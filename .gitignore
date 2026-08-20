@@ -1,0 +1,17 @@
+.next/
+node_modules/
+.pnpm-store/
+.env
+.env.local
+.env.production
+.env.*.local
+.env*
+!.env.example
+*.log
+coverage/
+playwright-report/
+test-results/
+supabase/.branches/
+supabase/.temp/
+*.tsbuildinfo
+.tmp/

@@ -1,0 +1,43 @@
+-- Discovery v1.2: enrich the deterministic vocabulary without changing approval rules.
+insert into public.exercise_aliases(exercise_id,alias,locale)
+select exercise.id, alias, 'en'
+from public.exercises exercise
+join lateral unnest(case exercise.slug
+  when 'leg-press' then array['seated leg press','leg press machine','machine leg press']
+  when 'hack-squat' then array['hack squat','hack squat machine','machine hack squat']
+  when 'smith-squat' then array['smith squat','smith machine squat','smith machine back squat']
+  when 'goblet-squat' then array['goblet squat','kettlebell goblet squat','dumbbell goblet squat']
+  when 'leg-extension' then array['leg extension','leg extension machine','knee extension','seated leg extension']
+  when 'lying-leg-curl' then array['leg curl','lying leg curl','prone leg curl','hamstring curl','lying hamstring curl']
+  when 'seated-leg-curl' then array['seated leg curl','seated hamstring curl','leg curl machine']
+  when 'hip-thrust' then array['hip thrust','barbell hip thrust','weighted hip thrust','bench hip thrust','glute hip thrust']
+  when 'machine-glute' then array['glute kickback machine','machine glute kickback','hip extension machine']
+  when 'calf-raise' then array['standing calf raise','calf raise','calf raise machine']
+  when 'lat-pulldown' then array['lat pulldown','lat pull down','front lat pulldown','cable pulldown','pulldown machine','wide grip pulldown']
+  when 'neutral-pulldown' then array['neutral grip lat pulldown','neutral pulldown','close grip pulldown']
+  when 'supinated-pulldown' then array['reverse grip lat pulldown','supinated pulldown','underhand pulldown']
+  when 'seated-row' then array['seated row','seated cable row','low row','cable row','low cable row']
+  when 'machine-row' then array['row machine','seated row machine','machine row','chest supported row machine']
+  when 'one-arm-row' then array['one arm dumbbell row','single arm dumbbell row','one arm row']
+  when 'reverse-fly' then array['reverse fly','reverse fly machine','rear delt fly','rear delt machine','reverse pec deck']
+  when 'face-pull' then array['face pull','cable face pull','rope face pull','rear delt rope pull','cable rear delt pull']
+  when 'machine-chest-press' then array['machine chest press','chest press machine','seated chest press','chest press exercise']
+  when 'incline-machine-press' then array['incline chest press machine','incline machine press','incline press machine']
+  when 'machine-fly' then array['pec deck','pec deck fly','machine chest fly','chest fly machine']
+  when 'machine-shoulder-press' then array['shoulder press','machine shoulder press','seated shoulder press','overhead press machine','shoulder press exercise']
+  when 'lateral-raise' then array['dumbbell lateral raise','lateral raise','side lateral raise']
+  when 'dead-bug' then array['dead bug','dead bug exercise','core dead bug']
+  when 'plank' then array['forearm plank','plank exercise','abdominal plank']
+  when 'pallof-press' then array['pallof press','cable pallof press','anti rotation press','anti-rotation press']
+  when 'farmer-walk' then array['farmer walk','farmers walk','farmer carry','loaded carry','kettlebell farmer walk']
+  when 'wall-slide' then array['wall slide','wall slides exercise','wall angel','wall shoulder slide']
+  when 'chin-tuck' then array['chin tuck','cervical retraction','neck retraction exercise']
+  when 'thoracic-extension' then array['thoracic extension','thoracic spine extension','foam roller thoracic extension']
+  when 'treadmill' then array['treadmill walking','walking on treadmill','treadmill exercise']
+  when 'incline-treadmill' then array['incline treadmill walking','incline walking','treadmill incline exercise']
+  when 'bike' then array['stationary bicycle','exercise bike','stationary bike exercise']
+  when 'elliptical' then array['elliptical trainer','cross trainer','elliptical exercise']
+  when 'walking' then array['brisk walking','walking exercise','fitness walking']
+  else array[exercise.name_pt]
+end) alias on true
+on conflict(exercise_id,alias) do nothing;

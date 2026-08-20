@@ -1,0 +1,1 @@
+create unique index one_cardio_log_per_session_exercise on public.cardio_logs(session_exercise_id);
