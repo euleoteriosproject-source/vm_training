@@ -1,6 +1,7 @@
 import { copyFile, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { randomBytes } from "node:crypto";
 import path from "node:path";
+import { sha256File } from "../../lib/media/hash.ts";
 import {
   prepareLocalArtifact,
   prepareLocalFile,
@@ -111,6 +112,7 @@ for (const candidate of selected) {
     ),
   );
   const mediaStats = await stat(artifact.mediaPath);
+  const posterHash = await sha256File(artifact.posterPath);
   results.push({
     candidateId: candidate.candidateId,
     exerciseSlug: candidate.exerciseSlug,
@@ -124,6 +126,7 @@ for (const candidate of selected) {
     fallbackReason: artifact.fallbackReason,
     storagePath: storage.mediaPath,
     posterPath: storage.posterPath,
+    posterHash,
     contentHash: artifact.hash,
     width: artifact.metadata.width,
     height: artifact.metadata.height,
@@ -270,7 +273,7 @@ await writeFile(
 );
 await writeFile(
   "data/media/primary-media-manifest.json",
-  `${JSON.stringify({ version: "1.6", strategy: "GIF-FIRST", generatedAt, entries: results.map(({ candidateId, exerciseSlug, mediaRole, mediaType, fallbackReason, storagePath, posterPath, contentHash, width, height, durationSeconds, fileSizeBytes, frameCount, framesPerSecond, loop, animated, visualReview, license }) => ({ candidateId, exerciseSlug, mediaRole, mediaType, fallbackReason, storagePath, posterPath, contentHash, width, height, durationSeconds, fileSizeBytes, frameCount, framesPerSecond, loop, animated, visualReview, license })) }, null, 2)}\n`,
+  `${JSON.stringify({ version: "1.6", strategy: "GIF-FIRST", generatedAt, entries: results.map(({ candidateId, exerciseSlug, mediaRole, mediaType, fallbackReason, storagePath, posterPath, posterHash, contentHash, width, height, durationSeconds, fileSizeBytes, frameCount, framesPerSecond, loop, animated, visualReview, license }) => ({ candidateId, exerciseSlug, mediaRole, mediaType, fallbackReason, storagePath, posterPath, posterHash, contentHash, width, height, durationSeconds, fileSizeBytes, frameCount, framesPerSecond, loop, animated, visualReview, license })) }, null, 2)}\n`,
 );
 log(
   args.apply ? "APPLIED" : "DRY-RUN",
