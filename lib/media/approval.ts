@@ -1,4 +1,7 @@
-import { isPrimaryChecklistComplete } from "./operations";
+import {
+  isPrimaryChecklistComplete,
+  validateAnimatedPrimary,
+} from "./operations";
 
 export type ApprovalInput = {
   status: string;
@@ -15,6 +18,12 @@ export type ApprovalInput = {
   mediaRole: string | null;
   checklist?: Record<string, boolean> | null;
   processedAt?: string | null;
+  mediaType?: string;
+  animationVerified?: boolean;
+  frameCount?: number | null;
+  durationSeconds?: number | null;
+  animationLoop?: boolean | null;
+  fallbackReason?: string | null;
 };
 export function validateApproval(input: ApprovalInput) {
   const errors: string[] = [];
@@ -34,6 +43,18 @@ export function validateApproval(input: ApprovalInput) {
     !isPrimaryChecklistComplete(input.checklist)
   )
     errors.push("review_checklist");
+  if (
+    input.mediaRole === "PRIMARY_DEMO" &&
+    !validateAnimatedPrimary({
+      mediaType: input.mediaType ?? "image",
+      animationVerified: input.animationVerified ?? false,
+      frameCount: input.frameCount ?? null,
+      durationSeconds: input.durationSeconds ?? null,
+      animationLoop: input.animationLoop ?? null,
+      fallbackReason: input.fallbackReason ?? null,
+    })
+  )
+    errors.push("animated_primary");
   if (input.attributionRequired && !input.licenseUrl)
     errors.push("attribution");
   return { valid: errors.length === 0, errors };

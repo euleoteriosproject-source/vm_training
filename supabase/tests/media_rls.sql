@@ -1,5 +1,5 @@
 begin;
-select plan(7);
+select plan(12);
 
 insert into public.allowed_signup_emails(email,display_name,default_role) values
 ('media-admin@example.test','Media Admin','admin'),
@@ -14,7 +14,8 @@ insert into public.exercise_media(
   id,exercise_id,media_type,storage_path,poster_path,status,media_role,source_name,
   source_type,source_url,license_code,license_url,author,attribution_text,
   content_hash,verified_at,verified_by,reviewed_at,reviewed_by,processed_at,
-  execution_quality,review_checklist
+  execution_quality,review_checklist,animation_verified,frame_count,
+  animation_loop,frames_per_second,fallback_reason,duration_seconds
 )
 select
   '50000000-0000-0000-0000-000000000005',id,'video',
@@ -25,13 +26,14 @@ select
   'CDC','CDC / Wikimedia Commons / Public Domain','test-hash',now(),
   '30000000-0000-0000-0000-000000000003',now(),
   '30000000-0000-0000-0000-000000000003',now(),'approved',
-  '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}'::jsonb
+  '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}'::jsonb,
+  true,180,true,30,'GIF_SIZE_TOO_LARGE',6
 from public.exercises limit 1;
 
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"40000000-0000-0000-0000-000000000004","role":"authenticated"}',true);
 select is(
-  (select count(*)::integer from public.exercise_media),
+  (select count(*)::integer from public.exercise_media where id='50000000-0000-0000-0000-000000000005'),
   0,
   'member cannot read media before publication'
 );
@@ -40,6 +42,88 @@ select throws_ok(
   '42501',
   'permission denied for table exercise_media',
   'member cannot approve media'
+);
+reset role;
+set local role service_role;
+select set_config('request.jwt.claims','{"sub":"00000000-0000-0000-0000-000000000000","role":"service_role"}',true);
+
+insert into public.exercise_media(
+  id,exercise_id,media_type,storage_path,poster_path,status,media_role,source_name,
+  source_type,source_url,license_code,license_url,author,attribution_text,
+  content_hash,verified_at,verified_by,reviewed_at,reviewed_by,processed_at,
+  execution_quality,review_checklist,animation_verified,frame_count,
+  animation_loop,frames_per_second,duration_seconds
+)
+select
+  '60000000-0000-0000-0000-000000000006',id,'image','static.webp','static-poster.webp','processed',
+  'PRIMARY_DEMO','Test','public_domain','https://example.test/static','PD',
+  'https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain','CDC','Test',
+  'static-hash',now(),'30000000-0000-0000-0000-000000000003',now(),
+  '30000000-0000-0000-0000-000000000003',now(),'approved',
+  '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}',
+  false,1,false,1,6
+from public.exercises order by slug offset 1 limit 1;
+
+select throws_ok(
+  $$select public.publish_exercise_media('60000000-0000-0000-0000-000000000006','30000000-0000-0000-0000-000000000003')$$,
+  'P0001',
+  'PRIMARY_DEMO requer GIF animado verificado ou fallback MP4 documentado',
+  'PRIMARY static image is rejected'
+);
+
+insert into public.exercise_media(
+  id,exercise_id,media_type,storage_path,poster_path,status,media_role,source_name,
+  source_type,source_url,license_code,license_url,author,attribution_text,
+  content_hash,verified_at,verified_by,reviewed_at,reviewed_by,processed_at,
+  execution_quality,review_checklist,animation_verified,frame_count,
+  animation_loop,frames_per_second,duration_seconds
+)
+select
+  '70000000-0000-0000-0000-000000000007',id,'gif','single.gif','single.webp','processed',
+  'PRIMARY_DEMO','Test','public_domain','https://example.test/single','PD',
+  'https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain','CDC','Test',
+  'single-hash',now(),'30000000-0000-0000-0000-000000000003',now(),
+  '30000000-0000-0000-0000-000000000003',now(),'approved',
+  '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}',
+  true,1,true,15,6
+from public.exercises order by slug offset 2 limit 1;
+
+select throws_ok(
+  $$select public.publish_exercise_media('70000000-0000-0000-0000-000000000007','30000000-0000-0000-0000-000000000003')$$,
+  'P0001',
+  'PRIMARY_DEMO requer GIF animado verificado ou fallback MP4 documentado',
+  'single-frame GIF is rejected'
+);
+
+insert into public.exercise_media(
+  id,exercise_id,media_type,storage_path,poster_path,status,media_role,source_name,
+  source_type,source_url,license_code,license_url,author,attribution_text,
+  content_hash,verified_at,verified_by,reviewed_at,reviewed_by,processed_at,
+  execution_quality,review_checklist,animation_verified,frame_count,
+  animation_loop,frames_per_second,duration_seconds
+)
+select
+  '80000000-0000-0000-0000-000000000008',id,'gif','animated.gif','animated.webp','processed',
+  'PRIMARY_DEMO','Test','public_domain','https://example.test/animated','PD',
+  'https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain','CDC','Test',
+  'animated-hash',now(),'30000000-0000-0000-0000-000000000003',now(),
+  '30000000-0000-0000-0000-000000000003',now(),'approved',
+  '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}',
+  true,90,true,15,6
+from public.exercises order by slug offset 3 limit 1;
+
+select lives_ok(
+  $$select public.publish_exercise_media('80000000-0000-0000-0000-000000000008','30000000-0000-0000-0000-000000000003')$$,
+  'animated GIF is accepted'
+);
+select ok(
+  (select public.exercise_has_approved_primary(exercise_id) from public.exercise_media where id='80000000-0000-0000-0000-000000000008'),
+  'approved GIF satisfies animated primary readiness'
+);
+select is(
+  (select exercise.active from public.exercises exercise join public.exercise_media media on media.exercise_id=exercise.id where media.id='80000000-0000-0000-0000-000000000008'),
+  true,
+  'exercise becomes active only with animated media'
 );
 reset role;
 
@@ -70,9 +154,12 @@ select is(
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"40000000-0000-0000-0000-000000000004","role":"authenticated"}',true);
 select is(
-  (select count(*)::integer from public.exercise_media),
-  1,
-  'member can read approved global media'
+  (select count(*)::integer from public.exercise_media where id in (
+    '50000000-0000-0000-0000-000000000005',
+    '80000000-0000-0000-0000-000000000008'
+  )),
+  2,
+  'member can read the two approved test media rows'
 );
 reset role;
 
@@ -81,12 +168,15 @@ select throws_ok(
       exercise_id,media_type,storage_path,poster_path,status,media_role,is_primary,
       source_name,source_type,source_url,license_code,license_url,author,
       attribution_text,content_hash,verified_at,verified_by,reviewed_at,reviewed_by,
-      approved_at,approved_by,processed_at,execution_quality,review_checklist
+      approved_at,approved_by,processed_at,execution_quality,review_checklist,
+      animation_verified,frame_count,animation_loop,frames_per_second,
+      fallback_reason,duration_seconds
     ) select exercise_id,'video','other.mp4','other.webp','approved','PRIMARY_DEMO',true,
       'Test','public_domain','https://commons.wikimedia.org/wiki/File:Other.webm',
       'PD','https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain',
       'CDC','CDC / Wikimedia Commons / Public Domain','other-hash',now(),verified_by,
-      now(),reviewed_by,now(),reviewed_by,now(),'approved',review_checklist
+      now(),reviewed_by,now(),reviewed_by,now(),'approved',review_checklist,
+      true,180,true,30,'GIF_SIZE_TOO_LARGE',6
     from public.exercise_media where id='50000000-0000-0000-0000-000000000005'$$,
   '23505',
   null,

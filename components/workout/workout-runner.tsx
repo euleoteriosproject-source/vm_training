@@ -229,7 +229,12 @@ export function WorkoutRunner({
           <div>
             <h1 className="font-semibold">{sessionName}</h1>
             <p className="text-xs text-muted">
-              {elapsed} min · {syncing ? "Sincronizando…" : pendingCount ? `${pendingCount} alterações pendentes` : "✓ Sincronizado"}
+              {elapsed} min ·{" "}
+              {syncing
+                ? "Sincronizando…"
+                : pendingCount
+                  ? `${pendingCount} alterações pendentes`
+                  : "✓ Sincronizado"}
             </p>
           </div>
           <div className="ml-auto w-24">
@@ -298,6 +303,7 @@ function ExerciseCard({
           <ViewportVideo
             src={item.detail.mediaUrl}
             poster={item.detail.posterUrl}
+            mediaType={item.detail.mediaType}
             className="w-full"
             priority={item.position === 1}
           />

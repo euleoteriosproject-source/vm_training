@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdir, mkdtemp, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 
 function executable(name: "ffmpeg" | "ffprobe") {
@@ -106,6 +106,37 @@ export async function processVideo(
   ];
   await run(executable("ffmpeg"), args);
 }
+export async function processGif(
+  input: string,
+  output: string,
+  options?: {
+    trimStart?: number;
+    trimEnd?: number;
+    fps?: number;
+    maxWidth?: number;
+  },
+) {
+  const start = options?.trimStart ?? 0;
+  const duration = options?.trimEnd ? options.trimEnd - start : 12;
+  const fps = Math.min(18, Math.max(12, options?.fps ?? 12));
+  const maxWidth = Math.min(720, Math.max(480, options?.maxWidth ?? 480));
+  const scale = `scale='min(${maxWidth},iw)':-1:flags=lanczos`;
+  await run(executable("ffmpeg"), [
+    "-y",
+    "-ss",
+    String(start),
+    "-i",
+    input,
+    "-t",
+    String(Math.min(12, Math.max(0.1, duration))),
+    "-filter_complex",
+    `[0:v]fps=${fps},${scale},split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=sierra2_4a:diff_mode=rectangle`,
+    "-an",
+    "-loop",
+    "0",
+    output,
+  ]);
+}
 export async function generatePoster(
   input: string,
   output: string,
@@ -132,10 +163,11 @@ export async function probeMedia(input: string) {
   const raw = await capture(executable("ffprobe"), [
     "-v",
     "error",
+    "-count_frames",
     "-select_streams",
     "v:0",
     "-show_entries",
-    "stream=codec_name,codec_long_name,width,height,r_frame_rate,pix_fmt:format=format_name,format_long_name,duration,size",
+    "stream=codec_name,codec_long_name,width,height,r_frame_rate,avg_frame_rate,pix_fmt,nb_frames,nb_read_frames:format=format_name,format_long_name,duration,size",
     "-of",
     "json",
     input,
@@ -147,7 +179,10 @@ export async function probeMedia(input: string) {
       width: number;
       height: number;
       r_frame_rate: string;
+      avg_frame_rate?: string;
       pix_fmt?: string;
+      nb_frames?: string;
+      nb_read_frames?: string;
     }[];
     format?: {
       format_name?: string;
@@ -164,10 +199,31 @@ export async function probeMedia(input: string) {
     codecLongName: stream?.codec_long_name ?? null,
     pixelFormat: stream?.pix_fmt ?? null,
     frameRate: stream?.r_frame_rate ?? null,
+    averageFrameRate: stream?.avg_frame_rate ?? null,
+    frameCount: Number(stream?.nb_read_frames ?? stream?.nb_frames ?? 0),
     container: value.format?.format_name ?? null,
     containerLongName: value.format?.format_long_name ?? null,
     durationSeconds: Number(value.format?.duration ?? 0),
     fileSizeBytes: Number(value.format?.size ?? 0),
+  };
+}
+
+function frameRateValue(rate: string | null) {
+  if (!rate) return 0;
+  const [numerator, denominator = "1"] = rate.split("/");
+  return Number(numerator) / Math.max(1, Number(denominator));
+}
+
+export async function inspectAnimatedGif(input: string) {
+  const metadata = await probeMedia(input);
+  const bytes = await readFile(input);
+  const loop = bytes.includes(Buffer.from("NETSCAPE2.0", "ascii"));
+  const fps = frameRateValue(metadata.averageFrameRate ?? metadata.frameRate);
+  return {
+    ...metadata,
+    animated: metadata.codec === "gif" && metadata.frameCount > 1,
+    loop,
+    fps: Number(fps.toFixed(2)),
   };
 }
 

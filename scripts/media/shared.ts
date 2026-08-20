@@ -69,6 +69,22 @@ export function getAdminClient(required = true): SupabaseClient | null {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
+export function isLocalSupabaseUrl(value: string) {
+  try {
+    const hostname = new URL(value).hostname;
+    if (
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "::1"
+    )
+      return true;
+    if (/^10\./.test(hostname) || /^192\.168\./.test(hostname)) return true;
+    const match = hostname.match(/^172\.(\d{1,2})\./);
+    return Boolean(match && Number(match[1]) >= 16 && Number(match[1]) <= 31);
+  } catch {
+    return false;
+  }
+}
 export async function loadExercises(
   client: SupabaseClient | null,
 ): Promise<MatchExercise[]> {

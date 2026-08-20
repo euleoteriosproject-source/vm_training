@@ -56,7 +56,7 @@ export default async function SessionPage({
             m.execution_quality === "approved" &&
             m.media_role === "PRIMARY_DEMO" &&
             m.is_primary &&
-            m.media_type === "video",
+            (m.media_type === "gif" || m.media_type === "video"),
         )
         .sort(
           (a, b) =>
@@ -107,6 +107,11 @@ export default async function SessionPage({
           }),
           mediaUrl,
           posterUrl,
+          mediaType: (media?.media_type === "gif"
+            ? "gif"
+            : media
+              ? "video"
+              : null) as "gif" | "video" | null,
           mediaSource: media
             ? {
                 author: media.author,

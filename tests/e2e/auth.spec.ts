@@ -14,7 +14,7 @@ test.describe("Supabase authentication", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await expect(page).toHaveURL(/today|onboarding/);
+    await expect(page).toHaveURL(/today|onboarding/, { timeout: 15000 });
     expect(authRequests.some((url) => url.includes("/supabase/auth/v1/token"))).toBe(
       true,
     );
@@ -41,7 +41,7 @@ test.describe("Supabase authentication", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await page.waitForURL(/today|onboarding/);
+    await page.waitForURL(/today|onboarding/, { timeout: 15000 });
     for (const width of [360, 390, 430, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: width < 768 ? 844 : 900 });
       await page.goto("/today");

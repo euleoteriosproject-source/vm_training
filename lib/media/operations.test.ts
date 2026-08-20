@@ -7,6 +7,7 @@ import {
   mediaStoragePaths,
   primaryChecklistKeys,
   validateMediaClassification,
+  validateAnimatedPrimary,
 } from "./operations";
 
 const completeChecklist = Object.fromEntries(
@@ -72,8 +73,56 @@ describe("media operations", () => {
         hash,
       }),
     ).toEqual({
+      mediaPath: `exercises/leg-press/primary/${hash}.mp4`,
       videoPath: `exercises/leg-press/primary/${hash}.mp4`,
+      gifPath: `exercises/leg-press/primary/${hash}.gif`,
       posterPath: `exercises/leg-press/primary/${hash}.webp`,
     });
+  });
+
+  it("rejects static images and single-frame GIFs as PRIMARY", () => {
+    expect(
+      validateAnimatedPrimary({
+        mediaType: "image",
+        animationVerified: true,
+        frameCount: 1,
+        durationSeconds: 5,
+        animationLoop: false,
+        fallbackReason: null,
+      }),
+    ).toBe(false);
+    expect(
+      validateAnimatedPrimary({
+        mediaType: "gif",
+        animationVerified: true,
+        frameCount: 1,
+        durationSeconds: 5,
+        animationLoop: true,
+        fallbackReason: null,
+      }),
+    ).toBe(false);
+  });
+
+  it("accepts animated GIF and documented MP4 fallback", () => {
+    expect(
+      validateAnimatedPrimary({
+        mediaType: "gif",
+        animationVerified: true,
+        frameCount: 90,
+        durationSeconds: 6,
+        animationLoop: true,
+        fallbackReason: null,
+      }),
+    ).toBe(true);
+    expect(
+      validateAnimatedPrimary({
+        mediaType: "video",
+        animationVerified: true,
+        frameCount: 180,
+        durationSeconds: 6,
+        animationLoop: true,
+        fallbackReason: "GIF_SIZE_TOO_LARGE",
+      }),
+    ).toBe(true);
   });
 });

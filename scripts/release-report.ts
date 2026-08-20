@@ -1,20 +1,46 @@
 import { calculatePlanCoverage } from "../lib/media/operations.ts";
 import { getAdminClient } from "./media/shared.ts";
 
+try {
+  process.loadEnvFile?.(".tmp/e2e.local.env");
+} catch {
+  /* Optional local-only credentials used by the Playwright media flow. */
+}
+
 const modeIndex = process.argv.indexOf("--mode");
 const mode = modeIndex >= 0 ? process.argv[modeIndex + 1] : "local";
-if (!(["local", "production"] as const).includes(mode as "local" | "production"))
+if (
+  !(["local", "production"] as const).includes(mode as "local" | "production")
+)
   throw new Error("Use --mode local ou --mode production");
 
 const client = getAdminClient()!;
-const [{ data: profiles, error: profileError }, { data: plans, error: planError }, { data: exercises, error: exerciseError }, { data: allowlist, error: allowlistError }, bucket] =
-  await Promise.all([
-    client.from("profiles").select("user_id,email,display_name,onboarding_completed"),
-    client.from("workout_plans").select("id,user_id,name,status,workout_days(workout_day_exercises(exercise_id))"),
-    client.from("exercises").select("id,exercise_media(status,media_role,execution_quality,is_primary)"),
-    client.from("allowed_signup_emails").select("email,active").eq("active", true),
-    client.storage.getBucket("exercise-media"),
-  ]);
+const [
+  { data: profiles, error: profileError },
+  { data: plans, error: planError },
+  { data: exercises, error: exerciseError },
+  { data: allowlist, error: allowlistError },
+  bucket,
+] = await Promise.all([
+  client
+    .from("profiles")
+    .select("user_id,email,display_name,onboarding_completed"),
+  client
+    .from("workout_plans")
+    .select(
+      "id,user_id,name,status,workout_days(workout_day_exercises(exercise_id))",
+    ),
+  client
+    .from("exercises")
+    .select(
+      "id,exercise_media(status,media_role,execution_quality,is_primary)",
+    ),
+  client
+    .from("allowed_signup_emails")
+    .select("email,active")
+    .eq("active", true),
+  client.storage.getBucket("exercise-media"),
+]);
 for (const error of [profileError, planError, exerciseError, allowlistError])
   if (error) throw error;
 
@@ -31,12 +57,13 @@ const primaryIds = new Set(
     )
     .map((exercise) => exercise.id),
 );
-const media = (exercises ?? []).flatMap((exercise) => exercise.exercise_media ?? []);
-const authorized = [
-  "vinicius.euleoterio@hotmail.com",
-  "lisepaiva@hotmail.com",
-];
-const activeAllowlist = (allowlist ?? []).map((entry) => entry.email.toLowerCase()).sort();
+const media = (exercises ?? []).flatMap(
+  (exercise) => exercise.exercise_media ?? [],
+);
+const authorized = ["vinicius.euleoterio@hotmail.com", "lisepaiva@hotmail.com"];
+const activeAllowlist = (allowlist ?? [])
+  .map((entry) => entry.email.toLowerCase())
+  .sort();
 const productionAllowlistOk =
   activeAllowlist.length === authorized.length &&
   authorized.every((email) => activeAllowlist.includes(email));
@@ -66,22 +93,23 @@ function userReport(email: string) {
     profile,
     plan,
     coverage:
-      plan && ids.length
-        ? calculated
-        : { ...calculated, percentage: 0 },
+      plan && ids.length ? calculated : { ...calculated, percentage: 0 },
   };
 }
 
 const vinicius = userReport(authorized[0]);
 const marlise = userReport(authorized[1]);
 const pending = media.filter((item) =>
-  ["pending", "reviewing", "processing", "processed", "failed"].includes(item.status),
+  ["pending", "reviewing", "processing", "processed", "failed"].includes(
+    item.status,
+  ),
 ).length;
 const educational = media.filter(
   (item) => item.status === "approved" && item.media_role === "EDUCATIONAL",
 ).length;
 const variations = media.filter(
-  (item) => item.status === "approved" && item.media_role === "ALTERNATIVE_VARIATION",
+  (item) =>
+    item.status === "approved" && item.media_role === "ALTERNATIVE_VARIATION",
 ).length;
 const coverage = exercises?.length
   ? Number(((primaryIds.size / exercises.length) * 100).toFixed(1))

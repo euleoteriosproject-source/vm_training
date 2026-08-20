@@ -56,6 +56,12 @@ describe("media pipeline", () => {
           license_confirmed: true,
         },
         processedAt: new Date().toISOString(),
+        mediaType: "gif",
+        animationVerified: true,
+        frameCount: 90,
+        durationSeconds: 6,
+        animationLoop: true,
+        fallbackReason: null,
       }).valid,
     ).toBe(true);
   });
