@@ -4,7 +4,10 @@ test("landing and login are usable", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: /Treine com intenção/ }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "Entrar" }).first().click();
+  await Promise.all([
+    page.waitForURL(/\/login$/),
+    page.getByRole("link", { name: "Entrar" }).first().click(),
+  ]);
   await expect(page.getByLabel("E-mail")).toBeVisible();
   await expect(page.getByLabel("Senha")).toBeVisible();
 });
