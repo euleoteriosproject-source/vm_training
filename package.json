@@ -41,7 +41,11 @@
     "media:storage-check": "node --experimental-strip-types scripts/media/storage-check.ts",
     "release:check": "node --experimental-strip-types scripts/release-check.ts",
     "release:report": "node --experimental-strip-types scripts/release-report.ts",
-    "smoke:production": "node --experimental-strip-types scripts/smoke-production.ts"
+    "smoke:production": "node --experimental-strip-types scripts/smoke-production.ts",
+    "security:grants:local": "node --experimental-strip-types scripts/security/capture-grant-matrix.ts",
+    "security:grants:production": "node --experimental-strip-types scripts/security/capture-grant-matrix.ts --production",
+    "security:grants:diff": "node --experimental-strip-types scripts/security/compare-grant-matrices.ts",
+    "security:grants:test": "supabase test db --local tests/database/grants.test.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

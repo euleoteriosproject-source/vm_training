@@ -1,0 +1,4150 @@
+{
+  "version": "1.6.1-R2",
+  "target": "production",
+  "projectRef": "inghftngeritrsezwxnm",
+  "matrix": {
+    "defaultPrivileges": [
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "postgres",
+        "privilege": "EXECUTE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "postgres",
+        "privilege": "EXECUTE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "postgres",
+        "privilege": "EXECUTE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "USAGE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "USAGE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "postgres",
+        "privilege": "USAGE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "DELETE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "INSERT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "MAINTAIN",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "REFERENCES",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRIGGER",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRUNCATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "DELETE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "INSERT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "MAINTAIN",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "REFERENCES",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRIGGER",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRUNCATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "DELETE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "INSERT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "MAINTAIN",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "REFERENCES",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "SELECT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRIGGER",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "TRUNCATE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "postgres",
+        "privilege": "UPDATE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "supabase_admin",
+        "privilege": "EXECUTE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "supabase_admin",
+        "privilege": "EXECUTE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "FUNCTIONS",
+        "owner": "supabase_admin",
+        "privilege": "EXECUTE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "USAGE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "USAGE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "SEQUENCES",
+        "owner": "supabase_admin",
+        "privilege": "USAGE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "DELETE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "INSERT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "MAINTAIN",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "REFERENCES",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRIGGER",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRUNCATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "DELETE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "INSERT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "MAINTAIN",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "REFERENCES",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRIGGER",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRUNCATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "DELETE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "INSERT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "MAINTAIN",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "REFERENCES",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "SELECT",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRIGGER",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "TRUNCATE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "objectType": "TABLES",
+        "owner": "supabase_admin",
+        "privilege": "UPDATE",
+        "role": "service_role",
+        "schema": "public"
+      }
+    ],
+    "functionInventory": [
+      {
+        "identityArguments": "",
+        "language": "sql",
+        "object": "is_admin",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_day",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_plan",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_session",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_session_exercise",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan",
+        "resultType": "void",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "payload jsonb",
+        "language": "plpgsql",
+        "object": "complete_onboarding",
+        "resultType": "void",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "delete_own_account_data",
+        "resultType": "void",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "enforce_exercise_media",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "enforce_plan_activation",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "enforce_server_media_approval",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "exercise_has_approved_primary",
+        "resultType": "boolean",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_id uuid, p_notes text",
+        "language": "plpgsql",
+        "object": "finish_workout",
+        "resultType": "void",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "get_exercise_publish_readiness",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "get_plan_readiness",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "handle_new_user",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "event jsonb",
+        "language": "plpgsql",
+        "object": "hook_restrict_signup",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "value jsonb",
+        "language": "sql",
+        "object": "is_valid_primary_checklist",
+        "resultType": "boolean",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "prevent_primary_media_regression",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "protect_active_exercise_media",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_media_id uuid, p_admin_id uuid",
+        "language": "plpgsql",
+        "object": "publish_exercise_media",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "set_updated_at",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_id uuid",
+        "language": "plpgsql",
+        "object": "start_workout",
+        "resultType": "uuid",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "validate_media_approval",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      }
+    ],
+    "functions": [
+      {
+        "identityArguments": "",
+        "language": "sql",
+        "object": "is_admin",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_day",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_plan",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_session",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_id uuid",
+        "language": "sql",
+        "object": "owns_session_exercise",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "payload jsonb",
+        "language": "plpgsql",
+        "object": "complete_onboarding",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "delete_own_account_data",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "exercise_has_approved_primary",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "exercise_has_approved_primary",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_id uuid, p_notes text",
+        "language": "plpgsql",
+        "object": "finish_workout",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "get_plan_readiness",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "event jsonb",
+        "language": "plpgsql",
+        "object": "hook_restrict_signup",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "supabase_auth_admin",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "value jsonb",
+        "language": "sql",
+        "object": "is_valid_primary_checklist",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "value jsonb",
+        "language": "sql",
+        "object": "is_valid_primary_checklist",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_media_id uuid, p_admin_id uuid",
+        "language": "plpgsql",
+        "object": "publish_exercise_media",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_id uuid",
+        "language": "plpgsql",
+        "object": "start_workout",
+        "privilege": "EXECUTE",
+        "resultType": "uuid",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      }
+    ],
+    "schemas": [
+      {
+        "privilege": "USAGE",
+        "role": "authenticated",
+        "schema": "private"
+      },
+      {
+        "privilege": "USAGE",
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "privilege": "USAGE",
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "privilege": "USAGE",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "privilege": "USAGE",
+        "role": "supabase_auth_admin",
+        "schema": "public"
+      }
+    ],
+    "sequences": [],
+    "tables": [
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "allowed_signup_emails",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "supabase_auth_admin",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "body_measurements",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "cardio_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_aliases",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_media",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercise_substitutions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_licenses",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "media_review_events",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "profiles",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "set_logs",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "training_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_equipment",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_exercise_preferences",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "user_goals",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_day_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_days",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_plans",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_session_exercises",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "anon",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "REFERENCES",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRIGGER",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "TRUNCATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "workout_sessions",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      }
+    ]
+  }
+}
