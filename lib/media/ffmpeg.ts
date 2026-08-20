@@ -135,22 +135,68 @@ export async function probeMedia(input: string) {
     "-select_streams",
     "v:0",
     "-show_entries",
-    "stream=width,height,r_frame_rate:format=duration,size",
+    "stream=codec_name,codec_long_name,width,height,r_frame_rate,pix_fmt:format=format_name,format_long_name,duration,size",
     "-of",
     "json",
     input,
   ]);
   const value = JSON.parse(raw) as {
-    streams?: { width: number; height: number; r_frame_rate: string }[];
-    format?: { duration: string; size: string };
+    streams?: {
+      codec_name?: string;
+      codec_long_name?: string;
+      width: number;
+      height: number;
+      r_frame_rate: string;
+      pix_fmt?: string;
+    }[];
+    format?: {
+      format_name?: string;
+      format_long_name?: string;
+      duration: string;
+      size: string;
+    };
   };
   const stream = value.streams?.[0];
   return {
     width: stream?.width ?? 0,
     height: stream?.height ?? 0,
+    codec: stream?.codec_name ?? null,
+    codecLongName: stream?.codec_long_name ?? null,
+    pixelFormat: stream?.pix_fmt ?? null,
+    frameRate: stream?.r_frame_rate ?? null,
+    container: value.format?.format_name ?? null,
+    containerLongName: value.format?.format_long_name ?? null,
     durationSeconds: Number(value.format?.duration ?? 0),
     fileSizeBytes: Number(value.format?.size ?? 0),
   };
+}
+
+export async function generateContactSheet(
+  input: string,
+  output: string,
+  durationSeconds: number,
+) {
+  const duration = Math.max(durationSeconds, 0.6);
+  const start = durationSeconds >= 0.6 ? duration * 0.05 : 0;
+  const reviewDuration = Math.max(duration * 0.9, 0.6);
+  await run(executable("ffmpeg"), [
+    "-y",
+    "-ss",
+    String(start),
+    "-i",
+    input,
+    "-t",
+    String(reviewDuration),
+    "-vf",
+    `tpad=stop_mode=clone:stop_duration=${reviewDuration},fps=6/${reviewDuration},scale=480:-1:flags=lanczos,tile=3x2:padding=8:margin=8:color=white`,
+    "-frames:v",
+    "1",
+    "-c:v",
+    "libwebp",
+    "-quality",
+    "86",
+    output,
+  ]);
 }
 
 export async function checkFfmpeg() {

@@ -1,0 +1,188 @@
+{
+  "version": "1.5",
+  "generatedAt": "2026-08-20T15:30:00.000Z",
+  "exercises": [
+    {
+      "exerciseSlug": "hack-squat",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 2,
+      "bestCandidateScore": 40,
+      "recommendedNextSearchQueries": [
+        "hack squat machine full repetition exercise demonstration licensed"
+      ],
+      "recommendedSourceTypes": [
+        "official manufacturer",
+        "institutional media",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "smith-squat",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 2,
+      "bestCandidateScore": 40,
+      "recommendedNextSearchQueries": [
+        "smith machine squat full repetition licensed demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "official manufacturer",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "lying-leg-curl",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 48,
+      "recommendedNextSearchQueries": [
+        "lying prone leg curl machine demonstration licensed"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "official manufacturer",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "calf-raise",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 5,
+      "bestCandidateScore": 68,
+      "recommendedNextSearchQueries": [
+        "standing calf raise full repetition licensed video"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "verified Creative Commons",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "lat-pulldown",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 4,
+      "bestCandidateScore": 88,
+      "recommendedNextSearchQueries": [
+        "lat pulldown full repetition pronated grip licensed video"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "verified Creative Commons",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "neutral-pulldown",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 66,
+      "recommendedNextSearchQueries": [
+        "neutral grip lat pulldown full repetition licensed video"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "official manufacturer",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "supinated-pulldown",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 66,
+      "recommendedNextSearchQueries": [
+        "reverse grip supinated lat pulldown licensed demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "official manufacturer",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "seated-row",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 74,
+      "recommendedNextSearchQueries": [
+        "seated low cable row licensed exercise demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "institutional media",
+        "verified Creative Commons",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "incline-machine-press",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 3,
+      "bestCandidateScore": 73,
+      "recommendedNextSearchQueries": [
+        "incline chest press machine licensed exercise demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "official manufacturer",
+        "institutional media",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "machine-fly",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 42,
+      "recommendedNextSearchQueries": [
+        "pec deck machine fly full repetition licensed video"
+      ],
+      "recommendedSourceTypes": [
+        "official manufacturer",
+        "institutional media",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "machine-shoulder-press",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 2,
+      "bestCandidateScore": 70,
+      "recommendedNextSearchQueries": [
+        "seated shoulder press machine licensed exercise demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "official manufacturer",
+        "institutional media",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "farmer-walk",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 1,
+      "bestCandidateScore": 74,
+      "recommendedNextSearchQueries": [
+        "bilateral farmer carry kettlebell licensed demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "verified Creative Commons",
+        "institutional media",
+        "self-produced"
+      ]
+    },
+    {
+      "exerciseSlug": "thoracic-extension",
+      "reason": "No candidate passed exact identity, equipment, complete movement, execution, visibility and verified-license requirements together.",
+      "previousCandidatesReviewed": 2,
+      "bestCandidateScore": 10,
+      "recommendedNextSearchQueries": [
+        "thoracic extension foam roller licensed exercise demonstration"
+      ],
+      "recommendedSourceTypes": [
+        "NHS/institutional media",
+        "verified Creative Commons",
+        "self-produced"
+      ]
+    }
+  ]
+}

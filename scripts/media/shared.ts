@@ -26,6 +26,8 @@ export type CliArgs = {
   expanded: boolean;
   resume: boolean;
   approvedForProcessing: boolean;
+  apply: boolean;
+  allowProduction: boolean;
 };
 export function parseArgs(argv = process.argv.slice(2)): CliArgs {
   const value = (name: string) => {
@@ -49,6 +51,8 @@ export function parseArgs(argv = process.argv.slice(2)): CliArgs {
     expanded: argv.includes("--expanded"),
     resume: argv.includes("--resume"),
     approvedForProcessing: argv.includes("--approved-for-processing"),
+    apply: argv.includes("--apply"),
+    allowProduction: argv.includes("--allow-production"),
   };
 }
 export function getAdminClient(required = true): SupabaseClient | null {

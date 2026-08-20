@@ -1,0 +1,4089 @@
+{
+  "version": "1.5",
+  "generatedAt": "2026-08-20T15:30:00.000Z",
+  "sourceArtifact": "data/media/media-candidates.json",
+  "methodology": "Metadata + ffprobe + six-frame contact sheets + direct visual review + independent institutional web references + catalog/equipment comparison",
+  "productionApplied": false,
+  "summary": {
+    "totalCandidates": 40,
+    "reviewed": 40,
+    "approved": 7,
+    "rejected": 31,
+    "pending": 2,
+    "exact": 15,
+    "acceptableVariation": 0,
+    "relatedButDifferent": 20,
+    "incorrect": 5,
+    "primaryDemo": 7,
+    "educational": 2,
+    "alternativeVariation": 0,
+    "exercisesWithPrimary": 7,
+    "exercisesWithoutPrimary": 13,
+    "exercisesResearched": 20,
+    "uniqueReferencesConsulted": 34,
+    "licenseVerified": 34,
+    "licenseIssues": 6
+  },
+  "candidates": [
+    {
+      "candidateId": "80eb98d2c2545580",
+      "exerciseSlug": "leg-press",
+      "sourceTitle": "Muscle Strengthening at the Gym - Seated Leg Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated machine leg press",
+      "expectedExercise": "Seated leg press on a dedicated machine",
+      "exerciseMatch": "EXACT",
+      "variation": "standard seated machine variation",
+      "equipment": "selectorized seated leg-press machine",
+      "equipmentMatch": true,
+      "movementPattern": "squat / compound hip and knee extension",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 88,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 96,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Seated Leg Press.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/154/seated-leg-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated machine setup and controlled hip/knee flexion and extension."
+        },
+        {
+          "name": "Leg press video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/leg-press/vid-20084684",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms dedicated machine, supported trunk and smooth press path."
+        }
+      ],
+      "visualNotes": "Machine, supported body, knee/hip path and complete repetitions are visible; the full source is instructional.",
+      "reasoningSummary": "Exact CDC public-domain demonstration; use a short, silent processed excerpt after frame-accurate trim selection.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "13cf057a7677c107f8e4f68176cf3ef4782deb63b854ae751ef0370de25a324f"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "3744/125",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 68.897,
+          "fileSizeBytes": 6632747
+        }
+      }
+    },
+    {
+      "candidateId": "0c0bd7baeb151077",
+      "exerciseSlug": "leg-press",
+      "sourceTitle": "How to properly leg press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "45-degree leg press tutorial with errors and variations",
+      "expectedExercise": "Seated leg press on a dedicated machine",
+      "exerciseMatch": "EXACT",
+      "variation": "tutorial containing standard and alternate stances",
+      "equipment": "45-degree plate-loaded leg press",
+      "equipmentMatch": true,
+      "movementPattern": "squat / compound hip and knee extension",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 82,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 88,
+      "confidence": "HIGH_CONFIDENCE",
+      "recommendedRole": "EDUCATIONAL",
+      "decision": "KEEP_PENDING",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Colossus Fitness",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“How to properly leg press.webm”. Autor: Colossus Fitness. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/154/seated-leg-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated machine setup and controlled hip/knee flexion and extension."
+        },
+        {
+          "name": "Leg press video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/leg-press/vid-20084684",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms dedicated machine, supported trunk and smooth press path."
+        }
+      ],
+      "visualNotes": "The source includes discussion, mistakes, correct-form material around 04:47 and later variations; several inspected windows show the machine work but no clean final trim was established.",
+      "reasoningSummary": "Technically relevant long-form education, but Wikimedia marks the video for license review; it cannot be approved.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "7a1039e6aee39d486bbdfa9943e394705e52db342270e290ca6f6e74e4fddffe"
+        },
+        "technical": {
+          "width": 1920,
+          "height": 1080,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "60/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 451.543,
+          "fileSizeBytes": 155138232
+        }
+      }
+    },
+    {
+      "candidateId": "c7f0edf1ad88047b",
+      "exerciseSlug": "leg-press",
+      "sourceTitle": "Exercisingwithmoderntech.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Exercisingwithmoderntech.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 65,
+      "visualExercise": "Chair sit-to-stand",
+      "expectedExercise": "Seated leg press on a dedicated machine",
+      "exerciseMatch": "INCORRECT",
+      "variation": "bodyweight sit-to-stand",
+      "equipment": "chair; no leg-press machine",
+      "equipmentMatch": false,
+      "movementPattern": "squat / compound hip and knee extension",
+      "movementMatch": false,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 70,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 18,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "author": "Azoisco",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Exercisingwithmoderntech.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Exercisingwithmoderntech.gif”. Autor: Azoisco. Licença: CC BY-SA 4.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": false,
+        "executionAcceptable": false,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/154/seated-leg-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated machine setup and controlled hip/knee flexion and extension."
+        },
+        {
+          "name": "Leg press video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/leg-press/vid-20084684",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms dedicated machine, supported trunk and smooth press path."
+        }
+      ],
+      "visualNotes": "The animation shows a person rising from a chair, not pressing a machine platform.",
+      "reasoningSummary": "Wrong exercise and equipment.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Exercisingwithmoderntech.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "c1851d9410ef28f13b47aaecec308640fe0cdc710c89d4b2fa1a72be7f8c3aa8"
+        },
+        "technical": {
+          "width": 429,
+          "height": 267,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.06,
+          "fileSizeBytes": 70591
+        }
+      }
+    },
+    {
+      "candidateId": "1671caca9d4a2b28",
+      "exerciseSlug": "leg-press",
+      "sourceTitle": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 65,
+      "visualExercise": "Chair-assisted bodyweight squat",
+      "expectedExercise": "Seated leg press on a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "bodyweight squat",
+      "equipment": "chair; no leg-press machine",
+      "equipmentMatch": false,
+      "movementPattern": "squat / compound hip and knee extension",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 72,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 42,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "w:en:Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Squat-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/154/seated-leg-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated machine setup and controlled hip/knee flexion and extension."
+        },
+        {
+          "name": "Leg press video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/leg-press/vid-20084684",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms dedicated machine, supported trunk and smooth press path."
+        }
+      ],
+      "visualNotes": "A complete squat is shown but the required leg-press equipment and constrained path are absent.",
+      "reasoningSummary": "Similar squat pattern is not a leg press.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "af6a182a4391cbf8badc132631b85846a14b6bf2903cd24e22006a55ffa5021b"
+        },
+        "technical": {
+          "width": 220,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 18407
+        }
+      }
+    },
+    {
+      "candidateId": "e2b4801df9db6b26",
+      "exerciseSlug": "hack-squat",
+      "sourceTitle": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Chair-assisted bodyweight squat",
+      "expectedExercise": "Hack squat on a guided angled machine with back and shoulder support",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "bodyweight squat",
+      "equipment": "chair; no hack-squat machine",
+      "equipmentMatch": false,
+      "movementPattern": "machine-guided squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 72,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 38,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "w:en:Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Squat-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Plate-Loaded Linear Hack Squat",
+          "url": "https://shop.lifefitness.com/products/hammer-strength-plate-loaded-hack-squat",
+          "organization": "Life Fitness",
+          "conclusion": "Defines a 45-degree, back-supported, fixed-path hack squat."
+        },
+        {
+          "name": "Squat loading position considerations",
+          "url": "https://www.nsca.com/education/articles/ptq/squat-loading-position-considerations/",
+          "organization": "NSCA",
+          "conclusion": "Distinguishes squat loading positions and their mechanical demands."
+        },
+        {
+          "name": "Back Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
+          "organization": "ACE",
+          "conclusion": "Provides the free-squat comparator and confirms it is a different equipment identity."
+        }
+      ],
+      "visualNotes": "The motion is an unsupported bodyweight squat.",
+      "reasoningSummary": "No angled sled, back support or guided hack-squat path.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "af6a182a4391cbf8badc132631b85846a14b6bf2903cd24e22006a55ffa5021b"
+        },
+        "technical": {
+          "width": 220,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 18407
+        }
+      }
+    },
+    {
+      "candidateId": "72f6dc978f353ead",
+      "exerciseSlug": "hack-squat",
+      "sourceTitle": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 60,
+      "visualExercise": "Bodyweight half squat",
+      "expectedExercise": "Hack squat on a guided angled machine with back and shoulder support",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "shallow bodyweight squat",
+      "equipment": "no equipment",
+      "equipmentMatch": false,
+      "movementPattern": "machine-guided squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 84,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 40,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at Home - Half squat.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Plate-Loaded Linear Hack Squat",
+          "url": "https://shop.lifefitness.com/products/hammer-strength-plate-loaded-hack-squat",
+          "organization": "Life Fitness",
+          "conclusion": "Defines a 45-degree, back-supported, fixed-path hack squat."
+        },
+        {
+          "name": "Squat loading position considerations",
+          "url": "https://www.nsca.com/education/articles/ptq/squat-loading-position-considerations/",
+          "organization": "NSCA",
+          "conclusion": "Distinguishes squat loading positions and their mechanical demands."
+        },
+        {
+          "name": "Back Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
+          "organization": "ACE",
+          "conclusion": "Provides the free-squat comparator and confirms it is a different equipment identity."
+        }
+      ],
+      "visualNotes": "A short-range bodyweight squat is visible in a home setting.",
+      "reasoningSummary": "Wrong equipment and materially different range/loading.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "d067de9dd6097f08403deac771f2dd5fe579e33e9b6937003bfa73ba2944a338"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30000/1001",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 78.603,
+          "fileSizeBytes": 6432925
+        }
+      }
+    },
+    {
+      "candidateId": "7a7d1d1355b6e9e1",
+      "exerciseSlug": "smith-squat",
+      "sourceTitle": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Chair-assisted bodyweight squat",
+      "expectedExercise": "Squat with a bar guided by a Smith machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "bodyweight squat",
+      "equipment": "chair; no Smith machine",
+      "equipmentMatch": false,
+      "movementPattern": "fixed-bar squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 72,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 38,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "w:en:Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Squat-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Exercise selection: Smith machine squats",
+          "url": "https://www.acefitness.org/continuing-education/prosource/september-2013/3459/is-your-exercise-selection-helping-or-hurting-your-clients/",
+          "organization": "ACE",
+          "conclusion": "Identifies the Smith squat by its fixed bar path."
+        },
+        {
+          "name": "Squat loading position considerations",
+          "url": "https://www.nsca.com/education/articles/ptq/squat-loading-position-considerations/",
+          "organization": "NSCA",
+          "conclusion": "Confirms loading and equipment materially affect squat execution."
+        },
+        {
+          "name": "Back Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
+          "organization": "ACE",
+          "conclusion": "Provides a free-bar comparator; bodyweight footage is not a Smith squat."
+        }
+      ],
+      "visualNotes": "The animation shows a bodyweight squat.",
+      "reasoningSummary": "A Smith squat requires a guided bar and machine.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "af6a182a4391cbf8badc132631b85846a14b6bf2903cd24e22006a55ffa5021b"
+        },
+        "technical": {
+          "width": 220,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 18407
+        }
+      }
+    },
+    {
+      "candidateId": "f2bf2b10305aeffa",
+      "exerciseSlug": "smith-squat",
+      "sourceTitle": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 60,
+      "visualExercise": "Bodyweight half squat",
+      "expectedExercise": "Squat with a bar guided by a Smith machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "shallow bodyweight squat",
+      "equipment": "no equipment",
+      "equipmentMatch": false,
+      "movementPattern": "fixed-bar squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "hamstrings"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 84,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 40,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at Home - Half squat.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Exercise selection: Smith machine squats",
+          "url": "https://www.acefitness.org/continuing-education/prosource/september-2013/3459/is-your-exercise-selection-helping-or-hurting-your-clients/",
+          "organization": "ACE",
+          "conclusion": "Identifies the Smith squat by its fixed bar path."
+        },
+        {
+          "name": "Squat loading position considerations",
+          "url": "https://www.nsca.com/education/articles/ptq/squat-loading-position-considerations/",
+          "organization": "NSCA",
+          "conclusion": "Confirms loading and equipment materially affect squat execution."
+        },
+        {
+          "name": "Back Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
+          "organization": "ACE",
+          "conclusion": "Provides a free-bar comparator; bodyweight footage is not a Smith squat."
+        }
+      ],
+      "visualNotes": "The video shows a partial bodyweight squat.",
+      "reasoningSummary": "No guided Smith bar or machine is present.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "d067de9dd6097f08403deac771f2dd5fe579e33e9b6937003bfa73ba2944a338"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30000/1001",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 78.603,
+          "fileSizeBytes": 6432925
+        }
+      }
+    },
+    {
+      "candidateId": "e8126275ec36715b",
+      "exerciseSlug": "goblet-squat",
+      "sourceTitle": "Kettlebell Goblet Squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kettlebell_Goblet_Squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Kettlebell goblet squat",
+      "expectedExercise": "Squat holding one kettlebell or dumbbell at the chest in goblet position",
+      "exerciseMatch": "EXACT",
+      "variation": "standard kettlebell goblet squat",
+      "equipment": "kettlebell",
+      "equipmentMatch": true,
+      "movementPattern": "loaded squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "core"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 93,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 98,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": 5,
+      "trimEnd": 12,
+      "license": {
+        "code": "CC-BY-SA-4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "author": "Taco fleur",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kettlebell_Goblet_Squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Kettlebell Goblet Squat.webm”. Autor: Taco fleur. Licença: CC BY-SA 4.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Goblet Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/362/goblet-squat/",
+          "organization": "ACE",
+          "conclusion": "Confirms chest-level goblet load and complete squat path."
+        },
+        {
+          "name": "Progressive strategies for movement patterns",
+          "url": "https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf",
+          "organization": "NSCA",
+          "conclusion": "Uses the goblet squat as a distinct loaded squat progression."
+        }
+      ],
+      "visualNotes": "Full body, chest-held kettlebell, depth and complete repetition are clear from a stable angle.",
+      "reasoningSummary": "Exact, clearly visible exercise with verified CC BY-SA 4.0 permission record.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kettlebell_Goblet_Squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "6243dac8a45745f8c4b23c1c5b31f91f51b86cd7438fa1399caa0da930ada2bd"
+        },
+        "technical": {
+          "width": 640,
+          "height": 480,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "25/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 23.107,
+          "fileSizeBytes": 3197075
+        }
+      }
+    },
+    {
+      "candidateId": "38dc3a1ed90bdf03",
+      "exerciseSlug": "goblet-squat",
+      "sourceTitle": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Chair-assisted bodyweight squat",
+      "expectedExercise": "Squat holding one kettlebell or dumbbell at the chest in goblet position",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "bodyweight squat",
+      "equipment": "chair; no goblet load",
+      "equipmentMatch": false,
+      "movementPattern": "loaded squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "core"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 72,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 45,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "w:en:Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Squat-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Goblet Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/362/goblet-squat/",
+          "organization": "ACE",
+          "conclusion": "Confirms chest-level goblet load and complete squat path."
+        },
+        {
+          "name": "Progressive strategies for movement patterns",
+          "url": "https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf",
+          "organization": "NSCA",
+          "conclusion": "Uses the goblet squat as a distinct loaded squat progression."
+        }
+      ],
+      "visualNotes": "The squat cycle is visible but there is no chest-held weight.",
+      "reasoningSummary": "Missing the defining goblet load and position.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "af6a182a4391cbf8badc132631b85846a14b6bf2903cd24e22006a55ffa5021b"
+        },
+        "technical": {
+          "width": 220,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 18407
+        }
+      }
+    },
+    {
+      "candidateId": "69d50f521aea630c",
+      "exerciseSlug": "goblet-squat",
+      "sourceTitle": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 60,
+      "visualExercise": "Bodyweight half squat",
+      "expectedExercise": "Squat holding one kettlebell or dumbbell at the chest in goblet position",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "shallow bodyweight squat",
+      "equipment": "no equipment",
+      "equipmentMatch": false,
+      "movementPattern": "loaded squat",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "core"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 84,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 45,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at Home - Half squat.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Goblet Squat",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/362/goblet-squat/",
+          "organization": "ACE",
+          "conclusion": "Confirms chest-level goblet load and complete squat path."
+        },
+        {
+          "name": "Progressive strategies for movement patterns",
+          "url": "https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf",
+          "organization": "NSCA",
+          "conclusion": "Uses the goblet squat as a distinct loaded squat progression."
+        }
+      ],
+      "visualNotes": "The video shows a partial unloaded squat.",
+      "reasoningSummary": "Missing the goblet load and full expected movement.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "d067de9dd6097f08403deac771f2dd5fe579e33e9b6937003bfa73ba2944a338"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30000/1001",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 78.603,
+          "fileSizeBytes": 6432925
+        }
+      }
+    },
+    {
+      "candidateId": "e84f0b22b7b81375",
+      "exerciseSlug": "leg-extension",
+      "sourceTitle": "Muscle Strengthening at the Gym - Leg Extension.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated machine leg extension",
+      "expectedExercise": "Seated knee extension on a selectorized leg-extension machine",
+      "exerciseMatch": "EXACT",
+      "variation": "standard bilateral machine leg extension",
+      "equipment": "selectorized leg-extension machine",
+      "equipmentMatch": true,
+      "movementPattern": "knee extension",
+      "movementMatch": true,
+      "primaryJoints": [
+        "knee"
+      ],
+      "predominantMuscles": [
+        "quadriceps"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 90,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 97,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Leg Extension.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Extension",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/183/seated-leg-extension/",
+          "organization": "ACE",
+          "conclusion": "Confirms selectorized equipment and isolated seated knee extension."
+        },
+        {
+          "name": "Knee extension video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/knee-extension/vid-20084686",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms pad placement and controlled knee extension on a machine."
+        }
+      ],
+      "visualNotes": "Seat, shin pad, knee axis and controlled extension/return are clearly visible; source is instructional.",
+      "reasoningSummary": "Exact CDC public-domain machine demonstration; process a short excerpt before publishing.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "a8b4921b16439560b01ec690df37ced5c7aae46f43a6e09812cd6e220b42a849"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "599/20",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 49.275,
+          "fileSizeBytes": 5869377
+        }
+      }
+    },
+    {
+      "candidateId": "ce0a5122e15e0d69",
+      "exerciseSlug": "leg-extension",
+      "sourceTitle": "Knee extension-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Knee_extension-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated knee extension with ankle weight",
+      "expectedExercise": "Seated knee extension on a selectorized leg-extension machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "non-machine knee extension",
+      "equipment": "chair and ankle weight",
+      "equipmentMatch": false,
+      "movementPattern": "knee extension",
+      "movementMatch": true,
+      "primaryJoints": [
+        "knee"
+      ],
+      "predominantMuscles": [
+        "quadriceps"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 78,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 52,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Knee_extension-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Knee extension-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Leg Extension",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/183/seated-leg-extension/",
+          "organization": "ACE",
+          "conclusion": "Confirms selectorized equipment and isolated seated knee extension."
+        },
+        {
+          "name": "Knee extension video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/knee-extension/vid-20084686",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms pad placement and controlled knee extension on a machine."
+        }
+      ],
+      "visualNotes": "Knee extension is visible, but the catalog exercise specifically expects a leg-extension machine.",
+      "reasoningSummary": "Correct joint action but wrong resistance equipment.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Knee_extension-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "82f73a3aa66fe1c87c93f0573134740ed4483f67d8981d0e6953cdcd8b44fdd1"
+        },
+        "technical": {
+          "width": 225,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "5/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 9.2,
+          "fileSizeBytes": 20895
+        }
+      }
+    },
+    {
+      "candidateId": "bc552436c04ac9b7",
+      "exerciseSlug": "lying-leg-curl",
+      "sourceTitle": "Muscle Strengthening at the Gym - Leg Curl.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Seated machine leg curl",
+      "expectedExercise": "Prone leg curl on a lying leg-curl machine",
+      "exerciseMatch": "INCORRECT",
+      "variation": "seated rather than prone",
+      "equipment": "seated leg-curl machine",
+      "equipmentMatch": false,
+      "movementPattern": "prone knee flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "knee"
+      ],
+      "predominantMuscles": [
+        "hamstrings"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 88,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 48,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Leg Curl.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Lying hamstring curl",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lying-hamstring-curl/vid-20084689",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms prone body position and knee flexion against a machine pad."
+        },
+        {
+          "name": "Seated hamstring curl",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/seated-hamstring-curl/vid-20084685",
+          "organization": "Mayo Clinic",
+          "conclusion": "Provides the seated comparator and shows it is a distinct variation."
+        }
+      ],
+      "visualNotes": "The person remains seated while flexing the knees against the machine pad.",
+      "reasoningSummary": "Body position identifies a different catalog exercise: seated leg curl.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "69cfbc8c8b739dca2986dfbb6bcd0f9eddff223ba5ba7561fe578482c35bff82"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "1197/40",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 33.509,
+          "fileSizeBytes": 3070512
+        }
+      }
+    },
+    {
+      "candidateId": "dc9c85d86b7e601d",
+      "exerciseSlug": "seated-leg-curl",
+      "sourceTitle": "Muscle Strengthening at the Gym - Leg Curl.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Seated machine leg curl",
+      "expectedExercise": "Seated leg curl on a dedicated machine",
+      "exerciseMatch": "EXACT",
+      "variation": "standard bilateral seated leg curl",
+      "equipment": "seated leg-curl machine",
+      "equipmentMatch": true,
+      "movementPattern": "seated knee flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "knee"
+      ],
+      "predominantMuscles": [
+        "hamstrings"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 88,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 96,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Leg Curl.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated hamstring curl",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/seated-hamstring-curl/vid-20084685",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seated body position and controlled knee flexion."
+        },
+        {
+          "name": "Insignia Seated Leg Curl",
+          "url": "https://shop.lifefitness.com/products/insignia-series-seated-leg-curl",
+          "organization": "Life Fitness",
+          "conclusion": "Confirms dedicated seated equipment and full range of motion."
+        }
+      ],
+      "visualNotes": "Machine setup, seated posture and controlled knee flexion/return are visible; source is instructional.",
+      "reasoningSummary": "Exact CDC public-domain demonstration; process a short excerpt before publishing.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "69cfbc8c8b739dca2986dfbb6bcd0f9eddff223ba5ba7561fe578482c35bff82"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "1197/40",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 33.509,
+          "fileSizeBytes": 3070512
+        }
+      }
+    },
+    {
+      "candidateId": "ff366b28b9419fed",
+      "exerciseSlug": "calf-raise",
+      "sourceTitle": "Rocking-standing-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-1.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Rocking-standing-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Standing barbell calf raise start position",
+      "expectedExercise": "Standing calf raise showing complete plantar-flexion repetition",
+      "exerciseMatch": "EXACT",
+      "variation": "rocking standing barbell calf raise",
+      "equipment": "barbell",
+      "equipmentMatch": true,
+      "movementPattern": "ankle plantar flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 58,
+        "fullBodyVisible": false,
+        "targetJointVisible": false,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 68,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-1.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Rocking-standing-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Rocking-standing-calf-raise-1.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Calf raise video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/calf-raise/vid-20084681",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms a complete heel raise and controlled return."
+        },
+        {
+          "name": "Calves exercise library",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/body-part/legs-calves-and-shins/",
+          "organization": "ACE",
+          "conclusion": "Separates standing and seated calf exercise variations."
+        }
+      ],
+      "visualNotes": "The GIF is effectively one static pose and does not show the heel-rise cycle.",
+      "reasoningSummary": "An isolated pose cannot teach the complete movement.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Rocking-standing-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "11875e63d4b1bebd9f685fd4593c1fe8771af3ad601468d4097982e0fb00855b"
+        },
+        "technical": {
+          "width": 216,
+          "height": 300,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.1,
+          "fileSizeBytes": 14220
+        }
+      }
+    },
+    {
+      "candidateId": "05cf0deb36319460",
+      "exerciseSlug": "calf-raise",
+      "sourceTitle": "Rocking-standing-calf-raise-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-2.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Rocking-standing-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Standing barbell calf raise end position",
+      "expectedExercise": "Standing calf raise showing complete plantar-flexion repetition",
+      "exerciseMatch": "EXACT",
+      "variation": "rocking standing barbell calf raise",
+      "equipment": "barbell",
+      "equipmentMatch": true,
+      "movementPattern": "ankle plantar flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 58,
+        "fullBodyVisible": false,
+        "targetJointVisible": false,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 68,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-2.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Rocking-standing-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Rocking-standing-calf-raise-2.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Calf raise video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/calf-raise/vid-20084681",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms a complete heel raise and controlled return."
+        },
+        {
+          "name": "Calves exercise library",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/body-part/legs-calves-and-shins/",
+          "organization": "ACE",
+          "conclusion": "Separates standing and seated calf exercise variations."
+        }
+      ],
+      "visualNotes": "The GIF is effectively one complementary static pose.",
+      "reasoningSummary": "An isolated pose cannot teach the complete movement.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Rocking-standing-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "1e53f5b98fa787cd4a6bd04d84a3cfee23c946cde1eddb8bbe387f80547f5fec"
+        },
+        "technical": {
+          "width": 216,
+          "height": 300,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.1,
+          "fileSizeBytes": 13991
+        }
+      }
+    },
+    {
+      "candidateId": "bf40cdf69b75b6ac",
+      "exerciseSlug": "calf-raise",
+      "sourceTitle": "Seated-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated-calf-raise-1.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Seated-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated calf raise pose",
+      "expectedExercise": "Standing calf raise showing complete plantar-flexion repetition",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "seated variation",
+      "equipment": "seated calf-raise setup",
+      "equipmentMatch": false,
+      "movementPattern": "ankle plantar flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 58,
+        "fullBodyVisible": false,
+        "targetJointVisible": false,
+        "machineVisible": false,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 45,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated-calf-raise-1.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Seated-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Seated-calf-raise-1.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Calf raise video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/calf-raise/vid-20084681",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms a complete heel raise and controlled return."
+        },
+        {
+          "name": "Calves exercise library",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/body-part/legs-calves-and-shins/",
+          "organization": "ACE",
+          "conclusion": "Separates standing and seated calf exercise variations."
+        }
+      ],
+      "visualNotes": "Only a static seated pose is present.",
+      "reasoningSummary": "Wrong catalog variation and incomplete movement evidence.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Seated-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "e779f8348a2312f962704f84c2b0a41feaf357ec7305e5f2a119e6aec2a0c238"
+        },
+        "technical": {
+          "width": 156,
+          "height": 250,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.1,
+          "fileSizeBytes": 11835
+        }
+      }
+    },
+    {
+      "candidateId": "aa5c3f70905fd753",
+      "exerciseSlug": "calf-raise",
+      "sourceTitle": "Standing-barbell-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-1.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Standing-barbell-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Standing barbell calf raise start position",
+      "expectedExercise": "Standing calf raise showing complete plantar-flexion repetition",
+      "exerciseMatch": "EXACT",
+      "variation": "standing barbell variation",
+      "equipment": "barbell",
+      "equipmentMatch": true,
+      "movementPattern": "ankle plantar flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 58,
+        "fullBodyVisible": false,
+        "targetJointVisible": false,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 68,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-1.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Standing-barbell-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Standing-barbell-calf-raise-1.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Calf raise video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/calf-raise/vid-20084681",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms a complete heel raise and controlled return."
+        },
+        {
+          "name": "Calves exercise library",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/body-part/legs-calves-and-shins/",
+          "organization": "ACE",
+          "conclusion": "Separates standing and seated calf exercise variations."
+        }
+      ],
+      "visualNotes": "Only one static position is visible.",
+      "reasoningSummary": "The complete plantar-flexion cycle is absent.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Standing-barbell-calf-raise-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "a2d3f17e2a55ff430d8e178bf2bae51f78f9004de87653ba7b4ee24a3b3107f8"
+        },
+        "technical": {
+          "width": 216,
+          "height": 300,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.1,
+          "fileSizeBytes": 15120
+        }
+      }
+    },
+    {
+      "candidateId": "5ce88876eeefed5b",
+      "exerciseSlug": "calf-raise",
+      "sourceTitle": "Standing-barbell-calf-raise-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-2.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Standing-barbell-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Standing barbell calf raise end position",
+      "expectedExercise": "Standing calf raise showing complete plantar-flexion repetition",
+      "exerciseMatch": "EXACT",
+      "variation": "standing barbell variation",
+      "equipment": "barbell",
+      "equipmentMatch": true,
+      "movementPattern": "ankle plantar flexion",
+      "movementMatch": true,
+      "primaryJoints": [
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "gastrocnemius",
+        "soleus"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 58,
+        "fullBodyVisible": false,
+        "targetJointVisible": false,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 68,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-2.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Standing-barbell-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Standing-barbell-calf-raise-2.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Calf raise video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/calf-raise/vid-20084681",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms a complete heel raise and controlled return."
+        },
+        {
+          "name": "Calves exercise library",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/body-part/legs-calves-and-shins/",
+          "organization": "ACE",
+          "conclusion": "Separates standing and seated calf exercise variations."
+        }
+      ],
+      "visualNotes": "Only one complementary static position is visible.",
+      "reasoningSummary": "The complete plantar-flexion cycle is absent.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Standing-barbell-calf-raise-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "291797b65844950e7ece63ba453a0eea701f20f9ea31895dcb9a4c107705b2ba"
+        },
+        "technical": {
+          "width": 216,
+          "height": 300,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0.1,
+          "fileSizeBytes": 14968
+        }
+      }
+    },
+    {
+      "candidateId": "3174bc031cbcf2b8",
+      "exerciseSlug": "lat-pulldown",
+      "sourceTitle": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Wide pronated-grip lat pulldown tutorial",
+      "expectedExercise": "Seated pronated-grip lat pulldown to the upper chest",
+      "exerciseMatch": "EXACT",
+      "variation": "wide pronated grip with errors/corrections",
+      "equipment": "cable lat-pulldown machine",
+      "equipmentMatch": true,
+      "movementPattern": "vertical pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps",
+        "scapular retractors"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 91,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 88,
+      "confidence": "HIGH_CONFIDENCE",
+      "recommendedRole": "EDUCATIONAL",
+      "decision": "KEEP_PENDING",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Andrew Kwong",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Common Lat Pulldown Mistakes.webm”. Autor: Andrew Kwong. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seated cable pulldown trajectory and controlled return."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / Journal of Strength and Conditioning Research",
+          "conclusion": "Confirms grip orientation is a meaningful pulldown variation."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines pronated, neutral and supinated grips."
+        }
+      ],
+      "visualNotes": "Multiple full pulldown positions and explanatory overlays are visible; the source is long-form instruction.",
+      "reasoningSummary": "Useful educational content, but Wikimedia flags the license for review, so approval is blocked.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "0765784da54e2bf0ec32bc0def3014a729b009b54d39533b135dc64a312efcf5"
+        },
+        "technical": {
+          "width": 1080,
+          "height": 1920,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "22121/369",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 10.944,
+          "fileSizeBytes": 3713960
+        }
+      }
+    },
+    {
+      "candidateId": "ed7dcbbebc3671f4",
+      "exerciseSlug": "lat-pulldown",
+      "sourceTitle": "Wide-grip-lat-pull-down-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-1.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/82/Wide-grip-lat-pull-down-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Wide-grip lat pulldown top pose",
+      "expectedExercise": "Seated pronated-grip lat pulldown to the upper chest",
+      "exerciseMatch": "EXACT",
+      "variation": "wide pronated grip",
+      "equipment": "lat-pulldown machine",
+      "equipmentMatch": true,
+      "movementPattern": "vertical pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps",
+        "scapular retractors"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 64,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 70,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-1.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/82/Wide-grip-lat-pull-down-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Wide-grip-lat-pull-down-1.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seated cable pulldown trajectory and controlled return."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / Journal of Strength and Conditioning Research",
+          "conclusion": "Confirms grip orientation is a meaningful pulldown variation."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines pronated, neutral and supinated grips."
+        }
+      ],
+      "visualNotes": "The GIF contains only the top/start position.",
+      "reasoningSummary": "One static pose does not demonstrate a repetition.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/82/Wide-grip-lat-pull-down-1.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "1861c6ac559f9361598cd87e8384ba44b685e4901e6b6aef7b724e64c2d7a0a7"
+        },
+        "technical": {
+          "width": 175,
+          "height": 250,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0,
+          "fileSizeBytes": 12777
+        }
+      }
+    },
+    {
+      "candidateId": "073037fc2fefe2f5",
+      "exerciseSlug": "lat-pulldown",
+      "sourceTitle": "Wide-grip-lat-pull-down-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-2.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Wide-grip-lat-pull-down-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Wide-grip lat pulldown bottom pose",
+      "expectedExercise": "Seated pronated-grip lat pulldown to the upper chest",
+      "exerciseMatch": "EXACT",
+      "variation": "wide pronated grip",
+      "equipment": "lat-pulldown machine",
+      "equipmentMatch": true,
+      "movementPattern": "vertical pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps",
+        "scapular retractors"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 64,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": false,
+        "cameraStable": false,
+        "obstructions": [
+          "incomplete/static movement evidence"
+        ]
+      },
+      "validationScore": 70,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "author": "Everkinetic",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-2.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Wide-grip-lat-pull-down-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Wide-grip-lat-pull-down-2.gif”. Autor: Everkinetic. Licença: CC BY-SA 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": false,
+        "fullMovementVisible": false,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seated cable pulldown trajectory and controlled return."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / Journal of Strength and Conditioning Research",
+          "conclusion": "Confirms grip orientation is a meaningful pulldown variation."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines pronated, neutral and supinated grips."
+        }
+      ],
+      "visualNotes": "The GIF contains only the bottom position.",
+      "reasoningSummary": "One static pose does not demonstrate a repetition.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Wide-grip-lat-pull-down-2.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "c6f19a18dcf6af471e2d25a4c9a9049d03d8f9fd294e005249e6076562d7158f"
+        },
+        "technical": {
+          "width": 175,
+          "height": 250,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 0,
+          "fileSizeBytes": 11607
+        }
+      }
+    },
+    {
+      "candidateId": "e1358c91d0449d14",
+      "exerciseSlug": "lat-pulldown",
+      "sourceTitle": "How to properly leg press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 65,
+      "visualExercise": "45-degree leg press tutorial",
+      "expectedExercise": "Seated pronated-grip lat pulldown to the upper chest",
+      "exerciseMatch": "INCORRECT",
+      "variation": "leg press",
+      "equipment": "leg-press machine",
+      "equipmentMatch": false,
+      "movementPattern": "vertical pull",
+      "movementMatch": false,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps",
+        "scapular retractors"
+      ],
+      "executionQuality": "rejected",
+      "visibility": {
+        "score": 82,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 5,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Colossus Fitness",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“How to properly leg press.webm”. Autor: Colossus Fitness. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": false,
+        "executionAcceptable": false,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seated cable pulldown trajectory and controlled return."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / Journal of Strength and Conditioning Research",
+          "conclusion": "Confirms grip orientation is a meaningful pulldown variation."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines pronated, neutral and supinated grips."
+        }
+      ],
+      "visualNotes": "The entire source concerns leg press, not a vertical pull.",
+      "reasoningSummary": "Wrong exercise, movement pattern and equipment.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "7a1039e6aee39d486bbdfa9943e394705e52db342270e290ca6f6e74e4fddffe"
+        },
+        "technical": {
+          "width": 1920,
+          "height": 1080,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "60/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 451.543,
+          "fileSizeBytes": 155138232
+        }
+      }
+    },
+    {
+      "candidateId": "c67f0842725ad27c",
+      "exerciseSlug": "neutral-pulldown",
+      "sourceTitle": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 58,
+      "visualExercise": "Wide pronated-grip lat pulldown tutorial",
+      "expectedExercise": "Lat pulldown using a neutral palms-facing grip",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "pronated rather than neutral grip",
+      "equipment": "cable lat-pulldown machine with straight bar",
+      "equipmentMatch": true,
+      "movementPattern": "neutral-grip vertical pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 91,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 66,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Andrew Kwong",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Common Lat Pulldown Mistakes.webm”. Autor: Andrew Kwong. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines neutral grip as palms facing each other."
+        },
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms the base pulldown path; grip must still match the catalog variation."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / JSCR",
+          "conclusion": "Supports treating forearm orientation as an explicit variation."
+        }
+      ],
+      "visualNotes": "The visible grip is overhand and wide, not palms-facing neutral.",
+      "reasoningSummary": "The defining grip does not match; the source also has unresolved license review.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "0765784da54e2bf0ec32bc0def3014a729b009b54d39533b135dc64a312efcf5"
+        },
+        "technical": {
+          "width": 1080,
+          "height": 1920,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "22121/369",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 10.944,
+          "fileSizeBytes": 3713960
+        }
+      }
+    },
+    {
+      "candidateId": "bec02db7c0e5540f",
+      "exerciseSlug": "supinated-pulldown",
+      "sourceTitle": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 68,
+      "visualExercise": "Wide pronated-grip lat pulldown tutorial",
+      "expectedExercise": "Lat pulldown using an underhand/supinated grip",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "pronated rather than supinated grip",
+      "equipment": "cable lat-pulldown machine with straight bar",
+      "equipmentMatch": true,
+      "movementPattern": "supinated-grip vertical pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "biceps"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 91,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 66,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Andrew Kwong",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Common Lat Pulldown Mistakes.webm”. Autor: Andrew Kwong. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Defines supinated grip as palms up/underhand."
+        },
+        {
+          "name": "Lat pull-down video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms the base pulldown path; the catalog requires a specific grip."
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/",
+          "organization": "PubMed / JSCR",
+          "conclusion": "Supports treating forearm orientation as an explicit variation."
+        }
+      ],
+      "visualNotes": "The visible grip is overhand, not underhand/supinated.",
+      "reasoningSummary": "The defining grip does not match; the source also has unresolved license review.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "0765784da54e2bf0ec32bc0def3014a729b009b54d39533b135dc64a312efcf5"
+        },
+        "technical": {
+          "width": 1080,
+          "height": 1920,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "22121/369",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 10.944,
+          "fileSizeBytes": 3713960
+        }
+      }
+    },
+    {
+      "candidateId": "d8a9d8634fe83558",
+      "exerciseSlug": "seated-row",
+      "sourceTitle": "Muscle Strengthening at the Gym - Row Machine.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Seated selectorized row machine",
+      "expectedExercise": "Seated low cable row with a horizontal cable path",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "machine row rather than low cable row",
+      "equipment": "lever/selectorized row machine",
+      "equipmentMatch": false,
+      "movementPattern": "horizontal pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "rhomboids",
+        "biceps"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 88,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 74,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Row Machine.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Row",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/48/seated-row/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated cable setup and horizontal handle path."
+        },
+        {
+          "name": "Seated row video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/seated-row/vid-20084688",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms controlled horizontal pulling with a stable torso."
+        }
+      ],
+      "visualNotes": "A complete horizontal pull is visible, but the lever machine is not the expected seated low cable setup.",
+      "reasoningSummary": "Equipment identity differs from the catalog exercise.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "f2db0741d95d7aeca3944bbbf48403a9d9d92cd17c0ef8b1bc63b736284f1b43"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "7481/250",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 28.958,
+          "fileSizeBytes": 3383080
+        }
+      }
+    },
+    {
+      "candidateId": "fa3314301801fe84",
+      "exerciseSlug": "machine-row",
+      "sourceTitle": "Muscle Strengthening at the Gym - Row Machine.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated selectorized row machine",
+      "expectedExercise": "Seated chest-supported selectorized row machine",
+      "exerciseMatch": "EXACT",
+      "variation": "standard bilateral machine row",
+      "equipment": "chest-supported selectorized row machine",
+      "equipmentMatch": true,
+      "movementPattern": "machine horizontal pull",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow",
+        "scapulothoracic articulation"
+      ],
+      "predominantMuscles": [
+        "latissimus dorsi",
+        "rhomboids",
+        "biceps"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 88,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 96,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Row Machine.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Selectorized Seated Row",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/168/seated-row/",
+          "organization": "ACE",
+          "conclusion": "Confirms selectorized row equipment and horizontal pull."
+        },
+        {
+          "name": "Seated row video",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/seated-row/vid-20084688",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms stable torso and controlled elbow/scapular motion."
+        }
+      ],
+      "visualNotes": "Chest support, handles and full horizontal pull/return are visible; source is instructional.",
+      "reasoningSummary": "Exact CDC public-domain demonstration; process a short excerpt before publishing.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "f2db0741d95d7aeca3944bbbf48403a9d9d92cd17c0ef8b1bc63b736284f1b43"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "7481/250",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 28.958,
+          "fileSizeBytes": 3383080
+        }
+      }
+    },
+    {
+      "candidateId": "d30d76720bbdb703",
+      "exerciseSlug": "machine-chest-press",
+      "sourceTitle": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Seated machine chest press",
+      "expectedExercise": "Seated chest press on a selectorized machine",
+      "exerciseMatch": "EXACT",
+      "variation": "standard bilateral machine press",
+      "equipment": "selectorized chest-press machine",
+      "equipmentMatch": true,
+      "movementPattern": "machine horizontal push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "pectorals",
+        "triceps",
+        "anterior deltoid"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 89,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 97,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Chest Press.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/188/seated-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms selectorized machine and forward pressing path."
+        },
+        {
+          "name": "Chest press with weight machine",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/chest-press/vid-20084687",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seat/handle setup and smooth machine press."
+        }
+      ],
+      "visualNotes": "Seat, back support, handles and full press/return are visible; source is instructional.",
+      "reasoningSummary": "Exact CDC public-domain demonstration; process a short excerpt before publishing.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "f0d278486b4ed366f924ea1efd366e9121ad86ca3fcc28315db66f18f3c43e94"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "5987/200",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 35.298,
+          "fileSizeBytes": 3562923
+        }
+      }
+    },
+    {
+      "candidateId": "e99c366fb897571d",
+      "exerciseSlug": "machine-chest-press",
+      "sourceTitle": "Chest press-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Supine dumbbell floor press",
+      "expectedExercise": "Seated chest press on a selectorized machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "dumbbell floor press",
+      "equipment": "dumbbells and mat",
+      "equipmentMatch": false,
+      "movementPattern": "machine horizontal push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "pectorals",
+        "triceps",
+        "anterior deltoid"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 86,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 49,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Chest press-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/188/seated-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms selectorized machine and forward pressing path."
+        },
+        {
+          "name": "Chest press with weight machine",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/chest-press/vid-20084687",
+          "organization": "Mayo Clinic",
+          "conclusion": "Confirms seat/handle setup and smooth machine press."
+        }
+      ],
+      "visualNotes": "The animation shows free weights while lying on the floor.",
+      "reasoningSummary": "No chest-press machine is present.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "e6db5fcdad73d1320550f9da7f73b13c7b53b8c702f26ddcf74aa5daa2f71019"
+        },
+        "technical": {
+          "width": 225,
+          "height": 172,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 9741
+        }
+      }
+    },
+    {
+      "candidateId": "2e24d23ca33c4722",
+      "exerciseSlug": "incline-machine-press",
+      "sourceTitle": "Incline press - exercise demonstration video.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_press_-_exercise_demonstration_video.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Incline_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 83,
+      "visualExercise": "Incline barbell bench press",
+      "expectedExercise": "Incline chest press using a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "free-bar incline press",
+      "equipment": "barbell, incline bench and rack",
+      "equipmentMatch": false,
+      "movementPattern": "inclined machine push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "upper pectorals",
+        "triceps",
+        "anterior deltoid"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 91,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 72,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "FitnessScape",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_press_-_exercise_demonstration_video.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Incline_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Incline press - exercise demonstration video.webm”. Autor: FitnessScape. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Incline Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/25/incline-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms inclined press geometry; equipment must match the catalog."
+        },
+        {
+          "name": "Chest press with weight machine",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/chest-press/vid-20084687",
+          "organization": "Mayo Clinic",
+          "conclusion": "Provides the dedicated-machine comparator."
+        },
+        {
+          "name": "Chest exercise study",
+          "url": "https://www.acefitness.org/about-ace/press-room/press-releases/2930/ace-study-tests-common-chest-exercises-finds-barbell-bench-press-most-effective/",
+          "organization": "ACE",
+          "conclusion": "Treats barbell and machine chest exercises as distinct modalities."
+        }
+      ],
+      "visualNotes": "A full incline press is clearly shown, but resistance is a free barbell.",
+      "reasoningSummary": "The catalog entry explicitly requires a machine.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Incline_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "6e2265685feab055c9661dfe0db392d95d3c028bedf30f5ef88f043203ec49f4"
+        },
+        "technical": {
+          "width": 1280,
+          "height": 720,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 6,
+          "fileSizeBytes": 442648
+        }
+      }
+    },
+    {
+      "candidateId": "09b53183dd0a76f3",
+      "exerciseSlug": "incline-machine-press",
+      "sourceTitle": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Seated horizontal machine chest press",
+      "expectedExercise": "Incline chest press using a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "non-incline machine press",
+      "equipment": "flat/horizontal chest-press machine",
+      "equipmentMatch": false,
+      "movementPattern": "inclined machine push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "upper pectorals",
+        "triceps",
+        "anterior deltoid"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 89,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 73,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Chest Press.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Incline Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/25/incline-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms inclined press geometry; equipment must match the catalog."
+        },
+        {
+          "name": "Chest press with weight machine",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/chest-press/vid-20084687",
+          "organization": "Mayo Clinic",
+          "conclusion": "Provides the dedicated-machine comparator."
+        },
+        {
+          "name": "Chest exercise study",
+          "url": "https://www.acefitness.org/about-ace/press-room/press-releases/2930/ace-study-tests-common-chest-exercises-finds-barbell-bench-press-most-effective/",
+          "organization": "ACE",
+          "conclusion": "Treats barbell and machine chest exercises as distinct modalities."
+        }
+      ],
+      "visualNotes": "The machine press is horizontal and lacks the required incline trajectory.",
+      "reasoningSummary": "Correct family and machine, wrong press angle/variation.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "f0d278486b4ed366f924ea1efd366e9121ad86ca3fcc28315db66f18f3c43e94"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "5987/200",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 35.298,
+          "fileSizeBytes": 3562923
+        }
+      }
+    },
+    {
+      "candidateId": "46e891811614ee31",
+      "exerciseSlug": "incline-machine-press",
+      "sourceTitle": "Chest press-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Supine dumbbell floor press",
+      "expectedExercise": "Incline chest press using a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "dumbbell floor press",
+      "equipment": "dumbbells and mat",
+      "equipmentMatch": false,
+      "movementPattern": "inclined machine push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "upper pectorals",
+        "triceps",
+        "anterior deltoid"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 86,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 43,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Chest press-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Incline Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/25/incline-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms inclined press geometry; equipment must match the catalog."
+        },
+        {
+          "name": "Chest press with weight machine",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/chest-press/vid-20084687",
+          "organization": "Mayo Clinic",
+          "conclusion": "Provides the dedicated-machine comparator."
+        },
+        {
+          "name": "Chest exercise study",
+          "url": "https://www.acefitness.org/about-ace/press-room/press-releases/2930/ace-study-tests-common-chest-exercises-finds-barbell-bench-press-most-effective/",
+          "organization": "ACE",
+          "conclusion": "Treats barbell and machine chest exercises as distinct modalities."
+        }
+      ],
+      "visualNotes": "The animation shows a horizontal floor press.",
+      "reasoningSummary": "Wrong equipment and no incline angle.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Chest_press-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "e6db5fcdad73d1320550f9da7f73b13c7b53b8c702f26ddcf74aa5daa2f71019"
+        },
+        "technical": {
+          "width": 225,
+          "height": 172,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 6,
+          "fileSizeBytes": 9741
+        }
+      }
+    },
+    {
+      "candidateId": "8c7b25d64e1f3dd6",
+      "exerciseSlug": "machine-fly",
+      "sourceTitle": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 64,
+      "visualExercise": "Seated machine chest press",
+      "expectedExercise": "Pec-deck or machine chest fly using shoulder horizontal adduction",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "machine press rather than fly",
+      "equipment": "chest-press machine",
+      "equipmentMatch": false,
+      "movementPattern": "shoulder horizontal adduction",
+      "movementMatch": false,
+      "primaryJoints": [
+        "shoulder"
+      ],
+      "predominantMuscles": [
+        "pectorals",
+        "anterior deltoid"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 89,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 42,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Muscle Strengthening at the Gym - Chest Press.webm”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": false,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Axiom Pectoral Fly",
+          "url": "https://shop.lifefitness.com/products/axiom-series-pectoral-fly-rear-deltoid",
+          "organization": "Life Fitness",
+          "conclusion": "Confirms pec-deck arms and fly/adduction motion."
+        },
+        {
+          "name": "Chest exercise study",
+          "url": "https://www.acefitness.org/about-ace/press-room/press-releases/2930/ace-study-tests-common-chest-exercises-finds-barbell-bench-press-most-effective/",
+          "organization": "ACE",
+          "conclusion": "Separates pec deck from pressing exercises."
+        },
+        {
+          "name": "Seated Chest Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/188/seated-chest-press/",
+          "organization": "ACE",
+          "conclusion": "Provides the elbow-extension press comparator."
+        }
+      ],
+      "visualNotes": "The elbows extend while handles are pressed forward; no fly/adduction arc is shown.",
+      "reasoningSummary": "A chest press is not a pec-deck fly.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "f0d278486b4ed366f924ea1efd366e9121ad86ca3fcc28315db66f18f3c43e94"
+        },
+        "technical": {
+          "width": 320,
+          "height": 240,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "5987/200",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 35.298,
+          "fileSizeBytes": 3562923
+        }
+      }
+    },
+    {
+      "candidateId": "ea3f265b5a97c799",
+      "exerciseSlug": "machine-shoulder-press",
+      "sourceTitle": "Shoulder press - exercise demonstration video.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_press_-_exercise_demonstration_video.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Shoulder_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Standing barbell shoulder press",
+      "expectedExercise": "Seated shoulder press using a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "standing free-bar overhead press",
+      "equipment": "barbell and rack",
+      "equipmentMatch": false,
+      "movementPattern": "machine vertical push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "deltoids",
+        "triceps"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 91,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 70,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "FitnessScape",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_press_-_exercise_demonstration_video.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Shoulder_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Shoulder press - exercise demonstration video.webm”. Autor: FitnessScape. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Shoulder Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/186/seated-shoulder-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated selectorized equipment and overhead press path."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Confirms equipment and body position are part of exercise technique."
+        }
+      ],
+      "visualNotes": "Complete overhead press repetitions are visible.",
+      "reasoningSummary": "The catalog requires a seated shoulder-press machine.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Shoulder_press_-_exercise_demonstration_video.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "c0ffde36fca4e9702460ffe35ce2dea50f4c0a5ad9ef426d134466a45d0e3b7a"
+        },
+        "technical": {
+          "width": 1280,
+          "height": 720,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 6.9,
+          "fileSizeBytes": 463728
+        }
+      }
+    },
+    {
+      "candidateId": "a44ad4c9dd90e8bf",
+      "exerciseSlug": "machine-shoulder-press",
+      "sourceTitle": "How To Properly Dumbbell Shoulder Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_To_Properly_Dumbbell_Shoulder_Press.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/How_To_Properly_Dumbbell_Shoulder_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 69,
+      "visualExercise": "Seated dumbbell shoulder press tutorial",
+      "expectedExercise": "Seated shoulder press using a dedicated machine",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "seated dumbbell press",
+      "equipment": "dumbbells and bench",
+      "equipmentMatch": false,
+      "movementPattern": "machine vertical push",
+      "movementMatch": true,
+      "primaryJoints": [
+        "shoulder",
+        "elbow"
+      ],
+      "predominantMuscles": [
+        "deltoids",
+        "triceps"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 82,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 65,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-3.0",
+        "url": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Colossus Fitness",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_To_Properly_Dumbbell_Shoulder_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/How_To_Properly_Dumbbell_Shoulder_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“How To Properly Dumbbell Shoulder Press.webm”. Autor: Colossus Fitness. Licença: CC BY 3.0. Fonte: Wikimedia Commons.",
+        "verified": false,
+        "issue": "Wikimedia license review remains unresolved"
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": false,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Seated Shoulder Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/186/seated-shoulder-press/",
+          "organization": "ACE",
+          "conclusion": "Confirms seated selectorized equipment and overhead press path."
+        },
+        {
+          "name": "Strength and conditioning manual",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf",
+          "organization": "NSCA",
+          "conclusion": "Confirms equipment and body position are part of exercise technique."
+        }
+      ],
+      "visualNotes": "The source includes setup, talking and dumbbell pressing rather than a machine demonstration.",
+      "reasoningSummary": "Wrong equipment; Wikimedia also marks the license for review.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/How_To_Properly_Dumbbell_Shoulder_Press.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "0ce79a7d63b00a42c22a952d565d328708c98d4217d5bc33f149e3050cbd6637"
+        },
+        "technical": {
+          "width": 1920,
+          "height": 1080,
+          "codec": "vp9",
+          "codecLongName": "Google VP9",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30000/1001",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 213.248,
+          "fileSizeBytes": 35365028
+        }
+      }
+    },
+    {
+      "candidateId": "10a8bfbd07151982",
+      "exerciseSlug": "farmer-walk",
+      "sourceTitle": "Kettlebell Farmer Walks.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Kettlebell_Farmer_Walks.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 82,
+      "visualExercise": "Unilateral kettlebell suitcase carry",
+      "expectedExercise": "Loaded carry with one implement in each hand",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "variation": "single-arm suitcase carry",
+      "equipment": "one kettlebell",
+      "equipmentMatch": false,
+      "movementPattern": "bilateral loaded carry",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle",
+        "shoulder girdle"
+      ],
+      "predominantMuscles": [
+        "grip",
+        "core",
+        "trapezius",
+        "lower body"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 87,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 74,
+      "confidence": "MEDIUM_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "author": "Taco fleur",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Kettlebell_Farmer_Walks.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Kettlebell Farmer Walks.webm”. Autor: Taco fleur. Licença: CC BY-SA 4.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Farmer's Carry",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/",
+          "organization": "ACE",
+          "conclusion": "Shows a bilateral carry with one load in each hand."
+        },
+        {
+          "name": "Loaded carries",
+          "url": "https://www.nsca.com/education/articles/nsca-coach/increase-hip-and-trunk-stability-with-loaded-carries/",
+          "organization": "NSCA",
+          "conclusion": "Distinguishes loaded-carry variations and trunk demands."
+        }
+      ],
+      "visualNotes": "The person walks with one kettlebell on one side; the complete path is visible from a low, distant camera.",
+      "reasoningSummary": "Unilateral suitcase carry has different anti-lateral-flexion demands than the bilateral farmer carry catalog entry.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Kettlebell_Farmer_Walks.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "video/webm",
+          "sha256": "b50b1a6320f395b023f96c3f8fff436e06c113881a537b5bf8657da9e99b0484"
+        },
+        "technical": {
+          "width": 640,
+          "height": 480,
+          "codec": "vp8",
+          "codecLongName": "On2 VP8",
+          "pixelFormat": "yuv420p",
+          "frameRate": "30/1",
+          "container": "matroska,webm",
+          "containerLongName": "Matroska / WebM",
+          "durationSeconds": 20.397,
+          "fileSizeBytes": 2956310
+        }
+      }
+    },
+    {
+      "candidateId": "4055318b339d4591",
+      "exerciseSlug": "thoracic-extension",
+      "sourceTitle": "Chest stretch-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_stretch-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Chest_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 65,
+      "visualExercise": "Standing chest/shoulder stretch",
+      "expectedExercise": "Thoracic spine extension over a chair, bench, ball or foam roller",
+      "exerciseMatch": "INCORRECT",
+      "variation": "chest stretch",
+      "equipment": "no equipment",
+      "equipmentMatch": false,
+      "movementPattern": "thoracic mobility / spinal extension",
+      "movementMatch": false,
+      "primaryJoints": [
+        "thoracic spine"
+      ],
+      "predominantMuscles": [
+        "thoracic extensors"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 74,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 10,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_stretch-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Chest_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Chest stretch-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": false,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Thoracic spine exercises",
+          "url": "https://www.cuh.nhs.uk/patient-information/thoracic-spine-exercises/",
+          "organization": "Cambridge University Hospitals NHS",
+          "conclusion": "Confirms thoracic-specific extension and mobility patterns."
+        },
+        {
+          "name": "Spinal exercises",
+          "url": "https://elht.nhs.uk/services/integrated-msk-pain-and-rheumatology-service/spinal-exercises",
+          "organization": "East Lancashire Hospitals NHS",
+          "conclusion": "Shows thoracic extension in supine and over a gym ball."
+        },
+        {
+          "name": "Physiotherapy exercises",
+          "url": "https://www.plymouthhospitals.nhs.uk/display-pil/pil-physiotherapy-for-breast-surgery-7032",
+          "organization": "University Hospitals Plymouth NHS",
+          "conclusion": "Describes seated thoracic extension as moving the head, arms and chest as one unit."
+        }
+      ],
+      "visualNotes": "The animation moves the arms for a chest stretch without thoracic extension over support.",
+      "reasoningSummary": "Wrong mobility exercise and target motion.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Chest_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "f2ccaff6771b3481d6d60b0b8954aaff8efece3b4c3867979d2e8a44aa9fa863"
+        },
+        "technical": {
+          "width": 200,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 7,
+          "fileSizeBytes": 9819
+        }
+      }
+    },
+    {
+      "candidateId": "a7c8eded2cdfbe7c",
+      "exerciseSlug": "thoracic-extension",
+      "sourceTitle": "Hamstring stretch-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamstring_stretch-CDC_strength_training_for_older_adults.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Hamstring_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 65,
+      "visualExercise": "Standing hamstring stretch",
+      "expectedExercise": "Thoracic spine extension over a chair, bench, ball or foam roller",
+      "exerciseMatch": "INCORRECT",
+      "variation": "hamstring stretch",
+      "equipment": "no equipment",
+      "equipmentMatch": false,
+      "movementPattern": "thoracic mobility / spinal extension",
+      "movementMatch": false,
+      "primaryJoints": [
+        "thoracic spine"
+      ],
+      "predominantMuscles": [
+        "thoracic extensors"
+      ],
+      "executionQuality": "acceptable",
+      "visibility": {
+        "score": 74,
+        "fullBodyVisible": false,
+        "targetJointVisible": true,
+        "machineVisible": false,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 5,
+      "confidence": "LOW_CONFIDENCE",
+      "recommendedRole": null,
+      "decision": "REJECT",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "PD",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamstring_stretch-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Hamstring_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": false,
+        "attributionText": "“Hamstring stretch-CDC strength training for older adults.gif”. Fonte: Wikimedia Commons. Licença: Public Domain.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": false,
+        "correctVariation": false,
+        "equipmentMatch": false,
+        "movementMatch": false,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Thoracic spine exercises",
+          "url": "https://www.cuh.nhs.uk/patient-information/thoracic-spine-exercises/",
+          "organization": "Cambridge University Hospitals NHS",
+          "conclusion": "Confirms thoracic-specific extension and mobility patterns."
+        },
+        {
+          "name": "Spinal exercises",
+          "url": "https://elht.nhs.uk/services/integrated-msk-pain-and-rheumatology-service/spinal-exercises",
+          "organization": "East Lancashire Hospitals NHS",
+          "conclusion": "Shows thoracic extension in supine and over a gym ball."
+        },
+        {
+          "name": "Physiotherapy exercises",
+          "url": "https://www.plymouthhospitals.nhs.uk/display-pil/pil-physiotherapy-for-breast-surgery-7032",
+          "organization": "University Hospitals Plymouth NHS",
+          "conclusion": "Describes seated thoracic extension as moving the head, arms and chest as one unit."
+        }
+      ],
+      "visualNotes": "The animation demonstrates a lower-body stretch.",
+      "reasoningSummary": "No thoracic extension occurs.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Hamstring_stretch-CDC_strength_training_for_older_adults.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "012b65f9f1f2158013a2ae6ae54b8e7ee9f656cfee4fb71915471effc22b41c7"
+        },
+        "technical": {
+          "width": 200,
+          "height": 275,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "2/1",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 7.5,
+          "fileSizeBytes": 33041
+        }
+      }
+    },
+    {
+      "candidateId": "a1907022712c0865",
+      "exerciseSlug": "bike",
+      "sourceTitle": "Man on an Exercise Bike GIF Animation Loop.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "discoveryScore": 100,
+      "visualExercise": "Stationary exercise-bike pedalling",
+      "expectedExercise": "Continuous pedalling on a stationary exercise bicycle",
+      "exerciseMatch": "EXACT",
+      "variation": "upright stationary bike",
+      "equipment": "stationary exercise bicycle",
+      "equipmentMatch": true,
+      "movementPattern": "cardio cycling",
+      "movementMatch": true,
+      "primaryJoints": [
+        "hip",
+        "knee",
+        "ankle"
+      ],
+      "predominantMuscles": [
+        "quadriceps",
+        "gluteals",
+        "calves",
+        "cardiovascular system"
+      ],
+      "executionQuality": "approved",
+      "visibility": {
+        "score": 86,
+        "fullBodyVisible": true,
+        "targetJointVisible": true,
+        "machineVisible": true,
+        "movementPathVisible": true,
+        "cameraStable": true,
+        "obstructions": []
+      },
+      "validationScore": 95,
+      "confidence": "VERY_HIGH_CONFIDENCE",
+      "recommendedRole": "PRIMARY_DEMO",
+      "decision": "APPROVE",
+      "trimStart": null,
+      "trimEnd": null,
+      "license": {
+        "code": "CC-BY-SA-4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "author": "VideoPlasty",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "attributionRequired": true,
+        "attributionText": "“Man on an Exercise Bike GIF Animation Loop.gif”. Autor: VideoPlasty. Licença: CC BY-SA 4.0. Fonte: Wikimedia Commons.",
+        "verified": true,
+        "issue": null
+      },
+      "reviewChecklist": {
+        "exerciseIdentity": true,
+        "correctVariation": true,
+        "equipmentMatch": true,
+        "movementMatch": true,
+        "executionAcceptable": true,
+        "fullMovementVisible": true,
+        "licenseVerified": true,
+        "referencesVerified": true
+      },
+      "references": [
+        {
+          "name": "Setting up the BikeErg",
+          "url": "https://www.concept2.com/training/articles/setting-up-the-bikeerg",
+          "organization": "Concept2",
+          "conclusion": "Confirms stationary-bike setup and pedalling position."
+        },
+        {
+          "name": "Managing resistance on the BikeErg",
+          "url": "https://www.concept2.com/training/articles/managing-resistance-bikeerg",
+          "organization": "Concept2",
+          "conclusion": "Confirms continuous pedalling against adjustable resistance."
+        }
+      ],
+      "visualNotes": "The loop clearly shows continuous pedalling, the complete bicycle and rider posture without obstruction.",
+      "reasoningSummary": "Exact stationary-bike activity with verified CC BY-SA 4.0 permission record.",
+      "technicalEvidence": {
+        "download": {
+          "ok": true,
+          "httpStatus": 200,
+          "finalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "contentType": "image/gif",
+          "sha256": "4bf3a8300802a72ce6bbc09cb782d6c4e364d2cea7d0c23ecaade8df9382aa4d"
+        },
+        "technical": {
+          "width": 75,
+          "height": 100,
+          "codec": "gif",
+          "codecLongName": "CompuServe GIF (Graphics Interchange Format)",
+          "pixelFormat": "bgra",
+          "frameRate": "100/3",
+          "container": "gif",
+          "containerLongName": "CompuServe Graphics Interchange Format (GIF)",
+          "durationSeconds": 9,
+          "fileSizeBytes": 808676
+        }
+      }
+    }
+  ]
+}

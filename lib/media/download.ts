@@ -1,5 +1,6 @@
 import { validateExternalMediaUrl } from "./url-safety.ts";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+type RetryableDownloadError = Error & { retryAfterMs?: number };
 export async function downloadMedia(
   source: string,
   options?: { maxMb?: number; timeoutMs?: number; retries?: number },
@@ -31,6 +32,14 @@ export async function downloadMedia(
           url = validateExternalMediaUrl(new URL(location, url).toString());
           continue;
         }
+        if (response.status === 429 || response.status === 503) {
+          const retryAfter = Number(response.headers.get("retry-after") ?? 0);
+          const retryable = new Error(
+            `Download HTTP ${response.status}`,
+          ) as RetryableDownloadError;
+          retryable.retryAfterMs = retryAfter > 0 ? retryAfter * 1000 : 15_000;
+          throw retryable;
+        }
         if (!response.ok) throw new Error(`Download HTTP ${response.status}`);
         const type = response.headers.get("content-type")?.split(";")[0] ?? "";
         if (!["video/webm", "video/mp4", "image/gif"].includes(type))
@@ -54,6 +63,7 @@ export async function downloadMedia(
         }
         return {
           buffer: Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))),
+          httpStatus: response.status,
           mime: type,
           finalUrl: url.toString(),
           size,
@@ -62,7 +72,12 @@ export async function downloadMedia(
       throw new Error("Muitos redirects");
     } catch (error) {
       if (attempt === retries - 1) throw error;
-      await sleep(500 * 2 ** attempt);
+      const retryAfter = (error as RetryableDownloadError).retryAfterMs;
+      await sleep(
+        retryAfter
+          ? Math.min(15 * 60_000, retryAfter)
+          : 500 * 2 ** attempt,
+      );
     } finally {
       clearTimeout(timer);
     }
