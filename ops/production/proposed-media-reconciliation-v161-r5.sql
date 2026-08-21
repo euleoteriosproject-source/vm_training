@@ -1,9 +1,17 @@
 -- VM Training v1.6.1-R5 semantic candidate reconciliation proposal.
--- REVIEW ARTIFACT ONLY. DO NOT EXECUTE WITHOUT A SEPARATE APPROVED APPLY STEP.
+-- APPROVED OPERATIONAL SQL. Execute only after every R5 APPLY gate passes.
 -- Adds one validated bike source candidate, synchronizes v1.5 decisions for
 -- 24 target identities, preserves Production-only candidates, and deletes none.
 
 begin;
+
+set local lock_timeout = '10s';
+set local statement_timeout = '120s';
+
+lock table public.exercise_media in share row exclusive mode;
+lock table public.media_review_events in share row exclusive mode;
+lock table public.exercises in share row exclusive mode;
+lock table storage.objects in share row exclusive mode;
 
 create temporary table r5_reconciliation_context on commit drop as
 select
@@ -14,7 +22,10 @@ select
     where exercise.slug = 'bike'
       and media.source_url = 'https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif'
   ) as bike_was_present,
-  (select count(*)::integer from storage.objects where bucket_id = 'exercise-media') as before_storage_count;
+  (select count(*)::integer from storage.objects where bucket_id = 'exercise-media') as before_storage_count,
+  (select count(*)::integer from public.media_review_events
+    where metadata->>'reconciliation_version' = '1.6.1-R5') as before_r5_event_count,
+  null::text as recognized_state;
 
 create temporary table r5_validation_payload on commit drop as
 select * from jsonb_to_recordset($r5_validation$[{"candidate_id":"80eb98d2c2545580","exercise_slug":"leg-press","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":96,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact CDC public-domain demonstration; use a short, silent processed excerpt after frame-accurate trim selection.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":96,"exercise_match":"EXACT"}},{"candidate_id":"0c0bd7baeb151077","exercise_slug":"leg-press","source_url":"https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm","decision":"KEEP_PENDING","target_status":"pending","execution_quality":"acceptable","recommended_role":"EDUCATIONAL","validation_score":88,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Technically relevant long-form education, but Wikimedia marks the video for license review; it cannot be approved.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":false,"references_verified":true,"validation_version":"1.5","validation_score":88,"exercise_match":"EXACT"}},{"candidate_id":"c7f0edf1ad88047b","exercise_slug":"leg-press","source_url":"https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif","decision":"REJECT","target_status":"rejected","execution_quality":"rejected","recommended_role":null,"validation_score":18,"exercise_match":"INCORRECT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Wrong exercise and equipment.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":false,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":18,"exercise_match":"INCORRECT"}},{"candidate_id":"1671caca9d4a2b28","exercise_slug":"leg-press","source_url":"https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":42,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Similar squat pattern is not a leg press.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":42,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"e2b4801df9db6b26","exercise_slug":"hack-squat","source_url":"https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":38,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"No angled sled, back support or guided hack-squat path.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":38,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"72f6dc978f353ead","exercise_slug":"hack-squat","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":40,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Wrong equipment and materially different range/loading.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":40,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"7a7d1d1355b6e9e1","exercise_slug":"smith-squat","source_url":"https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":38,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"A Smith squat requires a guided bar and machine.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":38,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"f2bf2b10305aeffa","exercise_slug":"smith-squat","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":40,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"No guided Smith bar or machine is present.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":40,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"e8126275ec36715b","exercise_slug":"goblet-squat","source_url":"https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":98,"exercise_match":"EXACT","rejection_reason":null,"trim_start":5,"trim_end":12,"reasoning_summary":"Exact, clearly visible exercise with verified CC BY-SA 4.0 permission record.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":98,"exercise_match":"EXACT"}},{"candidate_id":"38dc3a1ed90bdf03","exercise_slug":"goblet-squat","source_url":"https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":45,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Missing the defining goblet load and position.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":45,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"69d50f521aea630c","exercise_slug":"goblet-squat","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":45,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Missing the goblet load and full expected movement.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":45,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"e84f0b22b7b81375","exercise_slug":"leg-extension","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":97,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact CDC public-domain machine demonstration; process a short excerpt before publishing.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":97,"exercise_match":"EXACT"}},{"candidate_id":"ce0a5122e15e0d69","exercise_slug":"leg-extension","source_url":"https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":52,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Correct joint action but wrong resistance equipment.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":52,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"bc552436c04ac9b7","exercise_slug":"lying-leg-curl","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm","decision":"REJECT","target_status":"rejected","execution_quality":"approved","recommended_role":null,"validation_score":48,"exercise_match":"INCORRECT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Body position identifies a different catalog exercise: seated leg curl.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":48,"exercise_match":"INCORRECT"}},{"candidate_id":"dc9c85d86b7e601d","exercise_slug":"seated-leg-curl","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":96,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact CDC public-domain demonstration; process a short excerpt before publishing.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":96,"exercise_match":"EXACT"}},{"candidate_id":"3174bc031cbcf2b8","exercise_slug":"lat-pulldown","source_url":"https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm","decision":"KEEP_PENDING","target_status":"pending","execution_quality":"acceptable","recommended_role":"EDUCATIONAL","validation_score":88,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Useful educational content, but Wikimedia flags the license for review, so approval is blocked.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":false,"references_verified":true,"validation_version":"1.5","validation_score":88,"exercise_match":"EXACT"}},{"candidate_id":"c67f0842725ad27c","exercise_slug":"neutral-pulldown","source_url":"https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":66,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"The defining grip does not match; the source also has unresolved license review.","review_checklist":{"correct_exercise":false,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":false,"references_verified":true,"validation_version":"1.5","validation_score":66,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"bec02db7c0e5540f","exercise_slug":"supinated-pulldown","source_url":"https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm","decision":"REJECT","target_status":"rejected","execution_quality":"acceptable","recommended_role":null,"validation_score":66,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"The defining grip does not match; the source also has unresolved license review.","review_checklist":{"correct_exercise":false,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":false,"references_verified":true,"validation_version":"1.5","validation_score":66,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"d8a9d8634fe83558","exercise_slug":"seated-row","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm","decision":"REJECT","target_status":"rejected","execution_quality":"approved","recommended_role":null,"validation_score":74,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Equipment identity differs from the catalog exercise.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":74,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"fa3314301801fe84","exercise_slug":"machine-row","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":96,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact CDC public-domain demonstration; process a short excerpt before publishing.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":96,"exercise_match":"EXACT"}},{"candidate_id":"d30d76720bbdb703","exercise_slug":"machine-chest-press","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":97,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact CDC public-domain demonstration; process a short excerpt before publishing.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":97,"exercise_match":"EXACT"}},{"candidate_id":"8c7b25d64e1f3dd6","exercise_slug":"machine-fly","source_url":"https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm","decision":"REJECT","target_status":"rejected","execution_quality":"approved","recommended_role":null,"validation_score":42,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"A chest press is not a pec-deck fly.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":42,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"10a8bfbd07151982","exercise_slug":"farmer-walk","source_url":"https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm","decision":"REJECT","target_status":"rejected","execution_quality":"approved","recommended_role":null,"validation_score":74,"exercise_match":"RELATED_BUT_DIFFERENT","rejection_reason":"wrong_exercise","trim_start":0,"trim_end":null,"reasoning_summary":"Unilateral suitcase carry has different anti-lateral-flexion demands than the bilateral farmer carry catalog entry.","review_checklist":{"correct_exercise":false,"compatible_equipment":false,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":false,"useful_framing":false,"no_blocking_elements":false,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":74,"exercise_match":"RELATED_BUT_DIFFERENT"}},{"candidate_id":"a1907022712c0865","exercise_slug":"bike","source_url":"https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif","decision":"APPROVE","target_status":"reviewing","execution_quality":"approved","recommended_role":"PRIMARY_DEMO","validation_score":95,"exercise_match":"EXACT","rejection_reason":null,"trim_start":0,"trim_end":null,"reasoning_summary":"Exact stationary-bike activity with verified CC BY-SA 4.0 permission record.","review_checklist":{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true,"references_verified":true,"validation_version":"1.5","validation_score":95,"exercise_match":"EXACT"}}]$r5_validation$::jsonb) as candidate(
@@ -44,17 +55,28 @@ do $$
 declare
   target_count integer;
   baseline_count integer;
-  expected_before_count integer;
+  valid_event_count integer;
+  all_r5_event_count integer;
+  context_before_count integer;
+  context_storage_count integer;
+  context_bike_present boolean;
 begin
   if (select count(*) from public.exercise_media where status = 'approved') <> 0
-     or (select count(*) from public.exercise_media where is_primary) <> 0
+     or (select count(*) from public.exercise_media where is_primary or media_role = 'PRIMARY_DEMO') <> 0
      or (select count(*) from public.exercises where active) <> 0 then
     raise exception 'R5 preflight failed: approved, PRIMARY, and active counts must be zero';
   end if;
-  select case when bike_was_present then 41 else 40 end
-    into expected_before_count from r5_reconciliation_context;
-  if (select before_count from r5_reconciliation_context) <> expected_before_count then
-    raise exception 'R5 preflight failed: candidate baseline drifted from the audited 40 rows plus optional reconciled bike';
+  select before_count, before_storage_count, bike_was_present
+    into context_before_count, context_storage_count, context_bike_present
+  from r5_reconciliation_context;
+  if context_storage_count <> 0 then
+    raise exception 'R5 preflight failed: exercise-media Storage baseline must be exactly zero, got %', context_storage_count;
+  end if;
+  if exists(
+    select 1 from public.exercise_media
+    group by exercise_id, source_url having count(*) > 1
+  ) then
+    raise exception 'R5 preflight failed: duplicate candidate identity detected';
   end if;
   select count(*) into baseline_count
   from r5_baseline_identity baseline
@@ -69,8 +91,112 @@ begin
   join public.exercises exercise on exercise.slug = payload.exercise_slug
   join public.exercise_media media
     on media.exercise_id = exercise.id and media.source_url = payload.source_url;
-  if target_count <> (case when (select bike_was_present from r5_reconciliation_context) then 24 else 23 end) then
-    raise exception 'R5 preflight failed: validation identity presence does not match bike reconciliation state (got %)', target_count;
+  select count(*) into all_r5_event_count
+  from public.media_review_events
+  where metadata->>'reconciliation_version' = '1.6.1-R5';
+
+  if context_before_count = 40 and not context_bike_present and target_count = 23 then
+    if (select count(*)
+        from r5_validation_payload payload
+        join public.exercises exercise on exercise.slug = payload.exercise_slug
+        join public.exercise_media media
+          on media.exercise_id = exercise.id and media.source_url = payload.source_url
+        where media.status = 'pending'
+          and media.media_role is null
+          and not media.is_primary
+          and not media.ready_for_processing) <> 23 then
+      raise exception 'R5 preflight failed: FIRST_RUN requires 23/23 existing targets pending and unpromoted';
+    end if;
+    if all_r5_event_count <> 0 then
+      raise exception 'R5 preflight failed: FIRST_RUN requires zero R5 events, got %', all_r5_event_count;
+    end if;
+    update r5_reconciliation_context set recognized_state = 'FIRST_RUN';
+  elsif context_before_count = 41 and context_bike_present and target_count = 24 then
+    if (select count(*)
+        from public.exercise_media media
+        join public.exercises exercise on exercise.id = media.exercise_id
+        where exercise.slug = 'bike'
+          and media.source_url = 'https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif'
+          and media.media_type = 'gif'
+          and media.source_type = 'creative_commons'
+          and media.license_code = 'CC-BY-SA-4.0'
+          and media.license_url = 'https://creativecommons.org/licenses/by-sa/4.0/'
+          and media.author = 'VideoPlasty'
+          and media.attribution_required
+          and media.original_file_url = 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original') <> 1 then
+      raise exception 'R5 preflight failed: existing bike GIF metadata conflicts with the approved R5 source';
+    end if;
+    if (select count(*)
+        from r5_validation_payload payload
+        join public.exercises exercise on exercise.slug = payload.exercise_slug
+        join public.exercise_media media
+          on media.exercise_id = exercise.id and media.source_url = payload.source_url
+        where media.status = case payload.decision
+          when 'APPROVE' then 'reviewing'
+          when 'REJECT' then 'rejected'
+          when 'KEEP_PENDING' then 'pending'
+        end
+          and media.candidate_metadata->'validation'->>'version' = '1.5'
+          and media.candidate_metadata->'validation'->>'decision' = payload.decision
+          and media.media_role is null
+          and not media.is_primary
+          and not media.ready_for_processing) <> 24 then
+      raise exception 'R5 preflight failed: ALREADY_RECONCILED target states or metadata are incomplete';
+    end if;
+    select count(*) into valid_event_count
+    from r5_validation_payload payload
+    join public.exercises exercise on exercise.slug = payload.exercise_slug
+    join public.exercise_media media
+      on media.exercise_id = exercise.id and media.source_url = payload.source_url
+    join public.media_review_events event
+      on event.media_id = media.id
+     and event.metadata->>'validation_version' = '1.5'
+     and event.metadata->>'reconciliation_version' = '1.6.1-R5'
+     and event.metadata->>'candidate_id' = payload.candidate_id
+     and event.metadata->>'decision' = payload.decision
+     and event.action = case when payload.decision = 'REJECT' then 'rejected' else 'review_started' end
+     and event.from_status = 'pending'
+     and event.to_status = payload.target_status;
+    if all_r5_event_count <> 24 or valid_event_count <> 24
+       or exists(
+         select 1 from r5_validation_payload payload
+         join public.exercises exercise on exercise.slug = payload.exercise_slug
+         join public.exercise_media media
+           on media.exercise_id = exercise.id and media.source_url = payload.source_url
+         where (select count(*) from public.media_review_events event
+                where event.media_id = media.id
+                  and event.metadata->>'validation_version' = '1.5'
+                  and event.metadata->>'reconciliation_version' = '1.6.1-R5'
+                  and event.metadata->>'candidate_id' = payload.candidate_id
+                  and event.metadata->>'decision' = payload.decision
+                  and event.action = case when payload.decision = 'REJECT' then 'rejected' else 'review_started' end
+                  and event.from_status = 'pending'
+                  and event.to_status = payload.target_status) <> 1
+       ) then
+      raise exception 'R5 preflight failed: ALREADY_RECONCILED requires exactly 24 valid one-to-one R5 events';
+    end if;
+    update r5_reconciliation_context set recognized_state = 'ALREADY_RECONCILED';
+  else
+    raise exception 'R5 preflight failed: hybrid/partial state (candidates %, bike %, targets %, events %)',
+      context_before_count, context_bike_present, target_count, all_r5_event_count;
+  end if;
+end;
+$$;
+
+create temporary table r5_production_only_before on commit drop as
+select media.id, to_jsonb(media) as row_data
+from public.exercise_media media
+where not exists (
+  select 1
+  from r5_validation_payload payload
+  join public.exercises exercise on exercise.slug = payload.exercise_slug
+  where media.exercise_id = exercise.id and media.source_url = payload.source_url
+);
+
+do $$
+begin
+  if (select count(*) from r5_production_only_before) <> 17 then
+    raise exception 'R5 preflight failed: expected exactly 17 Production-only candidates';
   end if;
 end;
 $$;
@@ -114,6 +240,7 @@ select
   candidate.match_details, candidate.candidate_metadata, false, false
 from candidate
 join public.exercises exercise on exercise.slug = candidate.exercise_slug
+join r5_reconciliation_context context on context.recognized_state = 'FIRST_RUN'
 on conflict(exercise_id, source_url) do nothing;
 
 update public.exercise_media media
@@ -129,7 +256,7 @@ set
   reviewed_at = coalesce(media.reviewed_at, now()),
   trim_start = payload.trim_start,
   trim_end = payload.trim_end,
-  candidate_metadata = media.candidate_metadata || jsonb_build_object(
+  candidate_metadata = coalesce(media.candidate_metadata, '{}'::jsonb) || jsonb_build_object(
     'validation', jsonb_build_object(
       'version', '1.5',
       'decision', payload.decision,
@@ -140,7 +267,9 @@ set
   )
 from r5_validation_payload payload
 join public.exercises exercise on exercise.slug = payload.exercise_slug
-where media.exercise_id = exercise.id and media.source_url = payload.source_url;
+cross join r5_reconciliation_context context
+where context.recognized_state = 'FIRST_RUN'
+  and media.exercise_id = exercise.id and media.source_url = payload.source_url;
 
 insert into public.media_review_events(
   media_id, action, from_status, to_status, notes, metadata
@@ -164,25 +293,29 @@ from r5_validation_payload payload
 join public.exercises exercise on exercise.slug = payload.exercise_slug
 join public.exercise_media media
   on media.exercise_id = exercise.id and media.source_url = payload.source_url
-where not exists (
+cross join r5_reconciliation_context context
+where context.recognized_state = 'FIRST_RUN'
+  and not exists (
   select 1 from public.media_review_events event
   where event.media_id = media.id
-    and event.metadata @> jsonb_build_object(
-      'validation_version', '1.5',
-      'reconciliation_version', '1.6.1-R5'
-    )
+    and event.metadata->>'validation_version' = '1.5'
+    and event.metadata->>'reconciliation_version' = '1.6.1-R5'
+    and event.metadata->>'candidate_id' = payload.candidate_id
+    and event.metadata->>'decision' = payload.decision
+    and event.action = case when payload.decision = 'REJECT' then 'rejected' else 'review_started' end
+    and event.from_status = 'pending'
+    and event.to_status = payload.target_status
 );
 
 do $$
 declare
-  expected_count integer;
   actual_count integer;
+  valid_event_count integer;
+  all_r5_event_count integer;
 begin
-  select before_count + case when bike_was_present then 0 else 1 end
-    into expected_count from r5_reconciliation_context;
   select count(*) into actual_count from public.exercise_media;
-  if actual_count <> expected_count then
-    raise exception 'R5 candidate count mismatch: expected %, got %', expected_count, actual_count;
+  if actual_count <> 41 then
+    raise exception 'R5 candidate count mismatch: expected 41, got %', actual_count;
   end if;
   if (select count(*) from r5_validation_payload payload
       join public.exercises exercise on exercise.slug = payload.exercise_slug
@@ -190,9 +323,62 @@ begin
         on media.exercise_id = exercise.id and media.source_url = payload.source_url) <> 24 then
     raise exception 'R5 validation identity reconciliation did not reach 24/24 target rows';
   end if;
-  if (select count(*) from public.media_review_events
-      where metadata @> '{"validation_version":"1.5","reconciliation_version":"1.6.1-R5"}'::jsonb) <> 24 then
-    raise exception 'R5 audit event reconciliation did not reach 24/24';
+  if (select count(*)
+      from r5_validation_payload payload
+      join public.exercises exercise on exercise.slug = payload.exercise_slug
+      join public.exercise_media media
+        on media.exercise_id = exercise.id and media.source_url = payload.source_url
+      where media.status = case payload.decision
+        when 'APPROVE' then 'reviewing'
+        when 'REJECT' then 'rejected'
+        when 'KEEP_PENDING' then 'pending'
+      end
+        and media.candidate_metadata->'validation'->>'version' = '1.5'
+        and media.candidate_metadata->'validation'->>'decision' = payload.decision
+        and media.media_role is null
+        and not media.is_primary
+        and not media.ready_for_processing) <> 24 then
+    raise exception 'R5 target state reconciliation is not exactly 7 reviewing, 15 rejected, and 2 pending';
+  end if;
+  if (select count(*) from r5_validation_payload where decision = 'APPROVE') <> 7
+     or (select count(*) from r5_validation_payload where decision = 'REJECT') <> 15
+     or (select count(*) from r5_validation_payload where decision = 'KEEP_PENDING') <> 2 then
+    raise exception 'R5 payload decision distribution changed';
+  end if;
+  select count(*) into all_r5_event_count
+  from public.media_review_events
+  where metadata->>'reconciliation_version' = '1.6.1-R5';
+  select count(*) into valid_event_count
+  from r5_validation_payload payload
+  join public.exercises exercise on exercise.slug = payload.exercise_slug
+  join public.exercise_media media
+    on media.exercise_id = exercise.id and media.source_url = payload.source_url
+  join public.media_review_events event
+    on event.media_id = media.id
+   and event.metadata->>'validation_version' = '1.5'
+   and event.metadata->>'reconciliation_version' = '1.6.1-R5'
+   and event.metadata->>'candidate_id' = payload.candidate_id
+   and event.metadata->>'decision' = payload.decision
+   and event.action = case when payload.decision = 'REJECT' then 'rejected' else 'review_started' end
+   and event.from_status = 'pending'
+   and event.to_status = payload.target_status;
+  if all_r5_event_count <> 24 or valid_event_count <> 24
+     or exists(
+       select 1 from r5_validation_payload payload
+       join public.exercises exercise on exercise.slug = payload.exercise_slug
+       join public.exercise_media media
+         on media.exercise_id = exercise.id and media.source_url = payload.source_url
+       where (select count(*) from public.media_review_events event
+              where event.media_id = media.id
+                and event.metadata->>'validation_version' = '1.5'
+                and event.metadata->>'reconciliation_version' = '1.6.1-R5'
+                and event.metadata->>'candidate_id' = payload.candidate_id
+                and event.metadata->>'decision' = payload.decision
+                and event.action = case when payload.decision = 'REJECT' then 'rejected' else 'review_started' end
+                and event.from_status = 'pending'
+                and event.to_status = payload.target_status) <> 1
+     ) then
+    raise exception 'R5 audit postcondition failed: expected exactly one valid event per payload row';
   end if;
   if (select count(*) from public.exercise_media where status = 'approved') <> 0
      or (select count(*) from public.exercise_media where is_primary) <> 0
@@ -200,9 +386,8 @@ begin
      or (select count(*) from public.exercises where active) <> 0 then
     raise exception 'R5 safety invariant failed: no approval, PRIMARY, or activation allowed';
   end if;
-  if (select count(*) from storage.objects where bucket_id = 'exercise-media') <>
-     (select before_storage_count from r5_reconciliation_context) then
-    raise exception 'R5 safety invariant failed: Storage object count changed';
+  if (select count(*) from storage.objects where bucket_id = 'exercise-media') <> 0 then
+    raise exception 'R5 safety invariant failed: exercise-media Storage must remain empty';
   end if;
   if exists(
     select 1 from public.exercise_media
@@ -210,7 +395,55 @@ begin
   ) then
     raise exception 'R5 duplicate candidate identity detected';
   end if;
+  if (select count(*)
+      from public.exercise_media media
+      join public.exercises exercise on exercise.id = media.exercise_id
+      where exercise.slug = 'bike'
+        and media.source_url = 'https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif'
+        and media.media_type = 'gif'
+        and media.source_type = 'creative_commons'
+        and media.license_code = 'CC-BY-SA-4.0'
+        and media.license_url = 'https://creativecommons.org/licenses/by-sa/4.0/'
+        and media.author = 'VideoPlasty'
+        and media.attribution_required
+        and media.original_file_url = 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original') <> 1 then
+    raise exception 'R5 bike GIF immutable/source metadata postcondition failed';
+  end if;
+  if (select count(*) from r5_production_only_before) <> 17
+     or exists(
+       select 1 from r5_production_only_before snapshot
+       left join public.exercise_media media on media.id = snapshot.id
+       where media.id is null or to_jsonb(media) is distinct from snapshot.row_data
+     ) then
+    raise exception 'R5 safety invariant failed: a Production-only candidate changed';
+  end if;
 end;
 $$;
+
+select jsonb_build_object(
+  'input_state', context.recognized_state,
+  'candidate_delta', (select count(*) from public.exercise_media) - context.before_count,
+  'target_rows_updated', case when context.recognized_state = 'FIRST_RUN' then 24 else 0 end,
+  'event_delta', (select count(*) from public.media_review_events
+    where metadata->>'reconciliation_version' = '1.6.1-R5') - context.before_r5_event_count,
+  'candidates', (select count(*) from public.exercise_media),
+  'reviewing', (select count(*) from public.exercise_media media
+    join r5_validation_payload payload on media.status = 'reviewing' and payload.decision = 'APPROVE'
+    join public.exercises exercise on exercise.id = media.exercise_id and exercise.slug = payload.exercise_slug
+    where media.source_url = payload.source_url),
+  'rejected', (select count(*) from public.exercise_media media
+    join r5_validation_payload payload on media.status = 'rejected' and payload.decision = 'REJECT'
+    join public.exercises exercise on exercise.id = media.exercise_id and exercise.slug = payload.exercise_slug
+    where media.source_url = payload.source_url),
+  'pending_validation_targets', (select count(*) from public.exercise_media media
+    join r5_validation_payload payload on media.status = 'pending' and payload.decision = 'KEEP_PENDING'
+    join public.exercises exercise on exercise.id = media.exercise_id and exercise.slug = payload.exercise_slug
+    where media.source_url = payload.source_url),
+  'r5_events', (select count(*) from public.media_review_events
+    where metadata->>'reconciliation_version' = '1.6.1-R5'),
+  'production_only_preserved', 17,
+  'storage', (select count(*) from storage.objects where bucket_id = 'exercise-media')
+) as r5_apply_result
+from r5_reconciliation_context context;
 
 commit;
