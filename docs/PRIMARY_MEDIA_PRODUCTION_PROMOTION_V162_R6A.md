@@ -1,183 +1,205 @@
 # VM Training Primary Media Production Promotion v1.6.2-R6A
 
-Status: `BLOCKED`
+Status: `READY_FOR_PRODUCTION_ADMIN_BOOTSTRAP`
 
 Production project: `inghftngeritrsezwxnm`
 
-R6A Production writes performed: **0**.
+Execution date: 2026-08-21
 
-## Blocking precondition
+R6A completed the authorized binary promotion and automated processing only. It did not approve or publish media, assign a primary role, activate exercises, or create an Auth user/profile.
 
-Section 8 of the R6A specification requires all seven target candidates to have `reviewed_at IS NULL` and instructs the operation to abort if any candidate differs. The read-only Production preflight returned:
+## Authorized review timestamp semantics
 
-| Check | Expected | Actual |
-| --- | ---: | ---: |
-| Target candidates | 7 | 7 |
-| `status = reviewing` | 7 | 7 |
-| `reviewed_by IS NULL` | 7 | 7 |
-| `reviewed_at IS NULL` | 7 | 0 |
-| `approved_at/approved_by IS NULL` | 7 | 7 |
-| `storage_path/poster_path IS NULL` | 7 | 7 |
-| `media_role IS NULL`, `is_primary = false` | 7 | 7 |
+R5 intentionally populated the seven `reviewed_at` values during automated Validation v1.5 reconciliation. The R6A unblock authorized preserving those timestamps while continuing to interpret `reviewed_by IS NULL` as evidence that no final human Production review has occurred.
 
-All seven candidates have a non-null `reviewed_at`. A second SELECT-only audit established that this is the R5 validation synchronization state, not a fabricated human review:
-
-- 7/7 have Validation v1.5 `APPROVE` metadata;
-- 7/7 have R5 v1.5 review notes;
-- 7/7 have `reviewed_by IS NULL`;
-- 24 R5 reconciliation events remain present;
-- 0 R6A processing events exist.
-
-The R6A document also instructs the operation to preserve current R5 metadata. Clearing `reviewed_at` would therefore conflict with the preservation requirement and would erase an existing audit timestamp. R6A was aborted before Storage upload or DB mutation.
-
-Recommended resolution: explicitly permit the R5 automated `reviewed_at` value while continuing to require `reviewed_by IS NULL`, then preserve both fields through R6A. If the intended resolution is instead to clear `reviewed_at`, that requires a separately authorized corrective transaction.
+All seven candidates had the same R5 timestamp before R6A. All seven retained that exact value after R6A.
 
 ## Preflight
 
-| Check | Actual |
+| Check | Result |
 | --- | ---: |
+| CLI linked project | `inghftngeritrsezwxnm` |
+| CLI authentication | PASS |
+| Project health | `ACTIVE_HEALTHY` |
 | Candidates | 41 |
-| Target candidates | 7 |
-| Target status | 7 reviewing |
-| Pending | 19 |
+| Exact target identities | 7/7 |
+| Targets in `reviewing` | 7/7 |
+| `reviewed_at` from R5 present | 7/7 |
+| `reviewed_by IS NULL` | 7/7 |
+| Approval metadata null | 7/7 |
+| `media_role IS NULL`, `is_primary = false` | 7/7 |
+| Storage paths null | 7/7 |
+| Processing timestamps/errors null | 7/7 |
+| `ready_for_processing = false` | 7/7 |
+| Storage objects before | 0 |
+| Bucket exists/private | PASS |
+| R5 events | 24 |
+| Existing R6A events | 0 |
+| Migration history | 18/18 |
+| ACL | 81 grants / diff 0 |
+| RLS | PASS — 22/22 public tables |
+| Security Advisor | 0 findings |
+| Auth users/profiles/admins | 0/0/0 |
+
+The Production target was established through the authenticated CLI link, not through the LAN/local Supabase URLs used by the development web app.
+
+The exact candidate identity gate used `exercise slug + canonical source_url`. A pre-existing R5 `original_file_url` variant for `seated-leg-curl` was deliberately preserved, as required; it was not rewritten during binary processing. Exact source, license, review evidence, and execution-quality preservation was enforced by a before/after fingerprint.
+
+## Local binary gate
+
+| Check | Result |
+| --- | ---: |
+| Canonical GIF files | 7/7 |
+| Canonical WebP posters | 7/7 |
+| GIF SHA-256 | 7/7 |
+| Poster SHA-256 | 7/7 |
+| Animated GIF | 7/7 |
+| Frame count greater than one | 7/7 |
+| Loop enabled | 7/7 |
+| Positive FPS | 7/7 |
+| Valid dimensions/duration | 7/7 |
+| Static/single-frame GIF | 0 |
+
+Actual binary volume:
+
+- GIF: 25,335,119 bytes
+- Posters: 94,086 bytes
+- Total: 25,429,205 bytes (24.251180 MiB)
+
+No binary was regenerated, recompressed, replaced, or uploaded from an original WebM source.
+
+## Storage
+
+| Check | Result |
+| --- | ---: |
+| GIF uploaded | 7/7 |
+| Posters uploaded | 7/7 |
+| Reused identical | 0 |
+| Final objects | 14 |
+| Final bytes | 25,429,205 |
+| GIF MIME `image/gif` | 7/7 |
+| Poster MIME `image/webp` | 7/7 |
+| Immutable cache-control | 14/14 |
+| Remote GIF SHA-256 | 7/7 |
+| Remote poster SHA-256 | 7/7 |
+| Bucket private | YES |
+
+The 14 objects were downloaded again from the private Production bucket and hashed locally before any database row was allowed to reference them.
+
+## Processing
+
+| Operation | Result |
+| --- | ---: |
+| `reviewing -> processing` | 7/7 |
+| `processing -> processed` | 7/7 |
+| `processing_started` events | 7/7 |
+| `processed` events | 7/7 |
+| Total R6A events | 14/14 |
+| R5 events preserved | 24/24 |
+| Final media-review event total | 38 |
+| Automated event `admin_user_id IS NULL` | 14/14 |
+
+The transaction synchronized only canonical v1.6 processing fields: GIF type, Storage paths, content hash, file size, dimensions, duration, frame count, FPS, animation flags, processing timestamps/log, null fallback/error, and completed readiness state.
+
+## Review metadata preservation
+
+| Check | Result |
+| --- | ---: |
+| `reviewed_at` unchanged from R5 | 7/7 |
+| `reviewed_by` remains null | 7/7 |
+| `approved_at` remains null | 7/7 |
+| `approved_by` remains null | 7/7 |
+| `media_role` remains null | 7/7 |
+| `is_primary` remains false | 7/7 |
+| Source/license/R5 metadata fingerprint unchanged | PASS |
+| Other 34 candidates unchanged | PASS |
+
+The before/after non-target fingerprint remained `d4d955e9e97963f98cbed78aac9cd141`. This also preserves the 17 Production-only candidates.
+
+## Final candidate state
+
+| State | Count |
+| --- | ---: |
+| Total | 41 |
+| Processed | 7 |
 | Rejected | 15 |
-| Processed | 0 |
+| Pending | 19 |
+| Reviewing | 0 |
 | Approved | 0 |
 | PRIMARY | 0 |
 | PRIMARY_DEMO | 0 |
 | Active exercises | 0 |
-| Storage objects before | 0 |
-| Existing R6A events | 0 |
-| Auth users | 0 |
-| Profiles | 0 |
-| Admin profiles | 0 |
-| Bucket exists/private | 1/1 |
-| Migration history | 18 |
-| Non-target candidates | 34 |
-
-Non-target preflight fingerprint: `d4d955e9e97963f98cbed78aac9cd141`.
-
-## Local canonical artifacts
-
-All three authority artifacts agree for the exact seven candidates:
-
-- `data/media/media-validation-v15.json`;
-- `data/media/media-processing-v16.json`;
-- `data/media/primary-media-manifest.json`.
-
-| Check | Result |
-| --- | --- |
-| Local GIF hashes | PASS — 7/7 |
-| Local poster hashes | PASS — 7/7 |
-| GIF codec | PASS — 7/7 GIF89a / FFprobe GIF |
-| Animated | PASS — 7/7, frame count greater than 1 |
-| Loop | PASS — 7/7 |
-| Positive FPS | PASS — 7/7 at 12.5 FPS |
-| Dimensions | PASS — 7/7 valid |
-| Duration | PASS — 7/7 valid |
-| Posters | PASS — 7/7 WebP |
-| License validation evidence | PASS — 7/7 |
-
-Actual binary size:
-
-| Asset | Bytes | MiB |
-| --- | ---: | ---: |
-| 7 GIFs | 25,335,119 | 24.161452 |
-| 7 posters | 94,086 | 0.089727 |
-| Total | 25,429,205 | 24.251180 |
-
-Cost: **NO ADDITIONAL COST identified**. No resource, bucket, project, or plan upgrade was created or requested.
-
-## Storage
-
-| Operation | Actual |
-| --- | ---: |
-| GIF uploaded | 0/7 |
-| Posters uploaded | 0/7 |
-| Reused identical | 0 |
-| Storage objects final | 0 |
-| Remote GIF hash checks | Not run — preflight aborted |
-| Remote poster hash checks | Not run — preflight aborted |
-
-## Processing
-
-| Operation | Actual |
-| --- | ---: |
-| `reviewing -> processing` | 0/7 |
-| `processing -> processed` | 0/7 |
-| New processing events | 0 |
-
-No upload, processing, cleanup, ad-hoc repair, approval, publication, PRIMARY assignment, activation, or Auth operation was attempted.
-
-## Final candidate state
-
-Production remained unchanged:
-
-| Status | Actual |
-| --- | ---: |
-| Total | 41 |
-| Processed | 0 |
-| Rejected | 15 |
-| Pending | 19 |
-| Reviewing | 7 |
-| Approved | 0 |
-| PRIMARY | 0 |
-| PRIMARY_DEMO | 0 |
-| Active | 0 |
 
 ## Auth
 
-| Check | Expected | Actual |
-| --- | ---: | ---: |
-| `auth.users` | 0 | 0 |
-| Profiles | 0 | 0 |
-| Admin profiles | 0 | 0 |
+| State | Count |
+| --- | ---: |
+| `auth.users` | 0 |
+| Profiles | 0 |
+| Admin profiles | 0 |
 
-No fake admin, Auth user, profile, invite, password, UUID, `reviewed_by`, or `approved_by` was created.
+No fake administrator, invite, password, Auth user, profile, or reviewer UUID was created.
 
-## Integrity and tests
+## Integrity reconciliation
 
 | Check | Result |
-| --- | --- |
-| DB references to missing R6A files | 0 — all target paths remain null |
-| R6A files without DB references | 0 — no files uploaded |
-| Local hash mismatches | 0 |
-| GIF single frame | 0 |
-| Static PRIMARY | 0 |
-| Duplicate PRIMARY | 0 |
-| Active without animated PRIMARY | 0 |
-| Lint | PASS |
-| Typecheck | PASS |
-| Unit | PASS — 45/45 |
-| Media manifest integrity | PASS — 7/7 GIF and poster hashes |
-
-Remote hash reconciliation is intentionally not reported as complete because no object was uploaded.
+| --- | ---: |
+| `DB_WITHOUT_FILE` | 0 |
+| `FILE_WITHOUT_DB` | 0 |
+| `HASH_MISMATCH` | 0 |
+| `GIF_SINGLE_FRAME` | 0 |
+| `APPROVED_WITHOUT_POSTER` | 0 |
+| `PRIMARY_STATIC_IMAGE` | 0 |
+| `DUPLICATE_PRIMARY` | 0 |
+| `ACTIVE_WITHOUT_ANIMATED_PRIMARY` | 0 |
 
 ## Security
 
-- migration history: 18/18 baseline retained;
-- ACL: 81 / diff 0 baseline retained;
-- RLS: unchanged;
-- Security Advisor: 0 findings at the preceding R5 gate;
-- bucket `exercise-media`: private;
-- Storage policies: unchanged.
+| Check | Result |
+| --- | ---: |
+| Migration history | 18/18 |
+| ACL table grants | 81 |
+| ACL diff from canonical | 0 |
+| ACL before/after artifact | unchanged |
+| RLS | PASS — 22/22 public tables |
+| Security Advisor | 0 findings |
+| Storage policy fingerprint | unchanged |
+| Bucket private | YES |
 
-R6A performed no operation capable of changing schema, ACL, RLS, Auth, bucket configuration, or Storage policies.
+## Verification
+
+| Command/check | Result |
+| --- | --- |
+| `pnpm lint` | PASS |
+| `pnpm typecheck` | PASS |
+| `pnpm test` | PASS — 45/45 |
+| Primary manifest integrity | PASS — 7/7 GIF and 7/7 posters |
+| Direct FFprobe/binary validation | PASS |
+| Production reconciliation query | PASS |
+
+Full browser E2E was intentionally not run because Production still has no real Auth user and no approved/published PRIMARY media.
 
 ## Production writes
 
 | Scope | Writes |
 | --- | ---: |
-| Storage | 0 |
-| `exercise_media` processing | 0 |
-| Processing events | 0 |
+| Storage objects | 14 |
+| `exercise_media` candidates processed | 7 |
+| Processing events | 14 |
 | Approvals | 0 |
-| PRIMARY | 0 |
-| Exercise activation | 0 |
-| Auth | 0 |
+| PRIMARY assignments | 0 |
+| Exercise activations | 0 |
+| Auth/profile writes | 0 |
+| Schema/migration/ACL/RLS/policy changes | 0 |
+
+No paid resource, project, bucket, or plan upgrade was created. Cost gate: `NO ADDITIONAL COST`.
+
+## Future R6B contract
+
+R6B may replace the automated R5 `reviewed_at` only when a real Production administrator actually performs final media review. At that time it must set `reviewed_by` to the real admin user ID and `reviewed_at` to the real administrative review timestamp. That operation was not performed or authorized in R6A.
 
 ## Gate
 
-`BLOCKED`
+`READY_FOR_PRODUCTION_ADMIN_BOOTSTRAP`
 
-Required input: authorize preserving the seven existing R5 `reviewed_at` timestamps during R6A, or explicitly authorize a corrective transaction that clears them. Do not create a user or publish media.
+Stop after this gate. Do not create a user and do not publish media as part of R6A.
