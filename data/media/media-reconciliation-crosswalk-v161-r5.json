@@ -1,0 +1,2249 @@
+{
+  "version": "1.6.1-R5-PREP",
+  "generatedAt": "2026-08-21T16:54:39.012Z",
+  "productionProjectRef": "inghftngeritrsezwxnm",
+  "productionWrites": 0,
+  "authority": [
+    "LOCAL_VALIDATION_V1_5",
+    "LOCAL_PROCESSING_V1_6",
+    "LICENSE_VERIFICATION",
+    "LOCAL_DISCOVERY_V1_2",
+    "PRODUCTION_UNREVIEWED"
+  ],
+  "identity": {
+    "definition": "exerciseSlug + normalized sourceUrl",
+    "normalization": "Lowercase scheme/host, remove fragment and known tracking parameters, sort remaining query parameters, preserve path case and distinct Wikimedia filenames."
+  },
+  "summary": {
+    "unionCandidates": 57,
+    "localValidationCandidates": 40,
+    "productionCandidates": 40,
+    "localProductionOverlap": 23,
+    "previousMissing": 17,
+    "productionOnly": 17,
+    "validatedPrimary": 7,
+    "primaryPresent": 6,
+    "primaryMissing": 1,
+    "actions": {
+      "KEEP_UNREVIEWED": 12,
+      "ADD": 1,
+      "KEEP": 16,
+      "SYNC_VALIDATION_REJECTED": 15,
+      "UPDATE_METADATA": 6,
+      "MANUAL_REVIEW": 5,
+      "KEEP_PENDING": 2
+    },
+    "classifications": {
+      "UNKNOWN": 17,
+      "VALIDATED_PRIMARY": 7,
+      "REJECTED": 31,
+      "PENDING_MANUAL": 2
+    },
+    "proposedAdd": 1,
+    "proposedKeepExisting": 40,
+    "proposedRemove": 0,
+    "proposedFinalCandidateCount": 41
+  },
+  "entries": [
+    {
+      "identity": {
+        "exerciseSlug": "bike",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Man on an Exercise Bike.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "419c2f70-5018-42da-9f3e-cc0a12e42d09",
+        "exerciseSlug": "bike",
+        "title": "Man on an Exercise Bike.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Man_on_an_Exercise_Bike.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-4.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Man on an Exercise Bike.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "bike",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED"
+      ],
+      "title": "Man on an Exercise Bike GIF Animation Loop.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 95,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "MISSING",
+      "recommendedAction": "ADD",
+      "reason": "Required validated PRIMARY source candidate is absent; add it pending/reviewing without role, approval, publication, or Storage.",
+      "processed": {
+        "contentHash": "0d529456a570dc3d9bdd6526d1205184441c26e6ee7752269d9138990860e77a",
+        "posterHash": "0abf596d9f39bb7548e837d4e4976d38b3ee594dc5a72bee8ffeef25987bb6c8",
+        "manifestContentHash": "0d529456a570dc3d9bdd6526d1205184441c26e6ee7752269d9138990860e77a",
+        "manifestPosterHash": "0abf596d9f39bb7548e837d4e4976d38b3ee594dc5a72bee8ffeef25987bb6c8",
+        "artifactsAgree": true
+      },
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Donkey_Calf_Raise.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Donkey Calf Raise.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Donkey_Calf_Raise.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "701efeb6-3efd-4de9-8483-1d5c43efe0f9",
+        "exerciseSlug": "calf-raise",
+        "title": "Donkey Calf Raise.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Donkey_Calf_Raise.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Donkey_Calf_Raise.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Donkey Calf Raise.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-1.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Rocking-standing-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-1.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 68,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-2.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Rocking-standing-calf-raise-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking-standing-calf-raise-2.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 68,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking_Standing_Calf_Raise.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Rocking Standing Calf Raise.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking_Standing_Calf_Raise.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "568d6b5f-4a07-4c9c-a641-81dd4374d82f",
+        "exerciseSlug": "calf-raise",
+        "title": "Rocking Standing Calf Raise.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rocking_Standing_Calf_Raise.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Rocking_Standing_Calf_Raise.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Rocking Standing Calf Raise.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Seated-calf-raise-1.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Seated-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated-calf-raise-1.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 45,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Seated_Calf_Raise.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Seated Calf Raise.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated_Calf_Raise.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "fbef6eda-550d-46ba-a533-878d01ea1d1a",
+        "exerciseSlug": "calf-raise",
+        "title": "Seated Calf Raise.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated_Calf_Raise.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/Seated_Calf_Raise.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Seated Calf Raise.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Single_Leg_Calf_Raise.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Single Leg Calf Raise.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Single_Leg_Calf_Raise.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "810b509d-b007-4ed7-bb01-0ca6c73537b9",
+        "exerciseSlug": "calf-raise",
+        "title": "Single Leg Calf Raise.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Single_Leg_Calf_Raise.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Single_Leg_Calf_Raise.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Single Leg Calf Raise.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Smith_Machine_Calf_Raise.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Smith Machine Calf Raise.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Smith_Machine_Calf_Raise.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "927e0c5b-1f5a-45ab-934b-bf5c79013344",
+        "exerciseSlug": "calf-raise",
+        "title": "Smith Machine Calf Raise.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Smith_Machine_Calf_Raise.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Smith_Machine_Calf_Raise.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Smith Machine Calf Raise.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-1.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Standing-barbell-calf-raise-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-1.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 68,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "calf-raise",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-2.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Standing-barbell-calf-raise-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Standing-barbell-calf-raise-2.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 68,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "farmer-walk",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Kettlebell Farmer Walks.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 74,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "6a2510d0-b6d0-40a3-a2ea-8bd5e0c4a7f3",
+        "exerciseSlug": "farmer-walk",
+        "title": "Kettlebell Farmer Walks.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Farmer_Walks.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/85/Kettlebell_Farmer_Walks.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-4.0",
+        "matchScore": 82,
+        "candidateMetadata": {
+          "title": "Kettlebell Farmer Walks.webm",
+          "confidence": "candidate"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "goblet-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Kettlebell Goblet Squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 98,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "2fe6026ca687c84ef2a1f0e3587b8aa17dfab101c5210aa3a2c2c9450a9f9a37",
+        "posterHash": "d91a9d685315fea32ff9542d34ecefc6bc074b8a04915d983c78b42646af3281",
+        "manifestContentHash": "2fe6026ca687c84ef2a1f0e3587b8aa17dfab101c5210aa3a2c2c9450a9f9a37",
+        "manifestPosterHash": "d91a9d685315fea32ff9542d34ecefc6bc074b8a04915d983c78b42646af3281",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "63f4b87e-8892-4089-a4e4-d7751aaf5de3",
+        "exerciseSlug": "goblet-squat",
+        "title": "Kettlebell Goblet Squat.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kettlebell_Goblet_Squat.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-4.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Kettlebell Goblet Squat.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "goblet-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 45,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "f44c1e07-6937-477f-b892-f6df45d8e2ce",
+        "exerciseSlug": "goblet-squat",
+        "title": "Muscle Strengthening at Home - Half squat.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 60,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at Home - Half squat.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "goblet-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 45,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "d2c1953e-e90a-4a67-b661-4df53bc8f6a9",
+        "exerciseSlug": "goblet-squat",
+        "title": "Squat-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Squat-CDC strength training for older adults.gif",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "hack-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 40,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "dc3a47f0-0565-49ff-8b26-fae962b4be94",
+        "exerciseSlug": "hack-squat",
+        "title": "Muscle Strengthening at Home - Half squat.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 60,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at Home - Half squat.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "hack-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 38,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "b9503d2b-823f-4da2-9df3-8d5f4e5debbe",
+        "exerciseSlug": "hack-squat",
+        "title": "Squat-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Squat-CDC strength training for older adults.gif",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Chest press-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 43,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Bench_Press.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Incline Bench Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Bench_Press.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "MANUAL_REVIEW",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "MANUAL_REVIEW",
+      "reason": "Free-weight incline bench press may not match the catalog's dedicated incline machine.",
+      "processed": null,
+      "production": {
+        "id": "cbc1d7de-3ba0-465a-bc30-e516b0290806",
+        "exerciseSlug": "incline-machine-press",
+        "title": "Incline Bench Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Bench_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Incline_Bench_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 73,
+        "candidateMetadata": {
+          "title": "Incline Bench Press.webm",
+          "confidence": "candidate"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Dumbbell_Press.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Incline Dumbbell Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Dumbbell_Press.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "MANUAL_REVIEW",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "MANUAL_REVIEW",
+      "reason": "Dumbbell incline press has an equipment mismatch risk for incline-machine-press.",
+      "processed": null,
+      "production": {
+        "id": "4bc0a1da-fcd2-43f8-9a08-c7e2206c23bf",
+        "exerciseSlug": "incline-machine-press",
+        "title": "Incline Dumbbell Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Dumbbell_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Incline_Dumbbell_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 68,
+        "candidateMetadata": {
+          "title": "Incline Dumbbell Press.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Press_-_Exercise_Demonstration.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Incline Press - Exercise Demonstration.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Press_-_Exercise_Demonstration.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "MANUAL_REVIEW",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "MANUAL_REVIEW",
+      "reason": "Title is generic and does not prove the required machine equipment.",
+      "processed": null,
+      "production": {
+        "id": "bf23bf4b-174a-452c-9c81-04e9b8fb54db",
+        "exerciseSlug": "incline-machine-press",
+        "title": "Incline Press - Exercise Demonstration.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_Press_-_Exercise_Demonstration.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Incline_Press_-_Exercise_Demonstration.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 83,
+        "candidateMetadata": {
+          "title": "Incline Press - Exercise Demonstration.webm",
+          "confidence": "candidate"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_press_-_exercise_demonstration_video.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Incline press - exercise demonstration video.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_press_-_exercise_demonstration_video.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 72,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "incline-machine-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 73,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Close-Grip_Pulldown_-_Exercise_Demonstration.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Close-Grip Pulldown - Exercise Demonstration.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Close-Grip_Pulldown_-_Exercise_Demonstration.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "2e9cb941-d18d-4ee6-8484-4f1a8dfabcb9",
+        "exerciseSlug": "lat-pulldown",
+        "title": "Close-Grip Pulldown - Exercise Demonstration.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Close-Grip_Pulldown_-_Exercise_Demonstration.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/87/Close-Grip_Pulldown_-_Exercise_Demonstration.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Close-Grip Pulldown - Exercise Demonstration.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Close-grip_Lat_Pull_Down.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Close-grip Lat Pull Down.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Close-grip_Lat_Pull_Down.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "2f9b05b0-8cde-4098-9c17-75f16b9f86ac",
+        "exerciseSlug": "lat-pulldown",
+        "title": "Close-grip Lat Pull Down.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Close-grip_Lat_Pull_Down.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Close-grip_Lat_Pull_Down.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Close-grip Lat Pull Down.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "validationDecision": "KEEP_PENDING",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "acceptable",
+      "recommendedRole": "EDUCATIONAL",
+      "validationScore": 88,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "PENDING_MANUAL",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_PENDING",
+      "reason": "License/manual review is unresolved; preserve pending state and record the v1.5 audit decision.",
+      "processed": null,
+      "production": {
+        "id": "a6a7fcad-58dc-4e8a-9257-bbaa9fee2411",
+        "exerciseSlug": "lat-pulldown",
+        "title": "Common Lat Pulldown Mistakes.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Common_Lat_Pulldown_Mistakes.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Common Lat Pulldown Mistakes.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "How to properly leg press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "INCORRECT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 5,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "REJECTED",
+      "semanticDisposition": "BAD_DISCOVERY_ASSOCIATION",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the rejection in versioned audit evidence; do not insert this semantically incorrect association into Production.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-1.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Wide-grip-lat-pull-down-1.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-1.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 70,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-2.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Wide-grip-lat-pull-down-2.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip-lat-pull-down-2.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 70,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lat-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip_Lat_Pull_Down.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Wide-grip Lat Pull Down.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip_Lat_Pull_Down.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "8e973c8a-5702-4555-9b14-286068aad717",
+        "exerciseSlug": "lat-pulldown",
+        "title": "Wide-grip Lat Pull Down.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wide-grip_Lat_Pull_Down.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Wide-grip_Lat_Pull_Down.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Wide-grip Lat Pull Down.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Knee extension-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 52,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "b188139c-9cf2-4119-aa98-b683c5125ad6",
+        "exerciseSlug": "leg-extension",
+        "title": "Knee extension-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Knee_extension-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Knee_extension-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Knee extension-CDC strength training for older adults.gif",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Leg Extension.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 97,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "9c69c89d9099661a4babd219bc9b57b95140edbbcb002f83cb5b93d572543493",
+        "posterHash": "92d4107f372072eedadd9cde3b35cf6576e32e1f762c172840e03f32c29ec796",
+        "manifestContentHash": "9c69c89d9099661a4babd219bc9b57b95140edbbcb002f83cb5b93d572543493",
+        "manifestPosterHash": "92d4107f372072eedadd9cde3b35cf6576e32e1f762c172840e03f32c29ec796",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "1abe9d88-8927-4a6a-808b-425e3889a53d",
+        "exerciseSlug": "leg-extension",
+        "title": "Muscle Strengthening at the Gym - Leg Extension.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Leg Extension.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Exercisingwithmoderntech.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "INCORRECT",
+      "executionQuality": "rejected",
+      "recommendedRole": null,
+      "validationScore": 18,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "62c6e3de-e9d9-4228-abd7-f94a4083e45a",
+        "exerciseSlug": "leg-press",
+        "title": "Exercisingwithmoderntech.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Exercisingwithmoderntech.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Exercisingwithmoderntech.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-4.0",
+        "matchScore": 65,
+        "candidateMetadata": {
+          "title": "Exercisingwithmoderntech.gif",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "How to properly leg press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+      "validationDecision": "KEEP_PENDING",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "acceptable",
+      "recommendedRole": "EDUCATIONAL",
+      "validationScore": 88,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "PENDING_MANUAL",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_PENDING",
+      "reason": "License/manual review is unresolved; preserve pending state and record the v1.5 audit decision.",
+      "processed": null,
+      "production": {
+        "id": "d06c2689-3cd4-4dda-97da-b470bdf91c54",
+        "exerciseSlug": "leg-press",
+        "title": "How to properly leg press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_to_properly_leg_press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/How_to_properly_leg_press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "How to properly leg press.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Seated Leg Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 96,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "cf32752060a224e80d167f096331205841e7ddc4ec4b7d421da7883aecffff7d",
+        "posterHash": "54340788fd2c6d102cb962ec185209eec1a55db32c6f4871d5c4fa022abf142b",
+        "manifestContentHash": "cf32752060a224e80d167f096331205841e7ddc4ec4b7d421da7883aecffff7d",
+        "manifestPosterHash": "54340788fd2c6d102cb962ec185209eec1a55db32c6f4871d5c4fa022abf142b",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "57a56749-a4c1-4134-8c34-1f80857bde6e",
+        "exerciseSlug": "leg-press",
+        "title": "Muscle Strengthening at the Gym - Seated Leg Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Seated Leg Press.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "leg-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 42,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "584a5e4e-228f-4d68-a09c-a136178e1433",
+        "exerciseSlug": "leg-press",
+        "title": "Squat-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 65,
+        "candidateMetadata": {
+          "title": "Squat-CDC strength training for older adults.gif",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "lying-leg-curl",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "INCORRECT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 48,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "4ad215c5-275d-4873-8d54-2baa52097c3c",
+        "exerciseSlug": "lying-leg-curl",
+        "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/87/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-chest-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Bench_Press_-_Exercise_Demonstration.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Bench Press - Exercise Demonstration.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bench_Press_-_Exercise_Demonstration.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "MANUAL_REVIEW",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "MANUAL_REVIEW",
+      "reason": "Bench press is not equivalent to the validated selectorized machine chest press.",
+      "processed": null,
+      "production": {
+        "id": "cb09ad56-7e48-4b6c-bbb9-0d50031a876e",
+        "exerciseSlug": "machine-chest-press",
+        "title": "Bench Press - Exercise Demonstration.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bench_Press_-_Exercise_Demonstration.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Bench_Press_-_Exercise_Demonstration.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 75,
+        "candidateMetadata": {
+          "title": "Bench Press - Exercise Demonstration.webm",
+          "confidence": "candidate"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-chest-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Chest press-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_press-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 49,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-chest-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 97,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "c9f99ca69a26c888b87953e95ef9b1c3d4be12037b13ed207671d4a41ba4912d",
+        "posterHash": "e24a5dbca51b72153a6a7bf0fef32d033378d953d94853b871e6bf8cf69134c4",
+        "manifestContentHash": "c9f99ca69a26c888b87953e95ef9b1c3d4be12037b13ed207671d4a41ba4912d",
+        "manifestPosterHash": "e24a5dbca51b72153a6a7bf0fef32d033378d953d94853b871e6bf8cf69134c4",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "c9f5a928-1e19-4f47-905c-14517bda2f3f",
+        "exerciseSlug": "machine-chest-press",
+        "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-fly",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 42,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "6d4feb63-f8ba-49bc-8ff0-e5c9ceee065e",
+        "exerciseSlug": "machine-fly",
+        "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 64,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Chest Press.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-row",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 96,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "c3b427f6c66bacd1818062e02aa377f8eb28104f195f8fbc399fcaeae921644b",
+        "posterHash": "9e5af756b78891d8a5d47a4527d49aaa779e251aebc8f57cdc424961707f1c0c",
+        "manifestContentHash": "c3b427f6c66bacd1818062e02aa377f8eb28104f195f8fbc399fcaeae921644b",
+        "manifestPosterHash": "9e5af756b78891d8a5d47a4527d49aaa779e251aebc8f57cdc424961707f1c0c",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "da553bf8-5b87-41fe-8ad9-390311e0c703",
+        "exerciseSlug": "machine-row",
+        "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-shoulder-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:How_To_Properly_Dumbbell_Shoulder_Press.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "How To Properly Dumbbell Shoulder Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:How_To_Properly_Dumbbell_Shoulder_Press.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 65,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-shoulder-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Shoulder Press.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "d9380b77-80f1-4aa6-b1a4-e6134615dc14",
+        "exerciseSlug": "machine-shoulder-press",
+        "title": "Shoulder Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Shoulder_Press.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-SA-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Shoulder Press.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-shoulder-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press_-_Exercise_Demonstration.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Shoulder Press - Exercise Demonstration.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press_-_Exercise_Demonstration.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "578b5d56-2c3c-4ed5-82a9-c6c7fbea2814",
+        "exerciseSlug": "machine-shoulder-press",
+        "title": "Shoulder Press - Exercise Demonstration.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_Press_-_Exercise_Demonstration.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Shoulder_Press_-_Exercise_Demonstration.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 100,
+        "candidateMetadata": {
+          "title": "Shoulder Press - Exercise Demonstration.webm",
+          "confidence": "strong"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "machine-shoulder-press",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_press_-_exercise_demonstration_video.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Shoulder press - exercise demonstration video.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoulder_press_-_exercise_demonstration_video.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 70,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "KNOWN_REJECT",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the v1.5 rejection in versioned audit evidence; raw discovery parity is not a reason to insert it.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "neutral-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 66,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "f4a19ffb-65bc-417a-8220-1bb298c6efa2",
+        "exerciseSlug": "neutral-pulldown",
+        "title": "Common Lat Pulldown Mistakes.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Common_Lat_Pulldown_Mistakes.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 58,
+        "candidateMetadata": {
+          "title": "Common Lat Pulldown Mistakes.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "seated-leg-curl",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "LOCAL_PROCESSED",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+      "validationDecision": "APPROVE",
+      "exerciseMatch": "EXACT",
+      "executionQuality": "approved",
+      "recommendedRole": "PRIMARY_DEMO",
+      "validationScore": 96,
+      "licenseStatus": "VERIFIED",
+      "classification": "VALIDATED_PRIMARY",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "UPDATE_METADATA",
+      "reason": "Keep the validated source candidate and sync v1.5 review metadata without assigning PRIMARY_DEMO or approval.",
+      "processed": {
+        "contentHash": "45a0cc51ebe9cc07eb94b14fae1ddd1a9d80d14e3ddaac7fcc26f88785054cf0",
+        "posterHash": "8f7d2f32f32814c5b7831286897475cec21d0c690b08a1d1474ba838a6e214dc",
+        "manifestContentHash": "45a0cc51ebe9cc07eb94b14fae1ddd1a9d80d14e3ddaac7fcc26f88785054cf0",
+        "manifestPosterHash": "8f7d2f32f32814c5b7831286897475cec21d0c690b08a1d1474ba838a6e214dc",
+        "artifactsAgree": true
+      },
+      "production": {
+        "id": "227111a4-23ea-4770-ae12-9b09409ba4f2",
+        "exerciseSlug": "seated-leg-curl",
+        "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/87/Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Leg Curl.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "seated-row",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "approved",
+      "recommendedRole": null,
+      "validationScore": 74,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "727bd5dc-a2fa-4c27-b8d6-47254c2b4a6c",
+        "exerciseSlug": "seated-row",
+        "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at the Gym - Row Machine.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "smith-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at Home - Half squat.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 40,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "8da1cf56-4862-4369-8313-385f3fc2767d",
+        "exerciseSlug": "smith-squat",
+        "title": "Muscle Strengthening at Home - Half squat.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Muscle_Strengthening_at_Home_-_Half_squat.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 60,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at Home - Half squat.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "smith-squat",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Squat-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 38,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "3dbbd6e2-9902-4738-ac88-f1324dad8b27",
+        "exerciseSlug": "smith-squat",
+        "title": "Squat-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Squat-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Squat-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 69,
+        "candidateMetadata": {
+          "title": "Squat-CDC strength training for older adults.gif",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "supinated-pulldown",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION",
+        "PRODUCTION"
+      ],
+      "title": "Common Lat Pulldown Mistakes.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "RELATED_BUT_DIFFERENT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 66,
+      "licenseStatus": "UNRESOLVED: Wikimedia license review remains unresolved",
+      "classification": "REJECTED",
+      "semanticDisposition": null,
+      "productionPresence": "PRESENT",
+      "recommendedAction": "SYNC_VALIDATION_REJECTED",
+      "reason": "Candidate exists in Production and v1.5 rejected it; synchronize rejection plus audit event without deleting the row.",
+      "processed": null,
+      "production": {
+        "id": "639b6754-8450-48a9-92cc-b5dcd64eee3b",
+        "exerciseSlug": "supinated-pulldown",
+        "title": "Common Lat Pulldown Mistakes.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Common_Lat_Pulldown_Mistakes.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "CC-BY-3.0",
+        "matchScore": 68,
+        "candidateMetadata": {
+          "title": "Common Lat Pulldown Mistakes.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "thoracic-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_stretch-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Chest stretch-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chest_stretch-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "INCORRECT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 10,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "BAD_DISCOVERY_ASSOCIATION",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the rejection in versioned audit evidence; do not insert this semantically incorrect association into Production.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "thoracic-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Hamstring_stretch-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "LOCAL_DISCOVERY",
+        "LOCAL_VALIDATION"
+      ],
+      "title": "Hamstring stretch-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamstring_stretch-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": "REJECT",
+      "exerciseMatch": "INCORRECT",
+      "executionQuality": "acceptable",
+      "recommendedRole": null,
+      "validationScore": 5,
+      "licenseStatus": "VERIFIED",
+      "classification": "REJECTED",
+      "semanticDisposition": "BAD_DISCOVERY_ASSOCIATION",
+      "productionPresence": "MISSING",
+      "recommendedAction": "KEEP",
+      "reason": "Keep the rejection in versioned audit evidence; do not insert this semantically incorrect association into Production.",
+      "processed": null,
+      "production": null
+    },
+    {
+      "identity": {
+        "exerciseSlug": "thoracic-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Chest_Stretch.webm"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Muscle Strengthening at Home - Chest Stretch.webm",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Chest_Stretch.webm",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "MANUAL_REVIEW",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "MANUAL_REVIEW",
+      "reason": "Chest stretch is likely a different mobility movement; retain only for manual v1.7 review.",
+      "processed": null,
+      "production": {
+        "id": "bf8dc1b7-dd3e-451f-838b-cc3e0ea6c11b",
+        "exerciseSlug": "thoracic-extension",
+        "title": "Muscle Strengthening at Home - Chest Stretch.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_Home_-_Chest_Stretch.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Muscle_Strengthening_at_Home_-_Chest_Stretch.webm",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 65,
+        "candidateMetadata": {
+          "title": "Muscle Strengthening at Home - Chest Stretch.webm",
+          "confidence": "low"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    },
+    {
+      "identity": {
+        "exerciseSlug": "thoracic-extension",
+        "normalizedSourceUrl": "https://commons.wikimedia.org/wiki/File:Upper_back_extension-CDC_strength_training_for_older_adults.gif"
+      },
+      "source": [
+        "PRODUCTION"
+      ],
+      "title": "Upper back extension-CDC strength training for older adults.gif",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Upper_back_extension-CDC_strength_training_for_older_adults.gif",
+      "validationDecision": null,
+      "exerciseMatch": null,
+      "executionQuality": null,
+      "recommendedRole": null,
+      "validationScore": null,
+      "licenseStatus": "METADATA_PRESENT_UNVALIDATED",
+      "classification": "UNKNOWN",
+      "semanticDisposition": "USEFUL_UNREVIEWED",
+      "productionPresence": "PRESENT",
+      "recommendedAction": "KEEP_UNREVIEWED",
+      "reason": "Production-only candidate has no v1.5 decision and remains useful discovery evidence.",
+      "processed": null,
+      "production": {
+        "id": "b8ebcb49-b471-4815-a15a-4884ec9ff4ff",
+        "exerciseSlug": "thoracic-extension",
+        "title": "Upper back extension-CDC strength training for older adults.gif",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Upper_back_extension-CDC_strength_training_for_older_adults.gif",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/Upper_back_extension-CDC_strength_training_for_older_adults.gif",
+        "status": "pending",
+        "mediaRole": null,
+        "isPrimary": false,
+        "license": "PD",
+        "matchScore": 78,
+        "candidateMetadata": {
+          "title": "Upper back extension-CDC strength training for older adults.gif",
+          "confidence": "candidate"
+        },
+        "reviewedAt": null,
+        "approvedAt": null,
+        "storagePath": null
+      }
+    }
+  ]
+}
