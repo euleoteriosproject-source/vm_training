@@ -181,7 +181,7 @@ the least-privilege matrix proven by the grant contract and application tests.
 
 | Check                                                                      | Result                                                            |
 | -------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Grant contract (`tests/database/grants.test.sql`, after local proposal)    | PASS, 13/13                                                       |
+| Grant contract (`supabase/tests/grant_contract.sql`, after local proposal) | PASS, 13/13                                                       |
 | Full pgTAP after local proposal (contract + RLS/media/readiness/Auth Hook) | PASS, 53/53                                                       |
 | Unit tests                                                                 | PASS, 45/45                                                       |
 | Playwright isolated build                                                  | PASS, 14/14 (mobile + desktop)                                    |

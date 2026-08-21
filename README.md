@@ -66,6 +66,14 @@ pnpm db:reset
 pnpm exec supabase test db
 ```
 
+Toda migration futura que criar um objeto acessivel pela Data API deve declarar
+o contrato completo no mesmo arquivo: `CREATE OBJECT` -> defaults seguros ou
+`REVOKE` -> RLS/policies quando aplicavel -> `GRANT` somente para os roles e
+operacoes necessarios. Nao dependa dos defaults do Supabase Hosted para expor
+tabelas, sequences ou functions. Enquanto o historico remoto deste projeto nao
+for reconciliado, nao execute `db push` em Production; siga o runbook versionado
+em `ops/production/`.
+
 As migrations criam schema, constraints, índices, policies, funções e o bucket privado `exercise-media`. O arquivo `supabase/config.toml` habilita localmente o hook `before_user_created`. Em um projeto hospedado, confirme em **Authentication → Hooks** que `public.hook_restrict_signup` está selecionada e configure:
 
 - Site URL: a URL pública de produção;

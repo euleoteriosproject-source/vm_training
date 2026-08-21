@@ -58,7 +58,7 @@ await writeFile(
   output,
   `${JSON.stringify(
     {
-      version: "1.6.1-R2",
+      version: "1.6.1-R3",
       target,
       projectRef: target === "production" ? projectRef : null,
       matrix,

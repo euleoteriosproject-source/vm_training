@@ -45,7 +45,7 @@
     "security:grants:local": "node --experimental-strip-types scripts/security/capture-grant-matrix.ts",
     "security:grants:production": "node --experimental-strip-types scripts/security/capture-grant-matrix.ts --production",
     "security:grants:diff": "node --experimental-strip-types scripts/security/compare-grant-matrices.ts",
-    "security:grants:test": "supabase test db --local tests/database/grants.test.sql"
+    "security:grants:test": "supabase test db --local supabase/tests/grant_contract.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

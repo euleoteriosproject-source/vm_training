@@ -1,6 +1,6 @@
--- Run after applying the R2 proposal to the local simulation.
+-- Canonical ACL contract established by the R3 migration.
 begin;
-select plan(13);
+select plan(22);
 
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -52,6 +52,69 @@ select is(
      and acl.privilege_type in ('DELETE', 'INSERT', 'SELECT', 'UPDATE', 'TRUNCATE', 'TRIGGER', 'REFERENCES', 'MAINTAIN', 'USAGE', 'EXECUTE')),
   0,
   'future postgres/public objects do not inherit Data API privileges'
+);
+select is(
+  (select count(*)::integer from information_schema.role_table_grants
+   where table_schema = 'public'
+     and grantee in ('anon', 'authenticated', 'service_role', 'supabase_auth_admin')),
+  81,
+  'canonical public table ACL has exactly 81 grants'
+);
+select is(
+  (select count(*)::integer from information_schema.role_table_grants
+   where table_schema = 'public' and grantee = 'authenticated'),
+  62,
+  'authenticated has exactly 62 required table grants'
+);
+select is(
+  (select count(*)::integer from information_schema.role_table_grants
+   where table_schema = 'public' and grantee = 'service_role'),
+  18,
+  'service_role has exactly 18 required table grants'
+);
+select is(
+  (select count(*)::integer from information_schema.role_table_grants
+   where table_schema = 'public' and grantee = 'supabase_auth_admin'),
+  1,
+  'Auth Hook role has only its allowlist table grant'
+);
+select is(
+  (select count(*)::integer
+   from pg_class object
+   join pg_namespace schema on schema.oid = object.relnamespace
+   cross join (values ('anon'), ('authenticated'), ('service_role')) roles(role_name)
+   cross join (values ('USAGE'), ('SELECT'), ('UPDATE')) privileges(privilege)
+   where object.relkind = 'S' and schema.nspname in ('public', 'private')
+     and has_sequence_privilege(roles.role_name, object.oid, privileges.privilege)),
+  0,
+  'Data API roles have no application sequence grants'
+);
+select ok(has_schema_privilege('authenticated', 'private', 'usage'),
+  'authenticated can execute private RLS helpers');
+select is(
+  (select count(*)::integer
+   from (values ('anon'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
+   where has_schema_privilege(roles.role_name, 'private', 'usage')
+      or has_schema_privilege(roles.role_name, 'private', 'create')),
+  0,
+  'private schema is isolated from non-RLS-helper roles'
+);
+select is(
+  (select count(*)::integer
+   from (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
+   where has_schema_privilege(roles.role_name, 'public', 'create')),
+  0,
+  'Data API and Auth Hook roles cannot create in public'
+);
+select is(
+  (select count(*)::integer
+   from pg_proc function
+   join pg_namespace schema on schema.oid = function.pronamespace
+   cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
+   where schema.nspname in ('public', 'private')
+     and has_function_privilege(roles.role_name, function.oid, 'execute')),
+  19,
+  'canonical function ACL has exactly 19 grants'
 );
 
 select * from finish();
