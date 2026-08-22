@@ -30,15 +30,42 @@ export const onboardingSchema = z.object({
   birthDate: z.iso.date(),
   heightCm: z.coerce.number().min(100).max(250),
   weightKg: z.coerce.number().min(30).max(400),
-  goals: z.array(z.string()).min(1),
+  goalCode: z.enum([
+    "weight_loss",
+    "fat_loss",
+    "measurements",
+    "muscle_gain",
+    "strength",
+    "posture",
+    "mobility",
+    "conditioning",
+    "cardio_endurance",
+    "general_health",
+  ]),
   sessionsPerWeek: z.coerce.number().int().min(2).max(5),
   sessionMinutes: z.coerce
     .number()
     .refine((v) => [30, 45, 60, 75, 90].includes(v)),
-  cardioPreference: z.coerce.number().int().min(1).max(5),
   experience: z.enum(["beginner", "returning", "intermediate", "advanced"]),
-  trainingLocation: z.enum(["full_gym", "small_gym", "condo", "home", "other"]),
-  equipmentIds: z.array(z.string()).default([]),
+  gymCategory: z.enum([
+    "academia_essencial",
+    "academia_padrao",
+    "academia_completa",
+    "peso_livre_funcional",
+  ]),
+  movementAttention: z
+    .array(
+      z.enum([
+        "knee",
+        "shoulder",
+        "lower_back",
+        "hip",
+        "ankle",
+        "wrist",
+        "other",
+      ]),
+    )
+    .default([]),
 });
 
 export const setLogSchema = z.object({

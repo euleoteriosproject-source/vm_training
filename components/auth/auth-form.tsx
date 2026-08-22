@@ -41,7 +41,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         router.replace(params.get("next") || "/today");
         router.refresh();
       } else {
-        const { error: authError } = await supabase.auth.signUp({
+        const { data, error: authError } = await supabase.auth.signUp({
           email: raw.email,
           password: raw.password,
           options: {
@@ -49,16 +49,26 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           },
         });
         if (authError) throw authError;
-        toast.success("Confira seu e-mail para confirmar o cadastro");
-        router.push("/login?confirmed=pending");
+        if (data.session) {
+          toast.success("Conta criada. Vamos configurar seu treino.");
+          router.replace("/onboarding");
+          router.refresh();
+        } else {
+          toast.success("Confira seu e-mail para confirmar o cadastro");
+          router.push("/login?confirmed=pending");
+        }
       }
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Não foi possível continuar";
+      const normalized = message.toLowerCase();
       setError(
-        message.toLowerCase().includes("authorized") ||
-          message.includes("autorizado")
+        normalized.includes("authorized") || normalized.includes("autorizado")
           ? "Este cadastro não está autorizado para esta aplicação."
+          : normalized.includes("invalid login credentials")
+            ? "E-mail ou senha inválidos."
+            : normalized.includes("internal server error")
+              ? "Não foi possível entrar agora. Tente novamente em instantes."
           : message,
       );
     } finally {

@@ -39,8 +39,9 @@ export default async function WorkoutsPage() {
       </div>
       {isDraft && (
         <Card className="mt-6 border-warning/40 bg-warning/10 p-4 text-sm">
-          Este é o seu rascunho personalizado. A execução permanece bloqueada
-          até todos os vídeos necessários passarem pela revisão técnica.
+          Este é o seu rascunho personalizado. Ajuste as preferências e
+          recalcule para ativar uma estrutura de treino válida. As demonstrações
+          em GIF não bloqueiam o plano.
         </Card>
       )}
       <div className="mt-7 grid gap-4 lg:grid-cols-2">
@@ -62,7 +63,7 @@ export default async function WorkoutsPage() {
             </Link>
             {isDraft ? (
               <p className="mt-6 rounded-xl bg-surface-alt p-3 text-center text-sm text-muted">
-                Aguardando liberação das demonstrações
+                Rascunho disponível para consulta
               </p>
             ) : (
               <StartButton dayId={day.id} className="mt-6 w-full" />
@@ -73,8 +74,8 @@ export default async function WorkoutsPage() {
           <Card className="col-span-full p-8 text-center">
             <h2 className="text-xl font-semibold">Nenhum plano ativo</h2>
             <p className="mt-2 text-muted">
-              O gerador usa somente exercícios com mídia aprovada e equipamentos
-              disponíveis.
+              Conclua suas preferências para gerar um treino compatível com a
+              academia escolhida. A mídia é opcional.
             </p>
           </Card>
         )}

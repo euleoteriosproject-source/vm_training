@@ -45,6 +45,7 @@ type RunnerExercise = {
   repMax: number | null;
   restSeconds: number;
   category: string;
+  requiredEquipmentIds: string[];
   detail: ExerciseDetail;
   sets: SetRow[];
 };
@@ -262,6 +263,26 @@ export function WorkoutRunner({
               saveSet(item.id, setId, patch, item.restSeconds)
             }
             onSkip={() => skip(item.id)}
+            onSubstituted={(replacement) =>
+              setItems((current) =>
+                current.map((exercise) =>
+                  exercise.id === item.id
+                    ? {
+                        ...exercise,
+                        actualExerciseId: replacement.exerciseId,
+                        detail: {
+                          ...exercise.detail,
+                          name: replacement.exerciseName,
+                          mediaUrl: null,
+                          posterUrl: null,
+                          mediaType: null,
+                          mediaSource: null,
+                        },
+                      }
+                    : exercise,
+                ),
+              )
+            }
           />
         ))}
       </div>
@@ -277,10 +298,15 @@ function ExerciseCard({
   item,
   onSet,
   onSkip,
+  onSubstituted,
 }: {
   item: RunnerExercise;
   onSet: (setId: string, patch: Partial<SetRow>) => void;
   onSkip: () => void;
+  onSubstituted: (replacement: {
+    exerciseId: string;
+    exerciseName: string;
+  }) => void;
 }) {
   const [menu, setMenu] = useState(false);
   const completed = item.sets.every((s) => s.completed);
@@ -399,7 +425,11 @@ function ExerciseCard({
         <p className="text-sm text-muted">
           Substituições compatíveis respeitam seus equipamentos e preferências.
         </p>
-        <SubstitutionList item={item} onDone={() => setMenu(false)} />
+        <SubstitutionActions
+          item={item}
+          onDone={() => setMenu(false)}
+          onSubstituted={onSubstituted}
+        />
         <Button
           variant="danger"
           className="mt-5 w-full"
@@ -506,90 +536,94 @@ function CardioEntry({ exerciseId }: { exerciseId: string }) {
     </div>
   );
 }
-function SubstitutionList({
+function SubstitutionActions({
   item,
   onDone,
+  onSubstituted,
 }: {
   item: RunnerExercise;
   onDone: () => void;
+  onSubstituted: (replacement: {
+    exerciseId: string;
+    exerciseName: string;
+  }) => void;
 }) {
   const [loading, setLoading] = useState(false);
-  const [options, setOptions] = useState<
-    { id: string; name_pt: string; reason: string | null }[]
-  >([]);
-  useEffect(() => {
-    let active = true;
-    createClient()
-      .from("exercise_substitutions")
-      .select(
-        "reason,alternative:exercises!exercise_substitutions_alternative_exercise_id_fkey(id,name_pt,active,exercise_media(status,media_role,execution_quality,is_primary))",
-      )
-      .eq("exercise_id", item.actualExerciseId)
-      .order("score", { ascending: false })
-      .then(({ data }) => {
-        if (active)
-          setOptions(
-            (data ?? []).flatMap((row) => {
-              const ex = row.alternative as unknown as {
-                id: string;
-                name_pt: string;
-                active: boolean;
-                exercise_media: {
-                  status: string;
-                  media_role: string | null;
-                  execution_quality: string;
-                  is_primary: boolean;
-                }[];
-              } | null;
-              const ready =
-                ex?.active &&
-                ex.exercise_media.some(
-                  (media) =>
-                    media.status === "approved" &&
-                    media.media_role === "PRIMARY_DEMO" &&
-                    media.execution_quality === "approved" &&
-                    media.is_primary,
-                );
-              return ex && ready ? [{ ...ex, reason: row.reason }] : [];
-            }),
-          );
-        setLoading(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, [item.actualExerciseId]);
-  async function choose(id: string) {
-    const { error } = await createClient()
-      .from("workout_session_exercises")
-      .update({
-        actual_exercise_id: id,
-        substitution_reason: "Escolha do usuário",
-      })
-      .eq("id", item.id);
-    if (error) toast.error(error.message);
-    else {
-      toast.success("Exercício substituído");
-      onDone();
-      window.location.reload();
+  const [excluded, setExcluded] = useState<string[]>([]);
+  async function substitute(
+    reason:
+      "equipment_unavailable" | "temporarily_unavailable" | "user_requested",
+  ) {
+    setLoading(true);
+    const { data, error } = await createClient().rpc(
+      "substitute_workout_exercise",
+      {
+        p_session_exercise_id: item.id,
+        p_reason: reason,
+        p_equipment_id:
+          reason === "equipment_unavailable"
+            ? (item.requiredEquipmentIds[0] ?? null)
+            : null,
+        p_exclude_exercise_ids: excluded,
+      },
+    );
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
     }
+    const result = data as {
+      eventId: string;
+      exerciseId: string;
+      exerciseName: string;
+    };
+    setExcluded((current) => [...current, result.exerciseId]);
+    onSubstituted(result);
+    toast.success(`Substituímos por ${result.exerciseName}`, {
+      action: {
+        label: "Desfazer",
+        onClick: async () => {
+          const { error: undoError } = await createClient().rpc(
+            "undo_workout_substitution",
+            { p_event_id: result.eventId },
+          );
+          if (undoError) toast.error(undoError.message);
+          else {
+            toast.success("Substituição desfeita");
+            window.location.reload();
+          }
+        },
+      },
+      duration: 8000,
+    });
+    onDone();
   }
   return (
-    <div className="mt-5 space-y-2">
-      {loading && <p className="text-sm text-muted">Buscando alternativas…</p>}
-      {options.map((option) => (
-        <button
-          key={option.id}
-          onClick={() => choose(option.id)}
-          className="w-full rounded-xl border p-4 text-left hover:border-accent"
-        >
-          <p className="font-semibold">{option.name_pt}</p>
-          <p className="mt-1 text-sm text-muted">{option.reason}</p>
-        </button>
-      ))}
-      {!loading && !options.length && (
-        <p className="rounded-xl bg-surface-alt p-4 text-sm text-muted">
-          Nenhuma alternativa aprovada disponível.
+    <div className="mt-5 grid gap-2">
+      <Button
+        variant="secondary"
+        disabled={loading || !item.requiredEquipmentIds.length}
+        onClick={() => substitute("equipment_unavailable")}
+      >
+        Minha academia não tem
+      </Button>
+      <Button
+        variant="secondary"
+        disabled={loading}
+        onClick={() => substitute("temporarily_unavailable")}
+      >
+        Indisponível hoje
+      </Button>
+      <Button
+        variant="secondary"
+        disabled={loading}
+        onClick={() => substitute("user_requested")}
+      >
+        {excluded.length ? "Ver outra opção" : "Trocar por outra opção"}
+      </Button>
+      {loading && (
+        <p className="text-center text-sm text-muted">
+          Buscando uma alternativa compatível…
         </p>
       )}
     </div>

@@ -65,7 +65,7 @@ describe("generatePlan", () => {
   it("uses the requested weekly split", () => {
     expect(generatePlan(input, catalog)).toHaveLength(3);
   });
-  it("never uses inactive or media-less exercises", () => {
+  it("never uses inactive exercises", () => {
     const result = generatePlan(input, [
       ...catalog,
       { ...catalog[0], id: "unsafe", active: false, hasApprovedMedia: false },
@@ -73,6 +73,13 @@ describe("generatePlan", () => {
     expect(
       result.flatMap((day) => day.exercises).map((ex) => ex.exerciseId),
     ).not.toContain("unsafe");
+  });
+  it("does not block an active exercise while its media is pending", () => {
+    const mediaPending = catalog.map((exercise) => ({
+      ...exercise,
+      hasApprovedMedia: false,
+    }));
+    expect(generatePlan(input, mediaPending)).toHaveLength(3);
   });
   it("keeps resistance work when cardio is high", () => {
     const result = generatePlan(
@@ -93,13 +100,12 @@ describe("generatePlan", () => {
     expect(() => generatePlan(input, catalog.slice(0, 3))).toThrow(
       /insuficiente/,
     ));
-  it("creates a draft without weakening active-plan eligibility", () => {
+  it("never lets a draft option bypass catalog eligibility", () => {
     const unavailable = catalog.map((exercise) => ({
       ...exercise,
       active: false,
       hasApprovedMedia: false,
     }));
-    expect(generatePlan(input, unavailable, { draft: true })).toHaveLength(3);
     expect(() => generatePlan(input, unavailable)).toThrow(/insuficiente/);
   });
 });

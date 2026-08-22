@@ -9,28 +9,11 @@ export default async function OnboardingPage() {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
-  const [{ data: profile }, { data: equipment }, { data: exercises }] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("display_name,birth_date,height_cm,onboarding_completed")
-      .eq("user_id", user.id)
-      .single(),
-    supabase
-      .from("equipment")
-      .select("id,name,slug")
-      .eq("active", true)
-      .order("name"),
-    supabase
-      .from("exercises")
-      .select("id,name_pt,category")
-      .order("name_pt"),
-  ]);
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("display_name,birth_date,height_cm,onboarding_completed")
+    .eq("user_id", user.id)
+    .maybeSingle();
   if (profile?.onboarding_completed) redirect("/today");
-  return (
-    <OnboardingFlow
-      profile={profile}
-      equipment={equipment ?? []}
-      exercises={exercises ?? []}
-    />
-  );
+  return <OnboardingFlow profile={profile} />;
 }

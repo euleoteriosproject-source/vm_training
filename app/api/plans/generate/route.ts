@@ -25,7 +25,7 @@ export async function POST() {
       .from("training_preferences")
       .select("*")
       .eq("user_id", user.id)
-      .single(),
+      .maybeSingle(),
     supabase
       .from("user_goals")
       .select("goal_code,priority")
@@ -107,7 +107,7 @@ export async function POST() {
       equipment,
       preferences: preferenceMap,
     };
-    const days = generatePlan(input, catalog, { draft: true });
+    const days = generatePlan(input, catalog);
     await supabase
       .from("workout_plans")
       .update({ status: "archived", archived_at: new Date().toISOString() })
@@ -170,18 +170,14 @@ export async function POST() {
     const planCoverage = plannedIds.size
       ? Number(((primaryApproved.length / plannedIds.size) * 100).toFixed(1))
       : 0;
-    let status: "draft" | "active" = "draft";
-    if (planCoverage === 100) {
-      const { error: activateError } = await supabase.rpc("activate_plan", {
-        p_plan_id: plan.id,
-      });
-      if (activateError) throw activateError;
-      status = "active";
-    }
+    const { error: activateError } = await supabase.rpc("activate_plan", {
+      p_plan_id: plan.id,
+    });
+    if (activateError) throw activateError;
     return NextResponse.json(
       {
         id: plan.id,
-        status,
+        status: "active" as const,
         planCoverage,
         exercises: plannedIds.size,
         primaryApproved: primaryApproved.length,

@@ -17,13 +17,20 @@ port = 54323
 [auth]
 enabled = true
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["http://localhost:3000/auth/callback", "http://localhost:3000/update-password"]
+additional_redirect_urls = [
+  "http://localhost:3000/auth/callback",
+  "http://localhost:3000/update-password",
+  "http://127.0.0.1:3000/auth/callback",
+  "http://127.0.0.1:3000/update-password",
+  "http://192.168.2.109:3000/auth/callback",
+  "http://192.168.2.109:3000/update-password"
+]
 enable_signup = true
 
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = true
+enable_confirmations = false
 
 [auth.hook.before_user_created]
 enabled = true

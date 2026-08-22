@@ -1,0 +1,95 @@
+{
+  "version": "1.7",
+  "reviewedOn": "2026-08-21",
+  "strategy": "GIF-FIRST",
+  "summary": {
+    "processed": 7,
+    "approvePrimary": 6,
+    "approveEducational": 0,
+    "keepProcessed": 1,
+    "reject": 0
+  },
+  "checklist": {
+    "correct_exercise": true,
+    "compatible_equipment": true,
+    "start_position_visible": true,
+    "main_range_visible": true,
+    "complete_repetition_visible": true,
+    "technically_acceptable": true,
+    "sufficient_clarity": true,
+    "useful_framing": true,
+    "no_blocking_elements": true,
+    "license_confirmed": true
+  },
+  "entries": [
+    {
+      "exerciseSlug": "leg-press",
+      "contentHash": "cf32752060a224e80d167f096331205841e7ddc4ec4b7d421da7883aecffff7d",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Seated leg press real; pés apoiados, flexão e extensão de joelhos/quadris controladas; sem confusão com hack squat ou leg extension.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Seated_Leg_Press.webm",
+        "https://www.acefitness.org/resources/everyone/exercise-library/154/seated-leg-press/"
+      ]
+    },
+    {
+      "exerciseSlug": "goblet-squat",
+      "contentHash": "2fe6026ca687c84ef2a1f0e3587b8aa17dfab101c5210aa3a2c2c9450a9f9a37",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Kettlebell em goblet grip junto ao tórax; padrão de agachamento completo, tronco controlado e retorno por extensão de joelhos e quadris.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Kettlebell_Goblet_Squat.webm",
+        "https://www.nasm.org/resource-center/exercise-library/goblet-squat"
+      ]
+    },
+    {
+      "exerciseSlug": "leg-extension",
+      "contentHash": "9c69c89d9099661a4babd219bc9b57b95140edbbcb002f83cb5b93d572543493",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Máquina extensora sentada; extensão de joelho e retorno controlado com quadríceps e amplitude visíveis.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Extension.webm",
+        "https://www.acefitness.org/resources/everyone/exercise-library/experience/beginner/?page=5"
+      ]
+    },
+    {
+      "exerciseSlug": "seated-leg-curl",
+      "contentHash": "45a0cc51ebe9cc07eb94b14fae1ddd1a9d80d14e3ddaac7fcc26f88785054cf0",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Configuração sentada confirmada; rolo distal e flexão de joelho para posteriores da coxa claramente visíveis; não é lying leg curl.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Leg_Curl.webm",
+        "https://commons.wikimedia.org/wiki/Category:Leg_curls"
+      ]
+    },
+    {
+      "exerciseSlug": "machine-row",
+      "contentHash": "c3b427f6c66bacd1818062e02aa377f8eb28104f195f8fbc399fcaeae921644b",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Remada sentada em máquina com apoio de peito; puxada horizontal e retorno controlado, com retração dos braços visível.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Row_Machine.webm",
+        "https://www.acefitness.org/resources/everyone/exercise-library/168/seated-row/"
+      ]
+    },
+    {
+      "exerciseSlug": "machine-chest-press",
+      "contentHash": "c9f99ca69a26c888b87953e95ef9b1c3d4be12037b13ed207671d4a41ba4912d",
+      "decision": "APPROVE_PRIMARY",
+      "reviewNotes": "Chest press sentada em máquina; empurrar horizontal e retorno controlado visíveis; movimento não corresponde a pec deck.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Chest_Press.webm",
+        "https://www.acefitness.org/resources/everyone/exercise-library/188/seated-chest-press/"
+      ]
+    },
+    {
+      "exerciseSlug": "bike",
+      "contentHash": "0d529456a570dc3d9bdd6526d1205184441c26e6ee7752269d9138990860e77a",
+      "decision": "KEEP_PROCESSED",
+      "reviewNotes": "Pedalada identificável e licença válida, porém a animação estilizada de 75×100 não ensina ajuste ou execução com clareza suficiente para PRIMARY_DEMO.",
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Man_on_an_Exercise_Bike_GIF_Animation_Loop.gif"
+      ]
+    }
+  ]
+}

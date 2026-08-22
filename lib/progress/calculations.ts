@@ -25,6 +25,30 @@ export function progressChange(values: number[]) {
   return ((values.at(-1)! - values[0]) / values[0]) * 100;
 }
 
+export function bodyMassIndex(weightKg: number, heightCm: number) {
+  if (weightKg <= 0 || heightCm <= 0) return null;
+  return weightKg / (heightCm / 100) ** 2;
+}
+
+export function ageInYears(birthDate: string, now = new Date()) {
+  const birth = new Date(`${birthDate}T00:00:00Z`);
+  if (Number.isNaN(birth.getTime()) || birth > now) return null;
+  let age = now.getUTCFullYear() - birth.getUTCFullYear();
+  const beforeBirthday =
+    now.getUTCMonth() < birth.getUTCMonth() ||
+    (now.getUTCMonth() === birth.getUTCMonth() &&
+      now.getUTCDate() < birth.getUTCDate());
+  if (beforeBirthday) age -= 1;
+  return age;
+}
+
+export function weightTrend(current: number, previous?: number | null) {
+  if (previous == null) return "Primeiro registro";
+  const delta = current - previous;
+  if (Math.abs(delta) < 0.05) return "Peso estável";
+  return `${delta > 0 ? "+" : ""}${delta.toFixed(1).replace(".", ",")} kg`;
+}
+
 export function transformHistory(
   rows: {
     completed_at: string;

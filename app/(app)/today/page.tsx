@@ -1,10 +1,15 @@
 import Link from "next/link";
-import { ArrowRight, CalendarCheck, Scale, Timer } from "lucide-react";
+import { Activity, ArrowRight, CalendarCheck, Timer } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { StartButton } from "@/components/workout/start-button";
 import { GeneratePlanButton } from "@/components/workout/generate-plan-button";
+import { StartButton } from "@/components/workout/start-button";
+import {
+  ageInYears,
+  bodyMassIndex,
+  weeklyFrequency,
+  weightTrend,
+} from "@/lib/progress/calculations";
 import { createClient } from "@/lib/supabase/server";
-import { weeklyFrequency } from "@/lib/progress/calculations";
 
 export default async function TodayPage() {
   const now = new Date();
@@ -18,13 +23,16 @@ export default async function TodayPage() {
     { data: profile },
     { data: plans },
     { data: sessions },
-    { data: measurement },
+    { data: measurements },
   ] = await Promise.all([
-    supabase.from("profiles").select("display_name").single(),
+    supabase
+      .from("profiles")
+      .select("display_name,birth_date,height_cm")
+      .maybeSingle(),
     supabase
       .from("workout_plans")
       .select(
-        "id,name,status,sessions_per_week,created_at,workout_days(id,name,position,estimated_minutes,workout_day_exercises(exercise_id,exercise:exercises(name_pt,active,exercise_media(status,media_role,execution_quality,is_primary))))",
+        "id,name,status,sessions_per_week,created_at,workout_days(id,name,position,estimated_minutes,workout_day_exercises(exercise_id))",
       )
       .in("status", ["active", "draft"])
       .order("created_at", { ascending: false }),
@@ -38,11 +46,10 @@ export default async function TodayPage() {
       .from("body_measurements")
       .select("weight_kg,measured_at")
       .order("measured_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
+      .limit(2),
   ]);
   const frequency = weeklyFrequency(
-    (sessions ?? []).map((s) => ({ completedAt: s.completed_at! })),
+    (sessions ?? []).map((session) => ({ completedAt: session.completed_at! })),
     now,
   );
   const plan =
@@ -53,47 +60,18 @@ export default async function TodayPage() {
   const days = (plan?.workout_days ?? []).sort(
     (a, b) => a.position - b.position,
   );
-  const plannedExercises = new Map<
-    string,
-    { name: string; ready: boolean }
-  >();
-  for (const day of days)
-    for (const item of day.workout_day_exercises ?? []) {
-      const exercise = item.exercise as unknown as {
-        name_pt?: string;
-        active: boolean;
-        exercise_media?: {
-          status: string;
-          media_role: string | null;
-          execution_quality: string;
-          is_primary: boolean;
-        }[];
-      } | null;
-      plannedExercises.set(item.exercise_id, {
-        name: exercise?.name_pt ?? "Exercício",
-        ready:
-          Boolean(exercise?.active) &&
-          Boolean(
-            exercise?.exercise_media?.some(
-              (media) =>
-                media.status === "approved" &&
-                media.media_role === "PRIMARY_DEMO" &&
-                media.execution_quality === "approved" &&
-                media.is_primary,
-            ),
-          ),
-      });
-    }
-  const readyExercises = [...plannedExercises.values()].filter(
-    (item) => item.ready,
-  ).length;
-  const planCoverage = plannedExercises.size
-    ? Math.round((readyExercises / plannedExercises.size) * 100)
-    : 0;
-  const blockers = [...plannedExercises.values()].filter((item) => !item.ready);
-  const next = isDraft
-    ? undefined
-    : days[frequency % Math.max(days.length, 1)];
+  const next = isDraft ? undefined : days[frequency % Math.max(days.length, 1)];
+  const currentMeasurement = measurements?.[0];
+  const previousMeasurement = measurements?.[1];
+  const bmi =
+    currentMeasurement && profile?.height_cm
+      ? bodyMassIndex(
+          Number(currentMeasurement.weight_kg),
+          Number(profile.height_cm),
+        )
+      : null;
+  const age = profile?.birth_date ? ageInYears(profile.birth_date, now) : null;
+
   return (
     <div>
       <p className="text-sm text-muted">
@@ -107,6 +85,7 @@ export default async function TodayPage() {
         Olá,{" "}
         {profile?.display_name?.split(" ")[0] ?? user?.email?.split("@")[0]}
       </h1>
+
       {next ? (
         <Card className="relative mt-8 overflow-hidden p-6 md:p-8">
           <div className="absolute -right-16 -top-20 size-64 rounded-full bg-accent/10 blur-3xl" />
@@ -121,36 +100,16 @@ export default async function TodayPage() {
         </Card>
       ) : isDraft ? (
         <Card className="mt-8 p-7">
-          <p className="text-sm font-medium text-warning">Plano em preparação</p>
+          <p className="text-sm font-medium text-warning">
+            Plano em configuração
+          </p>
           <h2 className="mt-2 text-xl font-semibold">
-            Seu rascunho foi criado
+            Seu rascunho está salvo
           </h2>
           <p className="mt-2 max-w-xl text-muted">
-            Suas respostas já viraram um plano personalizado. Ele será liberado
-            para treino quando todos os exercícios tiverem demonstração real
-            revisada e aprovada.
+            Gere novamente para validar a estrutura e ativá-lo. Demonstrações em
+            GIF não bloqueiam o treino.
           </p>
-          <div className="mt-5 max-w-xl">
-            <div className="flex justify-between text-sm">
-              <span>Cobertura do plano</span>
-              <span className="font-semibold">{planCoverage}%</span>
-            </div>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-alt">
-              <div
-                className="h-full rounded-full bg-accent"
-                style={{ width: `${planCoverage}%` }}
-              />
-            </div>
-            <p className="mt-2 text-xs text-muted">
-              {readyExercises} de {plannedExercises.size} exercícios liberados
-            </p>
-          </div>
-          {blockers.length > 0 && (
-            <p className="mt-4 text-sm text-muted">
-              Aguardando vídeos: {blockers.slice(0, 5).map((item) => item.name).join(", ")}
-              {blockers.length > 5 ? ` e mais ${blockers.length - 5}` : ""}.
-            </p>
-          )}
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
               href="/workouts"
@@ -164,17 +123,75 @@ export default async function TodayPage() {
       ) : (
         <Card className="mt-8 p-7">
           <h2 className="text-xl font-semibold">
-            Seu plano ainda não está pronto
+            Vamos criar seu primeiro plano
           </h2>
           <p className="mt-2 max-w-xl text-muted">
-            Seu cadastro e suas respostas foram salvos. O plano não foi gerado
-            porque o catálogo ainda não possui exercícios suficientes com vídeo
-            revisado e aprovado para montar um treino seguro.
+            A disponibilidade de mídia não interfere na criação do treino.
           </p>
           <GeneratePlanButton />
         </Card>
       )}
-      <div className="mt-5 grid gap-4 sm:grid-cols-3">
+
+      <Link href="/progress" className="mt-5 block">
+        <Card className="overflow-hidden border-accent/25 bg-gradient-to-br from-accent/10 via-surface to-surface p-5 transition hover:border-accent">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-accent">Seu corpo</p>
+              <h2 className="mt-1 text-xl font-semibold">
+                Acompanhe sem complicação
+              </h2>
+            </div>
+            <Activity className="text-accent" />
+          </div>
+          <div className="mt-5 grid grid-cols-3 gap-3">
+            <div>
+              <p className="text-xs text-muted">Peso atual</p>
+              <p className="mt-1 font-semibold">
+                {currentMeasurement
+                  ? `${currentMeasurement.weight_kg} kg`
+                  : "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted">IMC</p>
+              <p className="mt-1 font-semibold">
+                {bmi ? bmi.toFixed(1).replace(".", ",") : "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-muted">Tendência</p>
+              <p className="mt-1 text-sm font-semibold">
+                {currentMeasurement
+                  ? weightTrend(
+                      Number(currentMeasurement.weight_kg),
+                      previousMeasurement
+                        ? Number(previousMeasurement.weight_kg)
+                        : null,
+                    )
+                  : "Sem dados"}
+              </p>
+            </div>
+          </div>
+          <div className="mt-5 flex items-center justify-between gap-3 text-xs text-muted">
+            <span>
+              {currentMeasurement
+                ? `Atualizado em ${new Intl.DateTimeFormat("pt-BR").format(new Date(currentMeasurement.measured_at))}`
+                : "Registre sua primeira medida"}
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-1 font-medium text-accent">
+              Ver detalhes <ArrowRight size={14} />
+            </span>
+          </div>
+          {age !== null && age < 20 && bmi !== null && (
+            <p className="mt-3 text-xs text-muted">
+              Para menores de 20 anos, mostramos apenas o valor, sem
+              classificação adulta.
+            </p>
+          )}
+        </Card>
+      </Link>
+
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <Card className="p-5">
           <CalendarCheck className="text-accent" />
           <p className="mt-5 text-2xl font-semibold">
@@ -182,18 +199,11 @@ export default async function TodayPage() {
           </p>
           <p className="text-sm text-muted">treinos nesta semana</p>
         </Card>
-        <Card className="p-5">
-          <Scale className="text-accent" />
-          <p className="mt-5 text-2xl font-semibold">
-            {measurement ? `${measurement.weight_kg} kg` : "—"}
-          </p>
-          <p className="text-sm text-muted">peso atual</p>
-        </Card>
         <Link href="/progress">
           <Card className="flex h-full min-h-28 items-center justify-between p-5 transition hover:border-accent">
             <div>
               <p className="font-semibold">Sua evolução</p>
-              <p className="mt-1 text-sm text-muted">Últimas 4 semanas</p>
+              <p className="mt-1 text-sm text-muted">Medidas e histórico</p>
             </div>
             <ArrowRight className="text-accent" />
           </Card>

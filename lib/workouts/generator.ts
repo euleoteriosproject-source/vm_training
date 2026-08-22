@@ -57,13 +57,12 @@ function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
 export function generatePlan(
   input: PlanInput,
   catalog: ExerciseCandidate[],
-  options: { draft?: boolean } = {},
+  options: { requireMedia?: boolean } = {},
 ): GeneratedDay[] {
   const eligible = catalog
-    .filter((exercise) =>
-      options.draft
-        ? true
-        : exercise.active && exercise.hasApprovedMedia,
+    .filter(
+      (exercise) =>
+        exercise.active && (!options.requireMedia || exercise.hasApprovedMedia),
     )
     .filter((exercise) =>
       exercise.equipment.every(

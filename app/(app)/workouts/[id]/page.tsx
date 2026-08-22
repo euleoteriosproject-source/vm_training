@@ -33,7 +33,7 @@ export default async function WorkoutDayPage({
       <div className="mt-6 flex gap-3">
         {isDraft ? (
           <p className="flex min-h-11 flex-1 items-center rounded-xl bg-warning/10 px-4 text-sm text-warning sm:flex-none">
-            Rascunho — aguardando vídeos aprovados
+            Rascunho para consulta — ajuste as preferências para ativar
           </p>
         ) : (
           <StartButton dayId={day.id} className="flex-1 sm:flex-none" />

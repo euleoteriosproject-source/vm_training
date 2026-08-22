@@ -11,7 +11,7 @@ export default async function SessionPage({
   const { data: session } = await supabase
     .from("workout_sessions")
     .select(
-      "id,started_at,status,workout_day:workout_days(name),workout_session_exercises(id,planned_exercise_id,actual_exercise_id,position,status,actual:exercises!workout_session_exercises_actual_exercise_id_fkey(id,name_pt,category,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(equipment(name)),exercise_media(id,storage_path,poster_path,status,media_type,media_role,execution_quality,sort_order,is_primary,author,source_name,source_url,license_code,license_url,attribution_text)),set_logs(id,set_number,weight_kg,reps,duration_seconds,completed))",
+      "id,started_at,status,workout_day:workout_days(name),workout_session_exercises(id,planned_exercise_id,actual_exercise_id,position,status,actual:exercises!workout_session_exercises_actual_exercise_id_fkey(id,name_pt,category,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(required,equipment(id,name)),exercise_media(id,storage_path,poster_path,status,media_type,media_role,execution_quality,sort_order,is_primary,author,source_name,source_url,license_code,license_url,attribution_text)),set_logs(id,set_number,weight_kg,reps,duration_seconds,completed))",
     )
     .eq("id", id)
     .maybeSingle();
@@ -30,7 +30,11 @@ export default async function SessionPage({
         breathing_instruction: string | null;
         common_errors: string[];
         exercise_equipment: {
-          equipment: { name: string } | { name: string }[] | null;
+          required: boolean;
+          equipment:
+            | { id: string; name: string }
+            | { id: string; name: string }[]
+            | null;
         }[];
         exercise_media: {
           storage_path: string;
@@ -90,6 +94,16 @@ export default async function SessionPage({
         repMax: 12,
         restSeconds: 75,
         category: actual?.category ?? "strength",
+        requiredEquipmentIds: (actual?.exercise_equipment ?? [])
+          .filter((entry) => entry.required)
+          .flatMap((entry) => {
+            const relation = entry.equipment;
+            return Array.isArray(relation)
+              ? relation.map((value) => value.id)
+              : relation
+                ? [relation.id]
+                : [];
+          }),
         detail: {
           name: actual?.name_pt ?? "Exercício",
           primaryMuscles: actual?.primary_muscles ?? [],
