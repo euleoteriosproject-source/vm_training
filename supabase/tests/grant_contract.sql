@@ -1,6 +1,6 @@
--- Canonical ACL contract established by the R3 migration.
+-- Canonical ACL contract established by R3 and extended by v1.7.
 begin;
-select plan(22);
+select plan(30);
 
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -57,20 +57,20 @@ select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public'
      and grantee in ('anon', 'authenticated', 'service_role', 'supabase_auth_admin')),
-  81,
-  'canonical public table ACL has exactly 81 grants'
+  99,
+  'canonical public table ACL has exactly 99 grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'authenticated'),
-  62,
-  'authenticated has exactly 62 required table grants'
+  68,
+  'authenticated has exactly 68 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'service_role'),
-  18,
-  'service_role has exactly 18 required table grants'
+  30,
+  'service_role has exactly 30 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -113,8 +113,28 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  19,
-  'canonical function ACL has exactly 19 grants'
+  24,
+  'canonical function ACL has exactly 24 grants'
+);
+
+select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),
+  'authenticated can read gym presets');
+select ok(has_table_privilege('authenticated', 'public.user_movement_attention', 'select,insert,update,delete'),
+  'authenticated can manage own movement attention through RLS');
+select ok(has_table_privilege('authenticated', 'public.workout_substitution_events', 'select'),
+  'authenticated can read own substitution audit events');
+select ok(not has_table_privilege('authenticated', 'public.workout_substitution_events', 'insert'),
+  'authenticated cannot insert substitution audit events directly');
+select ok(has_table_privilege('service_role', 'public.gym_equipment_presets', 'select,insert,update,delete'),
+  'service_role can manage gym presets');
+select ok(has_table_privilege('service_role', 'public.user_movement_attention', 'select,insert,update,delete'),
+  'service_role can manage movement attention operationally');
+select ok(has_table_privilege('service_role', 'public.workout_substitution_events', 'select,insert,update,delete'),
+  'service_role can manage substitution audit events operationally');
+select ok(
+  has_function_privilege('authenticated', 'public.substitute_workout_exercise(uuid,text,uuid,uuid[])', 'execute')
+  and has_function_privilege('authenticated', 'public.undo_workout_substitution(uuid)', 'execute'),
+  'authenticated can execute the ownership-checked substitution RPCs'
 );
 
 select * from finish();

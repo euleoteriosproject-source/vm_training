@@ -62,6 +62,7 @@ Branch: `main`
 - Lint: **PASS**, zero warnings.
 - Typecheck: **PASS**.
 - Build Next.js 16.3.1: **PASS**, 23 páginas geradas; o prebuild apenas reportou, como esperado, exercícios ativos sem mídia opcional.
+- pgTAP ACL: **PASS**, 30 checks do contrato canônico v1.7.
 - LAN: `http://192.168.2.109:3000`, servidor em `0.0.0.0:3000`.
 - Viewports públicos 375×812, 390×844 e desktop: sem overflow horizontal.
 - E2E autenticado completo: **BLOCKED** por ausência de uma credencial Hosted válida no ambiente local.
