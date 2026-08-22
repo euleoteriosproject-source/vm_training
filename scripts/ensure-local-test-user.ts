@@ -11,13 +11,34 @@ if (!publishableKey)
   throw new Error("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ausente");
 
 const adminClient = getAdminClient()!;
-const { data: profile, error: profileError } = await adminClient
+let { data: profile, error: profileError } = await adminClient
   .from("profiles")
   .select("user_id")
   .eq("role", "admin")
   .limit(1)
   .single();
-if (profileError) throw profileError;
+if (profileError?.code === "PGRST116") {
+  const { data: invitation, error: invitationError } = await adminClient
+    .from("allowed_signup_emails")
+    .select("email")
+    .eq("default_role", "admin")
+    .eq("active", true)
+    .limit(1)
+    .single();
+  if (invitationError || !invitation)
+    throw invitationError ?? new Error("Convite admin local ausente");
+  const { data: created, error: createError } =
+    await adminClient.auth.admin.createUser({
+      email: invitation.email,
+      password: randomBytes(24).toString("base64url"),
+      email_confirm: true,
+    });
+  if (createError || !created.user)
+    throw createError ?? new Error("Não foi possível criar o admin local");
+  profile = { user_id: created.user.id };
+  profileError = null;
+}
+if (profileError || !profile) throw profileError;
 const { data: authUser, error: userError } =
   await adminClient.auth.admin.getUserById(profile.user_id);
 if (userError || !authUser.user?.email)
@@ -30,7 +51,10 @@ const signupEmails = {
   mobile: "v172-mobile@example.test",
   desktop: "v172-desktop@example.test",
 };
-async function writeE2EEnv(sessionId?: string) {
+async function writeE2EEnv(
+  sessionId?: string,
+  mediaEnabled = Boolean(sessionId),
+) {
   await mkdir(".tmp", { recursive: true });
   await writeFile(
     ".tmp/e2e.local.env",
@@ -40,7 +64,7 @@ async function writeE2EEnv(sessionId?: string) {
       `E2E_SIGNUP_EMAIL_MOBILE=${signupEmails.mobile}`,
       `E2E_SIGNUP_EMAIL_DESKTOP=${signupEmails.desktop}`,
       `E2E_SIGNUP_PASSWORD=${signupPassword}`,
-      `E2E_MEDIA_TEST=${sessionId ? "true" : "false"}`,
+      `E2E_MEDIA_TEST=${mediaEnabled ? "true" : "false"}`,
       ...(sessionId ? [`E2E_SESSION_ID=${sessionId}`] : []),
       "",
     ].join("\n"),
@@ -95,15 +119,23 @@ const { data: approved, error: mediaError } = await userClient
   .eq("is_primary", true)
   .limit(3);
 if (mediaError) throw mediaError;
-const exerciseIds = [
+let exerciseIds = [
   ...new Set((approved ?? []).map((item) => item.exercise_id)),
 ];
+const hasApprovedMedia = exerciseIds.length > 0;
 if (!exerciseIds.length) {
-  await writeE2EEnv();
-  process.stdout.write(
-    "Usuário e onboarding E2E locais confirmados; mídia local indisponível.\n",
-  );
-  process.exit(0);
+  const { data: fallbackExercises, error: fallbackError } = await adminClient
+    .from("exercises")
+    .select("id")
+    .limit(3);
+  if (fallbackError || !fallbackExercises?.length)
+    throw fallbackError ?? new Error("Catálogo local sem exercícios E2E");
+  exerciseIds = fallbackExercises.map((exercise) => exercise.id);
+  const { error: activationError } = await adminClient
+    .from("exercises")
+    .update({ active: true })
+    .in("id", exerciseIds);
+  if (activationError) throw activationError;
 }
 
 await userClient
@@ -158,7 +190,7 @@ const { data: sessionId, error: sessionError } = await userClient.rpc(
 );
 if (sessionError) throw sessionError;
 
-await writeE2EEnv(sessionId);
+await writeE2EEnv(sessionId, hasApprovedMedia);
 process.stdout.write(
-  "Usuário, onboarding e plano E2E locais confirmados sem exibir credenciais.\n",
+  `Usuário, onboarding e plano E2E locais confirmados${hasApprovedMedia ? " com mídia" : " com fallback sem mídia"}.\n`,
 );

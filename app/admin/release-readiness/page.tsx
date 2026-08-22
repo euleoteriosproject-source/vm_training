@@ -81,9 +81,9 @@ export default async function ReleaseReadinessPage() {
   );
   const hosted = (() => {
     try {
-      return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").hostname.endsWith(
-        ".supabase.co",
-      );
+      return new URL(
+        process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+      ).hostname.endsWith(".supabase.co");
     } catch {
       return false;
     }
@@ -115,7 +115,10 @@ export default async function ReleaseReadinessPage() {
         <Card className="p-5">
           <h2 className="font-semibold">Planos reais</h2>
           {people.map((person) => (
-            <div key={person.label} className="mt-4 border-t pt-4 first:border-0 first:pt-0">
+            <div
+              key={person.label}
+              className="mt-4 border-t pt-4 first:border-0 first:pt-0"
+            >
               <div className="flex items-center justify-between gap-3">
                 <span>{person.label}</span>
                 <span className="font-semibold">
@@ -124,8 +127,8 @@ export default async function ReleaseReadinessPage() {
               </div>
               <p className="mt-1 text-xs text-muted">
                 Conta {person.profile ? "criada" : "ausente"} · Onboarding{" "}
-                {person.profile?.onboarding_completed ? "completo" : "pendente"} · Plano{" "}
-                {person.plan?.status ?? "ausente"}
+                {person.profile?.onboarding_completed ? "completo" : "pendente"}{" "}
+                · Plano {person.plan?.status ?? "ausente"}
               </p>
             </div>
           ))}

@@ -15,12 +15,63 @@
   --color-danger: var(--danger);
   --font-sans: var(--font-geist-sans);
 }
-:root { --background:#f5f6f3; --surface:#fff; --surface-alt:#e9ece7; --foreground:#111418; --muted:#657079; --border:#dfe3dd; --accent:#a6bd34; --accent-foreground:#111508; --success:#318a59; --warning:#ad6d19; --danger:#bd3e45; }
-.dark { --background:#0b0e11; --surface:#12171c; --surface-alt:#181e24; --foreground:#f6f7f8; --muted:#9ba5ae; --border:#293139; --accent:#d8f36a; --accent-foreground:#151b08; --success:#67c58c; --warning:#e4a653; --danger:#eb747a; }
-* { border-color: var(--border); }
-html { background:var(--background); color:var(--foreground); overflow-x:hidden; }
-body { min-height:100dvh; background:var(--background); font-family:var(--font-geist-sans),system-ui,sans-serif; }
-button,input,select,textarea { font:inherit; }
-button { cursor:pointer; }
-::selection { background:color-mix(in srgb,var(--accent) 35%,transparent); }
-@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+:root {
+  --background: #f5f6f3;
+  --surface: #fff;
+  --surface-alt: #e9ece7;
+  --foreground: #111418;
+  --muted: #657079;
+  --border: #dfe3dd;
+  --accent: #a6bd34;
+  --accent-foreground: #111508;
+  --success: #318a59;
+  --warning: #ad6d19;
+  --danger: #bd3e45;
+}
+.dark {
+  --background: #0b0e11;
+  --surface: #12171c;
+  --surface-alt: #181e24;
+  --foreground: #f6f7f8;
+  --muted: #9ba5ae;
+  --border: #293139;
+  --accent: #d8f36a;
+  --accent-foreground: #151b08;
+  --success: #67c58c;
+  --warning: #e4a653;
+  --danger: #eb747a;
+}
+* {
+  border-color: var(--border);
+}
+html {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+body {
+  min-height: 100dvh;
+  background: var(--background);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

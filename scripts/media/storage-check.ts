@@ -10,11 +10,13 @@ const bytes = Buffer.from(
 );
 let uploaded = false;
 try {
-  const upload = await client.storage.from("exercise-media").upload(path, bytes, {
-    contentType: "image/webp",
-    cacheControl: "31536000",
-    upsert: false,
-  });
+  const upload = await client.storage
+    .from("exercise-media")
+    .upload(path, bytes, {
+      contentType: "image/webp",
+      cacheControl: "31536000",
+      upsert: false,
+    });
   if (upload.error) throw upload.error;
   uploaded = true;
   const download = await client.storage.from("exercise-media").download(path);

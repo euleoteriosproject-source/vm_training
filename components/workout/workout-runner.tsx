@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import {
   Check,
   Circle,
+  Flag,
   MoreHorizontal,
   SkipForward,
   SwitchCamera,
+  XCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -33,6 +35,7 @@ type SetRow = {
   reps: number | null;
   duration_seconds: number | null;
   completed: boolean;
+  previous?: { weightKg: number | null; reps: number | null } | null;
 };
 type RunnerExercise = {
   id: string;
@@ -45,6 +48,7 @@ type RunnerExercise = {
   repMax: number | null;
   restSeconds: number;
   category: string;
+  cardioCompleted: boolean;
   requiredEquipmentIds: string[];
   detail: ExerciseDetail;
   sets: SetRow[];
@@ -69,13 +73,23 @@ export function WorkoutRunner({
   });
   const [elapsed, setElapsed] = useState(0);
   const [finishing, setFinishing] = useState(false);
+  const [finishOpen, setFinishOpen] = useState(false);
+  const [notes, setNotes] = useState("");
+  const [confirmCancel, setConfirmCancel] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
   const [syncing, setSyncing] = useState(false);
   const completed = items.reduce(
-    (sum, item) => sum + item.sets.filter((set) => set.completed).length,
+    (sum, item) =>
+      sum +
+      (item.category === "cardio"
+        ? Number(item.cardioCompleted)
+        : item.sets.filter((set) => set.completed).length),
     0,
   );
-  const total = items.reduce((sum, item) => sum + item.sets.length, 0);
+  const total = items.reduce(
+    (sum, item) => sum + (item.category === "cardio" ? 1 : item.sets.length),
+    0,
+  );
   const progress = total ? Math.round((completed / total) * 100) : 0;
   useEffect(() => {
     const id = setInterval(
@@ -208,11 +222,13 @@ export function WorkoutRunner({
     else toast.success("Exercício pulado");
   }
   async function finish() {
+    if (completed === 0) return;
     setFinishing(true);
     await syncQueue();
     const { error } = await createClient().rpc("finish_workout", {
       p_session_id: sessionId,
-      p_notes: null,
+      p_notes: notes || null,
+      p_confirm_partial: progress < 100,
     });
     if (error) {
       toast.error(error.message);
@@ -221,6 +237,22 @@ export function WorkoutRunner({
     }
     toast.success("Treino concluído");
     router.replace(`/workout-session/${sessionId}/summary`);
+    router.refresh();
+  }
+  async function cancel() {
+    setFinishing(true);
+    await syncQueue();
+    const { error } = await createClient().rpc("cancel_workout", {
+      p_session_id: sessionId,
+      p_reason: notes || null,
+    });
+    if (error) {
+      toast.error(error.message);
+      setFinishing(false);
+      return;
+    }
+    toast.info("Treino cancelado");
+    router.replace("/workouts?view=history");
     router.refresh();
   }
   return (
@@ -249,8 +281,9 @@ export function WorkoutRunner({
               />
             </div>
           </div>
-          <Button variant="danger" onClick={finish} disabled={finishing}>
-            Encerrar
+          <Button variant="secondary" onClick={() => setFinishOpen(true)}>
+            <Flag size={17} />
+            Finalizar
           </Button>
         </div>
       </header>
@@ -263,6 +296,15 @@ export function WorkoutRunner({
               saveSet(item.id, setId, patch, item.restSeconds)
             }
             onSkip={() => skip(item.id)}
+            onCardioComplete={() =>
+              setItems((current) =>
+                current.map((exercise) =>
+                  exercise.id === item.id
+                    ? { ...exercise, cardioCompleted: true }
+                    : exercise,
+                ),
+              )
+            }
             onSubstituted={(replacement) =>
               setItems((current) =>
                 current.map((exercise) =>
@@ -304,6 +346,89 @@ export function WorkoutRunner({
         endsAt={restEnds}
         onSkip={() => setRestEnds(null)}
       />
+      <Sheet
+        open={finishOpen}
+        onOpenChange={(open) => {
+          setFinishOpen(open);
+          if (!open) setConfirmCancel(false);
+        }}
+        title="Finalizar treino"
+      >
+        <div className="rounded-2xl bg-surface-alt p-5">
+          <p className="text-3xl font-semibold">{progress}%</p>
+          <p className="mt-1 text-sm text-muted">
+            {completed} de {total} séries concluídas ·{" "}
+            {
+              items.filter((item) =>
+                item.category === "cardio"
+                  ? item.cardioCompleted
+                  : item.sets.some((set) => set.completed),
+              ).length
+            }{" "}
+            de {items.length} exercícios iniciados
+          </p>
+        </div>
+        {completed === 0 ? (
+          <p className="mt-5 rounded-xl bg-warning/10 p-4 text-sm text-warning">
+            Conclua pelo menos uma série ou atividade antes de finalizar. Se não
+            puder continuar, cancele o treino abaixo.
+          </p>
+        ) : progress < 100 ? (
+          <p className="mt-5 text-sm leading-6 text-muted">
+            Ainda há {total - completed} séries pendentes. Ao confirmar, o
+            histórico mostrará este treino como concluído parcialmente.
+          </p>
+        ) : (
+          <p className="mt-5 text-sm text-muted">
+            Tudo concluído. Ótimo trabalho.
+          </p>
+        )}
+        <label className="mt-5 block text-sm font-medium">
+          Observações (opcional)
+          <textarea
+            className="mt-2 min-h-24 w-full rounded-xl border bg-background p-3 text-sm outline-none focus:ring-2 focus:ring-accent"
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="Como foi o treino?"
+          />
+        </label>
+        <Button
+          className="mt-5 w-full"
+          disabled={finishing || completed === 0}
+          onClick={finish}
+        >
+          {progress < 100 ? "Concluir mesmo assim" : "Concluir treino"}
+        </Button>
+        <div className="mt-7 border-t pt-5">
+          <p className="text-sm font-semibold">Cancelar não é concluir</p>
+          <p className="mt-1 text-xs leading-5 text-muted">
+            O treino ficará registrado como cancelado e não contará no histórico
+            de concluídos nem na frequência.
+          </p>
+          {confirmCancel ? (
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => setConfirmCancel(false)}
+              >
+                Voltar
+              </Button>
+              <Button variant="danger" disabled={finishing} onClick={cancel}>
+                Confirmar cancelamento
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="ghost"
+              className="mt-3 w-full text-danger"
+              onClick={() => setConfirmCancel(true)}
+            >
+              <XCircle size={17} />
+              Cancelar treino
+            </Button>
+          )}
+        </div>
+      </Sheet>
     </>
   );
 }
@@ -311,12 +436,14 @@ function ExerciseCard({
   item,
   onSet,
   onSkip,
+  onCardioComplete,
   onSubstituted,
   onSubstitutionUndone,
 }: {
   item: RunnerExercise;
   onSet: (setId: string, patch: Partial<SetRow>) => void;
   onSkip: () => void;
+  onCardioComplete: () => void;
   onSubstituted: (replacement: {
     exerciseId: string;
     exerciseName: string;
@@ -327,7 +454,10 @@ function ExerciseCard({
   }) => void;
 }) {
   const [menu, setMenu] = useState(false);
-  const completed = item.sets.every((s) => s.completed);
+  const completed =
+    item.category === "cardio"
+      ? item.cardioCompleted
+      : item.sets.every((set) => set.completed);
   if (item.status === "skipped")
     return (
       <Card className="p-5 opacity-60">
@@ -340,18 +470,31 @@ function ExerciseCard({
   return (
     <Card className={completed ? "border-success/50" : ""}>
       <div className="grid gap-4 p-4 sm:grid-cols-[180px_1fr]">
-        <button
-          className="overflow-hidden rounded-xl text-left"
-          aria-label={`Ver execução de ${item.detail.name}`}
-        >
-          <ViewportVideo
-            src={item.detail.mediaUrl}
-            poster={item.detail.posterUrl}
-            mediaType={item.detail.mediaType}
-            className="w-full"
-            priority={item.position === 1}
-          />
-        </button>
+        <ExerciseDetails
+          exercise={item.detail}
+          prescription={{
+            sets: item.targetSets,
+            repMin: item.repMin,
+            repMax: item.repMax,
+            restSeconds: item.restSeconds,
+          }}
+          onEquipmentUnavailable={() => setMenu(true)}
+          onChangeExercise={() => setMenu(true)}
+          trigger={
+            <button
+              className="overflow-hidden rounded-xl text-left"
+              aria-label={`Ver detalhes de ${item.detail.name}`}
+            >
+              <ViewportVideo
+                src={item.detail.mediaUrl}
+                poster={item.detail.posterUrl}
+                mediaType={item.detail.mediaType}
+                className="w-full"
+                priority={item.position === 1}
+              />
+            </button>
+          }
+        />
         <div>
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -379,7 +522,11 @@ function ExerciseCard({
         </div>
       </div>
       {item.category === "cardio" ? (
-        <CardioEntry exerciseId={item.id} />
+        <CardioEntry
+          exerciseId={item.id}
+          completed={item.cardioCompleted}
+          onSaved={onCardioComplete}
+        />
       ) : (
         <div className="border-t px-3 py-2">
           <div className="grid grid-cols-[44px_1fr_1fr_48px] items-center gap-2 px-1 pb-2 text-center text-xs uppercase tracking-wide text-muted">
@@ -391,49 +538,80 @@ function ExerciseCard({
           {item.sets.map((set) => (
             <div
               key={set.id}
-              className="grid grid-cols-[44px_1fr_1fr_48px] items-center gap-2 py-1"
+              className="border-t border-border/50 py-2 first:border-0"
             >
-              <span className="text-center text-sm text-muted">
-                {set.set_number}
-              </span>
-              <Input
-                aria-label={`Carga da série ${set.set_number}`}
-                className="h-11 text-center"
-                inputMode="decimal"
-                type="number"
-                step="0.5"
-                value={set.weight_kg ?? ""}
-                onChange={(e) =>
-                  onSet(set.id, {
-                    weight_kg: e.target.value === "" ? null : +e.target.value,
-                  })
-                }
-              />
-              <Input
-                aria-label={`Repetições da série ${set.set_number}`}
-                className="h-11 text-center"
-                inputMode="numeric"
-                type="number"
-                value={set.reps ?? ""}
-                onChange={(e) =>
-                  onSet(set.id, {
-                    reps: e.target.value === "" ? null : +e.target.value,
-                  })
-                }
-              />
-              <button
-                onClick={() => onSet(set.id, { completed: !set.completed })}
-                aria-label={`${set.completed ? "Desmarcar" : "Concluir"} série ${set.set_number}`}
-                className={`grid size-11 place-items-center rounded-xl ${set.completed ? "bg-success text-white" : "bg-surface-alt text-muted"}`}
-              >
-                {set.completed ? <Check size={20} /> : <Circle size={20} />}
-              </button>
+              <div className="grid grid-cols-[44px_1fr_1fr_48px] items-center gap-2">
+                <span className="text-center text-sm text-muted">
+                  {set.set_number}
+                </span>
+                <Input
+                  aria-label={`Carga da série ${set.set_number}`}
+                  className="h-11 text-center"
+                  inputMode="decimal"
+                  type="number"
+                  step="0.5"
+                  value={set.weight_kg ?? ""}
+                  onChange={(e) =>
+                    onSet(set.id, {
+                      weight_kg: e.target.value === "" ? null : +e.target.value,
+                    })
+                  }
+                />
+                <Input
+                  aria-label={`Repetições da série ${set.set_number}`}
+                  className="h-11 text-center"
+                  inputMode="numeric"
+                  type="number"
+                  value={set.reps ?? ""}
+                  onChange={(e) =>
+                    onSet(set.id, {
+                      reps: e.target.value === "" ? null : +e.target.value,
+                    })
+                  }
+                />
+                <button
+                  onClick={() => onSet(set.id, { completed: !set.completed })}
+                  aria-label={`${set.completed ? "Desmarcar" : "Concluir"} série ${set.set_number}`}
+                  className={`grid size-11 place-items-center rounded-xl ${set.completed ? "bg-success text-white" : "bg-surface-alt text-muted"}`}
+                >
+                  {set.completed ? <Check size={20} /> : <Circle size={20} />}
+                </button>
+              </div>
+              {set.previous && (
+                <div className="ml-11 mt-1 flex items-center justify-between gap-2 px-2 text-xs text-muted">
+                  <span>
+                    Anterior: {set.previous.weightKg ?? "—"} kg ·{" "}
+                    {set.previous.reps ?? "—"} reps
+                  </span>
+                  <button
+                    className="min-h-9 rounded-lg px-3 font-semibold text-accent"
+                    onClick={() =>
+                      onSet(set.id, {
+                        weight_kg: set.previous?.weightKg ?? null,
+                        reps: set.previous?.reps ?? null,
+                      })
+                    }
+                  >
+                    Repetir
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
       )}
       <div className="flex items-center justify-between border-t p-3">
-        <ExerciseDetails exercise={item.detail} />
+        <ExerciseDetails
+          exercise={item.detail}
+          prescription={{
+            sets: item.targetSets,
+            repMin: item.repMin,
+            repMax: item.repMax,
+            restSeconds: item.restSeconds,
+          }}
+          onEquipmentUnavailable={() => setMenu(true)}
+          onChangeExercise={() => setMenu(true)}
+        />
         <Button variant="ghost" onClick={() => setMenu(true)}>
           <SwitchCamera size={17} />
           Trocar
@@ -464,7 +642,15 @@ function ExerciseCard({
     </Card>
   );
 }
-function CardioEntry({ exerciseId }: { exerciseId: string }) {
+function CardioEntry({
+  exerciseId,
+  completed,
+  onSaved,
+}: {
+  exerciseId: string;
+  completed: boolean;
+  onSaved: () => void;
+}) {
   const [minutes, setMinutes] = useState("");
   const [distance, setDistance] = useState("");
   const [incline, setIncline] = useState("");
@@ -491,7 +677,10 @@ function CardioEntry({ exerciseId }: { exerciseId: string }) {
         { onConflict: "session_exercise_id" },
       );
     if (error) toast.error(error.message);
-    else toast.success("Cardio salvo");
+    else {
+      onSaved();
+      toast.success("Cardio salvo");
+    }
   }
   return (
     <div className="grid grid-cols-2 gap-3 border-t p-4 sm:grid-cols-5">
@@ -550,7 +739,7 @@ function CardioEntry({ exerciseId }: { exerciseId: string }) {
         />
       </label>
       <Button className="col-span-2 sm:col-span-5" onClick={save}>
-        Salvar cardio
+        {completed ? "Cardio salvo" : "Salvar cardio"}
       </Button>
     </div>
   );

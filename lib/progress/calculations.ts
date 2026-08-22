@@ -30,6 +30,60 @@ export function bodyMassIndex(weightKg: number, heightCm: number) {
   return weightKg / (heightCm / 100) ** 2;
 }
 
+export type AdultBmiCategory =
+  | "Abaixo do peso"
+  | "Faixa saudável"
+  | "Sobrepeso"
+  | "Obesidade classe 1"
+  | "Obesidade classe 2"
+  | "Obesidade classe 3";
+
+export function adultBmiCategory(
+  bmi: number | null,
+  age: number | null,
+): AdultBmiCategory | null {
+  if (
+    bmi === null ||
+    !Number.isFinite(bmi) ||
+    bmi <= 0 ||
+    age === null ||
+    age < 20
+  )
+    return null;
+  if (bmi < 18.5) return "Abaixo do peso";
+  if (bmi < 25) return "Faixa saudável";
+  if (bmi < 30) return "Sobrepeso";
+  if (bmi < 35) return "Obesidade classe 1";
+  if (bmi < 40) return "Obesidade classe 2";
+  return "Obesidade classe 3";
+}
+
+export function weightChange(
+  measurements: { weight: number; measuredAt: string }[],
+  days: number,
+  now = new Date(),
+) {
+  const valid = measurements
+    .filter(
+      (item) =>
+        Number.isFinite(item.weight) &&
+        item.weight > 0 &&
+        !Number.isNaN(new Date(item.measuredAt).getTime()),
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.measuredAt).getTime() - new Date(b.measuredAt).getTime(),
+    );
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - days);
+  const withinWindow = valid.filter(
+    (item) =>
+      new Date(item.measuredAt) >= cutoff && new Date(item.measuredAt) <= now,
+  );
+  if (withinWindow.length < 2) return null;
+  return withinWindow.at(-1)!.weight - withinWindow[0].weight;
+}
+
 export function ageInYears(birthDate: string, now = new Date()) {
   const birth = new Date(`${birthDate}T00:00:00Z`);
   if (Number.isNaN(birth.getTime()) || birth > now) return null;

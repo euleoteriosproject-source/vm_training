@@ -1,4 +1,4 @@
--- Canonical ACL contract established by R3 and extended by v1.7.
+-- Canonical ACL contract established by R3 and extended by v1.8.
 begin;
 select plan(30);
 
@@ -113,8 +113,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  26,
-  'canonical function ACL has exactly 26 grants'
+  27,
+  'canonical function ACL has exactly 27 grants'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),
@@ -133,8 +133,10 @@ select ok(has_table_privilege('service_role', 'public.workout_substitution_event
   'service_role can manage substitution audit events operationally');
 select ok(
   has_function_privilege('authenticated', 'public.substitute_workout_exercise(uuid,text,uuid,uuid[])', 'execute')
-  and has_function_privilege('authenticated', 'public.undo_workout_substitution(uuid)', 'execute'),
-  'authenticated can execute the ownership-checked substitution RPCs'
+  and has_function_privilege('authenticated', 'public.undo_workout_substitution(uuid)', 'execute')
+  and has_function_privilege('authenticated', 'public.finish_workout(uuid,text,boolean)', 'execute')
+  and has_function_privilege('authenticated', 'public.cancel_workout(uuid,text)', 'execute'),
+  'authenticated can execute the ownership-checked workout RPCs'
 );
 
 select * from finish();

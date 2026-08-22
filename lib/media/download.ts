@@ -74,9 +74,7 @@ export async function downloadMedia(
       if (attempt === retries - 1) throw error;
       const retryAfter = (error as RetryableDownloadError).retryAfterMs;
       await sleep(
-        retryAfter
-          ? Math.min(15 * 60_000, retryAfter)
-          : 500 * 2 ** attempt,
+        retryAfter ? Math.min(15 * 60_000, retryAfter) : 500 * 2 ** attempt,
       );
     } finally {
       clearTimeout(timer);

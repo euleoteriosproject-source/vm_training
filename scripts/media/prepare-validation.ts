@@ -2,10 +2,7 @@ import { createHash } from "node:crypto";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { downloadMedia } from "../../lib/media/download.ts";
-import {
-  generateContactSheet,
-  probeMedia,
-} from "../../lib/media/ffmpeg.ts";
+import { generateContactSheet, probeMedia } from "../../lib/media/ffmpeg.ts";
 import { getAdminClient, parseArgs } from "./shared.ts";
 
 type Candidate = {
@@ -61,7 +58,9 @@ if (client) {
   try {
     const { data, error } = await client
       .from("exercise_media")
-      .select("id,exercise_id,source_url,status,media_role,exercises!inner(slug)");
+      .select(
+        "id,exercise_id,source_url,status,media_role,exercises!inner(slug)",
+      );
     if (error) throw error;
     databaseRows = (data ?? []) as DatabaseRow[];
     databaseAvailable = true;
@@ -104,7 +103,10 @@ for (const exercise of artifact.exercises) {
           ? ".mp4"
           : ".webm";
     const exerciseDirectory = path.join(originalRoot, exercise.slug);
-    const originalPath = path.join(exerciseDirectory, `${candidateId}${extension}`);
+    const originalPath = path.join(
+      exerciseDirectory,
+      `${candidateId}${extension}`,
+    );
     const contactSheetPath = path.join(contactSheetRoot, `${candidateId}.webp`);
     await mkdir(exerciseDirectory, { recursive: true });
 
@@ -125,7 +127,7 @@ for (const exercise of artifact.exercises) {
               mime: candidate.mime,
               finalUrl: candidate.originalFileUrl,
             }
-            : await downloadMedia(candidate.originalFileUrl, {
+          : await downloadMedia(candidate.originalFileUrl, {
               maxMb: 500,
               timeoutMs: 120_000,
               retries: 3,
@@ -175,7 +177,9 @@ for (const exercise of artifact.exercises) {
       discoveryScore: candidate.score,
       discoveryConfidence: candidate.confidence,
       declaredMime: candidate.mime,
-      originalPath: technical ? path.relative(process.cwd(), originalPath) : null,
+      originalPath: technical
+        ? path.relative(process.cwd(), originalPath)
+        : null,
       contactSheetPath: technical
         ? path.relative(process.cwd(), contactSheetPath)
         : null,

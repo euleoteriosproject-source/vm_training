@@ -22,27 +22,33 @@ export default async function MediaReviewPage({
     .single();
   if (currentProfile?.role !== "admin") redirect("/today");
   const supabase = createAdminClient();
-  const [{ data: media }, { data: exercises }, { data: plans }, { data: profiles }] =
-    await Promise.all([
-      supabase
-        .from("exercise_media")
-        .select(
-          "id,status,storage_path,source_name,source_url,original_file_url,license_code,license_url,author,attribution_text,match_score,match_details,candidate_metadata,width,height,duration_seconds,quality_score,media_role,execution_quality,processing_error,exercise:exercises(id,name_pt,slug,movement_pattern,primary_muscles,exercise_equipment(equipment(name)))",
-        )
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("exercises")
-        .select(
-          "id,name_pt,active,movement_pattern,primary_muscles,execution_instructions,exercise_equipment(equipment_id),exercise_media(status,media_role,execution_quality,is_primary)",
-        )
-        .order("name_pt"),
-      supabase
-        .from("workout_plans")
-        .select("user_id,status,workout_days(workout_day_exercises(exercise_id))")
-        .in("status", ["active", "draft"]),
-      supabase.from("profiles").select("user_id,email,display_name"),
-    ]);
-  const profileById = new Map((profiles ?? []).map((profile) => [profile.user_id, profile]));
+  const [
+    { data: media },
+    { data: exercises },
+    { data: plans },
+    { data: profiles },
+  ] = await Promise.all([
+    supabase
+      .from("exercise_media")
+      .select(
+        "id,status,storage_path,source_name,source_url,original_file_url,license_code,license_url,author,attribution_text,match_score,match_details,candidate_metadata,width,height,duration_seconds,quality_score,media_role,execution_quality,processing_error,exercise:exercises(id,name_pt,slug,movement_pattern,primary_muscles,exercise_equipment(equipment(name)))",
+      )
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("exercises")
+      .select(
+        "id,name_pt,active,movement_pattern,primary_muscles,execution_instructions,exercise_equipment(equipment_id),exercise_media(status,media_role,execution_quality,is_primary)",
+      )
+      .order("name_pt"),
+    supabase
+      .from("workout_plans")
+      .select("user_id,status,workout_days(workout_day_exercises(exercise_id))")
+      .in("status", ["active", "draft"]),
+    supabase.from("profiles").select("user_id,email,display_name"),
+  ]);
+  const profileById = new Map(
+    (profiles ?? []).map((profile) => [profile.user_id, profile]),
+  );
   const neededBy = new Map<string, Set<string>>();
   for (const plan of plans ?? []) {
     const profile = profileById.get(plan.user_id);
@@ -51,7 +57,7 @@ export default async function MediaReviewPage({
         ? "VINICIUS"
         : profile?.email === "lisepaiva@hotmail.com"
           ? "MARLISE"
-          : profile?.display_name?.toUpperCase() ?? "OUTRO PLANO";
+          : (profile?.display_name?.toUpperCase() ?? "OUTRO PLANO");
     for (const day of plan.workout_days ?? [])
       for (const item of day.workout_day_exercises ?? []) {
         const owners = neededBy.get(item.exercise_id) ?? new Set<string>();

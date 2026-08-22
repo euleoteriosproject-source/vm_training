@@ -8,9 +8,11 @@ import { createClient } from "@/lib/supabase/client";
 export function StartButton({
   dayId,
   className,
+  label = "Iniciar treino",
 }: {
   dayId: string;
   className?: string;
+  label?: string;
 }) {
   const [busy, setBusy] = useState(false);
   const router = useRouter();
@@ -29,7 +31,7 @@ export function StartButton({
   return (
     <Button size="lg" className={className} disabled={busy} onClick={start}>
       <Play size={18} fill="currentColor" />
-      {busy ? "Preparando…" : "Iniciar treino"}
+      {busy ? "Preparando…" : label}
     </Button>
   );
 }

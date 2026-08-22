@@ -9,7 +9,9 @@ try {
 
 const modeArg = process.argv.indexOf("--mode");
 const mode = modeArg >= 0 ? process.argv[modeArg + 1] : "local";
-if (!(["local", "production"] as const).includes(mode as "local" | "production"))
+if (
+  !(["local", "production"] as const).includes(mode as "local" | "production")
+)
   throw new Error("Use --mode local ou --mode production");
 
 function assertProductionConfiguration() {
@@ -32,9 +34,13 @@ function assertProductionConfiguration() {
   if (app.protocol !== "https:")
     throw new Error("NEXT_PUBLIC_APP_URL de Production deve usar HTTPS");
   if (process.env.SUPABASE_AUTH_HOOK_VERIFIED !== "true")
-    throw new Error("Confirme o Before User Created Hook com SUPABASE_AUTH_HOOK_VERIFIED=true");
+    throw new Error(
+      "Confirme o Before User Created Hook com SUPABASE_AUTH_HOOK_VERIFIED=true",
+    );
   if (process.env.E2E_MEDIA_TEST !== "true")
-    throw new Error("Production exige E2E_MEDIA_TEST=true e Media E2E sem skip");
+    throw new Error(
+      "Production exige E2E_MEDIA_TEST=true e Media E2E sem skip",
+    );
 }
 
 if (mode === "production") assertProductionConfiguration();

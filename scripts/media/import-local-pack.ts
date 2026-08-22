@@ -96,34 +96,32 @@ for (const entry of manifest.entries) {
         cacheControl: "31536000",
       });
     if (posterResult.error) throw posterResult.error;
-    const { error } = await client!
-      .from("exercise_media")
-      .insert({
-        exercise_id: exercise.id,
-        media_type: "video",
-        storage_path: `${storageBase}/main.mp4`,
-        poster_path: `${storageBase}/poster.webp`,
-        angle: "main",
-        status: "reviewing",
-        source_name: manifest.name,
-        source_type: license.sourceType,
-        source_url: `local-pack://${manifest.name}/${manifest.version}`,
-        license_code: license.code,
-        license_url: license.url,
-        author: entry.author ?? null,
-        attribution_text: entry.attribution ?? null,
-        attribution_required: license.attributionRequired,
-        downloaded_at: new Date().toISOString(),
-        content_hash: hash,
-        width: meta.width,
-        height: meta.height,
-        duration_seconds: meta.durationSeconds,
-        file_size_bytes: meta.fileSizeBytes,
-        candidate_metadata: {
-          packVersion: manifest.version,
-          originalFilename: entry.file,
-        },
-      });
+    const { error } = await client!.from("exercise_media").insert({
+      exercise_id: exercise.id,
+      media_type: "video",
+      storage_path: `${storageBase}/main.mp4`,
+      poster_path: `${storageBase}/poster.webp`,
+      angle: "main",
+      status: "reviewing",
+      source_name: manifest.name,
+      source_type: license.sourceType,
+      source_url: `local-pack://${manifest.name}/${manifest.version}`,
+      license_code: license.code,
+      license_url: license.url,
+      author: entry.author ?? null,
+      attribution_text: entry.attribution ?? null,
+      attribution_required: license.attributionRequired,
+      downloaded_at: new Date().toISOString(),
+      content_hash: hash,
+      width: meta.width,
+      height: meta.height,
+      duration_seconds: meta.durationSeconds,
+      file_size_bytes: meta.fileSizeBytes,
+      candidate_metadata: {
+        packVersion: manifest.version,
+        originalFilename: entry.file,
+      },
+    });
     if (error) throw error;
     log("UPLOAD", `${entry.exerciseSlug}: enviado para revisão`);
   } catch (error) {

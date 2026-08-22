@@ -36,9 +36,7 @@ type Artifact = {
 const client = getAdminClient();
 const args = parseArgs();
 const artifactPath = args.input ?? "data/media/media-candidates.json";
-const artifact = JSON.parse(
-  await readFile(artifactPath, "utf8"),
-) as Artifact;
+const artifact = JSON.parse(await readFile(artifactPath, "utf8")) as Artifact;
 const { data: exercises, error: exerciseError } = await client!
   .from("exercises")
   .select("id,slug");

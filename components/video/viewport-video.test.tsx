@@ -30,9 +30,9 @@ describe("ExercisePreviewVideo", () => {
       container.querySelector('button[aria-label="Reproduzir demonstração"]'),
     ).toBeInTheDocument();
   });
-  it("uses a neutral review state instead of generic animation", () => {
+  it("uses a compact, user-facing fallback without technical status", () => {
     const { getByText } = render(<ExercisePreviewVideo />);
-    expect(getByText("Demonstração em revisão")).toBeVisible();
+    expect(getByText("Vídeo ainda não disponível")).toBeVisible();
   });
   it("shows the poster before an animated GIF when reduced motion is enabled", () => {
     const { getByRole, getByTestId } = render(

@@ -1,38 +1,29 @@
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { MeasurementForm } from "@/components/progress/measurement-form";
 import { ProgressChart } from "@/components/progress/progress-chart";
 import { createClient } from "@/lib/supabase/server";
 import {
   ageInYears,
+  adultBmiCategory,
   bodyMassIndex,
+  weightChange,
   weightTrend,
 } from "@/lib/progress/calculations";
 export default async function ProgressPage() {
   const supabase = await createClient();
-  const [
-    { data: measurements },
-    { data: sessions },
-    { data: profile },
-    { data: attention },
-  ] = await Promise.all([
-    supabase
-      .from("body_measurements")
-      .select("id,measured_at,weight_kg,waist_cm,hips_cm,clothing_fit,notes")
-      .order("measured_at", { ascending: true }),
-    supabase
-      .from("workout_sessions")
-      .select(
-        "id,started_at,completed_at,duration_seconds,workout_day:workout_days(name),workout_session_exercises(id,actual:exercises!workout_session_exercises_actual_exercise_id_fkey(name_pt),set_logs(weight_kg,reps,completed))",
-      )
-      .eq("status", "completed")
-      .order("completed_at", { ascending: false })
-      .limit(30),
-    supabase.from("profiles").select("height_cm,birth_date").maybeSingle(),
-    supabase
-      .from("user_movement_attention")
-      .select("region")
-      .eq("active", true),
-  ]);
+  const [{ data: measurements }, { data: profile }, { data: attention }] =
+    await Promise.all([
+      supabase
+        .from("body_measurements")
+        .select("id,measured_at,weight_kg,waist_cm,hips_cm,clothing_fit,notes")
+        .order("measured_at", { ascending: true }),
+      supabase.from("profiles").select("height_cm,birth_date").maybeSingle(),
+      supabase
+        .from("user_movement_attention")
+        .select("region")
+        .eq("active", true),
+    ]);
   const chart = (measurements ?? []).map((item) => ({
     date: new Intl.DateTimeFormat("pt-BR", {
       day: "2-digit",
@@ -47,6 +38,13 @@ export default async function ProgressPage() {
       ? bodyMassIndex(Number(current.weight_kg), Number(profile.height_cm))
       : null;
   const age = profile?.birth_date ? ageInYears(profile.birth_date) : null;
+  const bmiCategory = adultBmiCategory(bmi, age);
+  const weightRows = (measurements ?? []).map((item) => ({
+    weight: Number(item.weight_kg),
+    measuredAt: item.measured_at,
+  }));
+  const change30 = weightChange(weightRows, 30);
+  const change90 = weightChange(weightRows, 90);
   const regionNames: Record<string, string> = {
     knee: "joelho",
     shoulder: "ombro",
@@ -79,7 +77,11 @@ export default async function ProgressPage() {
             />
             <SnapshotValue
               label="IMC"
-              value={bmi ? bmi.toFixed(1).replace(".", ",") : "—"}
+              value={
+                bmi
+                  ? `${bmi.toFixed(1).replace(".", ",")}${bmiCategory ? ` · ${bmiCategory}` : ""}`
+                  : "—"
+              }
             />
             <SnapshotValue
               label="Tendência"
@@ -102,13 +104,26 @@ export default async function ProgressPage() {
             </p>
           )}
           {bmi !== null && (
-            <p className="mt-3 rounded-xl bg-surface-alt p-3 text-xs text-muted">
-              O IMC é apenas um indicador de triagem e não substitui uma
-              avaliação profissional.
-              {age !== null && age < 20
-                ? " Por você ter menos de 20 anos, não aplicamos classificação adulta."
-                : ""}
-            </p>
+            <div className="mt-3 rounded-xl bg-surface-alt p-3 text-xs leading-5 text-muted">
+              <p>
+                O IMC é um indicador de triagem, não um diagnóstico. Considere-o
+                junto com seu histórico e uma avaliação profissional.
+              </p>
+              {age !== null && age < 20 && (
+                <p className="mt-2">
+                  Para pessoas de 2 a 19 anos, a interpretação usa percentis por
+                  idade e sexo. Como o perfil não reúne todos esses dados,
+                  mostramos somente o valor e não aplicamos a classificação
+                  adulta.
+                </p>
+              )}
+            </div>
+          )}
+          {(change30 !== null || change90 !== null) && (
+            <div className="mt-4 flex flex-wrap gap-2 text-xs">
+              {change30 !== null && <ChangeBadge days={30} value={change30} />}
+              {change90 !== null && <ChangeBadge days={90} value={change90} />}
+            </div>
           )}
         </Card>
         <Card className="p-5">
@@ -145,42 +160,30 @@ export default async function ProgressPage() {
           <ProgressChart data={chart} dataKey="weight" unit="kg" />
         </Card>
       </section>
-      <section id="history" className="mt-9 scroll-mt-8">
-        <h2 className="text-xl font-semibold">Histórico</h2>
-        <div className="mt-4 space-y-3">
-          {(sessions ?? []).map((session) => {
-            const day = session.workout_day as unknown as {
-              name: string;
-            } | null;
-            const sets =
-              session.workout_session_exercises
-                ?.flatMap((e) => e.set_logs ?? [])
-                .filter((s) => s.completed).length ?? 0;
-            return (
-              <Card key={session.id} className="p-4">
-                <div className="flex justify-between gap-4">
-                  <div>
-                    <p className="font-semibold">{day?.name ?? "Treino"}</p>
-                    <p className="mt-1 text-sm text-muted">
-                      {new Intl.DateTimeFormat("pt-BR", {
-                        dateStyle: "medium",
-                      }).format(new Date(session.completed_at!))}{" "}
-                      · {Math.round((session.duration_seconds ?? 0) / 60)} min
-                    </p>
-                  </div>
-                  <span className="text-sm text-muted">{sets} séries</span>
-                </div>
-              </Card>
-            );
-          })}
-          {!sessions?.length && (
-            <Card className="p-8 text-center text-muted">
-              Seu primeiro treino concluído aparecerá aqui.
-            </Card>
-          )}
+      <Card className="mt-7 flex flex-wrap items-center justify-between gap-4 p-5">
+        <div>
+          <h2 className="font-semibold">Histórico de treinos</h2>
+          <p className="mt-1 text-sm text-muted">
+            Consulte séries, carga, volume e repita sessões anteriores.
+          </p>
         </div>
-      </section>
+        <Link
+          href="/workouts?view=history"
+          className="inline-flex min-h-11 items-center rounded-xl bg-surface-alt px-4 text-sm font-semibold"
+        >
+          Ver histórico
+        </Link>
+      </Card>
     </div>
+  );
+}
+
+function ChangeBadge({ days, value }: { days: number; value: number }) {
+  const formatted = `${value > 0 ? "+" : ""}${value.toFixed(1).replace(".", ",")} kg`;
+  return (
+    <span className="rounded-full bg-background px-3 py-1.5 text-muted">
+      {days} dias: <strong className="text-foreground">{formatted}</strong>
+    </span>
   );
 }
 

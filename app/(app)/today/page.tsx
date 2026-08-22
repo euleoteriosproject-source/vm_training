@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Activity, ArrowRight, CalendarCheck, Timer } from "lucide-react";
+import { Activity, ArrowRight, CalendarCheck, Play, Timer } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { GeneratePlanButton } from "@/components/workout/generate-plan-button";
 import { StartButton } from "@/components/workout/start-button";
 import {
   ageInYears,
+  adultBmiCategory,
   bodyMassIndex,
   weeklyFrequency,
   weightTrend,
@@ -23,6 +24,7 @@ export default async function TodayPage() {
     { data: profile },
     { data: plans },
     { data: sessions },
+    { data: inProgress },
     { data: measurements },
   ] = await Promise.all([
     supabase
@@ -42,6 +44,13 @@ export default async function TodayPage() {
       .eq("status", "completed")
       .not("completed_at", "is", null)
       .gte("completed_at", since.toISOString()),
+    supabase
+      .from("workout_sessions")
+      .select("id,started_at,workout_day:workout_days(name)")
+      .eq("status", "in_progress")
+      .order("started_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
     supabase
       .from("body_measurements")
       .select("weight_kg,measured_at")
@@ -71,6 +80,7 @@ export default async function TodayPage() {
         )
       : null;
   const age = profile?.birth_date ? ageInYears(profile.birth_date, now) : null;
+  const bmiCategory = adultBmiCategory(bmi, age);
 
   return (
     <div>
@@ -85,6 +95,34 @@ export default async function TodayPage() {
         Olá,{" "}
         {profile?.display_name?.split(" ")[0] ?? user?.email?.split("@")[0]}
       </h1>
+
+      {inProgress && (
+        <Card className="mt-8 border-accent/40 bg-accent/10 p-5">
+          <p className="text-sm font-medium text-accent">Treino em andamento</p>
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold">
+                {(inProgress.workout_day as unknown as { name: string } | null)
+                  ?.name ?? "Treino"}
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                Iniciado às{" "}
+                {new Intl.DateTimeFormat("pt-BR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }).format(new Date(inProgress.started_at))}
+              </p>
+            </div>
+            <Link
+              href={`/workout-session/${inProgress.id}`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-accent-foreground"
+            >
+              <Play size={17} fill="currentColor" />
+              Retomar treino
+            </Link>
+          </div>
+        </Card>
+      )}
 
       {next ? (
         <Card className="relative mt-8 overflow-hidden p-6 md:p-8">
@@ -157,6 +195,9 @@ export default async function TodayPage() {
               <p className="mt-1 font-semibold">
                 {bmi ? bmi.toFixed(1).replace(".", ",") : "—"}
               </p>
+              {bmiCategory && (
+                <p className="mt-0.5 text-[11px] text-muted">{bmiCategory}</p>
+              )}
             </div>
             <div>
               <p className="text-xs text-muted">Tendência</p>

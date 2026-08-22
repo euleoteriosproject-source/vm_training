@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import { Play } from "lucide-react";
+import { ImageOff, Play } from "lucide-react";
 
 function subscribeMotion(callback: () => void) {
   const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -71,9 +71,10 @@ export function ExercisePreviewVideo({
   if (!src)
     return (
       <div
-        className={`grid aspect-video place-items-center bg-surface-alt px-4 text-center text-xs text-muted ${className}`}
+        className={`flex min-h-20 items-center justify-center gap-2 bg-surface-alt px-4 text-center text-xs text-muted ${className}`}
       >
-        <span>Demonstração em revisão</span>
+        <ImageOff size={16} className="shrink-0" />
+        <span>Vídeo ainda não disponível</span>
       </div>
     );
   if (mediaType === "gif")

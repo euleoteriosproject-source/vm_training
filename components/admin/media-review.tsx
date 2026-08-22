@@ -460,7 +460,10 @@ function CandidateReview({
                 Algorithm Match {item.matchScore ?? 0}%
               </p>
               <p className="mt-1 text-muted">
-                Technical Review: {item.executionQuality === "unreviewed" ? "Pending" : item.executionQuality}
+                Technical Review:{" "}
+                {item.executionQuality === "unreviewed"
+                  ? "Pending"
+                  : item.executionQuality}
               </p>
             </div>
           </div>

@@ -11,7 +11,7 @@ export default async function SessionPage({
   const { data: session } = await supabase
     .from("workout_sessions")
     .select(
-      "id,started_at,status,workout_day:workout_days(name),workout_session_exercises(id,planned_exercise_id,actual_exercise_id,position,status,actual:exercises!workout_session_exercises_actual_exercise_id_fkey(id,name_pt,category,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(required,equipment(id,name)),exercise_media(id,storage_path,poster_path,status,media_type,media_role,execution_quality,sort_order,is_primary,author,source_name,source_url,license_code,license_url,attribution_text)),set_logs(id,set_number,weight_kg,reps,duration_seconds,completed))",
+      "id,started_at,status,workout_day_id,workout_day:workout_days(name),workout_session_exercises(id,planned_exercise_id,actual_exercise_id,position,status,actual:exercises!workout_session_exercises_actual_exercise_id_fkey(id,name_pt,category,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(required,equipment(id,name)),exercise_media(id,storage_path,poster_path,status,media_type,media_role,execution_quality,sort_order,is_primary,author,source_name,source_url,license_code,license_url,attribution_text)),set_logs(id,set_number,weight_kg,reps,duration_seconds,completed),cardio_logs(duration_seconds))",
     )
     .eq("id", id)
     .maybeSingle();
@@ -19,6 +19,46 @@ export default async function SessionPage({
   const raw = (session.workout_session_exercises ?? []).sort(
     (a, b) => a.position - b.position,
   );
+  const [{ data: plannedRows }, { data: priorSessions }] = await Promise.all([
+    supabase
+      .from("workout_day_exercises")
+      .select("exercise_id,position,target_sets,rep_min,rep_max,rest_seconds")
+      .eq("workout_day_id", session.workout_day_id!),
+    supabase
+      .from("workout_sessions")
+      .select(
+        "started_at,workout_session_exercises(actual_exercise_id,set_logs(set_number,weight_kg,reps,completed))",
+      )
+      .eq("status", "completed")
+      .lt("started_at", session.started_at)
+      .order("started_at", { ascending: false })
+      .limit(30),
+  ]);
+  const plannedByPosition = new Map(
+    (plannedRows ?? []).map((row) => [row.position, row]),
+  );
+  const previousByExercise = new Map<
+    string,
+    Map<number, { weightKg: number | null; reps: number | null }>
+  >();
+  for (const priorSession of priorSessions ?? []) {
+    for (const priorExercise of priorSession.workout_session_exercises ?? []) {
+      if (previousByExercise.has(priorExercise.actual_exercise_id)) continue;
+      const completedSets = (priorExercise.set_logs ?? []).filter(
+        (set) => set.completed,
+      );
+      if (!completedSets.length) continue;
+      previousByExercise.set(
+        priorExercise.actual_exercise_id,
+        new Map(
+          completedSets.map((set) => [
+            set.set_number,
+            { weightKg: set.weight_kg, reps: set.reps },
+          ]),
+        ),
+      );
+    }
+  }
   const exercises = await Promise.all(
     raw.map(async (row) => {
       const actual = row.actual as unknown as {
@@ -83,17 +123,22 @@ export default async function SessionPage({
         mediaUrl = video?.signedUrl ?? null;
         posterUrl = poster?.signedUrl ?? null;
       }
+      const planned = plannedByPosition.get(row.position);
+      const previous = previousByExercise.get(row.actual_exercise_id);
       return {
         id: row.id,
         actualExerciseId: row.actual_exercise_id,
         plannedExerciseId: row.planned_exercise_id,
         position: row.position,
         status: row.status,
-        targetSets: (row.set_logs ?? []).length,
-        repMin: 8,
-        repMax: 12,
-        restSeconds: 75,
+        targetSets: planned?.target_sets ?? (row.set_logs ?? []).length,
+        repMin: planned?.rep_min ?? null,
+        repMax: planned?.rep_max ?? null,
+        restSeconds: planned?.rest_seconds ?? 60,
         category: actual?.category ?? "strength",
+        cardioCompleted: (row.cardio_logs ?? []).some(
+          (log) => log.duration_seconds > 0,
+        ),
         requiredEquipmentIds: (actual?.exercise_equipment ?? [])
           .filter((entry) => entry.required)
           .flatMap((entry) => {
@@ -137,7 +182,12 @@ export default async function SessionPage({
               }
             : null,
         },
-        sets: (row.set_logs ?? []).sort((a, b) => a.set_number - b.set_number),
+        sets: (row.set_logs ?? [])
+          .sort((a, b) => a.set_number - b.set_number)
+          .map((set) => ({
+            ...set,
+            previous: previous?.get(set.set_number) ?? null,
+          })),
       };
     }),
   );

@@ -6,7 +6,8 @@ type ValidationCandidate = {
   exerciseSlug: string;
   sourceUrl: string;
   decision: "APPROVE" | "REJECT" | "KEEP_PENDING";
-  recommendedRole: "PRIMARY_DEMO" | "EDUCATIONAL" | "ALTERNATIVE_VARIATION" | null;
+  recommendedRole:
+    "PRIMARY_DEMO" | "EDUCATIONAL" | "ALTERNATIVE_VARIATION" | null;
   executionQuality: "approved" | "acceptable" | "rejected";
   trimStart: number | null;
   trimEnd: number | null;
@@ -62,8 +63,7 @@ const reviewedMediaIds = new Set(
 const byIdentity = new Map(
   (rows ?? []).map((row) => {
     const relation = row.exercises as unknown as
-      | { slug: string }
-      | { slug: string }[];
+      { slug: string } | { slug: string }[];
     const slug = Array.isArray(relation) ? relation[0]?.slug : relation?.slug;
     return [`${slug}\0${row.source_url}`, row];
   }),
@@ -89,7 +89,9 @@ const primaryChecklist = (candidate: ValidationCandidate) => ({
 let changed = 0;
 let unchanged = 0;
 for (const candidate of result.candidates) {
-  const row = byIdentity.get(`${candidate.exerciseSlug}\0${candidate.sourceUrl}`);
+  const row = byIdentity.get(
+    `${candidate.exerciseSlug}\0${candidate.sourceUrl}`,
+  );
   if (!row)
     throw new Error(
       `Database candidate missing: ${candidate.exerciseSlug}/${candidate.candidateId}`,
