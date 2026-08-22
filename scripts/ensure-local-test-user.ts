@@ -20,10 +20,43 @@ const { data: profile, error: profileError } = await adminClient
 if (profileError) throw profileError;
 const { data: authUser, error: userError } =
   await adminClient.auth.admin.getUserById(profile.user_id);
-if (userError || !authUser.user.email)
+if (userError || !authUser.user?.email)
   throw userError ?? new Error("Usuário admin local sem e-mail");
+const authEmail = authUser.user.email;
 
 const password = randomBytes(24).toString("base64url");
+const signupPassword = `VmE2E${randomBytes(18).toString("base64url")}7`;
+const signupEmails = {
+  mobile: "v172-mobile@example.test",
+  desktop: "v172-desktop@example.test",
+};
+async function writeE2EEnv(sessionId?: string) {
+  await mkdir(".tmp", { recursive: true });
+  await writeFile(
+    ".tmp/e2e.local.env",
+    [
+      `E2E_TEST_EMAIL=${authEmail}`,
+      `E2E_TEST_PASSWORD=${password}`,
+      `E2E_SIGNUP_EMAIL_MOBILE=${signupEmails.mobile}`,
+      `E2E_SIGNUP_EMAIL_DESKTOP=${signupEmails.desktop}`,
+      `E2E_SIGNUP_PASSWORD=${signupPassword}`,
+      `E2E_MEDIA_TEST=${sessionId ? "true" : "false"}`,
+      ...(sessionId ? [`E2E_SESSION_ID=${sessionId}`] : []),
+      "",
+    ].join("\n"),
+  );
+}
+const { data: users, error: listUsersError } =
+  await adminClient.auth.admin.listUsers();
+if (listUsersError) throw listUsersError;
+for (const user of users.users) {
+  if (user.email && Object.values(signupEmails).includes(user.email)) {
+    const { error: deleteUserError } = await adminClient.auth.admin.deleteUser(
+      user.id,
+    );
+    if (deleteUserError) throw deleteUserError;
+  }
+}
 const { error: passwordError } = await adminClient.auth.admin.updateUserById(
   profile.user_id,
   { password, email_confirm: true },
@@ -33,7 +66,7 @@ const userClient = createClient(url, publishableKey, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 const { error: signInError } = await userClient.auth.signInWithPassword({
-  email: authUser.user.email,
+  email: authEmail,
   password,
 });
 if (signInError) throw signInError;
@@ -44,14 +77,12 @@ const { error: onboardingError } = await userClient.rpc("complete_onboarding", {
     birthDate: "1990-01-01",
     heightCm: 175,
     weightKg: 75,
-    goals: [{ code: "general_health", priority: 1 }],
+    goalCode: "general_health",
     sessionsPerWeek: 2,
     sessionMinutes: 45,
-    cardioPreference: 3,
     experience: "returning",
-    trainingLocation: "full_gym",
-    equipmentIds: [],
-    exercisePreferences: [],
+    gymCategory: "academia_completa",
+    movementAttention: [],
   },
 });
 if (onboardingError) throw onboardingError;
@@ -67,7 +98,13 @@ if (mediaError) throw mediaError;
 const exerciseIds = [
   ...new Set((approved ?? []).map((item) => item.exercise_id)),
 ];
-if (!exerciseIds.length) throw new Error("Nenhuma PRIMARY_DEMO local aprovada");
+if (!exerciseIds.length) {
+  await writeE2EEnv();
+  process.stdout.write(
+    "Usuário e onboarding E2E locais confirmados; mídia local indisponível.\n",
+  );
+  process.exit(0);
+}
 
 await userClient
   .from("workout_plans")
@@ -121,11 +158,7 @@ const { data: sessionId, error: sessionError } = await userClient.rpc(
 );
 if (sessionError) throw sessionError;
 
-await mkdir(".tmp", { recursive: true });
-await writeFile(
-  ".tmp/e2e.local.env",
-  `E2E_TEST_EMAIL=${authUser.user.email}\nE2E_TEST_PASSWORD=${password}\nE2E_MEDIA_TEST=true\nE2E_SESSION_ID=${sessionId}\n`,
-);
+await writeE2EEnv(sessionId);
 process.stdout.write(
   "Usuário, onboarding e plano E2E locais confirmados sem exibir credenciais.\n",
 );
