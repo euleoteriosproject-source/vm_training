@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet } from "@/components/ui/sheet";
 import { createClient } from "@/lib/supabase/client";
+import { strongPasswordSchema } from "@/lib/validation/schemas";
 export function AccountSettings() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
@@ -21,12 +22,15 @@ export function AccountSettings() {
   }
   async function updatePassword(data: FormData) {
     const value = String(data.get("password"));
-    if (value.length < 8) {
-      toast.error("Use ao menos 8 caracteres");
+    const parsed = strongPasswordSchema.safeParse(value);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Revise a nova senha");
       return;
     }
-    const { error } = await createClient().auth.updateUser({ password: value });
-    if (error) toast.error(error.message);
+    const { error } = await createClient().auth.updateUser({
+      password: parsed.data,
+    });
+    if (error) toast.error("Não foi possível atualizar a senha agora.");
     else toast.success("Senha atualizada");
   }
   async function remove() {
@@ -82,6 +86,9 @@ export function AccountSettings() {
           />
           <Button>Atualizar</Button>
         </form>
+        <p className="mt-2 text-xs text-muted">
+          Use 12 ou mais caracteres, com maiúscula, minúscula e número.
+        </p>
       </section>
       <section className="rounded-2xl border bg-surface p-5">
         <h2 className="font-semibold">Sessão</h2>

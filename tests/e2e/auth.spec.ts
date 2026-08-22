@@ -7,17 +7,16 @@ test.describe("Supabase authentication", () => {
   test("allowed user can sign in", async ({ page }) => {
     const authRequests: string[] = [];
     page.on("request", (request) => {
-      if (request.url().includes("/auth/v1/"))
-        authRequests.push(request.url());
+      if (request.url().includes("/auth/v1/")) authRequests.push(request.url());
     });
     await page.goto("/login");
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
     await expect(page).toHaveURL(/today|onboarding/, { timeout: 15000 });
-    expect(authRequests.some((url) => url.includes("/supabase/auth/v1/token"))).toBe(
-      true,
-    );
+    expect(
+      authRequests.some((url) => url.includes("/supabase/auth/v1/token")),
+    ).toBe(true);
     expect(
       authRequests.every(
         (url) => new URL(url).origin === new URL(page.url()).origin,
@@ -27,8 +26,8 @@ test.describe("Supabase authentication", () => {
   test("unlisted email signup is rejected by server hook", async ({ page }) => {
     await page.goto("/sign-up");
     await page.getByLabel("E-mail").fill("qualqueroutro@gmail.com");
-    await page.getByLabel("Senha", { exact: true }).fill("uma-senha-segura");
-    await page.getByLabel("Confirmar senha").fill("uma-senha-segura");
+    await page.getByLabel("Senha", { exact: true }).fill("SenhaForaDaLista12");
+    await page.getByLabel("Confirmar senha").fill("SenhaForaDaLista12");
     await page.getByRole("button", { name: "Criar conta" }).click();
     await expect(page.locator('p[role="alert"]')).toContainText(
       "não está autorizado",

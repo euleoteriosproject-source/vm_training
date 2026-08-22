@@ -122,8 +122,8 @@ select ok(
 );
 select is(
   (select exercise.active from public.exercises exercise join public.exercise_media media on media.exercise_id=exercise.id where media.id='80000000-0000-0000-0000-000000000008'),
-  true,
-  'exercise becomes active only with animated media'
+  false,
+  'media publication does not change independent catalog activation'
 );
 reset role;
 

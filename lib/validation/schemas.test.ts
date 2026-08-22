@@ -5,18 +5,34 @@ describe("validation", () => {
     expect(
       signUpSchema.parse({
         email: " User@Example.COM ",
-        password: "12345678",
-        confirmPassword: "12345678",
+        password: "TreinoSeguro12",
+        confirmPassword: "TreinoSeguro12",
       }).email,
     ).toBe("user@example.com"));
   it("rejects mismatched passwords", () =>
     expect(
       signUpSchema.safeParse({
         email: "a@b.com",
-        password: "12345678",
-        confirmPassword: "abcdefgh",
+        password: "TreinoSeguro12",
+        confirmPassword: "OutraSenha34",
       }).success,
     ).toBe(false));
+  it("enforces the hosted signup password policy", () => {
+    for (const password of [
+      "Curta1",
+      "semsenhaforte12",
+      "SEMMINUSCULA12",
+      "SemNumeroAlgum",
+    ]) {
+      expect(
+        signUpSchema.safeParse({
+          email: "a@b.com",
+          password,
+          confirmPassword: password,
+        }).success,
+      ).toBe(false);
+    }
+  });
   it("rejects impossible body weight", () =>
     expect(
       measurementSchema.safeParse({

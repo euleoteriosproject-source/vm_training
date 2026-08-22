@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
-import { emailSchema, passwordSchema } from "@/lib/validation/schemas";
+import { emailSchema, strongPasswordSchema } from "@/lib/validation/schemas";
 
 export function ResetForm({ update = false }: { update?: boolean }) {
   const router = useRouter();
@@ -18,7 +18,9 @@ export function ResetForm({ update = false }: { update?: boolean }) {
     try {
       const supabase = createClient();
       if (update) {
-        const password = passwordSchema.parse(String(data.get("password")));
+        const password = strongPasswordSchema.parse(
+          String(data.get("password")),
+        );
         const { error: e } = await supabase.auth.updateUser({ password });
         if (e) throw e;
         toast.success("Senha atualizada");
@@ -54,7 +56,7 @@ export function ResetForm({ update = false }: { update?: boolean }) {
       </h1>
       <p className="mt-2 text-sm text-muted">
         {update
-          ? "Escolha uma senha com pelo menos 8 caracteres."
+          ? "Use 12 ou mais caracteres, com maiúscula, minúscula e número."
           : "Você receberá um link de recuperação."}
       </p>
       <label className="mt-6 block text-sm font-medium">

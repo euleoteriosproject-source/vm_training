@@ -283,6 +283,19 @@ export function WorkoutRunner({
                 ),
               )
             }
+            onSubstitutionUndone={(previous) =>
+              setItems((current) =>
+                current.map((exercise) =>
+                  exercise.id === item.id
+                    ? {
+                        ...exercise,
+                        actualExerciseId: previous.exerciseId,
+                        detail: previous.detail,
+                      }
+                    : exercise,
+                ),
+              )
+            }
           />
         ))}
       </div>
@@ -299,6 +312,7 @@ function ExerciseCard({
   onSet,
   onSkip,
   onSubstituted,
+  onSubstitutionUndone,
 }: {
   item: RunnerExercise;
   onSet: (setId: string, patch: Partial<SetRow>) => void;
@@ -306,6 +320,10 @@ function ExerciseCard({
   onSubstituted: (replacement: {
     exerciseId: string;
     exerciseName: string;
+  }) => void;
+  onSubstitutionUndone: (previous: {
+    exerciseId: string;
+    detail: ExerciseDetail;
   }) => void;
 }) {
   const [menu, setMenu] = useState(false);
@@ -429,6 +447,7 @@ function ExerciseCard({
           item={item}
           onDone={() => setMenu(false)}
           onSubstituted={onSubstituted}
+          onSubstitutionUndone={onSubstitutionUndone}
         />
         <Button
           variant="danger"
@@ -540,12 +559,17 @@ function SubstitutionActions({
   item,
   onDone,
   onSubstituted,
+  onSubstitutionUndone,
 }: {
   item: RunnerExercise;
   onDone: () => void;
   onSubstituted: (replacement: {
     exerciseId: string;
     exerciseName: string;
+  }) => void;
+  onSubstitutionUndone: (previous: {
+    exerciseId: string;
+    detail: ExerciseDetail;
   }) => void;
 }) {
   const [loading, setLoading] = useState(false);
@@ -569,7 +593,7 @@ function SubstitutionActions({
     );
     setLoading(false);
     if (error) {
-      toast.error(error.message);
+      toast.error(substitutionErrorMessage(error.message));
       return;
     }
     const result = data as {
@@ -587,10 +611,16 @@ function SubstitutionActions({
             "undo_workout_substitution",
             { p_event_id: result.eventId },
           );
-          if (undoError) toast.error(undoError.message);
+          if (undoError)
+            toast.error(
+              "Não foi possível desfazer agora. Seu treino continua salvo.",
+            );
           else {
             toast.success("Substituição desfeita");
-            window.location.reload();
+            onSubstitutionUndone({
+              exerciseId: item.actualExerciseId,
+              detail: item.detail,
+            });
           }
         },
       },
@@ -612,7 +642,7 @@ function SubstitutionActions({
         disabled={loading}
         onClick={() => substitute("temporarily_unavailable")}
       >
-        Indisponível hoje
+        Está indisponível hoje
       </Button>
       <Button
         variant="secondary"
@@ -628,4 +658,13 @@ function SubstitutionActions({
       )}
     </div>
   );
+}
+
+function substitutionErrorMessage(message: string) {
+  const normalized = message.toLowerCase();
+  if (normalized.includes("nenhuma substituição compatível"))
+    return "Não encontramos outra opção compatível agora.";
+  if (normalized.includes("sessão") || normalized.includes("autenticado"))
+    return "Atualize a página e tente novamente.";
+  return "Não foi possível trocar este exercício agora.";
 }

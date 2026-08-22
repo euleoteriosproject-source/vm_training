@@ -69,7 +69,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             ? "E-mail ou senha inválidos."
             : normalized.includes("internal server error")
               ? "Não foi possível entrar agora. Tente novamente em instantes."
-          : message,
+              : message,
       );
     } finally {
       setBusy(false);
@@ -99,18 +99,31 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             required
           />
         </label>
-        <label className="block text-sm font-medium">
-          Senha
-          <Input
-            className="mt-2"
-            name="password"
-            type="password"
-            autoComplete={
-              mode === "login" ? "current-password" : "new-password"
-            }
-            required
-          />
-        </label>
+        <div>
+          <label className="block text-sm font-medium">
+            Senha
+            <Input
+              aria-describedby={
+                mode === "signup" ? "signup-password-requirements" : undefined
+              }
+              className="mt-2"
+              name="password"
+              type="password"
+              autoComplete={
+                mode === "login" ? "current-password" : "new-password"
+              }
+              required
+            />
+          </label>
+          {mode === "signup" && (
+            <p
+              id="signup-password-requirements"
+              className="mt-2 text-xs font-normal text-muted"
+            >
+              Use 12 ou mais caracteres, com maiúscula, minúscula e número.
+            </p>
+          )}
+        </div>
         {mode === "signup" && (
           <label className="block text-sm font-medium">
             Confirmar senha

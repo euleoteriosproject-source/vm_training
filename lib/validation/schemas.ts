@@ -14,12 +14,19 @@ export const passwordSchema = z
   .string()
   .min(8, "Use ao menos 8 caracteres")
   .max(72);
+export const strongPasswordSchema = z
+  .string()
+  .min(12, "Use ao menos 12 caracteres")
+  .max(72)
+  .regex(/[a-z]/, "Inclua ao menos uma letra minúscula")
+  .regex(/[A-Z]/, "Inclua ao menos uma letra maiúscula")
+  .regex(/[0-9]/, "Inclua ao menos um número");
 export const signInSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
 });
 export const signUpSchema = signInSchema
-  .extend({ confirmPassword: z.string() })
+  .extend({ password: strongPasswordSchema, confirmPassword: z.string() })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
     message: "As senhas não coincidem",
