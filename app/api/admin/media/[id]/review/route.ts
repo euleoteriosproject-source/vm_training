@@ -95,6 +95,12 @@ export async function POST(
       poster_timestamp: parsed.data.posterTimestamp ?? null,
       reviewed_by: user.id,
       reviewed_at: now,
+      review_state: "MANUAL_REVIEW_REQUIRED",
+      review_method: "human",
+      review_agent: null,
+      validation_version: null,
+      validation_confidence: null,
+      automated_validation: {},
       verified_by: user.id,
       verified_at: now,
       ready_for_processing: !current.storage_path,
@@ -116,6 +122,7 @@ export async function POST(
     from_status: current.status,
     to_status: nextStatus,
     notes: parsed.data.reviewNotes ?? null,
+    metadata: { review_method: "human" },
   });
   return NextResponse.json({ ok: true, status: nextStatus });
 }

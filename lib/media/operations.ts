@@ -18,6 +18,58 @@ export const mediaStatuses = [
 
 export type MediaStatus = (typeof mediaStatuses)[number];
 
+export const mediaReviewStates = [
+  "AUTOMATED_VALIDATED",
+  "MANUAL_REVIEW_REQUIRED",
+  "REJECTED",
+  "PUBLISHED",
+] as const;
+
+export type MediaReviewState = (typeof mediaReviewStates)[number];
+export type MediaReviewMethod = "automated" | "human";
+
+export const automatedValidationKeys = [
+  "exercise_match_exact",
+  "equipment_match",
+  "execution_quality_approved",
+  "visibility_sufficient",
+  "license_verified",
+  "download_permitted",
+  "transformation_permitted",
+  "rehost_permitted",
+  "source_provenance_verified",
+  "visual_inspection_passed",
+  "biomechanical_references_passed",
+  "final_gif_inspection_passed",
+  "storage_hash_verified",
+] as const;
+
+export type AutomatedValidationKey = (typeof automatedValidationKeys)[number];
+export type AutomatedValidation = Partial<
+  Record<AutomatedValidationKey, boolean>
+>;
+
+export function validateAutomatedMediaPublication(input: {
+  reviewState: MediaReviewState;
+  reviewMethod: MediaReviewMethod | null;
+  reviewAgent: string | null;
+  reviewedBy: string | null;
+  validationVersion: string | null;
+  confidence: string | null;
+  checks: AutomatedValidation;
+}) {
+  const errors: string[] = [];
+  if (input.reviewState !== "AUTOMATED_VALIDATED") errors.push("review_state");
+  if (input.reviewMethod !== "automated") errors.push("review_method");
+  if (!input.reviewAgent?.trim()) errors.push("review_agent");
+  if (input.reviewedBy !== null) errors.push("reviewed_by");
+  if (!input.validationVersion?.trim()) errors.push("validation_version");
+  if (input.confidence !== "HIGH") errors.push("confidence");
+  if (automatedValidationKeys.some((key) => input.checks[key] !== true))
+    errors.push("automated_validation");
+  return { valid: errors.length === 0, errors };
+}
+
 export const primaryChecklistKeys = [
   "correct_exercise",
   "compatible_equipment",

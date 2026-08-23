@@ -7,10 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Sheet } from "@/components/ui/sheet";
+import type {
+  MediaReviewMethod,
+  MediaReviewState,
+} from "@/lib/media/operations";
 
 export type ReviewCandidate = {
   id: string;
   status: string;
+  reviewState: MediaReviewState;
+  reviewMethod: MediaReviewMethod | null;
+  reviewAgent: string | null;
+  validationVersion: string | null;
+  validationConfidence: string | null;
   sourceName: string | null;
   sourceUrl: string | null;
   originalFileUrl: string | null;
@@ -90,30 +99,23 @@ export function MediaReview({
   initialExercise?: string;
 }) {
   const [filter, setFilter] = useState<
-    "strong" | "candidate" | "low" | "approved" | "missing" | "rejected"
-  >("strong");
+    "manual" | "automated" | "rejected" | "all"
+  >("manual");
   const [search, setSearch] = useState("");
   const [upload, setUpload] = useState(Boolean(initialExercise));
   const shown = useMemo(
     () =>
       candidates
         .filter((item) => {
-          const pending = [
-            "pending",
-            "reviewing",
-            "processing",
-            "processed",
-            "failed",
-          ].includes(item.status);
-          const score = item.matchScore ?? 0;
           const inTab =
-            filter === "strong"
-              ? pending && score >= 85
-              : filter === "candidate"
-                ? pending && score >= 70 && score < 85
-                : filter === "low"
-                  ? pending && score >= 55 && score < 70
-                  : item.status === filter;
+            filter === "manual"
+              ? item.reviewState === "MANUAL_REVIEW_REQUIRED"
+              : filter === "automated"
+                ? item.reviewState === "PUBLISHED" &&
+                  item.reviewMethod === "automated"
+                : filter === "rejected"
+                  ? item.reviewState === "REJECTED"
+                  : true;
           return (
             inTab &&
             (!search ||
@@ -157,7 +159,7 @@ export function MediaReview({
           />
         </label>
         <div className="flex gap-2 overflow-x-auto">
-          {(["strong", "candidate", "low", "missing", "rejected"] as const).map(
+          {(["manual", "automated", "rejected", "all"] as const).map(
             (value) => (
               <Button
                 key={value}
@@ -166,11 +168,10 @@ export function MediaReview({
               >
                 {
                   {
-                    strong: "Strong candidates",
-                    candidate: "Candidates",
-                    low: "Low confidence",
-                    missing: "Sem vídeo",
+                    manual: "Precisa de revisão",
+                    automated: "Publicados automaticamente",
                     rejected: "Rejeitados",
+                    all: "Todos",
                   }[value]
                 }
               </Button>
@@ -183,30 +184,6 @@ export function MediaReview({
         </div>
       </div>
       <div className="mt-7 space-y-5">
-        {filter === "missing" &&
-          exercises
-            .filter((item) => !item.hasMedia)
-            .map((item) => (
-              <Card
-                key={item.id}
-                className="flex items-center justify-between gap-4 p-5"
-              >
-                <div>
-                  <p className="font-semibold">{item.name}</p>
-                  {item.neededByPlan && (
-                    <p className="mt-1 text-xs font-semibold text-warning">
-                      {blockerLabel(item.neededBy ?? [])}
-                    </p>
-                  )}
-                  <p className="mt-1 text-sm text-muted">
-                    Nenhum candidato seguro encontrado.
-                  </p>
-                </div>
-                <Button asChild>
-                  <a href={`/admin/media-review?exercise=${item.id}`}>Upload</a>
-                </Button>
-              </Card>
-            ))}
         {shown.map((item, index) => (
           <CandidateReview
             key={item.id}
@@ -214,7 +191,7 @@ export function MediaReview({
             nextId={shown[index + 1]?.id}
           />
         ))}
-        {!shown.length && filter !== "missing" && (
+        {!shown.length && (
           <Card className="p-8 text-center text-muted">
             Nenhuma mídia neste filtro.
           </Card>
@@ -449,11 +426,23 @@ function CandidateReview({
             <div>
               <p className="font-semibold">{item.title || "Vídeo candidato"}</p>
               <p className="mt-1 text-sm text-muted">{item.sourceName}</p>
-              <span className="mt-2 inline-flex rounded-full bg-success/10 px-2.5 py-1 text-xs font-semibold text-success">
-                {item.licenseCode === "PD"
-                  ? "PUBLIC DOMAIN"
-                  : item.licenseCode || "LICENSE PENDING"}
-              </span>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <span className="inline-flex rounded-full bg-success/10 px-2.5 py-1 text-xs font-semibold text-success">
+                  {item.licenseCode === "PD"
+                    ? "PUBLIC DOMAIN"
+                    : item.licenseCode || "LICENSE PENDING"}
+                </span>
+                <span className="inline-flex rounded-full bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent">
+                  {item.reviewState.replaceAll("_", " ")}
+                </span>
+                {item.reviewMethod === "automated" && (
+                  <span className="inline-flex rounded-full bg-surface-alt px-2.5 py-1 text-xs text-muted">
+                    {item.reviewAgent ?? "agente automatizado"} · v
+                    {item.validationVersion ?? "—"} ·{" "}
+                    {item.validationConfidence}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="text-right text-xs">
               <p className="rounded-full bg-accent/10 px-3 py-1 text-accent">

@@ -96,8 +96,8 @@ select is(
    from (values ('anon'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where has_schema_privilege(roles.role_name, 'private', 'usage')
       or has_schema_privilege(roles.role_name, 'private', 'create')),
-  0,
-  'private schema is isolated from non-RLS-helper roles'
+  1,
+  'only service_role additionally receives private schema usage for media automation'
 );
 select is(
   (select count(*)::integer
@@ -113,8 +113,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  27,
-  'canonical function ACL has exactly 27 grants'
+  28,
+  'canonical function ACL has exactly 28 grants'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

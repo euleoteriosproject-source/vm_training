@@ -37,6 +37,8 @@
     "media:process:v16": "node --experimental-strip-types scripts/media/process-primary-v16.ts --dry-run",
     "media:finalize:v17": "node --experimental-strip-types scripts/media/finalize-v17.ts --dry-run",
     "media:finalize:v17:apply": "node --experimental-strip-types scripts/media/finalize-v17.ts --apply",
+    "media:automate:v181": "node --experimental-strip-types scripts/media/automate-active-plan-v181.ts --dry-run",
+    "media:automate:v181:apply": "node --experimental-strip-types scripts/media/automate-active-plan-v181.ts --apply --allow-production --confirm-visual",
     "media:manifest-check": "node --experimental-strip-types scripts/media/verify-primary-manifest.ts",
     "media:reconcile": "node --experimental-strip-types scripts/media/reconcile.ts",
     "media:production-report": "node --experimental-strip-types scripts/media/production-report.ts",

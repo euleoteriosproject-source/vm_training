@@ -2,12 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   calculatePlanCoverage,
   canTransitionMedia,
+  automatedValidationKeys,
   getExercisePublishReadiness,
   isPrimaryChecklistComplete,
   mediaStoragePaths,
   primaryChecklistKeys,
   validateMediaClassification,
   validateAnimatedPrimary,
+  validateAutomatedMediaPublication,
 } from "./operations";
 
 const completeChecklist = Object.fromEntries(
@@ -124,5 +126,43 @@ describe("media operations", () => {
         fallbackReason: "GIF_SIZE_TOO_LARGE",
       }),
     ).toBe(true);
+  });
+
+  it("accepts automated publication only with HIGH confidence and every check", () => {
+    const checks = Object.fromEntries(
+      automatedValidationKeys.map((key) => [key, true]),
+    );
+    expect(
+      validateAutomatedMediaPublication({
+        reviewState: "AUTOMATED_VALIDATED",
+        reviewMethod: "automated",
+        reviewAgent: "vm-media-validator-v181",
+        reviewedBy: null,
+        validationVersion: "1.8.1",
+        confidence: "HIGH",
+        checks,
+      }),
+    ).toEqual({ valid: true, errors: [] });
+  });
+
+  it("rejects automated publication when provenance or a required check fails", () => {
+    const checks = Object.fromEntries(
+      automatedValidationKeys.map((key) => [key, true]),
+    );
+    checks.license_verified = false;
+    expect(
+      validateAutomatedMediaPublication({
+        reviewState: "AUTOMATED_VALIDATED",
+        reviewMethod: "automated",
+        reviewAgent: "vm-media-validator-v181",
+        reviewedBy: "human-uuid",
+        validationVersion: "1.8.1",
+        confidence: "MEDIUM",
+        checks,
+      }),
+    ).toMatchObject({
+      valid: false,
+      errors: ["reviewed_by", "confidence", "automated_validation"],
+    });
   });
 });

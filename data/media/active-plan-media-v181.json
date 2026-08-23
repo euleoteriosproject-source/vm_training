@@ -1,0 +1,375 @@
+{
+  "version": "1.8.1",
+  "generatedAt": "2026-08-23T03:30:00.000Z",
+  "projectRef": "inghftngeritrsezwxnm",
+  "strategy": "GIF-FIRST_PER_EXERCISE",
+  "reviewAgent": "vm-media-validator-v181",
+  "activePlanExercises": 18,
+  "primaryBefore": 4,
+  "summary": {
+    "exercisesEvaluated": 14,
+    "automatedValidated": 1,
+    "manualReviewRequired": 2,
+    "rejected": 5,
+    "noCandidateFound": 6,
+    "primaryAdded": 1,
+    "primaryFinal": 5
+  },
+  "decisions": [
+    {
+      "exercise": "face-pull",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "NASM Face Pull",
+          "url": "https://www.nasm.org/resource-center/exercise-library/face-pull"
+        },
+        {
+          "name": "NASM Corrective Exercises for the Upper Back",
+          "url": "https://blog.nasm.org/12-great-corrective-exercises-for-the-upper-back"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source showed an unambiguous cable-and-rope face pull with the required high pull and scapular/external-rotation pattern."
+    },
+    {
+      "exercise": "lat-pulldown",
+      "candidateFound": true,
+      "candidate": {
+        "title": "Common Lat Pulldown Mistakes.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+        "licenseCode": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "author": "Andrew Kwong",
+        "sourceProvenanceVerified": true,
+        "licenseVerified": false
+      },
+      "license": "CC-BY-3.0_REVIEW_FLAG",
+      "references": [
+        {
+          "name": "Mayo Clinic Lat Pull-down",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683"
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/"
+        }
+      ],
+      "match": "EXACT_PRONATED",
+      "execution": "TUTORIAL_WITH_ERRORS_AND_CORRECTIONS",
+      "confidence": "MEDIUM",
+      "decision": "MANUAL_REVIEW_REQUIRED",
+      "published": false,
+      "reason": "The movement is a frontal pronated pulldown, but the long-form mistakes tutorial and unresolved Wikimedia license-review flag prevent automatic PRIMARY publication."
+    },
+    {
+      "exercise": "neutral-pulldown",
+      "candidateFound": true,
+      "license": "CC-BY-3.0_REVIEW_FLAG",
+      "references": [
+        {
+          "name": "NSCA Basics of Strength and Conditioning",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf"
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/"
+        }
+      ],
+      "match": "RELATED_BUT_DIFFERENT",
+      "execution": "PRONATED_GRIP",
+      "confidence": "HIGH",
+      "decision": "REJECTED",
+      "published": false,
+      "reason": "The reused pulldown tutorial visibly uses a wide pronated grip, not palms-facing neutral handles."
+    },
+    {
+      "exercise": "supinated-pulldown",
+      "candidateFound": true,
+      "license": "CC-BY-3.0_REVIEW_FLAG",
+      "references": [
+        {
+          "name": "NSCA Basics of Strength and Conditioning",
+          "url": "https://www.nsca.com/contentassets/116c55d64e1343d2b264e05aaf158a91/basics_of_strength_and_conditioning_manual.pdf"
+        },
+        {
+          "name": "Grip width and forearm orientation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20543740/"
+        }
+      ],
+      "match": "RELATED_BUT_DIFFERENT",
+      "execution": "PRONATED_GRIP",
+      "confidence": "HIGH",
+      "decision": "REJECTED",
+      "published": false,
+      "reason": "The visible grip is pronated rather than underhand/supinated."
+    },
+    {
+      "exercise": "seated-row",
+      "candidateFound": true,
+      "license": "PD",
+      "references": [
+        {
+          "name": "ACE Seated Row",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/48/seated-row/"
+        },
+        {
+          "name": "Mayo Clinic Seated Row",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/seated-row/vid-20084688"
+        }
+      ],
+      "match": "RELATED_BUT_DIFFERENT",
+      "execution": "SELECTORIZED_LEVER_ROW",
+      "confidence": "HIGH",
+      "decision": "REJECTED",
+      "published": false,
+      "reason": "The CDC source is an articulated selectorized row already represented by machine-row, not the catalog's low cable row."
+    },
+    {
+      "exercise": "one-arm-row",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "ACE Single-arm Row",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/126/single-arm-row/"
+        },
+        {
+          "name": "NASM Corrective Exercises for the Upper Back",
+          "url": "https://blog.nasm.org/12-great-corrective-exercises-for-the-upper-back"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source matched the bench-supported unilateral dumbbell row in the catalog."
+    },
+    {
+      "exercise": "reverse-fly",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "ACE Incline Reverse Fly",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/34/incline-reverse-fly/"
+        },
+        {
+          "name": "ACE Kneeling Reverse Fly",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/128/kneeling-reverse-fly/"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source clearly showed posterior-shoulder horizontal abduction with catalog-compatible equipment."
+    },
+    {
+      "exercise": "machine-shoulder-press",
+      "candidateFound": true,
+      "candidate": {
+        "candidateId": "46f41a7577ededd9",
+        "title": "Muscle Strengthening at the Gym - Overhead Press.webm",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Overhead_Press.webm",
+        "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Muscle_Strengthening_at_the_Gym_-_Overhead_Press.webm",
+        "licenseCode": "PD",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain",
+        "author": "Centers for Disease Control and Prevention",
+        "attributionRequired": false,
+        "attributionText": "Muscle Strengthening at the Gym - Overhead Press. Centers for Disease Control and Prevention. Public Domain via Wikimedia Commons.",
+        "trimStart": 18,
+        "trimEnd": 26,
+        "sourceSha256": "af698f935566d782f5b3e1f8476376f969a295d3d88fc22a1ecddd342e66ee26",
+        "gifSha256": "a71ff463a30988ceac803a4d6ca81bee28f67966941c357f8c78d0d02ae402d8",
+        "posterSha256": "ea8b0c96ee32a4b0d67b4494854b065408bba867e75bf00061675cc1286231e8",
+        "gif": {
+          "width": 320,
+          "height": 240,
+          "durationSeconds": 8,
+          "fileSizeBytes": 4520956,
+          "frameCount": 96,
+          "framesPerSecond": 12.5,
+          "animationVerified": true,
+          "loop": true,
+          "upscaled": false
+        },
+        "checks": {
+          "exercise_match_exact": true,
+          "equipment_match": true,
+          "execution_quality_approved": true,
+          "visibility_sufficient": true,
+          "license_verified": true,
+          "download_permitted": true,
+          "transformation_permitted": true,
+          "rehost_permitted": true,
+          "source_provenance_verified": true,
+          "visual_inspection_passed": true,
+          "biomechanical_references_passed": true,
+          "final_gif_inspection_passed": true,
+          "storage_hash_verified": true
+        }
+      },
+      "license": "PD",
+      "references": [
+        {
+          "name": "CDC institutional source and public-domain provenance",
+          "url": "https://commons.wikimedia.org/wiki/File:Muscle_Strengthening_at_the_Gym_-_Overhead_Press.webm"
+        },
+        {
+          "name": "ACE Seated Shoulder Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/186/seated-shoulder-press/"
+        },
+        {
+          "name": "Life Fitness Shoulder Press",
+          "url": "https://shop.lifefitness.com/products/insignia-series-shoulder-press"
+        }
+      ],
+      "match": "EXACT",
+      "execution": "APPROVED",
+      "confidence": "HIGH",
+      "decision": "AUTOMATED_VALIDATED",
+      "published": true,
+      "reason": "A seated selectorized shoulder-press machine, full controlled repetition, verified public-domain CDC provenance, and final GIF QA all match.",
+      "rejectedCandidates": [
+        "Shoulder press - exercise demonstration video.webm: standing barbell press",
+        "How To Properly Dumbbell Shoulder Press.webm: dumbbells and bench",
+        "Muscle Strengthening at Home - Overhead Press.webm: dumbbells",
+        "Overhead press-CDC strength training for older adults.gif: dumbbells"
+      ]
+    },
+    {
+      "exercise": "lateral-raise",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "ACE Lateral Raise",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/26/lateral-raise/"
+        },
+        {
+          "name": "ACE Shoulder Exercise Study",
+          "url": "https://www.acefitness.org/certifiednews/images/article/pdfs/ACEShoulderStudy.pdf"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source passed the dumbbell lateral-raise identity and complete-repetition checks."
+    },
+    {
+      "exercise": "machine-fly",
+      "candidateFound": true,
+      "license": "PD",
+      "references": [
+        {
+          "name": "Life Fitness Axiom Pectoral Fly",
+          "url": "https://shop.lifefitness.com/products/axiom-series-pectoral-fly-rear-deltoid"
+        },
+        {
+          "name": "ACE Seated Chest Press comparator",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/188/seated-chest-press/"
+        }
+      ],
+      "match": "WRONG_EXERCISE",
+      "execution": "CHEST_PRESS",
+      "confidence": "HIGH",
+      "decision": "REJECTED",
+      "published": false,
+      "reason": "Both returned CDC assets demonstrate elbow-extension chest press, not a pec-deck fly/adduction arc."
+    },
+    {
+      "exercise": "hip-thrust",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "NSCA Muscle Activation in Hip Thrust Variations",
+          "url": "https://www.nsca.com/education/articles/infographics/muscle-activation-in-hip-thrust-variations/"
+        },
+        {
+          "name": "NSCA Glute Program Design",
+          "url": "https://dxpprod.nsca.com/contentassets/f921c5b3fe4142db964a943d3554b324/ptq-10.4.4-program-design-considerations-for-optimal-strength-hypertophy-glute-mucsles.pdf"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source showed barbell load, upper-back bench support, full hip extension, and controlled return."
+    },
+    {
+      "exercise": "machine-glute",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "ACE Glute Press",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/293/glute-press/"
+        },
+        {
+          "name": "NSCA Glute Program Design",
+          "url": "https://dxpprod.nsca.com/contentassets/f921c5b3fe4142db964a943d3554b324/ptq-10.4.4-program-design-considerations-for-optimal-strength-hypertophy-glute-mucsles.pdf"
+        }
+      ],
+      "match": "CATALOG_SEMANTICS_CONFLICT",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "MANUAL_REVIEW_REQUIRED",
+      "published": false,
+      "reason": "The name/instructions describe hip-extension glute press or kickback, while Production links the exercise to an abductor machine. Exact semantics must be corrected before media discovery can be authoritative."
+    },
+    {
+      "exercise": "farmer-walk",
+      "candidateFound": true,
+      "license": "CC-BY-SA-4.0",
+      "references": [
+        {
+          "name": "ACE Farmer's Carry",
+          "url": "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/"
+        },
+        {
+          "name": "NSCA Loaded Carries",
+          "url": "https://www.nsca.com/education/articles/nsca-coach/increase-hip-and-trunk-stability-with-loaded-carries/"
+        }
+      ],
+      "match": "RELATED_BUT_DIFFERENT",
+      "execution": "UNILATERAL_SUITCASE_CARRY",
+      "confidence": "HIGH",
+      "decision": "REJECTED",
+      "published": false,
+      "reason": "The source uses one kettlebell on one side; the catalog requires a bilateral loaded carry."
+    },
+    {
+      "exercise": "dead-bug",
+      "candidateFound": false,
+      "license": null,
+      "references": [
+        {
+          "name": "Mayo Clinic Core Strength Exercises",
+          "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/core-strength/art-20546851"
+        },
+        {
+          "name": "VM Training catalog movement contract",
+          "url": "data://exercise/dead-bug"
+        }
+      ],
+      "match": "INCONCLUSIVE",
+      "execution": "NOT_INSPECTABLE",
+      "confidence": "LOW",
+      "decision": "NO_CANDIDATE_FOUND",
+      "published": false,
+      "reason": "No licensed dynamic source clearly showed supine contralateral arm/leg extension while maintaining trunk control."
+    }
+  ]
+}

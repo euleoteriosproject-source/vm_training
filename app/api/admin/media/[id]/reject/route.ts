@@ -53,6 +53,12 @@ export async function POST(
     .from("exercise_media")
     .update({
       status: "rejected",
+      review_state: "REJECTED",
+      review_method: "human",
+      review_agent: null,
+      validation_version: null,
+      validation_confidence: null,
+      automated_validation: {},
       execution_quality: "rejected",
       review_notes: parsed.data.notes ?? null,
       rejection_reason: parsed.data.reason,
@@ -72,7 +78,7 @@ export async function POST(
       from_status: current.status,
       to_status: "rejected",
       notes: parsed.data.notes ?? parsed.data.reason,
-      metadata: { reason: parsed.data.reason },
+      metadata: { reason: parsed.data.reason, review_method: "human" },
     });
   return error
     ? NextResponse.json({ error: error.message }, { status: 422 })

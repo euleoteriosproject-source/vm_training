@@ -31,7 +31,7 @@ export default async function MediaReviewPage({
     supabase
       .from("exercise_media")
       .select(
-        "id,status,storage_path,source_name,source_url,original_file_url,license_code,license_url,author,attribution_text,match_score,match_details,candidate_metadata,width,height,duration_seconds,quality_score,media_role,execution_quality,processing_error,exercise:exercises(id,name_pt,slug,movement_pattern,primary_muscles,exercise_equipment(equipment(name)))",
+        "id,status,review_state,review_method,review_agent,validation_version,validation_confidence,storage_path,source_name,source_url,original_file_url,license_code,license_url,author,attribution_text,match_score,match_details,candidate_metadata,width,height,duration_seconds,quality_score,media_role,execution_quality,processing_error,exercise:exercises(id,name_pt,slug,movement_pattern,primary_muscles,exercise_equipment(equipment(name)))",
       )
       .order("created_at", { ascending: false }),
     supabase
@@ -110,6 +110,11 @@ export default async function MediaReviewPage({
       return {
         id: item.id,
         status: item.status,
+        reviewState: item.review_state as ReviewCandidate["reviewState"],
+        reviewMethod: item.review_method as ReviewCandidate["reviewMethod"],
+        reviewAgent: item.review_agent,
+        validationVersion: item.validation_version,
+        validationConfidence: item.validation_confidence,
         sourceName: item.source_name,
         sourceUrl: item.source_url,
         originalFileUrl: item.original_file_url,

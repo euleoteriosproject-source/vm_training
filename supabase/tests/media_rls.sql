@@ -170,13 +170,13 @@ select throws_ok(
       attribution_text,content_hash,verified_at,verified_by,reviewed_at,reviewed_by,
       approved_at,approved_by,processed_at,execution_quality,review_checklist,
       animation_verified,frame_count,animation_loop,frames_per_second,
-      fallback_reason,duration_seconds
+      fallback_reason,duration_seconds,review_state,review_method
     ) select exercise_id,'video','other.mp4','other.webp','approved','PRIMARY_DEMO',true,
       'Test','public_domain','https://commons.wikimedia.org/wiki/File:Other.webm',
       'PD','https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain',
       'CDC','CDC / Wikimedia Commons / Public Domain','other-hash',now(),verified_by,
       now(),reviewed_by,now(),reviewed_by,now(),'approved',review_checklist,
-      true,180,true,30,'GIF_SIZE_TOO_LARGE',6
+      true,180,true,30,'GIF_SIZE_TOO_LARGE',6,'PUBLISHED','human'
     from public.exercise_media where id='50000000-0000-0000-0000-000000000005'$$,
   '23505',
   null,
