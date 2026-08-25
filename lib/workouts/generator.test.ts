@@ -74,12 +74,21 @@ describe("generatePlan", () => {
       result.flatMap((day) => day.exercises).map((ex) => ex.exerciseId),
     ).not.toContain("unsafe");
   });
-  it("does not block an active exercise while its media is pending", () => {
+  it("blocks generation when approved media coverage is insufficient", () => {
     const mediaPending = catalog.map((exercise) => ({
       ...exercise,
       hasApprovedMedia: false,
     }));
-    expect(generatePlan(input, mediaPending)).toHaveLength(3);
+    expect(() => generatePlan(input, mediaPending)).toThrow(/demonstrações/);
+  });
+  it("only returns exercises with approved media", () => {
+    const result = generatePlan(input, [
+      ...catalog,
+      { ...catalog[0], id: "pending", hasApprovedMedia: false },
+    ]);
+    expect(
+      result.flatMap((day) => day.exercises).map((item) => item.exerciseId),
+    ).not.toContain("pending");
   });
   it("keeps resistance work when cardio is high", () => {
     const result = generatePlan(

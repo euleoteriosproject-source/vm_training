@@ -1,5 +1,7 @@
 -- Canonical ACL contract established by R3 and extended by v1.8.
 begin;
+grant usage on schema extensions to anon, authenticated, service_role;
+set local search_path = public, extensions;
 select plan(30);
 
 select is(
@@ -113,8 +115,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  28,
-  'canonical function ACL has exactly 28 grants'
+  30,
+  'canonical function ACL has exactly 30 grants after the two service-only v2.0 RPCs'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

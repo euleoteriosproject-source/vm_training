@@ -10,15 +10,23 @@ if (!client) {
   if (production) throw new Error(message);
   log("REPORT", `WARNING: ${message}`);
 } else {
-  const { data, error } = await client
-    .from("exercises")
-    .select(
-      "id,name_pt,active,exercise_media(status,media_role,execution_quality,is_primary)",
-    )
-    .eq("active", true);
-  if (error) {
-    if (production) throw error;
-    log("REPORT", `WARNING: ${error.message}`);
+  const [{ data, error }, { data: activePlans, error: plansError }] =
+    await Promise.all([
+      client
+        .from("exercises")
+        .select(
+          "id,name_pt,active,exercise_media(status,media_role,execution_quality,is_primary)",
+        )
+        .eq("active", true),
+      client
+        .from("workout_plans")
+        .select("workout_days(workout_day_exercises(exercise_id))")
+        .eq("status", "active"),
+    ]);
+  if (error || plansError) {
+    const queryError = error ?? plansError!;
+    if (production) throw queryError;
+    log("REPORT", `WARNING: ${queryError.message}`);
   } else {
     const rows = (data ?? []).map((item) => ({
       exerciseId: item.id,
@@ -40,14 +48,34 @@ if (!client) {
         .map(() => "approved"),
     }));
     const result = calculateCoverage(rows);
-    if (result.activeMissing.length) {
-      const message = `Exercícios ativos sem mídia aprovada: ${result.activeMissing.map((item) => item.name).join(", ")}`;
-      if (production) throw new Error(message);
-      log("REPORT", `WARNING: ${message}`);
-    } else
+    const plannedIds = new Set(
+      (activePlans ?? []).flatMap((plan) =>
+        (plan.workout_days ?? []).flatMap((day) =>
+          (day.workout_day_exercises ?? []).map((item) => item.exercise_id),
+        ),
+      ),
+    );
+    const mediaReadyIds = new Set(
+      rows
+        .filter((row) => row.mediaStatuses.includes("approved"))
+        .map((row) => row.exerciseId),
+    );
+    const plannedMissing = [...plannedIds].filter(
+      (id) => !mediaReadyIds.has(id),
+    );
+    if (plannedMissing.length)
+      throw new Error(
+        `Planos ativos sem PRIMARY_DEMO aprovada: ${plannedMissing.length}`,
+      );
+    if (result.activeMissing.length)
       log(
         "REPORT",
-        `Validação concluída: ${result.approved}/${result.total} exercícios ativos cobertos.`,
+        `Catálogo fora do pool media-ready: ${result.activeMissing.length}; planos ativos: ${plannedIds.size}/${plannedIds.size}.`,
+      );
+    else
+      log(
+        "REPORT",
+        `Validação concluída: catálogo ${result.approved}/${result.total}; planos ativos ${plannedIds.size}/${plannedIds.size}.`,
       );
   }
 }

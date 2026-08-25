@@ -1,4 +1,6 @@
 begin;
+grant usage on schema extensions to anon, authenticated, service_role;
+set local search_path = public, extensions;
 select plan(18);
 
 select hasnt_function('public', 'is_admin', array[]::text[],

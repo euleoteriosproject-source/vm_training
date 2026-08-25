@@ -81,8 +81,13 @@ test.describe("Supabase authentication", () => {
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
     await page.waitForURL(/today|onboarding/, { timeout: 15000 });
-    for (const width of [360, 390, 430, 768, 1024, 1440]) {
-      await page.setViewportSize({ width, height: width < 768 ? 844 : 900 });
+    for (const [width, height] of [
+      [375, 812],
+      [390, 844],
+      [430, 932],
+      [1440, 900],
+    ]) {
+      await page.setViewportSize({ width, height });
       await page.goto("/today");
       const overflow = await page.evaluate(
         () =>

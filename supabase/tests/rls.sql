@@ -1,4 +1,6 @@
 begin;
+grant usage on schema extensions to anon, authenticated, service_role;
+set local search_path = public, extensions;
 select plan(6);
 select has_table('public','profiles','profiles exists');
 select is((select relrowsecurity from pg_class where oid='public.profiles'::regclass),true,'profiles RLS enabled');

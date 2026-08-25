@@ -27,8 +27,8 @@ export function GeneratePlanButton() {
         );
       setNotice(
         result?.status === "active"
-          ? "Plano gerado e ativado."
-          : "Rascunho atualizado. Ele será liberado quando todos os vídeos necessários forem aprovados.",
+          ? "Plano completo gerado e ativado. Todas as demonstrações estão disponíveis."
+          : "Rascunho atualizado. Ele será liberado quando todas as demonstrações necessárias forem aprovadas.",
       );
       router.refresh();
     } catch (cause) {

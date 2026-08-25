@@ -1,4 +1,6 @@
 begin;
+grant usage on schema extensions to anon, authenticated, service_role;
+set local search_path = public, extensions;
 select plan(12);
 
 insert into public.allowed_signup_emails(email,display_name,default_role) values

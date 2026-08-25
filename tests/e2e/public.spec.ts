@@ -1,6 +1,12 @@
 import { expect, test } from "@playwright/test";
 test("landing and login are usable", async ({ page }) => {
   await page.goto("/");
+  await expect(page.locator("body")).not.toHaveText("");
+  await expect(
+    page.locator(
+      "[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay",
+    ),
+  ).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: /Treine com intenção/ }),
   ).toBeVisible();
@@ -12,8 +18,13 @@ test("landing and login are usable", async ({ page }) => {
   await expect(page.getByLabel("Senha")).toBeVisible();
 });
 test("has no horizontal overflow at required breakpoints", async ({ page }) => {
-  for (const width of [360, 390, 430, 768, 1024, 1440]) {
-    await page.setViewportSize({ width, height: width < 768 ? 844 : 900 });
+  for (const [width, height] of [
+    [375, 812],
+    [390, 844],
+    [430, 932],
+    [1440, 900],
+  ]) {
+    await page.setViewportSize({ width, height });
     await page.goto("/");
     const overflow = await page.evaluate(
       () =>

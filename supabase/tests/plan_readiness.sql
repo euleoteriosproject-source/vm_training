@@ -1,4 +1,6 @@
 begin;
+grant usage on schema extensions to anon, authenticated, service_role;
+set local search_path = public, extensions;
 select plan(4);
 
 select has_function('public','get_plan_readiness',array['uuid'],'plan readiness function exists');

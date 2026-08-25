@@ -19,6 +19,46 @@ import {
 } from "./operations.ts";
 
 const MAX_GIF_BYTES = 8 * 1024 * 1024;
+
+function isMissingObject(error: { message?: string } | null) {
+  return Boolean(
+    error?.message && /not found|does not exist/i.test(error.message),
+  );
+}
+
+async function uploadImmutable(
+  client: SupabaseClient,
+  objectPath: string,
+  bytes: Buffer,
+  contentType: string,
+) {
+  const bucket = client.storage.from("exercise-media");
+  const current = await bucket.download(objectPath);
+  if (!current.error && current.data) {
+    const currentBytes = Buffer.from(await current.data.arrayBuffer());
+    if (!currentBytes.equals(bytes))
+      throw new Error(`Colisao de Storage no caminho imutavel ${objectPath}`);
+    return false;
+  }
+  if (current.error && !isMissingObject(current.error)) throw current.error;
+
+  const uploaded = await bucket.upload(objectPath, bytes, {
+    contentType,
+    cacheControl: "31536000",
+    upsert: false,
+  });
+  if (!uploaded.error) return true;
+
+  // A second worker may have won the race after the read above. Reuse only
+  // when the bytes are identical; a different payload at a canonical path is
+  // always a hard failure.
+  const raced = await bucket.download(objectPath);
+  if (raced.error || !raced.data) throw uploaded.error;
+  const racedBytes = Buffer.from(await raced.data.arrayBuffer());
+  if (!racedBytes.equals(bytes))
+    throw new Error(`Colisao de Storage no caminho imutavel ${objectPath}`);
+  return false;
+}
 function numericFrameRate(rate: string | null) {
   if (!rate) return 0;
   const [numerator = 0, denominator = 1] = rate.split("/").map(Number);
@@ -113,24 +153,18 @@ export async function prepareLocalFile(
       readFile(/* turbopackIgnore: true */ artifact.mediaPath),
       readFile(/* turbopackIgnore: true */ artifact.posterPath),
     ]);
-    const mediaUpload = await client.storage
-      .from("exercise-media")
-      .upload(mediaPath, mediaBytes, {
-        contentType: artifact.mediaType === "gif" ? "image/gif" : "video/mp4",
-        cacheControl: "31536000",
-        upsert: false,
-      });
-    if (mediaUpload.error) throw mediaUpload.error;
-    const posterUpload = await client.storage
-      .from("exercise-media")
-      .upload(posterPath, posterBytes, {
-        contentType: "image/webp",
-        cacheControl: "31536000",
-        upsert: false,
-      });
-    if (posterUpload.error) {
-      await client.storage.from("exercise-media").remove([mediaPath]);
-      throw posterUpload.error;
+    const mediaUploaded = await uploadImmutable(
+      client,
+      mediaPath,
+      mediaBytes,
+      artifact.mediaType === "gif" ? "image/gif" : "video/mp4",
+    );
+    try {
+      await uploadImmutable(client, posterPath, posterBytes, "image/webp");
+    } catch (error) {
+      if (mediaUploaded)
+        await client.storage.from("exercise-media").remove([mediaPath]);
+      throw error;
     }
     return {
       storage_path: mediaPath,

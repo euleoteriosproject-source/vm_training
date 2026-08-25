@@ -1,0 +1,89 @@
+{
+  "version": "2.0",
+  "projectRef": "inghftngeritrsezwxnm",
+  "reviewAgent": "vm-media-validator-v20",
+  "decisions": [
+    {
+      "exercise": "lat-pulldown",
+      "sourceFile": ".tmp/media-v20/lat-pulldown.webm",
+      "title": "Common Lat Pulldown Mistakes.webm",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Common_Lat_Pulldown_Mistakes.webm",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/Common_Lat_Pulldown_Mistakes.webm",
+      "licenseCode": "CC-BY-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "author": "Andrew Kwong",
+      "attributionRequired": true,
+      "attributionText": "Common Lat Pulldown Mistakes, Andrew Kwong, CC BY 3.0, via Wikimedia Commons. Recortado e convertido pelo VM Training.",
+      "licenseEvidence": "https://web.archive.org/web/20240911220003id_/https://www.youtube.com/watch?v=5s6KGLTMgoI",
+      "trimStart": 6,
+      "trimEnd": 10.8,
+      "posterTimestamp": 2.4,
+      "sourceSha256": "0765784da54e2bf0ec32bc0def3014a729b009b54d39533b135dc64a312efcf5",
+      "artifactSha256": "b25b7fe9d9f0ce1aa829a2c076c8591290a8b85e5fcca59c41d224068a097bcb",
+      "posterSha256": "f7ec133e43c379faaefc76413663a263af75792ec17c7dbb1b4cb0c1b85ee8b5",
+      "mediaType": "video",
+      "fallbackReason": "GIF_SIZE_TOO_LARGE",
+      "references": [
+        "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/lat-pull-down/vid-20084683",
+        "https://pubmed.ncbi.nlm.nih.gov/20543740/"
+      ],
+      "reason": "Trecho final isolado mostra puxada frontal pronada ate a parte superior do peito, retorno controlado e equipamento compativel; trechos de erros foram excluidos. A captura original arquivada comprova CC BY com reutilizacao permitida."
+    },
+    {
+      "exercise": "farmer-walk",
+      "sourceFile": ".tmp/media-v20/farmer-walk.mp4",
+      "title": "Farmer Carry",
+      "sourceName": "Defense Visual Information Distribution Service",
+      "sourceType": "public_domain",
+      "sourceUrl": "https://www.dvidshub.net/video/640980/farmer-carry",
+      "originalFileUrl": "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106223238/DOD_106223238-1024x576-1769k.mp4",
+      "licenseCode": "PD",
+      "licenseUrl": "https://www.dvidshub.net/about/copyright",
+      "author": "Capt. Matthew Holfinger, U.S. Marine Corps Training and Education Command",
+      "attributionRequired": false,
+      "attributionText": "Farmer Carry, Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command, Public Domain via DVIDS. Recortado e convertido pelo VM Training.",
+      "trimStart": 14,
+      "trimEnd": 24,
+      "posterTimestamp": 5,
+      "sourceSha256": "9fe11ad55030ef556d8bb420bd857b26cabf61a3da980c7c6692b13fc5f7bc6f",
+      "artifactSha256": "62bb655d0c6f1033fb5029f0ce3d28e73e93f60c1ffe58a2ea4e9feabe5f9d8a",
+      "posterSha256": "55e195bfd7e01b553de5ace46a5b38b4dcace79a628d4d65fbaa5d49b46a8963",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/",
+        "https://www.nsca.com/education/articles/nsca-coach/increase-hip-and-trunk-stability-with-loaded-carries/"
+      ],
+      "reason": "Carregamento bilateral com halteres, postura alta e caminhada controlada; coincide com equipamento, padrao carry e instrucoes do catalogo. Fonte federal marcada Public Domain."
+    },
+    {
+      "exercise": "plank",
+      "sourceFile": ".tmp/media-v20/plank.mp4",
+      "title": "Plank",
+      "sourceName": "Defense Visual Information Distribution Service",
+      "sourceType": "public_domain",
+      "sourceUrl": "https://www.dvidshub.net/video/640237/plank",
+      "originalFileUrl": "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106215226/DOD_106215226-1024x576-1769k.mp4",
+      "licenseCode": "PD",
+      "licenseUrl": "https://www.dvidshub.net/about/copyright",
+      "author": "Capt. Matthew Holfinger, U.S. Marine Corps Training and Education Command",
+      "attributionRequired": false,
+      "attributionText": "Plank, Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command, Public Domain via DVIDS. Recortado e convertido pelo VM Training.",
+      "trimStart": 1,
+      "trimEnd": 10.5,
+      "posterTimestamp": 4.5,
+      "sourceSha256": "ccfc4e0e7bf94a98de7cbba53539fea2f5f6211b1d127e919920c70b674fd4c8",
+      "artifactSha256": "750a45d306d0fbfe7929090bd0407d33f741f0fd509db3ff6697c0919950277e",
+      "posterSha256": "75e90b95eb8ae84358fe41db3535e30f67a58c2cf603a45214b54ffbe435b6fd",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://www.acefitness.org/resources/everyone/exercise-library/32/front-plank/",
+        "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/core-strength/art-20546851"
+      ],
+      "reason": "Prancha de antebracos com alinhamento de ombros, quadris e tornozelos, contracao sustentada e equipamento bodyweight; fonte federal marcada Public Domain."
+    }
+  ]
+}

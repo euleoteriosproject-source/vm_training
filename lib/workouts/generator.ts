@@ -57,13 +57,9 @@ function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
 export function generatePlan(
   input: PlanInput,
   catalog: ExerciseCandidate[],
-  options: { requireMedia?: boolean } = {},
 ): GeneratedDay[] {
   const eligible = catalog
-    .filter(
-      (exercise) =>
-        exercise.active && (!options.requireMedia || exercise.hasApprovedMedia),
-    )
+    .filter((exercise) => exercise.active && exercise.hasApprovedMedia)
     .filter((exercise) =>
       exercise.equipment.every(
         (item) => item === "bodyweight" || input.equipment.includes(item),
@@ -78,7 +74,7 @@ export function generatePlan(
 
   if (eligible.length < 4)
     throw new Error(
-      "Catálogo compatível insuficiente para gerar um plano seguro.",
+      "Catálogo com demonstrações aprovadas insuficiente para gerar um plano seguro.",
     );
 
   const highCardio =

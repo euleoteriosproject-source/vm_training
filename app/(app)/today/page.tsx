@@ -145,8 +145,8 @@ export default async function TodayPage() {
             Seu rascunho está salvo
           </h2>
           <p className="mt-2 max-w-xl text-muted">
-            Gere novamente para validar a estrutura e ativá-lo. Demonstrações em
-            GIF não bloqueiam o treino.
+            Gere novamente para validar a estrutura. O plano só será ativado
+            quando todos os exercícios tiverem demonstração aprovada.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
@@ -164,7 +164,8 @@ export default async function TodayPage() {
             Vamos criar seu primeiro plano
           </h2>
           <p className="mt-2 max-w-xl text-muted">
-            A disponibilidade de mídia não interfere na criação do treino.
+            O plano será criado somente com exercícios que tenham demonstração
+            aprovada e compatível com seus equipamentos.
           </p>
           <GeneratePlanButton />
         </Card>
