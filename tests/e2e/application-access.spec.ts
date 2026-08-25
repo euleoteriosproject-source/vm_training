@@ -14,7 +14,8 @@ test.describe("reconciled application access", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await expect(page).toHaveURL(/today|onboarding/, { timeout: 15_000 });
+    await expect(page).toHaveURL(/today|onboarding/, { timeout: 30_000 });
+    await page.waitForLoadState("networkidle");
 
     const routes = [
       ["/workouts", /Plano E2E GIF-first|Treinos/],

@@ -1,8 +1,15 @@
 "use client";
-import { useState, type FormEvent } from "react";
+
+import {
+  useState,
+  useSyncExternalStore,
+  useTransition,
+  type FormEvent,
+} from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { loginAction, signupAction } from "@/app/auth-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,8 +17,9 @@ import {
   type AuthOperation,
   type ClassifiedAuthError,
 } from "@/lib/auth/errors";
-import { createClient } from "@/lib/supabase/client";
 import { signInSchema, signUpSchema } from "@/lib/validation/schemas";
+
+const subscribeToHydration = () => () => undefined;
 
 function correlationId() {
   return (
@@ -25,14 +33,6 @@ function traceAuth(
   context: { operation: AuthOperation; requestId: string; code?: string },
 ) {
   console.info("VM_AUTH_TRACE", { event, ...context });
-}
-
-function authFlowError(code: string, message: string, status = 500) {
-  return Object.assign(new Error(message), {
-    name: "AuthFlowError",
-    code,
-    status,
-  });
 }
 
 async function reportAuthFailure(
@@ -66,16 +66,22 @@ async function reportAuthFailure(
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const router = useRouter();
   const params = useSearchParams();
-  const [busy, setBusy] = useState(false);
+  const [busy, startTransition] = useTransition();
   const [error, setError] = useState("");
-  async function submit(event: FormEvent<HTMLFormElement>) {
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+
+  function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const operation: AuthOperation = mode === "login" ? "LOGIN" : "SIGNUP";
     const requestId = correlationId();
     traceAuth(`AUTH_${operation}_ACTION_START`, { operation, requestId });
-    setBusy(true);
     setError("");
+
     const raw = {
       email: String(formData.get("email") ?? ""),
       password: String(formData.get("password") ?? ""),
@@ -86,80 +92,65 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     );
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Revise os dados");
-      setBusy(false);
       return;
     }
-    try {
-      const supabase = createClient();
-      traceAuth("AUTH_CLIENT_CREATED", { operation, requestId });
-      if (mode === "login") {
-        traceAuth("AUTH_SIGNIN_CALL_START", { operation, requestId });
-        const { data, error: authError } =
-          await supabase.auth.signInWithPassword({
-            email: raw.email,
-            password: raw.password,
-          });
-        traceAuth("AUTH_SIGNIN_RESULT", {
+
+    startTransition(async () => {
+      let result;
+      try {
+        traceAuth(`AUTH_${operation}_SERVER_ACTION_START`, {
           operation,
           requestId,
-          code:
-            authError?.code ??
-            (data.session ? "session_created" : "no_session"),
         });
-        if (authError) throw authError;
-        if (!data.session)
-          throw authFlowError("missing_login_session", "Login sem sessão");
-        traceAuth("AUTH_SESSION_CREATED", { operation, requestId });
-        toast.success("Bem-vindo de volta");
-        traceAuth("AUTH_REDIRECT_START", { operation, requestId });
-        router.replace(params.get("next") || "/today");
-        router.refresh();
-      } else {
-        traceAuth("AUTH_SIGNUP_CALL_START", { operation, requestId });
-        const { data, error: authError } = await supabase.auth.signUp({
-          email: raw.email,
-          password: raw.password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
-        });
-        traceAuth("AUTH_SIGNUP_RESULT", {
+        result =
+          mode === "login"
+            ? await loginAction({
+                email: parsed.data.email,
+                password: parsed.data.password,
+                next: params.get("next"),
+              })
+            : await signupAction({
+                email: parsed.data.email,
+                password: parsed.data.password,
+                confirmPassword: raw.confirmPassword,
+              });
+      } catch (actionError) {
+        const failure = classifyAuthError(actionError, operation);
+        traceAuth(`AUTH_${operation}_ERROR`, {
           operation,
           requestId,
-          code:
-            authError?.code ??
-            (data.session ? "session_created" : "no_session"),
+          code: failure.kind,
         });
-        if (authError) throw authError;
-        if (data.user?.identities?.length === 0)
-          throw authFlowError(
-            "user_already_exists",
-            "Usuário já cadastrado",
-            422,
-          );
-        if (!data.session)
-          throw authFlowError("missing_signup_session", "Cadastro sem sessão");
-        traceAuth("AUTH_SESSION_CREATED", { operation, requestId });
-        toast.success("Conta criada. Vamos configurar seu treino.");
-        traceAuth("AUTH_REDIRECT_START", { operation, requestId });
-        router.replace("/onboarding");
-        router.refresh();
+        void reportAuthFailure(failure, operation, requestId);
+        setError(failure.userMessage);
+        return;
       }
-    } catch (err) {
-      const failure = classifyAuthError(err, operation);
-      traceAuth(`AUTH_${operation}_ERROR`, {
-        operation,
-        requestId,
-        code: failure.kind,
-      });
-      void reportAuthFailure(failure, operation, requestId);
-      setError(failure.userMessage);
-    } finally {
-      setBusy(false);
-    }
+
+      if (!result.ok) {
+        traceAuth(`AUTH_${operation}_ERROR`, {
+          operation,
+          requestId,
+          code: result.failure.kind,
+        });
+        void reportAuthFailure(result.failure, operation, requestId);
+        setError(result.failure.userMessage);
+        return;
+      }
+
+      traceAuth("AUTH_SESSION_CREATED", { operation, requestId });
+      toast.success(
+        mode === "login"
+          ? "Bem-vindo de volta"
+          : "Conta criada. Vamos configurar seu treino.",
+      );
+      traceAuth("AUTH_REDIRECT_START", { operation, requestId });
+      router.replace(result.redirectTo);
+    });
   }
+
   return (
     <form
+      method="post"
       onSubmit={submit}
       className="rounded-3xl border bg-surface p-6 shadow-xl shadow-black/5 md:p-8"
     >
@@ -228,7 +219,12 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           {error}
         </p>
       )}
-      <Button type="submit" className="mt-6 w-full" size="lg" disabled={busy}>
+      <Button
+        type="submit"
+        className="mt-6 w-full"
+        size="lg"
+        disabled={busy || !hydrated}
+      >
         {busy ? "Aguarde…" : mode === "login" ? "Entrar" : "Criar conta"}
       </Button>
       <div className="mt-5 flex flex-wrap justify-between gap-3 text-sm">

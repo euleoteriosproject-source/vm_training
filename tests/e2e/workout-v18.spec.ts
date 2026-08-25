@@ -14,14 +14,17 @@ test.describe("workout experience v1.8", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await page.waitForURL(/today|onboarding/, { timeout: 15_000 });
+    await page.waitForURL(/today|onboarding/, { timeout: 30_000 });
+    await page.waitForLoadState("networkidle");
   });
 
   test("resumes, explains exercises and blocks empty completion", async ({
     page,
   }) => {
     await page.goto("/today");
-    await expect(page.getByText("Treino em andamento")).toBeVisible();
+    await expect(
+      page.getByRole("main").getByText("Treino em andamento", { exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Retomar treino" }),
     ).toBeVisible();
@@ -67,7 +70,10 @@ test.describe("workout experience v1.8", () => {
     await expect(
       page.getByRole("navigation", { name: "Visualização dos treinos" }),
     ).toBeVisible();
-    await page.getByRole("link", { name: /Treino GIF-first/ }).first().click();
+    await page
+      .getByRole("link", { name: /Treino GIF-first/ })
+      .first()
+      .click();
     await expect(
       page.getByRole("button", { name: /Ver detalhes de/ }).first(),
     ).toBeVisible();

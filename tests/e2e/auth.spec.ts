@@ -6,21 +6,24 @@ test.describe("Supabase authentication", () => {
   test.skip(!configured, "Requires local or test Supabase credentials");
   test("allowed user can sign in", async ({ page }) => {
     const authRequests: string[] = [];
+    const serverActionRequests: string[] = [];
     page.on("request", (request) => {
       if (request.url().includes("/auth/v1/")) authRequests.push(request.url());
+      if (request.method() === "POST" && request.headers()["next-action"])
+        serverActionRequests.push(request.url());
     });
+    await page.route(/\/auth\/v1\//, (route) => route.abort("blockedbyclient"));
     await page.goto("/login");
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await expect(page).toHaveURL(/today|onboarding/, { timeout: 15000 });
-    const expectedAuthOrigin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!)
-      .origin;
-    expect(authRequests.some((url) => url.includes("/auth/v1/token"))).toBe(
-      true,
-    );
+    await expect(page).toHaveURL(/today|onboarding/, { timeout: 30000 });
+    await page.waitForLoadState("networkidle");
+    expect(authRequests).toHaveLength(0);
+    expect(serverActionRequests.length).toBeGreaterThan(0);
+    const cookies = await page.context().cookies();
     expect(
-      authRequests.every((url) => new URL(url).origin === expectedAuthOrigin),
+      cookies.some((cookie) => cookie.name.startsWith("vm-training-auth")),
     ).toBe(true);
   });
   test("unlisted email signup is rejected by server hook", async ({ page }) => {
@@ -32,6 +35,9 @@ test.describe("Supabase authentication", () => {
     await expect(page.locator('p[role="alert"]')).toContainText(
       "não está autorizado",
     );
+    await expect(
+      page.getByRole("button", { name: "Criar conta" }),
+    ).toBeEnabled();
   });
   test("weak signup password is rejected before Auth", async ({ page }) => {
     const authRequests: string[] = [];
@@ -56,12 +62,28 @@ test.describe("Supabase authentication", () => {
     const password = process.env.E2E_SIGNUP_PASSWORD;
     test.skip(!email || !password, "Requires disposable local signup data");
 
+    const authRequests: string[] = [];
+    const serverActionRequests: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().includes("/auth/v1/")) authRequests.push(request.url());
+      if (request.method() === "POST" && request.headers()["next-action"])
+        serverActionRequests.push(request.url());
+    });
+    await page.route(/\/auth\/v1\//, (route) => route.abort("blockedbyclient"));
+
     await page.goto("/sign-up");
     await page.getByLabel("E-mail").fill(email!);
     await page.getByLabel("Senha", { exact: true }).fill(password!);
     await page.getByLabel("Confirmar senha").fill(password!);
     await page.getByRole("button", { name: "Criar conta" }).click();
-    await expect(page).toHaveURL(/onboarding/, { timeout: 15000 });
+    await expect(page).toHaveURL(/onboarding/, { timeout: 30000 });
+    await page.waitForLoadState("networkidle");
+    expect(authRequests).toHaveLength(0);
+    expect(serverActionRequests.length).toBeGreaterThan(0);
+    const cookies = await page.context().cookies();
+    expect(
+      cookies.some((cookie) => cookie.name.startsWith("vm-training-auth")),
+    ).toBe(true);
 
     await page.context().clearCookies();
     await page.goto("/sign-up");
@@ -72,6 +94,9 @@ test.describe("Supabase authentication", () => {
     await expect(page.locator('p[role="alert"]')).toContainText(
       "já possui uma conta",
     );
+    await expect(
+      page.getByRole("button", { name: "Criar conta" }),
+    ).toBeEnabled();
   });
   test("authenticated dashboard fits all release breakpoints", async ({
     page,
@@ -80,7 +105,8 @@ test.describe("Supabase authentication", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await page.waitForURL(/today|onboarding/, { timeout: 15000 });
+    await page.waitForURL(/today|onboarding/, { timeout: 30000 });
+    await page.waitForLoadState("networkidle");
     for (const [width, height] of [
       [375, 812],
       [390, 844],
