@@ -11,11 +11,16 @@
 
 ## Vercel
 
-- Projeto pretendido: `vm-training`.
+- Projeto: `vm-training`.
 - Plano: Hobby.
-- Production URL: pendente.
-- Build local sem requisito de secret: **PASS**.
-- A conexão Vercel disponível retorna HTTP 403 para criar Preview ou Production; a CLI aguarda autorização direta do proprietário.
+- Repositório: `euleoteriosproject-source/vm_training`.
+- Branch de Production: `main`.
+- Production URL: `https://vm-training.vercel.app`.
+- HTTPS: **PASS**.
+- Build remoto Next.js: **PASS**.
+- Health remoto: **PASS** (`/api/health` retornou HTTP 200).
+- Login e cadastro: **PASS** em desktop/mobile, sem erro de console.
+- Logs iniciais: critical/fatal/HTTP 500 = **0**.
 
 ## Automated E2E
 
@@ -32,13 +37,17 @@
 - Migration de exclusão própria aplicada; dry-run posterior: **up to date**.
 - Clean reset: **PASS**.
 - pgTAP: **145/145 PASS**.
+- Site URL: `https://vm-training.vercel.app`.
+- Redirects exatos de callback e recuperação de senha: **PASS**.
+- Confirmação de e-mail: **OFF**.
+- Senha mínima 12, complexidade e TOTP: **preservados**.
 - Plano admin Hosted: 10/10 exercícios únicos com PRIMARY válida.
 - `ACTIVE_PLAN_WITHOUT_PRIMARY`: 0 no estado auditado antes do onboarding da segunda pessoa.
 
 ## Gates humanos pendentes
 
-1. Deployment HTTPS e configuração final das URLs de Auth.
-2. Onboarding pessoal da segunda pessoa real.
+1. Onboarding pessoal da segunda pessoa real.
+2. Auditoria read-only do segundo usuário e da cobertura PRIMARY do plano.
 3. UAT do admin em iPhone real.
 4. UAT do membro e auditoria final dos dois planos/logs.
 
@@ -46,4 +55,4 @@
 
 `BLOCKED`
 
-O código, banco e automação estão prontos. O gate não pode virar `V20_PRODUCTION_READY` antes da autorização Vercel e das validações humanas acima.
+Deployment, HTTPS, Auth URLs e automação estão prontos. O gate não pode virar `V20_PRODUCTION_READY` antes das validações humanas acima.

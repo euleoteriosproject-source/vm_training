@@ -8,33 +8,38 @@
 - Projeto: `vm-training`.
 - Repositório: `euleoteriosproject-source/vm_training`.
 - Branch: `main`.
+- Production URL: `https://vm-training.vercel.app`.
 - Custo adicional: R$ 0.
 
 ## Environment Production mínimo
 
-Somente valores browser-safe são necessários:
+Configuradas somente as variáveis browser-safe:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-Não provisionar no deployment web:
+Não provisionadas no deployment web:
 
 - `SUPABASE_SECRET_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - senhas E2E
 - tokens operacionais
 
-`NEXT_PUBLIC_APP_URL` e `PRODUCTION_URL` pertencem aos checks pós-deploy, não ao runtime normal.
+`NEXT_PUBLIC_APP_URL` e `PRODUCTION_URL` não são requisitos do runtime normal.
 
 ## Estado validado
 
-- Commit de aplicação: `f18fc8c` em `origin/main`.
-- Build local: PASS.
+- Baseline implantada: commit `9fac933a2dd8ca51989264fde73448c0b01fdb6d` de `main`.
+- Projeto Vercel vinculado ao GitHub; Production branch: `main`.
+- Framework Next.js detectado automaticamente no build.
+- Build remoto: **PASS**.
+- Deployment: **READY** e promovido ao alias estável.
+- HTTPS: **PASS**.
+- `/api/health`, `/login` e `/sign-up`: HTTP 200.
 - Supabase Hosted: sem migration pendente.
-- Deploy via conexão Vercel: bloqueado por HTTP 403 de permissão para Preview e Production.
-- Vercel CLI: login por dispositivo necessário antes de criar o projeto.
-- Production URL, health remoto e Auth redirects: pendentes da autorização.
+- Supabase Auth Site URL e redirects de produção: **PASS**.
+- `.vercelignore` limita o upload aos fontes versionáveis; `.env.local`, `.tmp`, `node_modules` e artefatos locais não são enviados.
 
 ## Desenvolvimento/LAN
 
-O app já foi validado em `0.0.0.0:3000`. O endereço LAN observado foi `http://192.168.2.109:3000`; ele não é Production e pode mudar por DHCP.
+O app também foi validado em `0.0.0.0:3000`. O endereço LAN observado foi `http://192.168.2.109:3000`; ele não é Production e pode mudar por DHCP.

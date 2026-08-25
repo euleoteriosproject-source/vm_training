@@ -1,13 +1,18 @@
+.git/
+.vercel/
 .next/
 .next-e2e/
 node_modules/
 .pnpm-store/
+.tmp/
+
 .env
 .env.local
 .env.production
 .env.*.local
 .env*
 !.env.example
+
 *.log
 coverage/
 playwright-report/
@@ -15,5 +20,3 @@ test-results/
 supabase/.branches/
 supabase/.temp/
 *.tsbuildinfo
-.tmp/
-.vercel/

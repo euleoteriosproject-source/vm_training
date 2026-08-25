@@ -8,10 +8,12 @@
 - [x] Plano, mídia, treino, histórico, progresso e rotas admin locais.
 - [x] Zero skip por senha real.
 - [x] Nenhuma credencial de pessoa real armazenada.
+- [x] Production HTTPS saudável em `https://vm-training.vercel.app`.
+- [x] Login desktop e cadastro mobile renderizados sem erro de console.
 
 ## ACTION REQUIRED — SECOND REAL USER ONBOARDING
 
-Executar somente depois da URL HTTPS ficar saudável. A segunda pessoa deve pessoalmente:
+A segunda pessoa deve acessar `https://vm-training.vercel.app` e pessoalmente:
 
 - [ ] Criar a conta com o e-mail allowlisted e senha privada.
 - [ ] Concluir o onboarding de três etapas.
@@ -28,4 +30,4 @@ Após isso, verificar somente por leitura: 2 usuários, 2 profiles, 1 admin, 1 m
 - [ ] Histórico/carga anterior, substituição e desfazer.
 - [ ] Tema claro/escuro, logout e novo login.
 
-Status: `BLOCKED` até o deployment HTTPS e os dois gates humanos passarem.
+Status: `BLOCKED` somente pelos dois gates humanos e pelas auditorias posteriores.
