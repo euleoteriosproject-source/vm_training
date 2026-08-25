@@ -1,42 +1,39 @@
 # V20 Security Final
 
-## Resultado técnico
+## Runtime e secrets
 
-- RLS habilitado nas 25 tabelas públicas.
-- ACL canônica de menor privilégio preservada; `service_role` não recebeu acesso às tabelas pessoais.
-- As RPCs v2.0 de reconciliação são `SECURITY DEFINER`, verificam `auth.role()='service_role'`, possuem `search_path=''` e têm EXECUTE apenas para `service_role`/owner.
-- Funções públicas privilegiadas não são executáveis por `anon` ou `authenticated`.
-- Auth Hook continua restrito a `supabase_auth_admin`.
-- Bucket `exercise-media` privado.
-- DB lint: zero erros.
-- Security Advisor: somente o aviso conhecido de leaked-password protection do plano Free.
-- `pnpm audit --prod --audit-level high`: zero vulnerabilidades conhecidas.
-- Clean reset e seed: PASS.
-- pgTAP local: 137/137 PASS, cobrindo RLS, ACL, Auth Hook, conclusão, substituição e gates de mídia v2.0.
+- `SUPABASE_SECRET_KEY_REQUIRED_IN_VERCEL = NO`.
+- Features normais usam publishable key, sessão autenticada, RLS e RPCs.
+- Mídia administrativa fica fora de banda; páginas/rotas operacionais ficam indisponíveis sem configuração privilegiada e não geram 500.
+- A exclusão própria exige reautenticação e chama uma RPC `SECURITY INVOKER`; o helper privilegiado fica no schema `private`, valida `auth.uid()` e só apaga o usuário atual.
+- `.env*`, `.tmp`, `.next`, `node_modules` e logs estão ignorados.
+- Nenhum padrão de token/chave foi encontrado no conteúdo rastreado ou staged.
+- Nenhum segredo foi incluído no browser bundle.
 
-## Integridade
+## Banco e ACL
 
-| Verificação              | Resultado |
-| ------------------------ | --------: |
-| DB sem arquivo/poster    |         0 |
-| Arquivo sem DB           |         0 |
-| Hash divergente          |         0 |
-| GIF com um frame         |         0 |
-| PRIMARY estática         |         0 |
-| PRIMARY duplicada        |         0 |
-| Plano ativo sem PRIMARY  |         0 |
-| Auth e-mail duplicado    |         0 |
-| Profile e-mail duplicado |         0 |
-| Plano ativo duplicado    |         0 |
-| Sessão ativa duplicada   |         0 |
-| Workout day órfão        |         0 |
+- RLS/ACL/Auth Hook: PASS nos contratos locais.
+- Bucket `exercise-media`: privado.
+- Funções públicas privilegiadas inesperadas para `anon`/`authenticated`: 0.
+- Clean reset: PASS.
+- pgTAP: 145/145 PASS.
+- Hosted migration history: alinhado após `20260825014657_v20_self_service_account_deletion.sql`.
 
-## Secrets
+## Integridade auditada
 
-- `.env`, `.env.local`, `.env.production`, `.env.*.local`, `.env*`, `.tmp`, `.next`, `node_modules` e logs estão ignorados.
-- O deploy deve provisionar `SUPABASE_SECRET_KEY` apenas como secret server-only; nunca `NEXT_PUBLIC_*`.
-- Nenhuma senha real deve ser armazenada em E2E, Git, docs ou logs.
+| Verificação | Resultado |
+| --- | ---: |
+| DB sem arquivo/poster | 0 |
+| Arquivo sem DB | 0 |
+| Hash divergente | 0 |
+| GIF com um frame | 0 |
+| PRIMARY estática | 0 |
+| PRIMARY duplicada | 0 |
+| Plano ativo sem PRIMARY | 0 |
+| Erro de licença | 0 |
 
-## Pendência externa
+## Pendente após deployment
 
-O secret scan final e o commit/push são executados no fechamento. O envio da secret key à Vercel requer autorização específica do proprietário e permanece bloqueado até essa confirmação.
+- Smoke HTTPS e runtime logs Vercel.
+- Site URL e redirects finais do Supabase Auth.
+- Isolamento cross-user e auditoria dos dois planos reais após onboarding humano.

@@ -2,35 +2,39 @@
 
 ## Destinos
 
-- Supabase Production: `inghftngeritrsezwxnm` (`sa-east-1`).
+- Supabase Production: `inghftngeritrsezwxnm`.
 - Vercel team: `Vinicius Euleoterio's projects`.
-- Plano Vercel: Hobby.
-- Projeto pretendido: `vm-training`.
+- Vercel plan: Hobby.
+- Projeto: `vm-training`.
+- Repositório: `euleoteriosproject-source/vm_training`.
 - Branch: `main`.
-- Custo adicional permitido/realizado: R$ 0.
+- Custo adicional: R$ 0.
 
-## Variáveis necessárias
+## Environment Production mínimo
 
-Browser-safe:
+Somente valores browser-safe são necessários:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-Server-only:
+Não provisionar no deployment web:
 
 - `SUPABASE_SECRET_KEY`
-- `SUPABASE_AUTH_HOOK_VERIFIED=true`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- senhas E2E
+- tokens operacionais
 
-`SUPABASE_INTERNAL_URL` é opcional no runtime Vercel porque o cliente servidor faz fallback para a Hosted URL pública. `NEXT_PUBLIC_APP_URL` e `PRODUCTION_URL` pertencem aos scripts de release/smoke após existir uma URL final.
+`NEXT_PUBLIC_APP_URL` e `PRODUCTION_URL` pertencem aos checks pós-deploy, não ao runtime normal.
 
-## Estado
+## Estado validado
 
-- Build local Production: PASS.
-- Projeto Vercel: ainda não criado.
-- Production URL: pendente.
-- Supabase Site URL/redirects: pendentes da URL final.
-- Motivo: a proteção de egress exige autorização específica antes de enviar `SUPABASE_SECRET_KEY` ao ambiente criptografado server-only da Vercel.
+- Commit de aplicação: `f18fc8c` em `origin/main`.
+- Build local: PASS.
+- Supabase Hosted: sem migration pendente.
+- Deploy via conexão Vercel: bloqueado por HTTP 403 de permissão para Preview e Production.
+- Vercel CLI: login por dispositivo necessário antes de criar o projeto.
+- Production URL, health remoto e Auth redirects: pendentes da autorização.
 
 ## Desenvolvimento/LAN
 
-O servidor foi validado em `0.0.0.0:3000`. Na rede local atual, o endereço de teste é `http://192.168.2.109:3000`. Esse endereço não é Production e pode mudar com DHCP.
+O app já foi validado em `0.0.0.0:3000`. O endereço LAN observado foi `http://192.168.2.109:3000`; ele não é Production e pode mudar por DHCP.

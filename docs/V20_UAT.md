@@ -1,37 +1,31 @@
 # V20 User Acceptance Test
 
-UAT humano é obrigatório e não pode ser substituído por Playwright.
+## Automação concluída
 
-## Admin existente — iPhone real
+- [x] 33/33 E2E locais.
+- [x] Chromium mobile, WebKit/iPhone 13 e desktop.
+- [x] Signup permitido/negado, login e persistência.
+- [x] Plano, mídia, treino, histórico, progresso e rotas admin locais.
+- [x] Zero skip por senha real.
+- [x] Nenhuma credencial de pessoa real armazenada.
 
-- [ ] Abrir a URL HTTPS final.
-- [ ] Entrar digitando a senha diretamente no aparelho.
-- [ ] Confirmar persistência após fechar/reabrir o Safari.
-- [ ] Ver plano ativo e os três dias.
-- [ ] Abrir detalhe e expandir GIF/vídeo.
-- [ ] Retomar a sessão já em andamento.
-- [ ] Registrar kg/reps e concluir uma série.
-- [ ] Ver confirmação explícita de conclusão parcial.
-- [ ] Ver histórico e cargas anteriores.
-- [ ] Testar substituição, indisponibilidade temporária e desfazer.
-- [ ] Ver peso, altura, IMC, interpretação e histórico.
-- [ ] Sair e entrar novamente.
+## ACTION REQUIRED — SECOND REAL USER ONBOARDING
 
-## Segunda pessoa real allowlisted — navegador real
+Executar somente depois da URL HTTPS ficar saudável. A segunda pessoa deve pessoalmente:
 
-- [ ] Criar a conta com o e-mail já autorizado.
-- [ ] Confirmar role `member` e ausência de acesso admin.
-- [ ] Concluir onboarding com dados pessoais fornecidos pela própria pessoa.
-- [ ] Confirmar fluxo em até três telas, data DD/MM/AAAA e preset de academia.
-- [ ] Gerar plano e confirmar 100% de mídia.
-- [ ] Iniciar, registrar, retomar, cancelar e concluir treino.
-- [ ] Confirmar isolamento direto entre os dois usuários.
+- [ ] Criar a conta com o e-mail allowlisted e senha privada.
+- [ ] Concluir o onboarding de três etapas.
+- [ ] Gerar/receber o plano e abrir o app.
+- [ ] Validar home, treino próprio, GIF, sets, progresso, histórico e perfil.
 
-## Automação disponível
+Após isso, verificar somente por leitura: 2 usuários, 2 profiles, 1 admin, 1 member, onboarding completo e plano do membro com 100% PRIMARY.
 
-- Chromium mobile, WebKit iPhone 13 e desktop configurados.
-- Viewports: 375×812, 390×844, 430×932 e 1440×900.
-- Testes públicos executados: 6 PASS.
-- Testes autenticados: 27 SKIPPED, porque nenhuma senha real foi armazenada.
+## ACTION REQUIRED — ADMIN IPHONE UAT
 
-Status atual: `BLOCKED` até as duas seções humanas passarem.
+- [ ] Login e persistência no Safari.
+- [ ] Home, Body Intelligence e os três dias de treino.
+- [ ] Detalhes/GIF, início, registro, retomada, conclusão parcial e cancelamento.
+- [ ] Histórico/carga anterior, substituição e desfazer.
+- [ ] Tema claro/escuro, logout e novo login.
+
+Status: `BLOCKED` até o deployment HTTPS e os dois gates humanos passarem.
