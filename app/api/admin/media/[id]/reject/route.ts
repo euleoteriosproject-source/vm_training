@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 const schema = z.object({
   reason: z.enum([
@@ -37,6 +40,11 @@ export async function POST(
     .single();
   if (profile?.role !== "admin")
     return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (!isAdminMaintenanceConfigured())
+    return NextResponse.json(
+      { error: "Fluxo operacional indisponível neste deployment" },
+      { status: 503 },
+    );
   const admin = createAdminClient();
   const { data: current } = await admin
     .from("exercise_media")

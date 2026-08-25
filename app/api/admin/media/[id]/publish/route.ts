@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(
@@ -19,6 +22,11 @@ export async function POST(
     .single();
   if (profile?.role !== "admin")
     return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (!isAdminMaintenanceConfigured())
+    return NextResponse.json(
+      { error: "Fluxo operacional indisponível neste deployment" },
+      { status: 503 },
+    );
   const { id } = await params;
   const { data, error } = await createAdminClient().rpc(
     "publish_exercise_media",

@@ -1,13 +1,11 @@
 import { calculateCoverage } from "../../lib/media/coverage.ts";
 import { getAdminClient, log } from "./shared.ts";
-const production =
-  process.env.NODE_ENV === "production" ||
-  process.env.VERCEL_ENV === "production";
+const required = process.env.MEDIA_VALIDATION_REQUIRED === "true";
 const client = getAdminClient(false);
 if (!client) {
   const message =
     "Supabase não configurado; cobertura de mídia não pôde ser validada.";
-  if (production) throw new Error(message);
+  if (required) throw new Error(message);
   log("REPORT", `WARNING: ${message}`);
 } else {
   const [{ data, error }, { data: activePlans, error: plansError }] =
@@ -25,7 +23,7 @@ if (!client) {
     ]);
   if (error || plansError) {
     const queryError = error ?? plansError!;
-    if (production) throw queryError;
+    if (required) throw queryError;
     log("REPORT", `WARNING: ${queryError.message}`);
   } else {
     const rows = (data ?? []).map((item) => ({

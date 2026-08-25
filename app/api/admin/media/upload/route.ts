@@ -8,7 +8,10 @@ import {
 } from "@/lib/media/ffmpeg";
 import { getLicense } from "@/lib/media/licenses";
 import { prepareLocalFile } from "@/lib/media/prepare";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { LicenseCode } from "@/lib/media/types";
 
@@ -36,6 +39,11 @@ export async function POST(request: Request) {
     .single();
   if (profile?.role !== "admin")
     return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (!isAdminMaintenanceConfigured())
+    return NextResponse.json(
+      { error: "Fluxo operacional indisponível neste deployment" },
+      { status: 503 },
+    );
   const form = await request.formData();
   const parsed = fields.safeParse({
     exerciseId: form.get("exerciseId"),

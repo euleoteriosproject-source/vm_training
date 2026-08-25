@@ -22,7 +22,10 @@ export default async function PrivateLayout({
   if (!profile?.onboarding_completed) redirect("/onboarding");
   return (
     <>
-      <AppNav admin={profile.role === "admin"} />
+      <AppNav
+        admin={profile.role === "admin"}
+        adminMaintenance={Boolean(process.env.SUPABASE_SECRET_KEY)}
+      />
       <main className="mx-auto min-h-dvh max-w-7xl px-4 pb-28 pt-7 md:pl-[calc(16rem+2rem)] md:pr-8 md:pb-10">
         {children}
       </main>

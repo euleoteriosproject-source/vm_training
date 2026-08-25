@@ -30,12 +30,14 @@ export function ExercisePreviewVideo({
   className = "",
   priority = false,
   mediaType = "video",
+  playbackControl = true,
 }: {
   src?: string | null;
   poster?: string | null;
   className?: string;
   priority?: boolean;
   mediaType?: "gif" | "video" | null;
+  playbackControl?: boolean;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [manual, setManual] = useState(false);
@@ -93,7 +95,7 @@ export function ExercisePreviewVideo({
           loading={priority ? "eager" : "lazy"}
           className="h-auto w-full object-contain"
         />
-        {autoplayBlocked && !manual && poster && (
+        {autoplayBlocked && !manual && poster && playbackControl && (
           <button
             onClick={() => setManual(true)}
             aria-label="Ver execução animada"
@@ -103,6 +105,13 @@ export function ExercisePreviewVideo({
               Ver execução
             </span>
           </button>
+        )}
+        {autoplayBlocked && !manual && poster && !playbackControl && (
+          <span className="pointer-events-none absolute inset-0 grid place-items-center bg-black/20">
+            <span className="rounded-full bg-black/75 px-4 py-2 text-sm font-medium text-white">
+              Ver execução
+            </span>
+          </span>
         )}
       </div>
     );
@@ -120,7 +129,7 @@ export function ExercisePreviewVideo({
         preload={priority ? "metadata" : "none"}
         controls={false}
       />
-      {autoplayBlocked && !manual && (
+      {autoplayBlocked && !manual && playbackControl && (
         <button
           onClick={play}
           aria-label="Reproduzir demonstração"
@@ -130,6 +139,13 @@ export function ExercisePreviewVideo({
             <Play size={21} fill="currentColor" />
           </span>
         </button>
+      )}
+      {autoplayBlocked && !manual && !playbackControl && (
+        <span className="pointer-events-none absolute inset-0 grid place-items-center bg-black/20">
+          <span className="grid size-12 place-items-center rounded-full bg-black/70 text-white">
+            <Play size={21} fill="currentColor" />
+          </span>
+        </span>
       )}
     </div>
   );

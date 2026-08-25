@@ -29,7 +29,12 @@ test.describe("workout experience v1.8", () => {
     await page.goto(`/workout-session/${process.env.E2E_SESSION_ID}`);
     await expect(page.getByRole("button", { name: "Finalizar" })).toBeVisible();
     await expect(
-      page.getByText("Vídeo ainda não disponível").first(),
+      page
+        .locator(
+          '[data-testid="exercise-preview-gif"], [data-testid="exercise-preview-video"]',
+        )
+        .or(page.getByText("Vídeo ainda não disponível"))
+        .first(),
     ).toBeVisible();
     await page
       .getByRole("button", { name: /Ver detalhes de/ })

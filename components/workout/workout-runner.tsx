@@ -491,6 +491,7 @@ function ExerciseCard({
                 mediaType={item.detail.mediaType}
                 className="w-full"
                 priority={item.position === 1}
+                playbackControl={false}
               />
             </button>
           }

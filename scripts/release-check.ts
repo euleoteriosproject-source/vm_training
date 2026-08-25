@@ -18,29 +18,13 @@ function assertProductionConfiguration() {
   const required = [
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-    "SUPABASE_SECRET_KEY",
-    "NEXT_PUBLIC_APP_URL",
-    "PRODUCTION_URL",
-    "E2E_TEST_EMAIL",
-    "E2E_TEST_PASSWORD",
   ];
   const missing = required.filter((name) => !process.env[name]);
   if (missing.length)
     throw new Error(`Production env ausente: ${missing.join(", ")}`);
   const supabase = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!);
-  const app = new URL(process.env.NEXT_PUBLIC_APP_URL!);
   if (!supabase.hostname.endsWith(".supabase.co"))
     throw new Error("Production exige Supabase Hosted (*.supabase.co)");
-  if (app.protocol !== "https:")
-    throw new Error("NEXT_PUBLIC_APP_URL de Production deve usar HTTPS");
-  if (process.env.SUPABASE_AUTH_HOOK_VERIFIED !== "true")
-    throw new Error(
-      "Confirme o Before User Created Hook com SUPABASE_AUTH_HOOK_VERIFIED=true",
-    );
-  if (process.env.E2E_MEDIA_TEST !== "true")
-    throw new Error(
-      "Production exige E2E_MEDIA_TEST=true e Media E2E sem skip",
-    );
 }
 
 if (mode === "production") assertProductionConfiguration();

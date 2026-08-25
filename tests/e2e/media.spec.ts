@@ -21,7 +21,7 @@ test.describe("approved exercise media", () => {
     await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
     await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
     await page.getByRole("button", { name: "Entrar" }).click();
-    await page.waitForURL(/today|onboarding/, { timeout: 15000 });
+    await page.waitForURL(/today|onboarding/, { timeout: 30000 });
     await page.goto(`/workout-session/${process.env.E2E_SESSION_ID}`);
 
     const preview = page

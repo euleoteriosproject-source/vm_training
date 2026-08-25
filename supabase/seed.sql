@@ -2,6 +2,7 @@ insert into public.allowed_signup_emails(email,display_name,default_role) values
 ('vinicius.euleoterio@hotmail.com','Vinicius','admin'),
 ('lisepaiva@hotmail.com','Marlise','member'),
 ('v172-mobile@example.test','VM Training E2E mobile','member'),
+('v172-webkit@example.test','VM Training E2E webkit','member'),
 ('v172-desktop@example.test','VM Training E2E desktop','member')
 on conflict(email) do update set display_name=excluded.display_name, default_role=excluded.default_role, active=true;
 

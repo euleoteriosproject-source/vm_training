@@ -18,7 +18,13 @@ const main = [
   { href: "/progress", label: "Progresso", icon: ChartNoAxesCombined },
   { href: "/profile", label: "Perfil", icon: UserRound },
 ];
-export function AppNav({ admin = false }: { admin?: boolean }) {
+export function AppNav({
+  admin = false,
+  adminMaintenance = false,
+}: {
+  admin?: boolean;
+  adminMaintenance?: boolean;
+}) {
   const path = usePathname();
   return (
     <>
@@ -58,20 +64,24 @@ export function AppNav({ admin = false }: { admin?: boolean }) {
                 <Dumbbell size={19} />
                 Exercícios
               </Link>
-              <Link
-                href="/admin/media-review"
-                className="mt-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-muted hover:bg-surface-alt"
-              >
-                <Film size={19} />
-                Revisar mídia
-              </Link>
-              <Link
-                href="/admin/release-readiness"
-                className="mt-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-muted hover:bg-surface-alt"
-              >
-                <ShieldCheck size={19} />
-                Release
-              </Link>
+              {adminMaintenance && (
+                <>
+                  <Link
+                    href="/admin/media-review"
+                    className="mt-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-muted hover:bg-surface-alt"
+                  >
+                    <Film size={19} />
+                    Revisar mídia
+                  </Link>
+                  <Link
+                    href="/admin/release-readiness"
+                    className="mt-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-muted hover:bg-surface-alt"
+                  >
+                    <ShieldCheck size={19} />
+                    Release
+                  </Link>
+                </>
+              )}
             </>
           )}
         </div>

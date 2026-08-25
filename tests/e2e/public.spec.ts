@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 test("landing and login are usable", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("body")).not.toHaveText("");
   await expect(
     page.locator(
@@ -25,7 +25,7 @@ test("has no horizontal overflow at required breakpoints", async ({ page }) => {
     [1440, 900],
   ]) {
     await page.setViewportSize({ width, height });
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
     const overflow = await page.evaluate(
       () =>
         document.documentElement.scrollWidth >

@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { calculatePlanCoverage } from "@/lib/media/operations";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +22,7 @@ export default async function ReleaseReadinessPage() {
     .eq("user_id", auth.user.id)
     .single();
   if (currentProfile?.role !== "admin") redirect("/today");
+  if (!isAdminMaintenanceConfigured()) notFound();
 
   const admin = createAdminClient();
   const [{ data: profiles }, { data: plans }, { data: exercises }, bucket] =

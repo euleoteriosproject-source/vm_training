@@ -3,9 +3,12 @@ import {
   type ReviewCandidate,
 } from "@/components/admin/media-review";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { getExercisePublishReadiness } from "@/lib/media/operations";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 export default async function MediaReviewPage({
   searchParams,
 }: {
@@ -21,6 +24,7 @@ export default async function MediaReviewPage({
     .eq("user_id", auth.user.id)
     .single();
   if (currentProfile?.role !== "admin") redirect("/today");
+  if (!isAdminMaintenanceConfigured()) notFound();
   const supabase = createAdminClient();
   const [
     { data: media },

@@ -4,7 +4,10 @@ import {
   primaryChecklistKeys,
   validateMediaClassification,
 } from "@/lib/media/operations";
-import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  createAdminClient,
+  isAdminMaintenanceConfigured,
+} from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 const checklistShape = Object.fromEntries(
@@ -53,6 +56,11 @@ export async function POST(
   const user = await requireAdmin();
   if (!user)
     return NextResponse.json({ error: "Acesso negado" }, { status: 403 });
+  if (!isAdminMaintenanceConfigured())
+    return NextResponse.json(
+      { error: "Fluxo operacional indisponível neste deployment" },
+      { status: 503 },
+    );
   const classification = validateMediaClassification({
     role: parsed.data.mediaRole,
     executionQuality: parsed.data.executionQuality,

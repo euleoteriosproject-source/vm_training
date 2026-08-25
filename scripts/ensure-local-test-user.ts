@@ -1,7 +1,63 @@
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { createClient } from "@supabase/supabase-js";
-import { getAdminClient, isLocalSupabaseUrl } from "./media/shared.ts";
+
+function isLocalUrl(value: string) {
+  try {
+    return ["localhost", "127.0.0.1", "::1"].includes(
+      new URL(value).hostname,
+    );
+  } catch {
+    return false;
+  }
+}
+
+function loadLocalSupabaseEnvironment() {
+  if (
+    isLocalUrl(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "") &&
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&
+    process.env.SUPABASE_SECRET_KEY
+  )
+    return;
+  const windowsCorepack = path.join(
+    path.dirname(process.execPath),
+    "node_modules",
+    "corepack",
+    "dist",
+    "corepack.js",
+  );
+  const result = spawnSync(
+    process.platform === "win32" ? process.execPath : "corepack",
+    process.platform === "win32"
+      ? [windowsCorepack, "pnpm", "exec", "supabase", "status", "-o", "env"]
+      : ["pnpm", "exec", "supabase", "status", "-o", "env"],
+    { encoding: "utf8", windowsHide: true, shell: false },
+  );
+  if (result.status !== 0)
+    throw new Error("Supabase local indisponível; execute supabase start");
+  const values = Object.fromEntries(
+    result.stdout
+      .split(/\r?\n/)
+      .filter((line) => /^[A-Z_]+=/.test(line))
+      .map((line) => {
+        const separator = line.indexOf("=");
+        return [
+          line.slice(0, separator),
+          line.slice(separator + 1).replace(/^"|"$/g, ""),
+        ];
+      }),
+  );
+  process.env.NEXT_PUBLIC_SUPABASE_URL = values.API_URL;
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY =
+    values.PUBLISHABLE_KEY ?? values.ANON_KEY;
+  process.env.SUPABASE_SECRET_KEY =
+    values.SECRET_KEY ?? values.SERVICE_ROLE_KEY;
+}
+
+loadLocalSupabaseEnvironment();
+const { getAdminClient, isLocalSupabaseUrl } = await import("./media/shared.ts");
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
@@ -49,6 +105,7 @@ const password = randomBytes(24).toString("base64url");
 const signupPassword = `VmE2E${randomBytes(18).toString("base64url")}7`;
 const signupEmails = {
   mobile: "v172-mobile@example.test",
+  webkit: "v172-webkit@example.test",
   desktop: "v172-desktop@example.test",
 };
 async function writeE2EEnv(
@@ -61,7 +118,12 @@ async function writeE2EEnv(
     [
       `E2E_TEST_EMAIL=${authEmail}`,
       `E2E_TEST_PASSWORD=${password}`,
+      `NEXT_PUBLIC_SUPABASE_URL=${url}`,
+      `SUPABASE_INTERNAL_URL=${url}`,
+      `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${publishableKey}`,
+      `SUPABASE_SECRET_KEY=${process.env.SUPABASE_SECRET_KEY}`,
       `E2E_SIGNUP_EMAIL_MOBILE=${signupEmails.mobile}`,
+      `E2E_SIGNUP_EMAIL_WEBKIT=${signupEmails.webkit}`,
       `E2E_SIGNUP_EMAIL_DESKTOP=${signupEmails.desktop}`,
       `E2E_SIGNUP_PASSWORD=${signupPassword}`,
       `E2E_MEDIA_TEST=${mediaEnabled ? "true" : "false"}`,
@@ -95,6 +157,19 @@ const { error: signInError } = await userClient.auth.signInWithPassword({
 });
 if (signInError) throw signInError;
 
+const { error: signupAllowlistError } = await userClient
+  .from("allowed_signup_emails")
+  .upsert(
+    Object.entries(signupEmails).map(([project, email]) => ({
+      email,
+      display_name: `VM Training E2E ${project}`,
+      default_role: "member",
+      active: true,
+    })),
+    { onConflict: "email" },
+  );
+if (signupAllowlistError) throw signupAllowlistError;
+
 const { error: onboardingError } = await userClient.rpc("complete_onboarding", {
   payload: {
     displayName: "VM Training E2E",
@@ -111,13 +186,141 @@ const { error: onboardingError } = await userClient.rpc("complete_onboarding", {
 });
 if (onboardingError) throw onboardingError;
 
+const fixtureGif = Buffer.from(
+  "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICRAEAIfkEAQAAAQAsAAAAAAEAAQAAAgJEADs=",
+  "base64",
+);
+const fixtureHash = createHash("sha256").update(fixtureGif).digest("hex");
+const fixtureStoragePath = "e2e/leg-press/primary.gif";
+const fixturePosterPath = "e2e/leg-press/poster.gif";
+for (const objectPath of [fixtureStoragePath, fixturePosterPath]) {
+  const { error: uploadError } = await adminClient.storage
+    .from("exercise-media")
+    .upload(objectPath, fixtureGif, {
+      contentType: "image/gif",
+      upsert: true,
+    });
+  if (uploadError) throw uploadError;
+}
+const { data: fixtureExercise, error: fixtureExerciseError } = await adminClient
+  .from("exercises")
+  .select("id")
+  .eq("slug", "leg-press")
+  .single();
+if (fixtureExerciseError || !fixtureExercise)
+  throw fixtureExerciseError ?? new Error("Exercício E2E ausente");
+const checklist = {
+  correct_exercise: true,
+  compatible_equipment: true,
+  start_position_visible: true,
+  main_range_visible: true,
+  complete_repetition_visible: true,
+  technically_acceptable: true,
+  sufficient_clarity: true,
+  useful_framing: true,
+  no_blocking_elements: true,
+  license_confirmed: true,
+};
+const automatedValidation = {
+  exercise_match_exact: true,
+  equipment_match: true,
+  execution_quality_approved: true,
+  visibility_sufficient: true,
+  license_verified: true,
+  download_permitted: true,
+  transformation_permitted: true,
+  rehost_permitted: true,
+  source_provenance_verified: true,
+  visual_inspection_passed: true,
+  biomechanical_references_passed: true,
+  final_gif_inspection_passed: true,
+  storage_hash_verified: true,
+};
+const fixtureSourceUrl =
+  "https://example.test/vm-training/local-e2e-leg-press";
+const { data: existingFixture, error: existingFixtureError } = await adminClient
+  .from("exercise_media")
+  .select("id,status")
+  .eq("exercise_id", fixtureExercise.id)
+  .eq("source_url", fixtureSourceUrl)
+  .maybeSingle();
+if (existingFixtureError) throw existingFixtureError;
+if (existingFixture?.status !== "approved") {
+  await adminClient
+    .from("exercise_media")
+    .update({ status: "reviewing", is_primary: false })
+    .eq("exercise_id", fixtureExercise.id)
+    .eq("status", "approved")
+    .neq("source_url", fixtureSourceUrl);
+  const now = new Date().toISOString();
+  const { data: fixtureMedia, error: fixtureMediaError } = await adminClient
+    .from("exercise_media")
+    .upsert(
+      {
+      exercise_id: fixtureExercise.id,
+      media_type: "gif",
+      storage_path: fixtureStoragePath,
+      poster_path: fixturePosterPath,
+      angle: "main",
+      status: "processed",
+      source_name: "VM Training local E2E fixture",
+      source_type: "self_produced",
+      source_url: fixtureSourceUrl,
+      original_file_url:
+        "https://example.test/vm-training/local-e2e-leg-press.gif",
+      license_code: "CUSTOM",
+      author: "VM Training E2E",
+      attribution_text: "Disposable local E2E fixture",
+      attribution_required: false,
+      verified_at: now,
+      downloaded_at: now,
+      content_hash: fixtureHash,
+      width: 1,
+      height: 1,
+      file_size_bytes: fixtureGif.byteLength,
+      is_primary: false,
+      quality_score: 100,
+      execution_quality: "approved",
+      media_role: "PRIMARY_DEMO",
+      review_checklist: checklist,
+      reviewed_at: now,
+      reviewed_by: profile.user_id,
+      processed_at: now,
+      animation_verified: true,
+      frame_count: 2,
+      animation_loop: true,
+      frames_per_second: 1,
+      duration_seconds: 2,
+      review_state: "MANUAL_REVIEW_REQUIRED",
+      review_method: "human",
+      automated_validation: automatedValidation,
+      },
+      { onConflict: "exercise_id,source_url" },
+    )
+    .select("id")
+    .single();
+  if (fixtureMediaError || !fixtureMedia)
+    throw fixtureMediaError ?? new Error("Mídia E2E não criada");
+  const { error: publishFixtureError } = await adminClient.rpc(
+    "publish_exercise_media",
+    { p_media_id: fixtureMedia.id, p_admin_id: profile.user_id },
+  );
+  if (publishFixtureError) throw publishFixtureError;
+}
+const { error: fixtureActivationError } = await adminClient
+  .from("exercises")
+  .update({ active: true })
+  .eq("id", fixtureExercise.id);
+if (fixtureActivationError) throw fixtureActivationError;
+
 const { data: approved, error: mediaError } = await userClient
   .from("exercise_media")
   .select("exercise_id")
   .eq("status", "approved")
   .eq("media_role", "PRIMARY_DEMO")
   .eq("is_primary", true)
-  .limit(3);
+  .eq("exercise_id", fixtureExercise.id)
+  .limit(1);
 if (mediaError) throw mediaError;
 let exerciseIds = [
   ...new Set((approved ?? []).map((item) => item.exercise_id)),
