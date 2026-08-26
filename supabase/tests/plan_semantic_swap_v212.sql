@@ -1,7 +1,7 @@
 begin;
 grant usage on schema extensions to anon, authenticated, service_role;
 set local search_path = public, extensions;
-select plan(32);
+select plan(60);
 
 select is((select count(*)::integer from public.exercises where training_role is null), 0,
   'every exercise has a programming training role');
@@ -81,6 +81,9 @@ insert into public.exercises(
     'vertical_push', array['ombros'], array['triceps'], 'beginner',
     array['Execute com controle.'], false),
   ('v212-bench-press', 'Supino com barra', 'strength',
+    'horizontal_push', array['peitoral'], array['triceps'], 'beginner',
+    array['Execute com controle.'], false),
+  ('v212-push-up', 'Flexão de braços V212', 'strength',
     'horizontal_push', array['peitoral'], array['triceps'], 'beginner',
     array['Execute com controle.'], false),
   ('v212-back-extension', 'Extensão lombar', 'strength',
@@ -242,6 +245,31 @@ select is((select count(*)::integer from public.user_exercise_preferences
 set local role authenticated;
 select set_config('request.jwt.claims',
   '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v213.single_false',
+  public.replace_plan_exercise_v212(
+    'e4000000-0000-4000-8000-000000000001',
+    (select id from public.exercises where slug = 'v212-bench-press'), false
+  )::text, true)$$, 'single occurrence replacement passes without persistence');
+reset role;
+select is(current_setting('v213.single_false')::jsonb->>'persistentExclusion',
+  'false', 'single occurrence result reports persistence disabled');
+select is((current_setting('v213.single_false')::jsonb->>'remainingOccurrenceCount')::integer,
+  0, 'single occurrence result reports no remaining source slots');
+select is((select count(*)::integer from public.user_exercise_preferences
+  where user_id = 'e1000000-0000-4000-8000-000000000001'
+    and exercise_id = (select id from public.exercises where slug = 'v212-floor-press')), 0,
+  'replacement without persistence creates no preference');
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_plan_exercise_change_v212(
+  (current_setting('v213.single_false')::jsonb->>'eventId')::uuid
+)$$, 'single occurrence replacement without persistence can be undone');
+reset role;
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
 select lives_ok($$select set_config('v212.preview',
   public.preview_plan_rebalance_v212(
     'e4000000-0000-4000-8000-000000000002',
@@ -290,6 +318,136 @@ select is((select status from public.workout_plans
 select is((select count(*)::integer from public.workout_plans
   where user_id = 'e1000000-0000-4000-8000-000000000001' and status = 'active'), 1,
   'undo leaves exactly one active plan');
+
+-- v2.1.3 regression: persisting an exclusion must not block a selected-slot
+-- swap when the same exercise appears elsewhere in the current active plan.
+update public.workout_plans set status = 'archived', archived_at = now()
+where id = 'e2000000-0000-4000-8000-000000000002';
+update public.workout_day_exercises
+set exercise_id = (select id from public.exercises where slug = 'v212-floor-press')
+where id = 'e4000000-0000-4000-8000-000000000004';
+update public.workout_plans
+set status = 'active', activated_at = now(), archived_at = null
+where id = 'e2000000-0000-4000-8000-000000000002';
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v213.direct',
+  public.replace_plan_exercise_v212(
+    'e4000000-0000-4000-8000-000000000001',
+    (select id from public.exercises where slug = 'v212-bench-press'), true
+  )::text, true)$$,
+  'persistent replacement succeeds when the source occurs on another day');
+reset role;
+
+select is((current_setting('v213.direct')::jsonb->>'remainingOccurrenceCount')::integer,
+  1, 'direct result reports the remaining current-plan occurrence');
+select is((select preference from public.user_exercise_preferences
+  where user_id = 'e1000000-0000-4000-8000-000000000001'
+    and exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  'avoid', 'future-plan avoid preference is persisted immediately');
+select is((select count(*)::integer
+  from public.workout_days day
+  join public.workout_day_exercises slot on slot.workout_day_id = day.id
+  where day.workout_plan_id = (current_setting('v213.direct')::jsonb->>'planId')::uuid
+    and slot.exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  1, 'the other current-plan occurrence remains unchanged');
+select ok(not private.exercise_auto_plan_eligible(
+  (select id from public.exercises where slug = 'v212-floor-press'),
+  'e1000000-0000-4000-8000-000000000001'),
+  'future automatic generation excludes the avoided source exercise');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v213.preview',
+  public.preview_remaining_exclusions_v213(
+    (current_setting('v213.direct')::jsonb->>'eventId')::uuid
+  )::text, true)$$,
+  'optional reorganization creates a strict-equivalent draft');
+reset role;
+
+select is((select status from public.workout_plans
+  where id = (current_setting('v213.preview')::jsonb->>'planId')::uuid),
+  'draft', 'remaining-occurrence preview is not silently activated');
+select is((select status from public.workout_plans
+  where id = (current_setting('v213.direct')::jsonb->>'planId')::uuid),
+  'active', 'canceling or reviewing the optional preview keeps the completed swap active');
+select is(jsonb_array_length(current_setting('v213.preview')::jsonb->'changes'),
+  1, 'preview explains every remaining occurrence change');
+select is((select count(*)::integer
+  from public.workout_days day
+  join public.workout_day_exercises slot on slot.workout_day_id = day.id
+  where day.workout_plan_id = (current_setting('v213.preview')::jsonb->>'planId')::uuid
+    and slot.exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  0, 'preview removes all remaining occurrences from its draft only');
+select is((current_setting('v213.preview')::jsonb#>>'{quality,mediaCoveragePercent}')::numeric,
+  100::numeric, 'remaining-occurrence preview retains complete media coverage');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v213.rebalance',
+  public.activate_remaining_exclusions_v213(
+    (current_setting('v213.preview')::jsonb->>'planId')::uuid
+  )::text, true)$$,
+  'explicit confirmation activates the remaining-occurrence reorganization');
+reset role;
+select is((select status from public.workout_plans
+  where id = (current_setting('v213.preview')::jsonb->>'planId')::uuid),
+  'active', 'confirmed remaining-occurrence preview becomes active');
+select is((select count(*)::integer
+  from public.workout_days day
+  join public.workout_day_exercises slot on slot.workout_day_id = day.id
+  where day.workout_plan_id = (current_setting('v213.preview')::jsonb->>'planId')::uuid
+    and slot.exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  0, 'confirmed reorganization excludes the source from the current plan');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_plan_exercise_change_v212(
+  (current_setting('v213.rebalance')::jsonb->>'eventId')::uuid
+)$$, 'remaining-occurrence reorganization can be undone independently');
+reset role;
+select is((select status from public.workout_plans
+  where id = (current_setting('v213.direct')::jsonb->>'planId')::uuid),
+  'active', 'reorganization undo restores the already-completed simple swap');
+select is((select preference from public.user_exercise_preferences
+  where user_id = 'e1000000-0000-4000-8000-000000000001'
+    and exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  'avoid', 'reorganization undo keeps the persistent future preference');
+select is((select count(*)::integer
+  from public.workout_days day
+  join public.workout_day_exercises slot on slot.workout_day_id = day.id
+  where day.workout_plan_id = (current_setting('v213.direct')::jsonb->>'planId')::uuid
+    and slot.exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  1, 'reorganization undo restores the untouched other occurrence');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_plan_exercise_change_v212(
+  (current_setting('v213.direct')::jsonb->>'eventId')::uuid
+)$$, 'simple persistent swap still supports exact undo');
+reset role;
+select is((select count(*)::integer from public.user_exercise_preferences
+  where user_id = 'e1000000-0000-4000-8000-000000000001'
+    and exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  0, 'simple undo restores the exact previous preference state');
+select is((select count(*)::integer
+  from public.workout_days day
+  join public.workout_day_exercises slot on slot.workout_day_id = day.id
+  where day.workout_plan_id = 'e2000000-0000-4000-8000-000000000002'
+    and slot.exercise_id = (select id from public.exercises where slug = 'v212-floor-press')),
+  2, 'simple undo restores the original plan including both occurrences');
+select ok((select undone_at is not null from public.plan_exercise_change_events
+  where id = (current_setting('v213.direct')::jsonb->>'eventId')::uuid),
+  'simple undo keeps a resolved audit event instead of an orphan');
+select is((select count(*)::integer from public.workout_plans
+  where user_id = 'e1000000-0000-4000-8000-000000000001' and status = 'active'),
+  1, 'v2.1.3 undo leaves exactly one active plan');
 
 select * from finish();
 rollback;

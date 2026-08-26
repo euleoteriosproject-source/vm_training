@@ -26,6 +26,9 @@ type PlanChangeResult = {
   planId: string;
   dayId: string;
   exerciseName?: string;
+  sourceExerciseName?: string;
+  persistentExclusion?: boolean;
+  remainingOccurrenceCount?: number;
 };
 
 async function readJson<T>(response: Response): Promise<T> {
@@ -58,6 +61,11 @@ export function PlanExerciseSwap({
   );
   const [persistExclusion, setPersistExclusion] = useState(false);
   const [preview, setPreview] = useState<RebalancePreview | null>(null);
+  const [previewMode, setPreviewMode] = useState<"semantic" | "remaining">(
+    "semantic",
+  );
+  const [completedChange, setCompletedChange] =
+    useState<PlanChangeResult | null>(null);
 
   useEffect(() => {
     if (initialOpen) void load("", 5);
@@ -91,6 +99,12 @@ export function PlanExerciseSwap({
   }
 
   function handleOpen(nextOpen: boolean) {
+    if (!nextOpen && completedChange) {
+      setOpen(false);
+      router.replace(`/workouts/${completedChange.dayId}`);
+      router.refresh();
+      return;
+    }
     setOpen(nextOpen);
     if (nextOpen && !candidates.length) void load("", 5);
     if (!nextOpen) {
@@ -114,6 +128,8 @@ export function PlanExerciseSwap({
       );
       const result = await readJson<{ dayId: string }>(response);
       toast.success("Alteração desfeita");
+      setCompletedChange(null);
+      setOpen(false);
       router.replace(`/workouts/${result.dayId}`);
       router.refresh();
     } catch (error) {
@@ -125,12 +141,17 @@ export function PlanExerciseSwap({
     }
   }
 
-  function finish(result: PlanChangeResult, message: string) {
-    setOpen(false);
+  function notifySuccess(result: PlanChangeResult, message: string) {
     toast.success(message, {
       action: { label: "Desfazer", onClick: () => void undo(result.eventId) },
       duration: 9000,
     });
+  }
+
+  function finish(result: PlanChangeResult, message: string) {
+    setCompletedChange(null);
+    setOpen(false);
+    notifySuccess(result, message);
     router.replace(`/workouts/${result.dayId}`);
     router.refresh();
   }
@@ -148,7 +169,17 @@ export function PlanExerciseSwap({
           persistExclusion,
         }),
       });
-      finish(await readJson<PlanChangeResult>(response), "Exercício alterado");
+      const result = await readJson<PlanChangeResult>(response);
+      if (
+        result.persistentExclusion &&
+        (result.remainingOccurrenceCount ?? 0) > 0
+      ) {
+        notifySuccess(result, "Exercício trocado.");
+        setSelected(null);
+        setCompletedChange(result);
+      } else {
+        finish(result, "Exercício trocado.");
+      }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Falha na troca.");
     } finally {
@@ -168,6 +199,26 @@ export function PlanExerciseSwap({
           desiredExerciseId: selected.exerciseId,
         }),
       });
+      setPreviewMode("semantic");
+      setPreview(await readJson<RebalancePreview>(response));
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Falha ao preparar a prévia.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function previewRemainingExclusions() {
+    if (!completedChange) return;
+    setBusy(true);
+    try {
+      const response = await fetch(
+        `/api/plans/exercise-changes/${completedChange.eventId}/remaining`,
+        { method: "POST" },
+      );
+      setPreviewMode("remaining");
       setPreview(await readJson<RebalancePreview>(response));
     } catch (error) {
       toast.error(
@@ -182,10 +233,11 @@ export function PlanExerciseSwap({
     if (!preview) return;
     setBusy(true);
     try {
-      const response = await fetch(
-        `/api/plans/rebalances/${preview.planId}/activate`,
-        { method: "POST" },
-      );
+      const endpoint =
+        previewMode === "remaining"
+          ? `/api/plans/exclusion-rebalances/${preview.planId}/activate`
+          : `/api/plans/rebalances/${preview.planId}/activate`;
+      const response = await fetch(endpoint, { method: "POST" });
       finish(await readJson<PlanChangeResult>(response), "Treino reorganizado");
     } catch (error) {
       toast.error(
@@ -212,47 +264,70 @@ export function PlanExerciseSwap({
         </Button>
       }
     >
-      <p className="text-sm leading-6 text-muted">
-        Estas opções mantêm a função deste exercício no seu treino.
-      </p>
-      <form
-        className="mt-5 flex gap-2"
-        onSubmit={(event) => {
-          event.preventDefault();
-          void search();
-        }}
-      >
-        <Input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Quero incluir um exercício específico"
-          aria-label="Buscar exercício específico"
-        />
-        <Button
-          type="submit"
-          size="icon"
-          disabled={loading}
-          aria-label="Buscar"
-        >
-          <Search size={18} />
-        </Button>
-      </form>
-      {activeQuery && (
-        <button
-          type="button"
-          className="mt-2 text-sm font-semibold text-accent"
-          onClick={() => {
-            setQuery("");
-            setActiveQuery("");
-            setLimit(5);
-            void load("", 5);
-          }}
-        >
-          Voltar às equivalentes recomendadas
-        </button>
+      {!completedChange && (
+        <>
+          <p className="text-sm leading-6 text-muted">
+            Estas opções mantêm a função deste exercício no seu treino.
+          </p>
+          <form
+            className="mt-5 flex gap-2"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void search();
+            }}
+          >
+            <Input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Quero incluir um exercício específico"
+              aria-label="Buscar exercício específico"
+            />
+            <Button
+              type="submit"
+              size="icon"
+              disabled={loading}
+              aria-label="Buscar"
+            >
+              <Search size={18} />
+            </Button>
+          </form>
+          {activeQuery && (
+            <button
+              type="button"
+              className="mt-2 text-sm font-semibold text-accent"
+              onClick={() => {
+                setQuery("");
+                setActiveQuery("");
+                setLimit(5);
+                void load("", 5);
+              }}
+            >
+              Voltar às equivalentes recomendadas
+            </button>
+          )}
+        </>
       )}
 
-      {loading ? (
+      {completedChange ? (
+        <div className="mt-6">
+          {preview ? (
+            <RebalanceConfirmation
+              preview={preview}
+              busy={busy}
+              onCancel={() => setPreview(null)}
+              onConfirm={() => void activateRebalance()}
+            />
+          ) : (
+            <RemainingExclusionNotice
+              exerciseName={completedChange.sourceExerciseName ?? exerciseName}
+              remainingCount={completedChange.remainingOccurrenceCount ?? 0}
+              busy={busy}
+              onContinue={() => handleOpen(false)}
+              onReorganize={() => void previewRemainingExclusions()}
+            />
+          )}
+        </div>
+      ) : loading ? (
         <p className="py-10 text-center text-sm text-muted">Buscando opções…</p>
       ) : selected ? (
         <div className="mt-6">
@@ -315,6 +390,49 @@ export function PlanExerciseSwap({
         </div>
       )}
     </Sheet>
+  );
+}
+
+function RemainingExclusionNotice({
+  exerciseName,
+  remainingCount,
+  busy,
+  onContinue,
+  onReorganize,
+}: {
+  exerciseName: string;
+  remainingCount: number;
+  busy: boolean;
+  onContinue: () => void;
+  onReorganize: () => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-accent/30 bg-accent/5 p-5">
+      <CheckCircle2 className="text-success" aria-hidden />
+      <h3 className="mt-3 text-lg font-semibold">Troca concluída</h3>
+      <p className="mt-2 text-sm leading-6 text-muted">
+        Esse exercício ainda aparece em outros dias do seu plano atual.
+      </p>
+      <p className="mt-2 text-sm leading-6 text-muted">
+        A preferência para evitar <strong>{exerciseName}</strong> já vale para
+        os próximos planos. Você pode manter {remainingCount}{" "}
+        {remainingCount === 1 ? "ocorrência atual" : "ocorrências atuais"} ou
+        revisar uma reorganização segura agora.
+      </p>
+      <div className="mt-5 grid gap-2 sm:grid-cols-2">
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={busy}
+          onClick={onContinue}
+        >
+          Ver plano atualizado
+        </Button>
+        <Button type="button" disabled={busy} onClick={onReorganize}>
+          {busy ? "Preparando…" : "Reorganizar outros dias"}
+        </Button>
+      </div>
+    </div>
   );
 }
 

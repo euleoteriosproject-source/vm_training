@@ -40,8 +40,10 @@ export function planSwapErrorMessage(message: string) {
     return "Não encontramos uma alternativa segura para preservar a função removida.";
   if (normalized.includes("plano ativo mudou"))
     return "Seu plano mudou. Atualize a página e tente novamente.";
-  if (normalized.includes("aparece em outros dias"))
-    return "Esse exercício aparece em outros dias. Reorganize o plano para excluí-lo por completo.";
+  if (normalized.includes("não há outras ocorrências"))
+    return "Não há outras ocorrências desse exercício no plano atual.";
+  if (normalized.includes("alteração persistente não encontrada"))
+    return "A troca não está mais disponível para reorganização.";
   if (
     normalized.includes("indisponível") ||
     normalized.includes("inelegível") ||

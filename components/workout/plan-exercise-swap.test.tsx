@@ -157,8 +157,118 @@ describe("PlanExerciseSwap", () => {
       expect.objectContaining({ method: "POST" }),
     );
     expect(mocks.toastSuccess).toHaveBeenCalledWith(
-      "Exercício alterado",
+      "Exercício trocado.",
       expect.objectContaining({ duration: 9000 }),
+    );
+  });
+
+  it("keeps the completed swap and offers a preview for remaining occurrences", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ candidates: [equivalent] }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          eventId: "event-v213",
+          planId: "plan-simple",
+          dayId: "day-simple",
+          sourceExerciseName: "Supino no chão",
+          persistentExclusion: true,
+          remainingOccurrenceCount: 1,
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          planId: "plan-preview",
+          dayId: "day-preview",
+          changes: [
+            {
+              kind: "replacement",
+              day: "Full Body B",
+              before: "Supino no chão",
+              after: "Flexão de braços",
+            },
+          ],
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          planId: "plan-preview",
+          dayId: "day-preview",
+          changes: [
+            {
+              kind: "replacement",
+              day: "Full Body B",
+              before: "Supino no chão",
+              after: "Flexão de braços",
+            },
+          ],
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          eventId: "event-rebalance",
+          planId: "plan-preview",
+          dayId: "day-preview",
+        }),
+      });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(
+      <PlanExerciseSwap slotId="slot-v213" exerciseName="Supino no chão" />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Trocar" }));
+    await screen.findByText("Supino com barra");
+    fireEvent.click(screen.getAllByRole("button", { name: "Trocar" })[1]);
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: "Não quero este exercício nos meus treinos futuros",
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Confirmar troca" }));
+
+    expect(
+      await screen.findByText(
+        "Esse exercício ainda aparece em outros dias do seu plano atual.",
+      ),
+    ).toBeInTheDocument();
+    expect(mocks.replace).not.toHaveBeenCalled();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Reorganizar outros dias" }),
+    );
+    expect(
+      await screen.findByText("Revise a reorganização"),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Full Body B/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar" }));
+    expect(
+      screen.getByText(
+        "Esse exercício ainda aparece em outros dias do seu plano atual.",
+      ),
+    ).toBeInTheDocument();
+    expect(mocks.replace).not.toHaveBeenCalled();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Reorganizar outros dias" }),
+    );
+    await screen.findByText("Revise a reorganização");
+    fireEvent.click(screen.getByRole("button", { name: "Ativar novo plano" }));
+    await waitFor(() =>
+      expect(mocks.replace).toHaveBeenCalledWith("/workouts/day-preview"),
+    );
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/plans/exercise-changes/event-v213/remaining",
+      { method: "POST" },
+    );
+    expect(fetchMock).toHaveBeenLastCalledWith(
+      "/api/plans/exclusion-rebalances/plan-preview/activate",
+      { method: "POST" },
     );
   });
 });
