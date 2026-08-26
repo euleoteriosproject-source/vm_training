@@ -22,9 +22,28 @@ async function read(pathname: string) {
   return { response, text };
 }
 
-const login = await read("/login");
-if (!/VM[\s\S]*Training/i.test(login.text) || !/E-mail/i.test(login.text))
-  throw new Error("A rota de login não exibe a autenticação do VM Training");
+function assertHtmlPage(
+  pathname: string,
+  result: Awaited<ReturnType<typeof read>>,
+) {
+  const contentType = result.response.headers.get("content-type") ?? "";
+  const finalPath = new URL(result.response.url).pathname;
+  if (!contentType.toLowerCase().includes("text/html"))
+    throw new Error(`${pathname}: resposta não é HTML`);
+  if (finalPath !== pathname)
+    throw new Error(`${pathname}: redirecionou para rota inesperada`);
+  if (!/<title>VM Training<\/title>/i.test(result.text))
+    throw new Error(`${pathname}: shell do VM Training ausente`);
+}
+
+const [landing, login, signup] = await Promise.all([
+  read("/"),
+  read("/login"),
+  read("/sign-up"),
+]);
+assertHtmlPage("/", landing);
+assertHtmlPage("/login", login);
+assertHtmlPage("/sign-up", signup);
 const health = await read("/api/health");
 const payload = JSON.parse(health.text) as { status?: string; app?: string };
 if (payload.status !== "ok" || payload.app !== "vm-training")
