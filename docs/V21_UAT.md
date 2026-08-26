@@ -15,6 +15,10 @@
 | Mobile Chromium | 12/12 PASS |
 | WebKit/iPhone 13 | 12/12 PASS |
 | Desktop Chromium | 12/12 PASS |
+| Production HTTP smoke | PASS |
+| Production login/signup render | PASS |
+| Production mobile 390x844 sem overflow | PASS |
+| Production browser console | PASS — sem erros |
 
 ## Produção — checklist humano pendente
 
@@ -34,3 +38,10 @@ Production HTTPS e confirmar pessoalmente:
 A segunda pessoa deve executar signup e onboarding pessoalmente. Não foi criada
 conta aleatória em Production. Depois disso, gerar seu plano v2.1 e auditar
 isolamento, mídia 100%, equipamentos e diversidade sem copiar o plano do admin.
+
+## Gate atual
+
+`ACTION_REQUIRED_ADMIN_UAT + ACTION_REQUIRED_SECOND_USER`
+
+Essas confirmações exigem pessoas reais e não são substituídas pelos 36 testes
+E2E nem pelo smoke público concluído.

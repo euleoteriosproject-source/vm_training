@@ -21,8 +21,25 @@
 - Dependency audit: nenhuma vulnerabilidade high/critical conhecida.
 - Secret scan: 0 achados em artefatos de release.
 
+## Production verification
+
+- Baseline v2.1: `f8d8b619145103b21b6eb93aee59c2cd304ac1ed`.
+- Production smoke hardening: `7d963c7`.
+- Vercel deployment: READY, publicado no alias canônico
+  `https://vm-training.vercel.app`.
+- HTTP smoke: `/`, `/login`, `/sign-up` e `/api/health` PASS.
+- Browser smoke: login e cadastro hidratados em Production, console sem erros.
+- Mobile smoke: viewport 390x844 sem overflow horizontal.
+- Vercel runtime error logs após o deploy: 0 ocorrências.
+- Supabase CLI não expõe consulta ao Hosted Logs Explorer. As operações de
+  migration, Auth, Database e Storage e as reconciliações finais terminaram sem
+  erro inesperado; não foi inventado um PASS de inspeção direta de logs.
+
 ## Release gate
 
-O código, banco, mídia e plano estão tecnicamente prontos. O gate público final
-depende ainda do deploy/smoke desta revisão e dos UATs pessoais registrados em
-`V21_UAT.md`. A segunda pessoa real não foi simulada.
+O código, banco, mídia, plano, deploy e smoke público estão tecnicamente prontos.
+Os únicos gates não automatizáveis permanecem registrados em `V21_UAT.md`: UAT
+pessoal do admin e signup/onboarding da segunda pessoa real. Nenhum deles foi
+simulado.
+
+Decisão final: `BLOCKED — ACTION_REQUIRED_ADMIN_UAT + ACTION_REQUIRED_SECOND_USER`.
