@@ -70,20 +70,20 @@ select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public'
      and grantee in ('anon', 'authenticated', 'service_role', 'supabase_auth_admin')),
-  111,
-  'canonical public table ACL has exactly 111 grants after v2.1.1 capability tables'
+  116,
+  'canonical public table ACL has exactly 116 grants after v2.1.2 plan change audit'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'authenticated'),
-  71,
-  'authenticated has exactly 71 required table grants'
+  72,
+  'authenticated has exactly 72 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'service_role'),
-  39,
-  'service_role has exactly 39 required table grants'
+  43,
+  'service_role has exactly 43 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -126,8 +126,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  42,
-  'canonical function ACL has exactly 42 grants after v2.1.1 operational RPCs'
+  52,
+  'canonical function ACL has exactly 52 grants after v2.1.2 plan editing RPCs'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

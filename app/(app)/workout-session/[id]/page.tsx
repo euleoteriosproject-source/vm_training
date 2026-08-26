@@ -22,7 +22,9 @@ export default async function SessionPage({
   const [{ data: plannedRows }, { data: priorSessions }] = await Promise.all([
     supabase
       .from("workout_day_exercises")
-      .select("exercise_id,position,target_sets,rep_min,rep_max,rest_seconds")
+      .select(
+        "id,exercise_id,position,target_sets,rep_min,rep_max,rest_seconds",
+      )
       .eq("workout_day_id", session.workout_day_id!),
     supabase
       .from("workout_sessions")
@@ -127,6 +129,8 @@ export default async function SessionPage({
       const previous = previousByExercise.get(row.actual_exercise_id);
       return {
         id: row.id,
+        planDayId: session.workout_day_id,
+        planSlotId: planned?.id ?? null,
         actualExerciseId: row.actual_exercise_id,
         plannedExerciseId: row.planned_exercise_id,
         position: row.position,

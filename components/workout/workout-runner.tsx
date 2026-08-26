@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Check,
   Circle,
@@ -39,6 +40,8 @@ type SetRow = {
 };
 type RunnerExercise = {
   id: string;
+  planDayId: string | null;
+  planSlotId: string | null;
   actualExerciseId: string;
   plannedExerciseId: string | null;
   position: number;
@@ -622,12 +625,33 @@ function ExerciseCard({
         <p className="text-sm text-muted">
           Substituições compatíveis respeitam seus equipamentos e preferências.
         </p>
+        <p className="mt-5 text-xs font-semibold uppercase tracking-wide text-muted">
+          Só hoje
+        </p>
         <SubstitutionActions
           item={item}
           onDone={() => setMenu(false)}
           onSubstituted={onSubstituted}
           onSubstitutionUndone={onSubstitutionUndone}
         />
+        {item.planDayId && item.planSlotId && (
+          <div className="mt-5 border-t pt-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+              Próximos treinos
+            </p>
+            <Button asChild variant="secondary" className="mt-2 w-full">
+              <Link
+                href={`/workouts/${item.planDayId}?swap=${item.planSlotId}`}
+              >
+                Trocar no meu plano
+              </Link>
+            </Button>
+            <p className="mt-2 text-xs leading-5 text-muted">
+              Cria uma nova versão do plano. Este treino em andamento não é
+              alterado.
+            </p>
+          </div>
+        )}
         <Button
           variant="danger"
           className="mt-5 w-full"
@@ -832,14 +856,14 @@ function SubstitutionActions({
         disabled={loading}
         onClick={() => substitute("temporarily_unavailable")}
       >
-        Está indisponível hoje
+        Está ocupado agora
       </Button>
       <Button
         variant="secondary"
         disabled={loading}
         onClick={() => substitute("user_requested")}
       >
-        {excluded.length ? "Ver outra opção" : "Trocar por outra opção"}
+        {excluded.length ? "Ver outra opção" : "Não quero fazer este exercício"}
       </Button>
       {loading && (
         <p className="text-center text-sm text-muted">
