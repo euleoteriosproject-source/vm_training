@@ -47,4 +47,13 @@ describe("media integrity reconciliation", () => {
       ]),
     );
   });
+
+  it("does not classify a file referenced by a non-primary record as orphaned", () => {
+    const issues = reconcileMediaIntegrity(
+      [valid],
+      [valid.storagePath!, valid.posterPath!, "candidate.gif"],
+      [valid.storagePath!, valid.posterPath!, "candidate.gif"],
+    );
+    expect(issues).toEqual([]);
+  });
 });

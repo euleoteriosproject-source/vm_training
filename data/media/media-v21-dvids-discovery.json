@@ -1,0 +1,53 @@
+{
+  "version": "2.1-dvids-discovery",
+  "source": "DVIDS official asset pages",
+  "writeScope": "local-versioned-metadata-only",
+  "candidates": [
+    {
+      "exerciseSlug": "high-to-low-plank",
+      "pageUrl": "https://www.dvidshub.net/video/753559/7-foundational-movements-plank",
+      "title": "7 Foundational Movements - Plank",
+      "author": "Cpl. Quinn Hurt",
+      "creditEvidence": [
+        "Video by Cpl. Quinn Hurt &nbsp; Marine Corps Base Quantico &nbsp; May 2026\"> &nbsp; &nbsp; April 2026\"> &nbsp; &nbsp; April 2025\"> &nbsp; &#10004; &#",
+        "video by Cpl. Quinn Hurt) VIDEO INFO Date Taken: 05.20.2020 Date Posted: 05.22.2020 08:46 Category: Series Video ID: 753559 VIRIN: 200520-M-YQ395-100"
+      ],
+      "description": "GySgt Gates from the Force Fitness Division demonstrates one of the seven foundational movements, the plank .(U.S. Marine Corps video by Cpl. Quinn Hurt)",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/2005/DOD_107824320/DOD_107824320-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 72929
+    },
+    {
+      "exerciseSlug": "side-plank",
+      "pageUrl": "https://www.dvidshub.net/video/640254/side-plank",
+      "title": "Side Plank",
+      "author": "Capt. Matthew Holfinger",
+      "creditEvidence": [
+        "Video by Capt. Matthew Holfinger &nbsp; July 2020\"> &nbsp; September 2019\"> &nbsp; U.S. Marine Corps Training and Education Command &nbsp; May 2024\">"
+      ],
+      "description": "Gunnery Sergeant Gates conducts a proper side plank.",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106215246/DOD_106215246-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 72003
+    },
+    {
+      "exerciseSlug": "trx-hip-flexor-stretch",
+      "pageUrl": "https://www.dvidshub.net/video/551157/trx-forward-lunge-with-hip-flexor-stretch",
+      "title": "TRX Forward Lunge with Hip Flexor Stretch",
+      "author": "Capt. Matthew Holfinger",
+      "creditEvidence": [
+        "Video by Capt. Matthew Holfinger &nbsp; July 2020\"> &nbsp; September 2019\"> &nbsp; U.S. Marine Corps Training and Education Command &nbsp; May 2024\">"
+      ],
+      "description": "Lower Body Flexibility & Mobility\r\nTarget Area – Hip Flexors, Quadriceps\r\nPreparation:\r\nThe Marine will stand facing away from the anchor point of the TRX. They will have a handle in each hand with their palms facing forward.\r\nExecution:\r\nThe Marine will step forward with the right leg and drop into a lunge keeping the front knee over the ankle. When they step they will reach up with the left hand pushing against the TRX. The Marine will activate the glute on the left leg to facilitate a better stretch. \r\nCommon Mistakes: - Slack in the TRX\r\n\t\t\t    - Not keeping front foot flat on deck",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/1709/DOD_104837676/DOD_104837676-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 74353
+    }
+  ]
+}

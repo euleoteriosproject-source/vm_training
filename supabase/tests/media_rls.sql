@@ -12,6 +12,14 @@ insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_co
 ('30000000-0000-0000-0000-000000000003','00000000-0000-0000-0000-000000000000','authenticated','authenticated','media-admin@example.test','x',now(),now(),now()),
 ('40000000-0000-0000-0000-000000000004','00000000-0000-0000-0000-000000000000','authenticated','authenticated','media-member@example.test','x',now(),now(),now());
 
+insert into public.exercises(
+  slug,name_pt,category,movement_pattern,primary_muscles,difficulty,
+  execution_instructions,active
+) values (
+  'media-rls-inactive-fixture','Fixture inativa de mídia','strength',
+  'core_anti_extension',array['core'],'beginner',array['Teste local'],false
+);
+
 insert into public.exercise_media(
   id,exercise_id,media_type,storage_path,poster_path,status,media_role,source_name,
   source_type,source_url,license_code,license_url,author,attribution_text,
@@ -108,11 +116,15 @@ select
   '80000000-0000-0000-0000-000000000008',id,'gif','animated.gif','animated.webp','processed',
   'PRIMARY_DEMO','Test','public_domain','https://example.test/animated','PD',
   'https://commons.wikimedia.org/wiki/Commons:Copyright_tags/Public_domain','CDC','Test',
-  'animated-hash',now(),'30000000-0000-0000-0000-000000000003',now(),
+  repeat('a',64),now(),'30000000-0000-0000-0000-000000000003',now(),
   '30000000-0000-0000-0000-000000000003',now(),'approved',
   '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}',
   true,90,true,15,6
-from public.exercises order by slug offset 3 limit 1;
+from public.exercises where slug='media-rls-inactive-fixture';
+
+insert into storage.objects(bucket_id,name,metadata) values
+  ('exercise-media','animated.gif','{"size":1024}'::jsonb),
+  ('exercise-media','animated.webp','{"size":512}'::jsonb);
 
 select lives_ok(
   $$select public.publish_exercise_media('80000000-0000-0000-0000-000000000008','30000000-0000-0000-0000-000000000003')$$,

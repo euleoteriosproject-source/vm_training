@@ -143,7 +143,7 @@ async function search(query: string) {
   });
   return pagesFrom(await api(params));
 }
-async function pagesByTitles(titles: string[]) {
+export async function pagesByTitles(titles: string[]) {
   if (!titles.length) return [];
   const batches: string[][] = [];
   for (let index = 0; index < titles.length; index += 50)

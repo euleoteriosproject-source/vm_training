@@ -2,7 +2,7 @@
 begin;
 grant usage on schema extensions to anon, authenticated, service_role;
 set local search_path = public, extensions;
-select plan(30);
+select plan(32);
 
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -36,6 +36,17 @@ select ok(not has_function_privilege('authenticated', 'public.publish_exercise_m
   'authenticated cannot execute the server-only media publisher');
 select ok(has_function_privilege('service_role', 'public.publish_exercise_media(uuid,uuid)', 'execute'),
   'service_role can execute the media publisher');
+select ok(
+  has_function_privilege('service_role', 'public.publish_v21_automated_media(uuid,text)', 'execute')
+  and not has_function_privilege('authenticated', 'public.publish_v21_automated_media(uuid,text)', 'execute')
+  and not has_function_privilege('anon', 'public.publish_v21_automated_media(uuid,text)', 'execute'),
+  'only service_role can execute the hash-bound v2.1 publisher'
+);
+select is(
+  (select prosecdef from pg_proc where oid = 'public.publish_v21_automated_media(uuid,text)'::regprocedure),
+  true,
+  'v2.1 publisher is a guarded SECURITY DEFINER operation'
+);
 select ok(not has_function_privilege('anon', 'public.hook_restrict_signup(jsonb)', 'execute'),
   'anon cannot execute the Auth Hook');
 select ok(not has_function_privilege('authenticated', 'public.hook_restrict_signup(jsonb)', 'execute'),
@@ -59,20 +70,20 @@ select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public'
      and grantee in ('anon', 'authenticated', 'service_role', 'supabase_auth_admin')),
-  99,
-  'canonical public table ACL has exactly 99 grants'
+  101,
+  'canonical public table ACL has exactly 101 grants after the v2.1 readiness view'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'authenticated'),
-  68,
-  'authenticated has exactly 68 required table grants'
+  69,
+  'authenticated has exactly 69 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
    where table_schema = 'public' and grantee = 'service_role'),
-  30,
-  'service_role has exactly 30 required table grants'
+  31,
+  'service_role has exactly 31 required table grants'
 );
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -115,8 +126,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  31,
-  'canonical function ACL has exactly 31 grants after self-service account deletion'
+  38,
+  'canonical function ACL has exactly 38 grants after v2.1 operational RPCs'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

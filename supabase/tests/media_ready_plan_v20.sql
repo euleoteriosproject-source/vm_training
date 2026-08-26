@@ -33,6 +33,20 @@ values (
   now(), now(), now()
 );
 
+insert into public.training_preferences(
+  user_id, sessions_per_week, session_minutes, cardio_preference,
+  experience, training_location
+) values (
+  'a1000000-0000-0000-0000-000000000001', 2, 45, 1,
+  'returning', 'full_gym'
+);
+insert into public.user_equipment(user_id,equipment_id,available)
+select 'a1000000-0000-0000-0000-000000000001', link.equipment_id, true
+from public.exercise_equipment link
+join public.exercises exercise on exercise.id = link.exercise_id
+where exercise.slug = 'leg-press' and link.required
+on conflict (user_id,equipment_id) do update set available = true;
+
 set local role service_role;
 select set_config(
   'request.jwt.claims',
@@ -56,12 +70,15 @@ select
   'V20 fixture', 'public_domain', 'https://example.test/v20-leg-press',
   'https://example.test/v20-leg-press.webm', 'PD',
   'https://example.test/public-domain', 'V20 fixture', 'V20 fixture / PD',
-  'v20-plan-ready-hash', now(), now(), now(), 'approved',
+  repeat('b',64), now(), now(), now(), 'approved',
   '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}',
   true, 96, true, 12.5, 8, 'AUTOMATED_VALIDATED', 'automated',
   'vm-media-validator-v20-test', '2.0', 'HIGH',
   '{"exercise_match_exact":true,"equipment_match":true,"execution_quality_approved":true,"visibility_sufficient":true,"license_verified":true,"download_permitted":true,"transformation_permitted":true,"rehost_permitted":true,"source_provenance_verified":true,"visual_inspection_passed":true,"biomechanical_references_passed":true,"final_gif_inspection_passed":true,"storage_hash_verified":true}'
 from public.exercises where slug = 'leg-press';
+insert into storage.objects(bucket_id,name,metadata) values
+  ('exercise-media','exercises/leg-press/primary/v20.gif','{"size":1024}'::jsonb),
+  ('exercise-media','exercises/leg-press/primary/v20.webp','{"size":512}'::jsonb);
 select private.publish_validated_exercise_media_automated(
   'a2000000-0000-0000-0000-000000000002',
   'vm-media-validator-v20-test',

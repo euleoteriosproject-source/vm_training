@@ -1,0 +1,131 @@
+{
+  "version": "2.1-dvids-review",
+  "projectRef": "inghftngeritrsezwxnm",
+  "remoteWrites": 0,
+  "candidates": [
+    {
+      "exerciseSlug": "high-to-low-plank",
+      "pageUrl": "https://www.dvidshub.net/video/753559/7-foundational-movements-plank",
+      "title": "7 Foundational Movements - Plank",
+      "author": "Cpl. Quinn Hurt",
+      "creditEvidence": [
+        "Video by Cpl. Quinn Hurt &nbsp; Marine Corps Base Quantico &nbsp; May 2026\"> &nbsp; &nbsp; April 2026\"> &nbsp; &nbsp; April 2025\"> &nbsp; &#10004; &#",
+        "video by Cpl. Quinn Hurt) VIDEO INFO Date Taken: 05.20.2020 Date Posted: 05.22.2020 08:46 Category: Series Video ID: 753559 VIRIN: 200520-M-YQ395-100"
+      ],
+      "description": "GySgt Gates from the Force Fitness Division demonstrates one of the seven foundational movements, the plank .(U.S. Marine Corps video by Cpl. Quinn Hurt)",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/2005/DOD_107824320/DOD_107824320-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 72929,
+      "sourceName": "Defense Visual Information Distribution Service",
+      "sourceType": "public_domain",
+      "originalFileUrl": "https://d34w7g4gy10iej.cloudfront.net/video/2005/DOD_107824320/DOD_107824320-1024x576-1769k.mp4",
+      "licenseCode": "PD",
+      "licenseUrl": "https://www.dvidshub.net/about/copyright",
+      "attributionRequired": false,
+      "attributionText": "7 Foundational Movements - Plank. Autor: Cpl. Quinn Hurt. Fonte: DVIDS. Domínio público dos Estados Unidos.",
+      "sourceSha256": "9889c5951d60d8e1dbd79366d54581be1a038dfdd77a06df0e1bbd91013790a7",
+      "sourceMetadata": {
+        "width": 1024,
+        "height": 576,
+        "codec": "h264",
+        "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "pixelFormat": "yuv420p",
+        "frameRate": "24000/1001",
+        "averageFrameRate": "24000/1001",
+        "frameCount": 1441,
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "containerLongName": "QuickTime / MOV",
+        "durationSeconds": 60.117,
+        "fileSizeBytes": 14177505
+      },
+      "localSource": ".tmp/media-v21/dvids-sources/high-to-low-plank.mp4",
+      "contactSheet": ".tmp/media-v21/dvids-contact-sheets/high-to-low-plank.webp",
+      "visualDecision": "PENDING",
+      "visualNotes": null
+    },
+    {
+      "exerciseSlug": "side-plank",
+      "pageUrl": "https://www.dvidshub.net/video/640254/side-plank",
+      "title": "Side Plank",
+      "author": "Capt. Matthew Holfinger",
+      "creditEvidence": [
+        "Video by Capt. Matthew Holfinger &nbsp; July 2020\"> &nbsp; September 2019\"> &nbsp; U.S. Marine Corps Training and Education Command &nbsp; May 2024\">"
+      ],
+      "description": "Gunnery Sergeant Gates conducts a proper side plank.",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106215246/DOD_106215246-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 72003,
+      "sourceName": "Defense Visual Information Distribution Service",
+      "sourceType": "public_domain",
+      "originalFileUrl": "https://d34w7g4gy10iej.cloudfront.net/video/1811/DOD_106215246/DOD_106215246-1024x576-1769k.mp4",
+      "licenseCode": "PD",
+      "licenseUrl": "https://www.dvidshub.net/about/copyright",
+      "attributionRequired": false,
+      "attributionText": "Side Plank. Autor: Capt. Matthew Holfinger. Fonte: DVIDS. Domínio público dos Estados Unidos.",
+      "sourceSha256": "cc8a0911df3a3fadf6f275f8b6554e8b1039c207f832e032777eb9071d2c3039",
+      "sourceMetadata": {
+        "width": 1024,
+        "height": 576,
+        "codec": "h264",
+        "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "pixelFormat": "yuv420p",
+        "frameRate": "30000/1001",
+        "averageFrameRate": "30000/1001",
+        "frameCount": 342,
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "containerLongName": "QuickTime / MOV",
+        "durationSeconds": 11.413,
+        "fileSizeBytes": 2609745
+      },
+      "localSource": ".tmp/media-v21/dvids-sources/side-plank.mp4",
+      "contactSheet": ".tmp/media-v21/dvids-contact-sheets/side-plank.webp",
+      "visualDecision": "PENDING",
+      "visualNotes": null
+    },
+    {
+      "exerciseSlug": "trx-hip-flexor-stretch",
+      "pageUrl": "https://www.dvidshub.net/video/551157/trx-forward-lunge-with-hip-flexor-stretch",
+      "title": "TRX Forward Lunge with Hip Flexor Stretch",
+      "author": "Capt. Matthew Holfinger",
+      "creditEvidence": [
+        "Video by Capt. Matthew Holfinger &nbsp; July 2020\"> &nbsp; September 2019\"> &nbsp; U.S. Marine Corps Training and Education Command &nbsp; May 2024\">"
+      ],
+      "description": "Lower Body Flexibility & Mobility\r\nTarget Area – Hip Flexors, Quadriceps\r\nPreparation:\r\nThe Marine will stand facing away from the anchor point of the TRX. They will have a handle in each hand with their palms facing forward.\r\nExecution:\r\nThe Marine will step forward with the right leg and drop into a lunge keeping the front knee over the ankle. When they step they will reach up with the left hand pushing against the TRX. The Marine will activate the glute on the left leg to facilitate a better stretch. \r\nCommon Mistakes: - Slack in the TRX\r\n\t\t\t    - Not keeping front foot flat on deck",
+      "originalFileUrls": [
+        "https://d34w7g4gy10iej.cloudfront.net/video/1709/DOD_104837676/DOD_104837676-1024x576-1769k.mp4"
+      ],
+      "publicDomainNoticePresent": true,
+      "pageBytes": 74353,
+      "sourceName": "Defense Visual Information Distribution Service",
+      "sourceType": "public_domain",
+      "originalFileUrl": "https://d34w7g4gy10iej.cloudfront.net/video/1709/DOD_104837676/DOD_104837676-1024x576-1769k.mp4",
+      "licenseCode": "PD",
+      "licenseUrl": "https://www.dvidshub.net/about/copyright",
+      "attributionRequired": false,
+      "attributionText": "TRX Forward Lunge with Hip Flexor Stretch. Autor: Capt. Matthew Holfinger. Fonte: DVIDS. Domínio público dos Estados Unidos.",
+      "sourceSha256": "0420c0c0e8a35bdf6d31638337eef451aa9a15f21e5201a24d4a0254aed20a46",
+      "sourceMetadata": {
+        "width": 1024,
+        "height": 576,
+        "codec": "h264",
+        "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "pixelFormat": "yuv420p",
+        "frameRate": "30000/1001",
+        "averageFrameRate": "30000/1001",
+        "frameCount": 1051,
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "containerLongName": "QuickTime / MOV",
+        "durationSeconds": 35.072,
+        "fileSizeBytes": 8327171
+      },
+      "localSource": ".tmp/media-v21/dvids-sources/trx-hip-flexor-stretch.mp4",
+      "contactSheet": ".tmp/media-v21/dvids-contact-sheets/trx-hip-flexor-stretch.webp",
+      "visualDecision": "PENDING",
+      "visualNotes": null
+    }
+  ]
+}

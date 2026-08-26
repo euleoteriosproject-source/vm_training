@@ -6,11 +6,8 @@ const client = getAdminClient()!;
 const { data, error } = await client
   .from("exercise_media")
   .select(
-    "id,exercise_id,media_type,storage_path,poster_path,content_hash,animation_verified,frame_count,duration_seconds,animation_loop",
-  )
-  .eq("status", "approved")
-  .eq("media_role", "PRIMARY_DEMO")
-  .eq("is_primary", true);
+    "id,exercise_id,status,media_role,is_primary,media_type,storage_path,poster_path,content_hash,animation_verified,frame_count,duration_seconds,animation_loop",
+  );
 if (error) throw error;
 
 async function listFiles(prefix = ""): Promise<string[]> {
@@ -28,8 +25,14 @@ async function listFiles(prefix = ""): Promise<string[]> {
 }
 
 const files = await listFiles();
+const primaryRows = (data ?? []).filter(
+  (row) =>
+    row.status === "approved" &&
+    row.media_role === "PRIMARY_DEMO" &&
+    row.is_primary,
+);
 const records = await Promise.all(
-  (data ?? []).map(async (row) => {
+  primaryRows.map(async (row) => {
     let actualHash: string | null = null;
     if (row.storage_path && files.includes(row.storage_path)) {
       const { data: blob, error: downloadError } = await client.storage
@@ -55,7 +58,11 @@ const records = await Promise.all(
     };
   }),
 );
-const issues = reconcileMediaIntegrity(records, files);
+const allReferencedPaths = (data ?? []).flatMap(
+  (row) =>
+    [row.storage_path, row.poster_path].filter(Boolean) as string[],
+);
+const issues = reconcileMediaIntegrity(records, files, allReferencedPaths);
 if (issues.length) {
   process.stderr.write(`${JSON.stringify({ ok: false, issues }, null, 2)}\n`);
   process.exitCode = 1;

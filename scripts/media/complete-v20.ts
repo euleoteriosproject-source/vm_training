@@ -8,7 +8,15 @@ import {
 import { sha256File } from "../../lib/media/hash.ts";
 import { getAdminClient, log, parseArgs } from "./shared.ts";
 
-const DATASET_PATH = "data/media/media-v20.json";
+const isV21 = process.argv.includes("--v21");
+const DATASET_PATH = isV21
+  ? "data/media/media-v21.json"
+  : "data/media/media-v20.json";
+const expectedVersion = isV21 ? "2.1" : "2.0";
+const expectedAgent = isV21
+  ? "vm-media-validator-v21"
+  : "vm-media-validator-v20";
+const expectedDecisionCount = isV21 ? 26 : 3;
 const ALLOWED_SOURCE_HOSTS = new Set([
   "upload.wikimedia.org",
   "d34w7g4gy10iej.cloudfront.net",
@@ -122,12 +130,12 @@ const args = parseArgs();
 const confirmVisual = process.argv.includes("--confirm-visual");
 const dataset = JSON.parse(await readFile(DATASET_PATH, "utf8")) as Dataset;
 if (
-  dataset.version !== "2.0" ||
+  dataset.version !== expectedVersion ||
   dataset.projectRef !== "inghftngeritrsezwxnm" ||
-  dataset.reviewAgent !== "vm-media-validator-v20" ||
-  dataset.decisions.length !== 3
+  dataset.reviewAgent !== expectedAgent ||
+  dataset.decisions.length !== expectedDecisionCount
 )
-  throw new Error("Dataset v2.0 invalido");
+  throw new Error(`Dataset v${expectedVersion} invalido`);
 
 const prepared = new Map<
   string,
@@ -162,7 +170,10 @@ for (const decision of dataset.decisions) {
 }
 
 if (!args.apply) {
-  log("DRY-RUN", "3/3 artefatos reproduzidos; zero writes remotos");
+  log(
+    "DRY-RUN",
+    `${expectedDecisionCount}/${expectedDecisionCount} artefatos reproduzidos; zero writes remotos`,
+  );
   process.exit(0);
 }
 if (!args.allowProduction || !confirmVisual)
@@ -425,7 +436,61 @@ for (const decision of dataset.decisions) {
     throw error;
   }
 }
+if (isV21) {
+  for (const decision of dataset.decisions) {
+    const { data: exercise, error: exerciseError } = await client
+      .from("exercises")
+      .select("id")
+      .eq("slug", decision.exercise)
+      .single();
+    if (exerciseError || !exercise)
+      throw exerciseError ?? new Error("Exercício v2.1 ausente");
+    const { data: candidate, error: candidateError } = await client
+      .from("exercise_media")
+      .select("id,status,review_state,is_primary,content_hash,storage_path,poster_path")
+      .eq("exercise_id", exercise.id)
+      .eq("source_url", decision.sourceUrl)
+      .single();
+    if (candidateError || !candidate)
+      throw candidateError ?? new Error("Mídia v2.1 ausente");
+    if (candidate.content_hash !== decision.artifactSha256)
+      throw new Error(`${decision.exercise}: hash diverge antes da publicação`);
+    if (candidate.status !== "approved") {
+      const { error: publishError } = await client.rpc(
+        "publish_v21_automated_media",
+        {
+          p_media_id: candidate.id,
+          p_expected_content_hash: decision.artifactSha256,
+        },
+      );
+      if (publishError) throw publishError;
+    }
+    const { data: published, error: publishedError } = await client
+      .from("exercise_media")
+      .select("status,review_state,is_primary,content_hash,storage_path,poster_path")
+      .eq("id", candidate.id)
+      .single();
+    if (
+      publishedError ||
+      !published ||
+      published.status !== "approved" ||
+      published.review_state !== "PUBLISHED" ||
+      !published.is_primary ||
+      published.content_hash !== decision.artifactSha256 ||
+      !published.storage_path ||
+      !published.poster_path
+    )
+      throw publishedError ?? new Error(`${decision.exercise}: publicação divergiu`);
+    await Promise.all([
+      verifyRemoteObject(client, published.storage_path, decision.artifactSha256),
+      verifyRemoteObject(client, published.poster_path, decision.posterSha256),
+    ]);
+    log("PUBLISHED", `${decision.exercise}: PRIMARY v2.1 verificada`);
+  }
+}
 log(
   "NEXT",
-  "3/3 processadas; publicar somente por migration automatizada revisada",
+  isV21
+    ? `${expectedDecisionCount}/${expectedDecisionCount} publicadas e verificadas`
+    : `${expectedDecisionCount}/${expectedDecisionCount} processadas; publicar somente por migration automatizada revisada`,
 );

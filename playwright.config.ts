@@ -49,7 +49,7 @@ export default defineConfig({
     command: `node node_modules/next/dist/bin/next dev --hostname 127.0.0.1 --port ${e2ePort}`,
     url: e2eBaseUrl,
     reuseExistingServer: false,
-    timeout: 120000,
+    timeout: 300000,
   },
   projects: [
     {

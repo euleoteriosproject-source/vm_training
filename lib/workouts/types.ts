@@ -19,6 +19,9 @@ export type ExerciseCandidate = {
   difficulty: "beginner" | "intermediate" | "advanced";
   active: boolean;
   hasApprovedMedia: boolean;
+  mediaReady?: boolean;
+  autoPlanEligible?: boolean;
+  eligibilityReasons?: string[];
 };
 
 export type PlanInput = {
@@ -29,6 +32,9 @@ export type PlanInput = {
   experience: "beginner" | "returning" | "intermediate" | "advanced";
   equipment: string[];
   preferences?: Record<string, "like" | "neutral" | "dislike" | "avoid">;
+  movementAttentionPatterns?: string[];
+  recentExerciseIds?: string[];
+  generatorVersion?: string;
 };
 
 export type GeneratedDay = {
@@ -42,4 +48,39 @@ export type GeneratedDay = {
     restSeconds: number;
     targetDurationSeconds?: number;
   }[];
+};
+
+export type PlanQualityMetrics = {
+  totalSlots: number;
+  uniqueExercises: number;
+  uniquenessPercent: number;
+  maxExactExerciseFrequency: number;
+  exactExerciseOnAllDays: string[];
+  dayPairOverlapPercent: Record<string, number>;
+  movementPatternCount: number;
+  movementPatternDistribution: Record<string, number>;
+  mediaCoveragePercent: number;
+  invalidEquipment: string[];
+  ineligibleExercises: string[];
+};
+
+export type PlanConstraintDiagnostic = {
+  code:
+    | "INSUFFICIENT_ELIGIBLE_POOL"
+    | "INSUFFICIENT_UNIQUE_EXERCISES"
+    | "EXCESSIVE_DAY_OVERLAP"
+    | "EXERCISE_ON_ALL_DAYS"
+    | "INCOMPLETE_MEDIA_COVERAGE"
+    | "INVALID_EQUIPMENT"
+    | "INELIGIBLE_EXERCISE"
+    | "INSUFFICIENT_MOVEMENT_COVERAGE";
+  message: string;
+  actual: number | string[];
+  required: number | string;
+};
+
+export type GeneratedPlan = {
+  days: GeneratedDay[];
+  quality: PlanQualityMetrics;
+  generatorVersion: string;
 };

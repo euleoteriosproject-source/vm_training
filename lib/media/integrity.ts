@@ -25,12 +25,14 @@ export type MediaIntegrityCode =
 export function reconcileMediaIntegrity(
   records: PrimaryMediaRecord[],
   storagePaths: Iterable<string>,
+  allReferencedPaths?: Iterable<string>,
 ) {
   const files = new Set(storagePaths);
   const referenced = new Set(
-    records.flatMap(
-      (row) => [row.storagePath, row.posterPath].filter(Boolean) as string[],
-    ),
+    allReferencedPaths ??
+      records.flatMap(
+        (row) => [row.storagePath, row.posterPath].filter(Boolean) as string[],
+      ),
   );
   const issues: Array<{
     code: MediaIntegrityCode;

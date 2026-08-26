@@ -6,6 +6,7 @@ import {
   ChartNoAxesCombined,
   Dumbbell,
   Film,
+  LibraryBig,
   ShieldCheck,
   Settings,
   UserRound,
@@ -15,6 +16,7 @@ import { cn } from "@/lib/utils";
 const main = [
   { href: "/today", label: "Hoje", icon: CalendarDays },
   { href: "/workouts", label: "Treinos", icon: Dumbbell },
+  { href: "/exercises", label: "Exercícios", icon: LibraryBig },
   { href: "/progress", label: "Progresso", icon: ChartNoAxesCombined },
   { href: "/profile", label: "Perfil", icon: UserRound },
 ];
@@ -88,7 +90,7 @@ export function AppNav({
       </aside>
       <nav
         aria-label="Navegação principal"
-        className="fixed inset-x-0 bottom-0 z-40 grid h-[calc(68px+env(safe-area-inset-bottom))] grid-cols-4 border-t bg-surface/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid h-[calc(68px+env(safe-area-inset-bottom))] grid-cols-5 border-t bg-surface/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
       >
         {main.map(({ href, label, icon: Icon }) => (
           <Link

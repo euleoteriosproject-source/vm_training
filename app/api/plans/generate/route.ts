@@ -1,11 +1,28 @@
 import { NextResponse } from "next/server";
-import { generatePlan } from "@/lib/workouts/generator";
+import {
+  GENERATOR_VERSION,
+  generatePlanWithQuality,
+  PlanConstraintError,
+} from "@/lib/workouts/generator";
 import type {
   ExerciseCandidate,
   GoalCode,
   PlanInput,
 } from "@/lib/workouts/types";
 import { createClient } from "@/lib/supabase/server";
+
+type AutoPlanCatalogRow = {
+  id: string;
+  name: string;
+  pattern: string;
+  category: ExerciseCandidate["category"];
+  difficulty: ExerciseCandidate["difficulty"];
+  active: boolean;
+  media_ready: boolean;
+  auto_plan_eligible: boolean;
+  eligibility_reasons: string[] | null;
+  required_equipment: string[] | null;
+};
 
 export async function POST() {
   const supabase = await createClient();
@@ -14,12 +31,14 @@ export async function POST() {
   } = await supabase.auth.getUser();
   if (!user)
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+
   const [
     { data: preferences },
     { data: goals },
     { data: userEquipment },
     { data: exercisePreferences },
-    { data: exercises },
+    { data: catalogRows, error: catalogError },
+    { data: recentSessions },
   ] = await Promise.all([
     supabase
       .from("training_preferences")
@@ -40,60 +59,61 @@ export async function POST() {
       .from("user_exercise_preferences")
       .select("exercise_id,preference")
       .eq("user_id", user.id),
+    supabase.rpc("get_auto_plan_catalog"),
     supabase
-      .from("exercises")
-      .select(
-        "id,name_pt,movement_pattern,category,difficulty,active,exercise_media(status,media_type,media_role,execution_quality,is_primary),exercise_equipment(required,equipment(slug))",
-      ),
+      .from("workout_sessions")
+      .select("workout_session_exercises(actual_exercise_id)")
+      .eq("user_id", user.id)
+      .in("status", ["completed", "cancelled"])
+      .order("started_at", { ascending: false })
+      .limit(10),
   ]);
+
   if (!preferences)
     return NextResponse.json(
       { error: "Preferências incompletas" },
       { status: 422 },
     );
+  if (catalogError)
+    return NextResponse.json(
+      { error: "Não foi possível validar o catálogo de exercícios." },
+      { status: 422 },
+    );
+
   const equipment = (userEquipment ?? [])
     .map((row) => {
       const value = row.equipment as unknown as { slug: string } | null;
       return value?.slug;
     })
-    .filter((v): v is string => Boolean(v));
+    .filter((value): value is string => Boolean(value));
   const preferenceMap = Object.fromEntries(
     (exercisePreferences ?? []).map((row) => [row.exercise_id, row.preference]),
   ) as PlanInput["preferences"];
-  const catalog: ExerciseCandidate[] = (exercises ?? []).map((row) => ({
+  const catalog: ExerciseCandidate[] = (
+    (catalogRows ?? []) as AutoPlanCatalogRow[]
+  ).map((row) => ({
     id: row.id,
-    name: row.name_pt,
-    pattern: row.movement_pattern,
+    name: row.name,
+    pattern: row.pattern,
     category: row.category,
     difficulty: row.difficulty,
     active: row.active,
-    hasApprovedMedia: (row.exercise_media ?? []).some(
-      (m: {
-        status: string;
-        media_type: string;
-        media_role: string | null;
-        execution_quality: string;
-        is_primary: boolean;
-      }) =>
-        m.status === "approved" &&
-        m.execution_quality === "approved" &&
-        m.media_role === "PRIMARY_DEMO" &&
-        m.is_primary &&
-        ["video", "gif"].includes(m.media_type),
-    ),
-    equipment: (row.exercise_equipment ?? [])
-      .filter((entry) => entry.required)
-      .flatMap((entry) => {
-        const relation = entry.equipment as unknown as
-          { slug: string } | { slug: string }[] | null;
-        return Array.isArray(relation)
-          ? relation.map((item) => item.slug)
-          : relation
-            ? [relation.slug]
-            : [];
-      }),
+    hasApprovedMedia: row.media_ready,
+    mediaReady: row.media_ready,
+    autoPlanEligible: row.auto_plan_eligible,
+    eligibilityReasons: row.eligibility_reasons ?? [],
+    equipment: row.required_equipment ?? [],
   }));
-  let createdPlanId: string | null = null;
+  const recentExerciseIds = [
+    ...new Set(
+      (recentSessions ?? []).flatMap((session) =>
+        (session.workout_session_exercises ?? []).map(
+          (exercise) => exercise.actual_exercise_id,
+        ),
+      ),
+    ),
+  ];
+
   try {
     const input: PlanInput = {
       goals: (goals ?? []).map((goal) => ({
@@ -106,87 +126,45 @@ export async function POST() {
       experience: preferences.experience,
       equipment,
       preferences: preferenceMap,
+      recentExerciseIds,
+      generatorVersion: GENERATOR_VERSION,
     };
-    const days = generatePlan(input, catalog);
-    await supabase
-      .from("workout_plans")
-      .update({ status: "archived", archived_at: new Date().toISOString() })
-      .eq("user_id", user.id)
-      .eq("status", "draft");
-    const { data: plan, error: planError } = await supabase
-      .from("workout_plans")
-      .insert({
-        user_id: user.id,
-        name: "Meu plano",
-        status: "draft",
-        source: "generated",
-        sessions_per_week: input.sessionsPerWeek,
-        target_session_minutes: input.sessionMinutes,
-      })
-      .select("id")
-      .single();
-    if (planError || !plan)
-      throw planError ?? new Error("Falha ao criar plano");
-    createdPlanId = plan.id;
-    for (let i = 0; i < days.length; i++) {
-      const day = days[i];
-      const { data: dayRow, error: dayError } = await supabase
-        .from("workout_days")
-        .insert({
-          workout_plan_id: plan.id,
-          name: day.name,
-          position: i + 1,
-          estimated_minutes: day.estimatedMinutes,
-        })
-        .select("id")
-        .single();
-      if (dayError || !dayRow)
-        throw dayError ?? new Error("Falha ao criar dia");
-      const { error: exerciseError } = await supabase
-        .from("workout_day_exercises")
-        .insert(
-          day.exercises.map((exercise, position) => ({
-            workout_day_id: dayRow.id,
-            exercise_id: exercise.exerciseId,
-            position: position + 1,
-            target_sets: exercise.sets,
-            rep_min: exercise.repMin || null,
-            rep_max: exercise.repMax || null,
-            rest_seconds: exercise.restSeconds,
-            target_duration_seconds: exercise.targetDurationSeconds ?? null,
-          })),
-        );
-      if (exerciseError) throw exerciseError;
-    }
-    const plannedIds = new Set(
-      days.flatMap((day) => day.exercises.map((item) => item.exerciseId)),
+    const generated = generatePlanWithQuality(input, catalog);
+    const { data: activation, error: activationError } = await supabase.rpc(
+      "create_and_activate_plan_v21",
+      {
+        p_days: generated.days,
+        p_generator_version: generated.generatorVersion,
+        p_rationale: {
+          strategy: "deterministic-diversity-v21",
+          quality: generated.quality,
+          recentExerciseWindow: recentExerciseIds.length,
+        },
+      },
     );
-    const readyIds = new Set(
-      catalog
-        .filter((exercise) => exercise.active && exercise.hasApprovedMedia)
-        .map((exercise) => exercise.id),
-    );
-    const primaryApproved = [...plannedIds].filter((id) => readyIds.has(id));
-    const planCoverage = plannedIds.size
-      ? Number(((primaryApproved.length / plannedIds.size) * 100).toFixed(1))
-      : 0;
-    const { error: activateError } = await supabase.rpc("activate_plan", {
-      p_plan_id: plan.id,
-    });
-    if (activateError) throw activateError;
+    if (activationError) throw activationError;
+    const result = activation as {
+      planId: string;
+      quality: typeof generated.quality;
+    };
     return NextResponse.json(
       {
-        id: plan.id,
+        id: result.planId,
         status: "active" as const,
-        planCoverage,
-        exercises: plannedIds.size,
-        primaryApproved: primaryApproved.length,
+        generatorVersion: generated.generatorVersion,
+        quality: result.quality,
       },
       { status: 201 },
     );
   } catch (error) {
-    if (createdPlanId)
-      await supabase.from("workout_plans").delete().eq("id", createdPlanId);
+    if (error instanceof PlanConstraintError)
+      return NextResponse.json(
+        {
+          error: "Não foi possível gerar um plano seguro e variado.",
+          diagnostics: error.diagnostics,
+        },
+        { status: 422 },
+      );
     return NextResponse.json(
       {
         error:

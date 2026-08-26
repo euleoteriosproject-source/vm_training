@@ -1,0 +1,31 @@
+{
+  "version": "2.1-dvids-cardio-search",
+  "source": "DVIDS official search",
+  "writeScope": "local-versioned-metadata-only",
+  "results": [
+    {
+      "query": "burpee",
+      "searchUrl": "https://www.dvidshub.net/search?q=burpee&type=video",
+      "resultCount": 0,
+      "links": []
+    },
+    {
+      "query": "jumping jacks",
+      "searchUrl": "https://www.dvidshub.net/search?q=jumping%20jacks&type=video",
+      "resultCount": 0,
+      "links": []
+    },
+    {
+      "query": "mountain climber",
+      "searchUrl": "https://www.dvidshub.net/search?q=mountain%20climber&type=video",
+      "resultCount": 0,
+      "links": []
+    },
+    {
+      "query": "high knees",
+      "searchUrl": "https://www.dvidshub.net/search?q=high%20knees&type=video",
+      "resultCount": 0,
+      "links": []
+    }
+  ]
+}

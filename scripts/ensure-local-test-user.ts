@@ -37,18 +37,23 @@ function loadLocalSupabaseEnvironment() {
   );
   if (result.status !== 0)
     throw new Error("Supabase local indisponível; execute supabase start");
-  const values = Object.fromEntries(
-    result.stdout
-      .split(/\r?\n/)
-      .filter((line) => /^[A-Z_]+=/.test(line))
-      .map((line) => {
-        const separator = line.indexOf("=");
-        return [
-          line.slice(0, separator),
-          line.slice(separator + 1).replace(/^"|"$/g, ""),
-        ];
-      }),
-  );
+  const output = result.stdout.trim();
+  const values = output.startsWith("{")
+    ? (JSON.parse(output) as Record<string, string>)
+    : Object.fromEntries(
+        output
+          .split(/\r?\n/)
+          .filter((line) => /^[A-Z_]+=/.test(line))
+          .map((line) => {
+            const separator = line.indexOf("=");
+            return [
+              line.slice(0, separator),
+              line.slice(separator + 1).replace(/^"|"$/g, ""),
+            ];
+          }),
+      );
+  if (!isLocalUrl(values.API_URL ?? ""))
+    throw new Error("Supabase local retornou configuração inválida");
   process.env.NEXT_PUBLIC_SUPABASE_URL = values.API_URL;
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY =
     values.PUBLISHABLE_KEY ?? values.ANON_KEY;
@@ -312,6 +317,51 @@ const { error: fixtureActivationError } = await adminClient
   .update({ active: true })
   .eq("id", fixtureExercise.id);
 if (fixtureActivationError) throw fixtureActivationError;
+
+// Keep the local fixture independent from preset changes while still exercising
+// the same per-user equipment gate used in production.
+const { data: requiredEquipment, error: requiredEquipmentError } =
+  await adminClient
+    .from("exercise_equipment")
+    .select("equipment_id")
+    .eq("exercise_id", fixtureExercise.id)
+    .eq("required", true);
+if (requiredEquipmentError) throw requiredEquipmentError;
+if (requiredEquipment?.length) {
+  const { error: fixtureEquipmentError } = await userClient
+    .from("user_equipment")
+    .upsert(
+      requiredEquipment.map(({ equipment_id }) => ({
+        user_id: profile.user_id,
+        equipment_id,
+        available: true,
+        temporary_unavailable_until: null,
+        source: "user_override",
+      })),
+      { onConflict: "user_id,equipment_id" },
+    );
+  if (fixtureEquipmentError) throw fixtureEquipmentError;
+}
+
+const { data: autoPlanCatalog, error: autoPlanCatalogError } =
+  await userClient.rpc("get_auto_plan_catalog");
+if (autoPlanCatalogError) throw autoPlanCatalogError;
+const typedAutoPlanCatalog = autoPlanCatalog as
+  | Array<{
+      id: string;
+      auto_plan_eligible: boolean;
+      eligibility_reasons: string[];
+    }>
+  | null;
+const fixtureEligibility = typedAutoPlanCatalog?.find(
+  (exercise) => exercise.id === fixtureExercise.id,
+);
+if (!fixtureEligibility?.auto_plan_eligible) {
+  const reasons = fixtureEligibility?.eligibility_reasons?.length
+    ? fixtureEligibility.eligibility_reasons.join(", ")
+    : "fixture_not_returned";
+  throw new Error(`Fixture E2E inelegível: ${reasons}`);
+}
 
 const { data: approved, error: mediaError } = await userClient
   .from("exercise_media")
