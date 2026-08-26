@@ -13,6 +13,28 @@ insert into public.equipment(slug,name) values
 ('lat-pulldown','Puxada'),('chest-press','Supino máquina'),('dumbbells','Halteres'),('barbell','Barra e anilhas'),('bench','Banco'),
 ('kettlebell','Kettlebell'),('band','Faixa elástica'),('bodyweight','Peso corporal') on conflict(slug) do nothing;
 
+-- Keep capability mappings reproducible when seed data is inserted after all
+-- migrations (the normal Supabase reset order).
+insert into public.equipment_capabilities(equipment_id, capability)
+select equipment.id, mapping.capability
+from (values
+  ('bodyweight', 'bodyweight'),
+  ('dumbbells', 'free_weights'), ('barbell', 'free_weights'),
+  ('kettlebell', 'free_weights'), ('band', 'free_weights'),
+  ('bench', 'bench'), ('cable', 'cable_system'),
+  ('lat-pulldown', 'vertical_pull'), ('pull-up-bar', 'vertical_pull'),
+  ('row-machine', 'horizontal_pull'), ('chest-press', 'horizontal_push'),
+  ('smith', 'squat_pattern_machine_or_free_weight'),
+  ('hack-squat', 'squat_pattern_machine_or_free_weight'),
+  ('leg-press', 'leg_press'), ('leg-extension', 'knee_extension'),
+  ('lying-leg-curl', 'knee_flexion'), ('seated-leg-curl', 'knee_flexion'),
+  ('treadmill', 'cardio_machine'), ('bike', 'cardio_machine'),
+  ('elliptical', 'cardio_machine'), ('abductor', 'hip_accessory'),
+  ('adductor', 'hip_accessory'), ('back-extension-machine', 'hip_extension')
+) mapping(equipment_slug, capability)
+join public.equipment equipment on equipment.slug = mapping.equipment_slug
+on conflict do nothing;
+
 insert into public.exercises(slug,name_pt,category,movement_pattern,primary_muscles,secondary_muscles,difficulty,execution_instructions,breathing_instruction,common_errors,active) values
 ('leg-press','Leg press','strength','squat',array['quadríceps','glúteos'],array['posteriores'], 'beginner',array['Apoie toda a coluna','Desça com controle','Empurre pela planta dos pés'],'Expire ao empurrar',array['Tirar o quadril do banco','Travar os joelhos'],false),
 ('hack-squat','Hack squat','strength','squat',array['quadríceps','glúteos'],array['posteriores'],'intermediate',array['Apoie costas e ombros','Desça até amplitude confortável','Suba sem travar joelhos'],'Expire ao subir',array['Joelhos colapsando','Perder apoio do calcanhar'],false),

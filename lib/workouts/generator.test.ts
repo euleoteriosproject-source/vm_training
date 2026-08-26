@@ -15,7 +15,12 @@ const candidate = (
   id,
   name: id,
   pattern,
-  category: pattern === "mobility" ? "mobility" : "strength",
+  category:
+    pattern === "mobility"
+      ? "mobility"
+      : pattern === "cardio"
+        ? "cardio"
+        : "strength",
   equipment,
   difficulty: "beginner",
   active: true,
@@ -47,6 +52,9 @@ const diverseCatalog: ExerciseCandidate[] = [
   candidate("posture-1", "posture"),
   candidate("posture-2", "posture"),
   candidate("mobility-1", "mobility"),
+  candidate("cardio-1", "cardio", ["treadmill"]),
+  candidate("cardio-2", "cardio", ["bike"]),
+  candidate("cardio-3", "cardio", ["elliptical"]),
 ];
 
 const input: PlanInput = {
@@ -55,7 +63,7 @@ const input: PlanInput = {
   sessionMinutes: 60,
   cardioPreference: 1,
   experience: "beginner",
-  equipment: ["bodyweight", "dumbbells", "cable"],
+  equipment: ["bodyweight", "dumbbells", "cable", "treadmill"],
 };
 
 describe("generatePlan v2.1", () => {
@@ -144,5 +152,95 @@ describe("generatePlan v2.1", () => {
     expect(result.quality.invalidEquipment).toEqual([]);
     expect(result.quality.ineligibleExercises).toEqual([]);
     expect(result.quality.mediaCoveragePercent).toBe(100);
+  });
+
+  it("materially changes programming for different goals", () => {
+    const equipment = [
+      ...input.equipment,
+      "treadmill",
+      "bike",
+      "elliptical",
+    ];
+    const strength = generatePlanWithQuality(
+      { ...input, equipment, goals: [{ code: "strength", priority: 1 }] },
+      diverseCatalog,
+    );
+    const conditioning = generatePlanWithQuality(
+      {
+        ...input,
+        equipment,
+        goals: [{ code: "conditioning", priority: 1 }],
+      },
+      diverseCatalog,
+    );
+    expect(strength.days).not.toEqual(conditioning.days);
+    expect(strength.quality.goalAlignment.status).toBe("PASS");
+    expect(conditioning.quality.goalAlignment.status).toBe("PASS");
+    expect(strength.quality.goalAlignment.lowerRepStrengthSlots).toBeGreaterThan(0);
+    expect(conditioning.quality.goalAlignment.cardioSlots).toBe(3);
+  });
+
+  it("uses capability groups while respecting permanent equipment exceptions", () => {
+    const machine = {
+      ...candidate("capability-row", "horizontal_pull", ["row-machine"]),
+      capabilities: ["horizontal_pull"],
+    };
+    const capabilityInput: PlanInput = {
+      ...input,
+      equipment: [],
+      capabilities: ["bodyweight", "horizontal_pull"],
+      gymProfile: "STANDARD_COMMERCIAL_GYM",
+    };
+    expect(isExerciseEligible(machine, capabilityInput)).toBe(true);
+    expect(
+      isExerciseEligible(machine, {
+        ...capabilityInput,
+        unavailableEquipment: ["row-machine"],
+      }),
+    ).toBe(false);
+  });
+
+  it("keeps every supported goal aligned across every supported frequency", () => {
+    const equipment = [
+      ...input.equipment,
+      "treadmill",
+      "bike",
+      "elliptical",
+    ];
+    for (const goal of [
+      "general_health",
+      "strength",
+      "muscle_gain",
+      "conditioning",
+      "mobility",
+      "posture",
+    ] as const) {
+      for (const sessionsPerWeek of [2, 3, 4, 5] as const) {
+        let result;
+        try {
+          result = generatePlanWithQuality(
+            {
+              ...input,
+              equipment,
+              goals: [{ code: goal, priority: 1 }],
+              sessionsPerWeek,
+              sessionMinutes: sessionsPerWeek === 3 ? 60 : 45,
+              cardioPreference: goal === "conditioning" ? 4 : 2,
+            },
+            diverseCatalog,
+          );
+        } catch (error) {
+          if (error instanceof PlanConstraintError)
+            throw new Error(
+              `${goal}/${sessionsPerWeek}: ${JSON.stringify(error.diagnostics)}`,
+            );
+          throw error;
+        }
+        expect(
+          result.quality.goalAlignment.status,
+          `${goal}/${sessionsPerWeek}`,
+        ).toBe("PASS");
+      }
+    }
   });
 });

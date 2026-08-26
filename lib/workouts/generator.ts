@@ -7,7 +7,7 @@ import type {
   PlanQualityMetrics,
 } from "./types";
 
-export const GENERATOR_VERSION = "v2.1.0";
+export const GENERATOR_VERSION = "v2.1.1";
 
 const splits: Record<number, string[]> = {
   2: ["Full Body A", "Full Body B"],
@@ -31,7 +31,7 @@ const lowerPatterns = new Set([
   "knee_flexion",
 ]);
 
-const threeDayPatternSlots: readonly (readonly (readonly string[])[])[] = [
+const balancedThreeDayPatternSlots: readonly (readonly (readonly string[])[])[] = [
   [
     ["squat"],
     ["horizontal_pull"],
@@ -57,6 +57,46 @@ const threeDayPatternSlots: readonly (readonly (readonly string[])[])[] = [
     ["mobility", "posture"],
   ],
 ];
+
+const conditioningThreeDayPatternSlots: typeof balancedThreeDayPatternSlots = [
+  [["squat"], ["horizontal_pull"], ["horizontal_push"], ["hinge", "hip_extension"], ["core_anti_extension", "carry"], ["cardio"]],
+  [["knee_extension", "squat"], ["vertical_pull"], ["vertical_push"], ["knee_flexion", "hinge"], ["core_anti_rotation", "posture"], ["cardio"]],
+  [["squat", "hip_extension"], ["horizontal_pull"], ["horizontal_push"], ["vertical_pull"], ["mobility", "core_anti_extension"], ["cardio"]],
+];
+
+const healthThreeDayPatternSlots: typeof balancedThreeDayPatternSlots = [
+  balancedThreeDayPatternSlots[0],
+  balancedThreeDayPatternSlots[1],
+  [
+    ["squat"],
+    ["horizontal_pull"],
+    ["vertical_push"],
+    ["vertical_pull"],
+    ["core_anti_extension"],
+    ["cardio"],
+  ],
+];
+
+const mobilityThreeDayPatternSlots: typeof balancedThreeDayPatternSlots = [
+  [["squat"], ["horizontal_pull"], ["horizontal_push"], ["core_anti_extension"], ["posture"], ["mobility", "posture"]],
+  [["hinge", "hip_extension"], ["vertical_pull"], ["vertical_push"], ["core_anti_rotation"], ["posture"], ["mobility", "posture"]],
+  [["knee_extension", "squat"], ["horizontal_pull"], ["horizontal_push"], ["knee_flexion"], ["posture"], ["mobility", "posture"]],
+];
+
+function primaryGoal(input: PlanInput) {
+  return [...input.goals].sort(
+    (left, right) => left.priority - right.priority || left.code.localeCompare(right.code),
+  )[0]?.code ?? "general_health";
+}
+
+function threeDaySlotsForGoal(input: PlanInput) {
+  const goal = primaryGoal(input);
+  if (["conditioning", "cardio_endurance", "fat_loss", "weight_loss", "measurements"].includes(goal))
+    return conditioningThreeDayPatternSlots;
+  if (["mobility", "posture"].includes(goal)) return mobilityThreeDayPatternSlots;
+  if (goal === "general_health") return healthThreeDayPatternSlots;
+  return balancedThreeDayPatternSlots;
+}
 
 export class PlanConstraintError extends Error {
   public readonly diagnostics: PlanConstraintDiagnostic[];
@@ -86,6 +126,23 @@ export function isExerciseEligible(
   if (input.experience === "beginner" && exercise.difficulty === "advanced")
     return false;
   if (input.movementAttentionPatterns?.includes(exercise.pattern)) return false;
+  return hasCompatibleEquipment(exercise, input);
+}
+
+function hasCompatibleEquipment(
+  exercise: ExerciseCandidate,
+  input: PlanInput,
+) {
+  if (
+    exercise.equipment.some((item) =>
+      input.unavailableEquipment?.includes(item),
+    )
+  )
+    return false;
+  if (exercise.capabilities?.length && input.capabilities?.length)
+    return exercise.capabilities.every((capability) =>
+      input.capabilities!.includes(capability),
+    );
   return exercise.equipment.every(
     (item) => item === "bodyweight" || input.equipment.includes(item),
   );
@@ -107,6 +164,13 @@ function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
     score += goals.get("strength")! * 2;
   if (goals.has("muscle_gain") && exercise.category === "strength")
     score += goals.get("muscle_gain")! * 2;
+  if (goals.has("mobility") && exercise.category === "mobility")
+    score += goals.get("mobility")! * 4;
+  if (
+    goals.has("general_health") &&
+    ["strength", "cardio", "mobility"].includes(exercise.category)
+  )
+    score += goals.get("general_health")!;
   if (
     (goals.has("conditioning") ||
       goals.has("fat_loss") ||
@@ -169,10 +233,7 @@ export function evaluatePlanQuality(
           const exercise = catalogById.get(slot.exerciseId);
           return (
             !exercise ||
-            exercise.equipment.some(
-              (item) =>
-                item !== "bodyweight" && !input.equipment.includes(item),
-            )
+            !hasCompatibleEquipment(exercise, input)
           );
         })
         .map((slot) => slot.exerciseId),
@@ -193,6 +254,8 @@ export function evaluatePlanQuality(
     return exercise ? isMediaReady(exercise) : false;
   }).length;
 
+  const goalAlignment = evaluateGoalAlignment(days, catalog, input);
+
   return {
     totalSlots: slots.length,
     uniqueExercises: frequencies.size,
@@ -208,6 +271,69 @@ export function evaluatePlanQuality(
     mediaCoveragePercent: percentage(mediaReadyCount, slots.length),
     invalidEquipment,
     ineligibleExercises,
+    goalAlignment,
+  };
+}
+
+export function evaluateGoalAlignment(
+  days: GeneratedDay[],
+  catalog: ExerciseCandidate[],
+  input: PlanInput,
+): PlanQualityMetrics["goalAlignment"] {
+  const byId = new Map(catalog.map((exercise) => [exercise.id, exercise]));
+  const slots = days.flatMap((day) => day.exercises);
+  const strengthSlots = slots.filter(
+    (slot) => byId.get(slot.exerciseId)?.category === "strength",
+  );
+  const cardioSlots = slots.filter(
+    (slot) => byId.get(slot.exerciseId)?.category === "cardio",
+  ).length;
+  const mobilityOrPostureSlots = slots.filter((slot) => {
+    const exercise = byId.get(slot.exerciseId);
+    return exercise?.category === "mobility" || exercise?.pattern === "posture";
+  }).length;
+  const lowerRepStrengthSlots = strengthSlots.filter(
+    (slot) => slot.repMax > 0 && slot.repMax <= 8,
+  ).length;
+  const moderateRepStrengthSlots = strengthSlots.filter(
+    (slot) => slot.repMin >= 8 && slot.repMax <= 15,
+  ).length;
+  const longRestStrengthSlots = strengthSlots.filter(
+    (slot) => slot.restSeconds >= 105,
+  ).length;
+  const goal = primaryGoal(input);
+  const reasons: string[] = [];
+  const ratio = (value: number, total: number) => (total ? value / total : 0);
+
+  if (goal === "strength") {
+    if (ratio(strengthSlots.length, slots.length) < 0.75) reasons.push("strength_volume");
+    if (ratio(lowerRepStrengthSlots, strengthSlots.length) < 0.5) reasons.push("strength_reps");
+    if (ratio(longRestStrengthSlots, strengthSlots.length) < 0.5) reasons.push("strength_rest");
+  } else if (goal === "muscle_gain") {
+    if (ratio(strengthSlots.length, slots.length) < 0.75) reasons.push("hypertrophy_volume");
+    if (ratio(moderateRepStrengthSlots, strengthSlots.length) < 0.7) reasons.push("hypertrophy_reps");
+  } else if (["conditioning", "cardio_endurance", "fat_loss", "weight_loss", "measurements"].includes(goal)) {
+    if (cardioSlots < days.length) reasons.push("conditioning_cardio");
+    if (strengthSlots.length < days.length * 2) reasons.push("conditioning_strength_foundation");
+  } else if (["mobility", "posture"].includes(goal)) {
+    if (mobilityOrPostureSlots < days.length) reasons.push("movement_quality_volume");
+    if (strengthSlots.length < days.length * 3) reasons.push("movement_quality_strength_foundation");
+  } else {
+    if (strengthSlots.length < days.length * 3) reasons.push("health_strength_foundation");
+    if (days.length >= 3 && mobilityOrPostureSlots < 1) reasons.push("health_movement_quality");
+    if (days.length >= 3 && cardioSlots < 1) reasons.push("health_conditioning");
+  }
+
+  return {
+    status: reasons.length ? "FAIL" : "PASS",
+    goal,
+    strengthSlots: strengthSlots.length,
+    cardioSlots,
+    mobilityOrPostureSlots,
+    lowerRepStrengthSlots,
+    moderateRepStrengthSlots,
+    longRestStrengthSlots,
+    reasons,
   };
 }
 
@@ -236,6 +362,13 @@ function qualityDiagnostics(
       message: "O plano contém exercício inelegível.",
       actual: quality.ineligibleExercises,
       required: 0,
+    });
+  if (quality.goalAlignment.status !== "PASS")
+    diagnostics.push({
+      code: "GOAL_MISALIGNED",
+      message: "O plano não reflete materialmente o objetivo selecionado.",
+      actual: quality.goalAlignment.reasons,
+      required: "PASS",
     });
   if (standardThreeDayPlan && quality.uniqueExercises < 12)
     diagnostics.push({
@@ -272,9 +405,16 @@ function qualityDiagnostics(
 }
 
 function createPrescription(exercise: ExerciseCandidate, input: PlanInput) {
-  const strengthGoal = input.goals.some(
-    (goal) => goal.code === "strength" && goal.priority <= 2,
-  );
+  const goal = primaryGoal(input);
+  const strengthGoal = goal === "strength";
+  const hypertrophyGoal = goal === "muscle_gain";
+  const conditioningGoal = [
+    "conditioning",
+    "cardio_endurance",
+    "fat_loss",
+    "weight_loss",
+    "measurements",
+  ].includes(goal);
   if (exercise.category === "cardio")
     return {
       exerciseId: exercise.id,
@@ -282,14 +422,17 @@ function createPrescription(exercise: ExerciseCandidate, input: PlanInput) {
       repMin: 0,
       repMax: 0,
       restSeconds: 0,
-      targetDurationSeconds: Math.max(300, input.sessionMinutes * 60 * 0.2),
+      targetDurationSeconds: Math.max(
+        300,
+        input.sessionMinutes * 60 * (conditioningGoal ? 0.24 : 0.15),
+      ),
     };
   return {
     exerciseId: exercise.id,
-    sets: strengthGoal ? 4 : 3,
-    repMin: strengthGoal ? 5 : 8,
-    repMax: strengthGoal ? 8 : 12,
-    restSeconds: strengthGoal ? 120 : 75,
+    sets: strengthGoal ? 4 : hypertrophyGoal ? 4 : 3,
+    repMin: strengthGoal ? 4 : hypertrophyGoal ? 8 : 8,
+    repMax: strengthGoal ? 7 : hypertrophyGoal ? 12 : 12,
+    restSeconds: strengthGoal ? 135 : hypertrophyGoal ? 90 : conditioningGoal ? 60 : 75,
   };
 }
 
@@ -314,7 +457,7 @@ function generateDiverseThreeDayPlan(
 
   for (let dayIndex = 0; dayIndex < 3; dayIndex++) {
     const selected: ExerciseCandidate[] = [];
-    for (const patterns of threeDayPatternSlots[dayIndex]) {
+    for (const patterns of threeDaySlotsForGoal(input)[dayIndex]) {
       const matching = eligible.filter(({ exercise }) =>
         patterns.includes(exercise.pattern),
       );
@@ -392,18 +535,24 @@ function generateLegacySplit(
         required: 4,
       },
     ]);
-  const highCardio =
-    input.cardioPreference >= 4 &&
-    input.goals.some((goal) =>
-      ["conditioning", "fat_loss", "weight_loss"].includes(goal.code),
-    );
+  const goal = primaryGoal(input);
+  const conditioningGoal = [
+    "conditioning",
+    "cardio_endurance",
+    "fat_loss",
+    "weight_loss",
+    "measurements",
+  ].includes(goal);
+  const movementQualityGoal = ["mobility", "posture"].includes(goal);
+  const healthGoal = goal === "general_health";
+  const highCardio = input.cardioPreference >= 4 && conditioningGoal;
   const strengthCount = highCardio
     ? Math.max(2, Math.floor((input.sessionMinutes * 0.35) / 7))
     : Math.max(3, Math.floor((input.sessionMinutes * 0.72) / 7));
   const cardioMinutes = highCardio
     ? Math.round(input.sessionMinutes * 0.65)
-    : input.cardioPreference >= 3
-      ? Math.round(input.sessionMinutes * 0.22)
+    : conditioningGoal || healthGoal || input.cardioPreference >= 3
+      ? Math.max(10, Math.round(input.sessionMinutes * 0.22))
       : 0;
   const used = new Map<string, number>();
 
@@ -431,6 +580,29 @@ function generateLegacySplit(
         used.set(exercise.id, (used.get(exercise.id) ?? 0) + 1);
         return createPrescription(exercise, input);
       });
+    if (movementQualityGoal) {
+      const selectedIds = new Set(selected.map((item) => item.exerciseId));
+      const movementQuality = eligible
+        .filter(
+          ({ exercise }) =>
+            exercise.category === "mobility" || exercise.pattern === "posture",
+        )
+        .filter(({ exercise }) => !selectedIds.has(exercise.id))
+        .sort(
+          (left, right) =>
+            (used.get(left.exercise.id) ?? 0) -
+              (used.get(right.exercise.id) ?? 0) ||
+            right.score - left.score ||
+            left.exercise.id.localeCompare(right.exercise.id),
+        )[0]?.exercise;
+      if (movementQuality) {
+        selected.push(createPrescription(movementQuality, input));
+        used.set(
+          movementQuality.id,
+          (used.get(movementQuality.id) ?? 0) + 1,
+        );
+      }
+    }
     const cardio = eligible.filter(
       ({ exercise }) => exercise.category === "cardio",
     );

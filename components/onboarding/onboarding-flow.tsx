@@ -15,19 +15,8 @@ import {
   toBrazilianDate,
 } from "@/lib/validation/dates";
 import { onboardingSchema } from "@/lib/validation/schemas";
-
-const goals = [
-  ["weight_loss", "Perder peso"],
-  ["fat_loss", "Reduzir gordura corporal"],
-  ["measurements", "Reduzir medidas"],
-  ["muscle_gain", "Ganhar massa muscular"],
-  ["strength", "Ganhar força"],
-  ["posture", "Melhorar postura"],
-  ["mobility", "Melhorar mobilidade"],
-  ["conditioning", "Melhorar condicionamento"],
-  ["cardio_endurance", "Aumentar resistência"],
-  ["general_health", "Saúde geral"],
-] as const;
+import { GOAL_OPTIONS } from "@/lib/workouts/goals";
+import type { GoalCode } from "@/lib/workouts/types";
 
 const gyms = [
   [
@@ -54,7 +43,6 @@ const attentionRegions = [
   ["other", "Outra região"],
 ] as const;
 
-type GoalCode = (typeof goals)[number][0];
 type GymCategory = (typeof gyms)[number][0];
 type AttentionRegion = (typeof attentionRegions)[number][0];
 type Data = {
@@ -141,7 +129,11 @@ export function OnboardingFlow({
         payload: parsed.data,
       });
       if (error) throw error;
-      const response = await fetch("/api/plans/generate", { method: "POST" });
+      const response = await fetch("/api/plans/generate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ activation: "immediate" }),
+      });
       const result = (await response.json().catch(() => null)) as {
         error?: string;
       } | null;
@@ -256,7 +248,7 @@ export function OnboardingFlow({
                 Qual é seu objetivo principal?
               </p>
               <div className="grid gap-2 sm:grid-cols-2">
-                {goals.map(([code, label]) => (
+                {GOAL_OPTIONS.map(([code, label, description]) => (
                   <button
                     type="button"
                     aria-pressed={data.goalCode === code}
@@ -268,6 +260,9 @@ export function OnboardingFlow({
                     )}
                   >
                     {label}
+                    <span className="mt-1 block text-xs leading-5 text-muted">
+                      {description}
+                    </span>
                   </button>
                 ))}
               </div>

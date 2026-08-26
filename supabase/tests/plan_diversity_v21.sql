@@ -1,7 +1,7 @@
 begin;
 grant usage on schema extensions to anon, authenticated, service_role;
 set local search_path = public, extensions;
-select plan(21);
+select plan(37);
 
 select has_view('public', 'exercise_media_readiness',
   'v2.1 exposes canonical media readiness');
@@ -29,13 +29,19 @@ insert into public.training_preferences(
   'd1000000-0000-0000-0000-000000000001', 3, 60, 2,
   'returning', 'full_gym'
 );
+insert into public.user_goals(user_id, goal_code, priority, active)
+values ('d1000000-0000-0000-0000-000000000001', 'general_health', 1, true);
 
 insert into public.exercises(
   slug, name_pt, category, movement_pattern, primary_muscles,
   difficulty, execution_instructions, active
 )
 select 'v21-fixture-' || fixture.number, 'Fixture ' || fixture.number,
-  'strength', fixture.pattern, array['core'], 'beginner',
+  case
+    when fixture.pattern = 'cardio' then 'cardio'
+    when fixture.pattern = 'mobility' then 'mobility'
+    else 'strength'
+  end, fixture.pattern, array['core'], 'beginner',
   array['Execute com controle.'], false
 from unnest(array[
   'squat', 'horizontal_pull', 'knee_flexion', 'vertical_push', 'carry',
@@ -211,6 +217,110 @@ select is((select count(*)::integer from public.workout_sessions
 select is((select count(*)::integer from public.workout_plans
   where user_id = 'd1000000-0000-0000-0000-000000000001'
     and status = 'active'), 1, 'exactly one plan remains active');
+
+select ok(
+  has_function_privilege('authenticated',
+    'public.save_training_preferences_v211(text,smallint,smallint,smallint,text)', 'execute')
+  and has_function_privilege('authenticated',
+    'public.get_auto_plan_catalog_v211()', 'execute')
+  and has_function_privilege('authenticated',
+    'public.create_plan_preview_v211(jsonb,text,jsonb)', 'execute')
+  and has_function_privilege('authenticated',
+    'public.activate_plan_v211(uuid)', 'execute'),
+  'authenticated can use the ownership-scoped v2.1.1 preference and plan RPCs'
+);
+
+insert into public.user_equipment(user_id, equipment_id, available, source)
+select 'd1000000-0000-0000-0000-000000000001', equipment.id, true, 'preset'
+from public.equipment equipment where equipment.slug = 'bike';
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"d1000000-0000-0000-0000-000000000001","role":"authenticated"}', true);
+select lives_ok(
+  $$select public.save_training_preferences_v211(
+    'strength', 3::smallint, 60::smallint, 4::smallint,
+    'STANDARD_COMMERCIAL_GYM'
+  )$$,
+  'simplified preferences save atomically'
+);
+reset role;
+
+select is((select goal_code from public.user_goals
+  where user_id = 'd1000000-0000-0000-0000-000000000001' and active),
+  'strength', 'goal change persists');
+select is((select cardio_preference from public.training_preferences
+  where user_id = 'd1000000-0000-0000-0000-000000000001'),
+  4::smallint, 'cardio preference persists');
+select is((select count(*)::integer from public.user_equipment
+  where user_id = 'd1000000-0000-0000-0000-000000000001'
+    and equipment_id = (select id from public.equipment where slug = 'bike')),
+  1, 'saving preferences preserves historical equipment rows');
+select ok(private.user_equipment_is_available(
+  'd1000000-0000-0000-0000-000000000001',
+  (select id from public.equipment where slug = 'row-machine')
+), 'standard commercial gym satisfies a capability without inventory input');
+
+insert into public.user_equipment(user_id, equipment_id, available, source)
+select 'd1000000-0000-0000-0000-000000000001', equipment.id, false, 'user_override'
+from public.equipment equipment where equipment.slug = 'row-machine'
+on conflict(user_id, equipment_id) do update set available = false, source = 'user_override';
+select ok(not private.user_equipment_is_available(
+  'd1000000-0000-0000-0000-000000000001',
+  (select id from public.equipment where slug = 'row-machine')
+), 'permanent equipment exception overrides the standard gym capability');
+
+delete from public.user_equipment
+where user_id = 'd1000000-0000-0000-0000-000000000001'
+  and equipment_id = (select id from public.equipment where slug = 'row-machine');
+update public.user_goals set active = false
+where user_id = 'd1000000-0000-0000-0000-000000000001';
+insert into public.user_goals(user_id, goal_code, priority, active)
+values ('d1000000-0000-0000-0000-000000000001', 'general_health', 1, true)
+on conflict(user_id, goal_code) do update set active = true, priority = 1;
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"d1000000-0000-0000-0000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v211.preview',
+  public.create_plan_preview_v211(
+    current_setting('v21.days')::jsonb, 'v2.1.1',
+    '{"strategy":"pgTAP-v211"}'::jsonb
+  )::text, true)$$,
+  'v2.1.1 creates a validated preview without activation');
+reset role;
+
+select is((select count(*)::integer from public.workout_plans
+  where user_id = 'd1000000-0000-0000-0000-000000000001'
+    and status = 'active'), 1,
+  'preview does not silently replace the active plan');
+select is((select status from public.workout_plans
+  where id = (current_setting('v211.preview')::jsonb->>'planId')::uuid),
+  'draft', 'new plan remains a draft before confirmation');
+select is(current_setting('v211.preview')::jsonb
+  #>>'{quality,goalAlignment,status}', 'PASS',
+  'goal alignment inspects the generated plan and passes');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"d1000000-0000-0000-0000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.activate_plan_v211(
+  (current_setting('v211.preview')::jsonb->>'planId')::uuid
+)$$, 'confirmed v2.1.1 preview activates atomically');
+reset role;
+
+select is((select status from public.workout_plans
+  where id = (current_setting('v21.result')::jsonb->>'planId')::uuid),
+  'archived', 'activation archives the previous plan version');
+select is((select status from public.workout_plans
+  where id = (current_setting('v211.preview')::jsonb->>'planId')::uuid),
+  'active', 'confirmed preview becomes the only active plan');
+select is((select count(*)::integer from public.workout_sessions
+  where id = 'd4000000-0000-0000-0000-000000000004'), 1,
+  'plan update preserves workout history');
+select is((select count(*)::integer from public.workout_plans
+  where user_id = 'd1000000-0000-0000-0000-000000000001'
+    and status = 'active'), 1, 'v2.1.1 still enforces one active plan');
 
 select * from finish();
 rollback;

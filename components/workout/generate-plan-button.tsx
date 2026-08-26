@@ -16,7 +16,11 @@ export function GeneratePlanButton() {
     setError("");
     setNotice("");
     try {
-      const response = await fetch("/api/plans/generate", { method: "POST" });
+      const response = await fetch("/api/plans/generate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ activation: "immediate" }),
+      });
       const result = (await response.json().catch(() => null)) as {
         error?: string;
         status?: "draft" | "active";

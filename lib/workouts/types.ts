@@ -10,12 +10,19 @@ export type GoalCode =
   | "cardio_endurance"
   | "general_health";
 
+export type GymProfile =
+  | "STANDARD_COMMERCIAL_GYM"
+  | "BASIC_GYM"
+  | "HOME_GYM"
+  | "BODYWEIGHT_ONLY";
+
 export type ExerciseCandidate = {
   id: string;
   name: string;
   pattern: string;
   category: "strength" | "cardio" | "mobility";
   equipment: string[];
+  capabilities?: string[];
   difficulty: "beginner" | "intermediate" | "advanced";
   active: boolean;
   hasApprovedMedia: boolean;
@@ -31,6 +38,9 @@ export type PlanInput = {
   cardioPreference: 1 | 2 | 3 | 4 | 5;
   experience: "beginner" | "returning" | "intermediate" | "advanced";
   equipment: string[];
+  unavailableEquipment?: string[];
+  gymProfile?: GymProfile;
+  capabilities?: string[];
   preferences?: Record<string, "like" | "neutral" | "dislike" | "avoid">;
   movementAttentionPatterns?: string[];
   recentExerciseIds?: string[];
@@ -62,6 +72,17 @@ export type PlanQualityMetrics = {
   mediaCoveragePercent: number;
   invalidEquipment: string[];
   ineligibleExercises: string[];
+  goalAlignment: {
+    status: "PASS" | "FAIL";
+    goal: GoalCode;
+    strengthSlots: number;
+    cardioSlots: number;
+    mobilityOrPostureSlots: number;
+    lowerRepStrengthSlots: number;
+    moderateRepStrengthSlots: number;
+    longRestStrengthSlots: number;
+    reasons: string[];
+  };
 };
 
 export type PlanConstraintDiagnostic = {
@@ -73,7 +94,8 @@ export type PlanConstraintDiagnostic = {
     | "INCOMPLETE_MEDIA_COVERAGE"
     | "INVALID_EQUIPMENT"
     | "INELIGIBLE_EXERCISE"
-    | "INSUFFICIENT_MOVEMENT_COVERAGE";
+    | "INSUFFICIENT_MOVEMENT_COVERAGE"
+    | "GOAL_MISALIGNED";
   message: string;
   actual: number | string[];
   required: number | string;

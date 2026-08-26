@@ -2,27 +2,26 @@ import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { PreferencesForm } from "@/components/settings/preferences-form";
 import { createClient } from "@/lib/supabase/server";
+import type { GoalCode } from "@/lib/workouts/types";
 export default async function PreferencesPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
-  const [{ data: preferences }, { data: equipment }, { data: selected }] =
+  const [{ data: preferences }, { data: goals }] =
     await Promise.all([
       supabase
         .from("training_preferences")
-        .select("sessions_per_week,session_minutes,cardio_preference")
+        .select("sessions_per_week,session_minutes,cardio_preference,gym_profile")
         .single(),
       supabase
-        .from("equipment")
-        .select("id,name")
+        .from("user_goals")
+        .select("goal_code,priority")
+        .eq("user_id", user.id)
         .eq("active", true)
-        .order("name"),
-      supabase
-        .from("user_equipment")
-        .select("equipment_id")
-        .eq("user_id", user.id),
+        .order("priority")
+        .limit(1),
     ]);
   if (!preferences) return null;
   return (
@@ -34,10 +33,8 @@ export default async function PreferencesPage() {
       </p>
       <Card className="mt-7 p-5 md:p-7">
         <PreferencesForm
-          userId={user.id}
           preferences={preferences}
-          equipment={equipment ?? []}
-          selected={(selected ?? []).map((row) => row.equipment_id)}
+          goal={(goals?.[0]?.goal_code ?? "general_health") as GoalCode}
         />
       </Card>
     </div>

@@ -318,6 +318,126 @@ const { error: fixtureActivationError } = await adminClient
   .eq("id", fixtureExercise.id);
 if (fixtureActivationError) throw fixtureActivationError;
 
+// The v2.1.1 preview exercises the real goal-driven generator. A disposable
+// local catalog therefore needs enough media-ready movement patterns to meet
+// the same diversity gate used in production.
+const v211FixtureSlugs = [
+  "bodyweight-half-squat",
+  "goblet-squat",
+  "machine-row",
+  "seated-row",
+  "lying-leg-curl",
+  "hip-thrust",
+  "machine-shoulder-press",
+  "lateral-raise",
+  "farmer-walk",
+  "dead-bug",
+  "pallof-press",
+  "machine-chest-press",
+  "lat-pulldown",
+  "neutral-pulldown",
+  "leg-extension",
+  "wall-slide",
+  "treadmill",
+] as const;
+const { data: v211Fixtures, error: v211FixturesError } = await adminClient
+  .from("exercises")
+  .select("id,slug")
+  .in("slug", [...v211FixtureSlugs]);
+if (v211FixturesError || v211Fixtures?.length !== v211FixtureSlugs.length)
+  throw v211FixturesError ?? new Error("Catálogo E2E v2.1.1 incompleto");
+
+for (const exercise of v211Fixtures) {
+  const mediaBytes = Buffer.concat([fixtureGif, Buffer.from(exercise.slug)]);
+  const mediaHash = createHash("sha256").update(mediaBytes).digest("hex");
+  const storagePath = `e2e/v211/${exercise.slug}/primary.gif`;
+  const posterPath = `e2e/v211/${exercise.slug}/poster.gif`;
+  for (const objectPath of [storagePath, posterPath]) {
+    const { error: uploadError } = await adminClient.storage
+      .from("exercise-media")
+      .upload(objectPath, mediaBytes, {
+        contentType: "image/gif",
+        upsert: true,
+      });
+    if (uploadError) throw uploadError;
+  }
+
+  const sourceUrl = `https://example.test/vm-training/local-e2e-v211/${exercise.slug}`;
+  const { data: existingMedia, error: existingMediaError } = await adminClient
+    .from("exercise_media")
+    .select("id,status")
+    .eq("exercise_id", exercise.id)
+    .eq("source_url", sourceUrl)
+    .maybeSingle();
+  if (existingMediaError) throw existingMediaError;
+  if (existingMedia?.status !== "approved") {
+    await adminClient
+      .from("exercise_media")
+      .update({ status: "reviewing", is_primary: false })
+      .eq("exercise_id", exercise.id)
+      .eq("status", "approved")
+      .neq("source_url", sourceUrl);
+    const now = new Date().toISOString();
+    const { data: media, error: mediaError } = await adminClient
+      .from("exercise_media")
+      .upsert(
+        {
+          exercise_id: exercise.id,
+          media_type: "gif",
+          storage_path: storagePath,
+          poster_path: posterPath,
+          angle: "main",
+          status: "processed",
+          source_name: "VM Training local E2E fixture v2.1.1",
+          source_type: "self_produced",
+          source_url: sourceUrl,
+          original_file_url: `${sourceUrl}.gif`,
+          license_code: "CUSTOM",
+          author: "VM Training E2E",
+          attribution_text: "Disposable local E2E fixture",
+          attribution_required: false,
+          verified_at: now,
+          downloaded_at: now,
+          content_hash: mediaHash,
+          width: 1,
+          height: 1,
+          file_size_bytes: mediaBytes.byteLength,
+          is_primary: false,
+          quality_score: 100,
+          execution_quality: "approved",
+          media_role: "PRIMARY_DEMO",
+          review_checklist: checklist,
+          reviewed_at: now,
+          reviewed_by: profile.user_id,
+          processed_at: now,
+          animation_verified: true,
+          frame_count: 2,
+          animation_loop: true,
+          frames_per_second: 1,
+          duration_seconds: 2,
+          review_state: "MANUAL_REVIEW_REQUIRED",
+          review_method: "human",
+          automated_validation: automatedValidation,
+        },
+        { onConflict: "exercise_id,source_url" },
+      )
+      .select("id")
+      .single();
+    if (mediaError || !media)
+      throw mediaError ?? new Error("Mídia E2E v2.1.1 não criada");
+    const { error: publishError } = await adminClient.rpc(
+      "publish_exercise_media",
+      { p_media_id: media.id, p_admin_id: profile.user_id },
+    );
+    if (publishError) throw publishError;
+  }
+}
+const { error: v211ActivationError } = await adminClient
+  .from("exercises")
+  .update({ active: true })
+  .in("slug", [...v211FixtureSlugs]);
+if (v211ActivationError) throw v211ActivationError;
+
 // Keep the local fixture independent from preset changes while still exercising
 // the same per-user equipment gate used in production.
 const { data: requiredEquipment, error: requiredEquipmentError } =
