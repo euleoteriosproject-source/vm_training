@@ -11,7 +11,7 @@ export async function POST(
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user)
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
-  const { data, error } = await supabase.rpc("activate_plan_rebalance_v212", {
+  const { data, error } = await supabase.rpc("activate_plan_rebalance_v214", {
     p_plan_id: id,
   });
   if (error)

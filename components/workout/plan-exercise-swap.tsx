@@ -60,6 +60,9 @@ export function PlanExerciseSwap({
     null,
   );
   const [persistExclusion, setPersistExclusion] = useState(false);
+  const [reasonCode, setReasonCode] = useState<
+    "exercise_dislike" | "user_choice" | "other"
+  >("user_choice");
   const [preview, setPreview] = useState<RebalancePreview | null>(null);
   const [previewMode, setPreviewMode] = useState<"semantic" | "remaining">(
     "semantic",
@@ -73,12 +76,17 @@ export function PlanExerciseSwap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialOpen]);
 
-  async function load(nextQuery = activeQuery, nextLimit = limit) {
+  async function load(
+    nextQuery = activeQuery,
+    nextLimit = limit,
+    nextReason = reasonCode,
+  ) {
     setLoading(true);
     setSelected(null);
     setPreview(null);
     try {
       const params = new URLSearchParams({ limit: String(nextLimit) });
+      params.set("reason", nextReason);
       if (nextQuery) params.set("q", nextQuery);
       const response = await fetch(
         `/api/plans/exercises/${slotId}/swap?${params}`,
@@ -157,7 +165,7 @@ export function PlanExerciseSwap({
   }
 
   async function replace() {
-    if (!selected?.isEquivalent) return;
+    if (!selected || selected.replacementType === "REQUIRES_REBALANCE") return;
     setBusy(true);
     try {
       const response = await fetch(`/api/plans/exercises/${slotId}/swap`, {
@@ -166,6 +174,8 @@ export function PlanExerciseSwap({
         body: JSON.stringify({
           action: "replace",
           replacementExerciseId: selected.exerciseId,
+          replacementType: selected.replacementType,
+          reasonCode,
           persistExclusion,
         }),
       });
@@ -188,7 +198,7 @@ export function PlanExerciseSwap({
   }
 
   async function previewRebalance() {
-    if (!selected || selected.isEquivalent) return;
+    if (!selected || selected.replacementType !== "REQUIRES_REBALANCE") return;
     setBusy(true);
     try {
       const response = await fetch(`/api/plans/exercises/${slotId}/swap`, {
@@ -197,6 +207,7 @@ export function PlanExerciseSwap({
         body: JSON.stringify({
           action: "preview-rebalance",
           desiredExerciseId: selected.exerciseId,
+          reasonCode,
         }),
       });
       setPreviewMode("semantic");
@@ -249,6 +260,12 @@ export function PlanExerciseSwap({
   }
 
   const total = candidates[0]?.totalCount ?? 0;
+  const equivalentCandidates = candidates.filter(
+    (candidate) => candidate.replacementType === "DIRECT_EQUIVALENT",
+  );
+  const otherCandidates = candidates.filter(
+    (candidate) => candidate.replacementType !== "DIRECT_EQUIVALENT",
+  );
   return (
     <Sheet
       open={open}
@@ -267,8 +284,28 @@ export function PlanExerciseSwap({
       {!completedChange && (
         <>
           <p className="text-sm leading-6 text-muted">
-            Estas opções mantêm a função deste exercício no seu treino.
+            Primeiro mostramos equivalentes diretos. Quando eles não existem,
+            oferecemos alternativas seguras para o seu objetivo ou uma prévia de
+            reorganização.
           </p>
+          <label className="mt-4 block text-sm font-medium">
+            Por que você quer trocar?
+            <select
+              className="mt-2 w-full rounded-xl border bg-background px-3 py-2"
+              value={reasonCode}
+              onChange={(event) => {
+                const value = event.target.value as typeof reasonCode;
+                setReasonCode(value);
+                void load(activeQuery, limit, value);
+              }}
+            >
+              <option value="user_choice">Quero outra opção</option>
+              <option value="exercise_dislike">
+                Não gosto deste exercício
+              </option>
+              <option value="other">Outro motivo</option>
+            </select>
+          </label>
           <form
             className="mt-5 flex gap-2"
             onSubmit={(event) => {
@@ -331,10 +368,12 @@ export function PlanExerciseSwap({
         <p className="py-10 text-center text-sm text-muted">Buscando opções…</p>
       ) : selected ? (
         <div className="mt-6">
-          {selected.isEquivalent ? (
+          {selected.replacementType !== "REQUIRES_REBALANCE" ? (
             <EquivalentConfirmation
               before={exerciseName}
               after={selected.exerciseName}
+              replacementType={selected.replacementType}
+              goalAlignmentReason={selected.goalAlignmentReason}
               persistExclusion={persistExclusion}
               busy={busy}
               onPersistExclusion={setPersistExclusion}
@@ -359,18 +398,25 @@ export function PlanExerciseSwap({
         </div>
       ) : (
         <div className="mt-6 space-y-3">
-          {candidates.map((candidate) => (
-            <CandidateCard
-              key={candidate.exerciseId}
-              candidate={candidate}
-              onSelect={() => setSelected(candidate)}
+          {equivalentCandidates.length > 0 && (
+            <CandidateSection
+              title="Equivalentes"
+              candidates={equivalentCandidates}
+              onSelect={setSelected}
             />
-          ))}
+          )}
+          {otherCandidates.length > 0 && (
+            <CandidateSection
+              title="Outras boas opções"
+              candidates={otherCandidates}
+              onSelect={setSelected}
+            />
+          )}
           {!candidates.length && (
             <div className="rounded-2xl border p-5 text-sm text-muted">
               {activeQuery
                 ? "Nenhum exercício compatível encontrado para esta busca."
-                : "Não há outra opção equivalente disponível com sua configuração atual."}
+                : "Ainda não encontramos uma alternativa segura com sua configuração atual."}
             </div>
           )}
           {!activeQuery && candidates.length < total && (
@@ -436,6 +482,31 @@ function RemainingExclusionNotice({
   );
 }
 
+function CandidateSection({
+  title,
+  candidates,
+  onSelect,
+}: {
+  title: string;
+  candidates: PlanReplacementCandidate[];
+  onSelect: (candidate: PlanReplacementCandidate) => void;
+}) {
+  return (
+    <section className="space-y-3" aria-label={title}>
+      <h3 className="pt-2 text-sm font-semibold uppercase tracking-wide text-muted">
+        {title}
+      </h3>
+      {candidates.map((candidate) => (
+        <CandidateCard
+          key={candidate.exerciseId}
+          candidate={candidate}
+          onSelect={() => onSelect(candidate)}
+        />
+      ))}
+    </section>
+  );
+}
+
 function CandidateCard({
   candidate,
   onSelect,
@@ -464,8 +535,20 @@ function CandidateCard({
           </span>
         </div>
         <p className="mt-3 text-sm text-muted">{candidate.reason}</p>
+        <p className="mt-1 text-xs text-muted">
+          {candidate.goalAlignmentReason}
+        </p>
+        <span className="mt-3 inline-flex rounded-full bg-accent/10 px-2 py-1 text-[11px] font-semibold text-accent">
+          {candidate.replacementType === "DIRECT_EQUIVALENT"
+            ? "Equivalente direto"
+            : candidate.replacementType === "GOAL_ALIGNED_ALTERNATIVE"
+              ? "Boa opção para seu objetivo"
+              : "Requer reorganização"}
+        </span>
         <Button type="button" className="mt-4 w-full" onClick={onSelect}>
-          {candidate.isEquivalent ? "Trocar" : "Quero este exercício"}
+          {candidate.replacementType === "DIRECT_EQUIVALENT"
+            ? "Trocar"
+            : "Quero este exercício"}
         </Button>
       </div>
     </article>
@@ -475,6 +558,8 @@ function CandidateCard({
 function EquivalentConfirmation({
   before,
   after,
+  replacementType,
+  goalAlignmentReason,
   persistExclusion,
   busy,
   onPersistExclusion,
@@ -483,6 +568,8 @@ function EquivalentConfirmation({
 }: {
   before: string;
   after: string;
+  replacementType: "DIRECT_EQUIVALENT" | "GOAL_ALIGNED_ALTERNATIVE";
+  goalAlignmentReason: string;
   persistExclusion: boolean;
   busy: boolean;
   onPersistExclusion: (value: boolean) => void;
@@ -493,12 +580,19 @@ function EquivalentConfirmation({
     <div className="rounded-2xl border p-5">
       <ShieldCheck className="text-success" aria-hidden />
       <h3 className="mt-3 text-lg font-semibold">
-        Confirmar troca equivalente?
+        {replacementType === "DIRECT_EQUIVALENT"
+          ? "Confirmar troca equivalente?"
+          : "Confirmar alternativa para seu objetivo?"}
       </h3>
       <p className="mt-2 text-sm leading-6 text-muted">
         Trocar <strong className="text-foreground">{before}</strong> por{" "}
         <strong className="text-foreground">{after}</strong>?
       </p>
+      {replacementType === "GOAL_ALIGNED_ALTERNATIVE" && (
+        <p className="mt-3 rounded-xl bg-accent/5 p-3 text-sm text-muted">
+          Esta não é uma equivalência direta. {goalAlignmentReason}
+        </p>
+      )}
       <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl bg-surface-alt p-3 text-sm">
         <input
           type="checkbox"

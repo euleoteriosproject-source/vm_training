@@ -46,7 +46,7 @@ export default async function TodayPage() {
       .gte("completed_at", since.toISOString()),
     supabase
       .from("workout_sessions")
-      .select("id,started_at,workout_day:workout_days(name)")
+      .select("id,started_at,workout_plan_id,workout_day:workout_days(name)")
       .eq("status", "in_progress")
       .order("started_at", { ascending: false })
       .limit(1)
@@ -70,6 +70,9 @@ export default async function TodayPage() {
     (a, b) => a.position - b.position,
   );
   const next = isDraft ? undefined : days[frequency % Math.max(days.length, 1)];
+  const staleInProgress = Boolean(
+    inProgress && plan?.status === "active" && inProgress.workout_plan_id !== plan.id,
+  );
   const currentMeasurement = measurements?.[0];
   const previousMeasurement = measurements?.[1];
   const bmi =
@@ -97,8 +100,22 @@ export default async function TodayPage() {
       </h1>
 
       {inProgress && (
-        <Card className="mt-8 border-accent/40 bg-accent/10 p-5">
-          <p className="text-sm font-medium text-accent">Treino em andamento</p>
+        <Card
+          className={
+            staleInProgress
+              ? "mt-8 border-warning/40 bg-warning/10 p-5"
+              : "mt-8 border-accent/40 bg-accent/10 p-5"
+          }
+        >
+          <p
+            className={
+              staleInProgress
+                ? "text-sm font-medium text-warning"
+                : "text-sm font-medium text-accent"
+            }
+          >
+            {staleInProgress ? "Treino de um plano anterior" : "Treino em andamento"}
+          </p>
           <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
             <div>
               <h2 className="text-xl font-semibold">
@@ -113,13 +130,20 @@ export default async function TodayPage() {
                 }).format(new Date(inProgress.started_at))}
               </p>
             </div>
-            <Link
-              href={`/workout-session/${inProgress.id}`}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-accent-foreground"
-            >
-              <Play size={17} fill="currentColor" />
-              Retomar treino
-            </Link>
+            {staleInProgress ? (
+              <p className="max-w-md text-sm text-muted">
+                Ao iniciar o treino de hoje, esta sessão antiga será cancelada
+                sem alterar seu histórico concluído.
+              </p>
+            ) : (
+              <Link
+                href={`/workout-session/${inProgress.id}`}
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-accent-foreground"
+              >
+                <Play size={17} fill="currentColor" />
+                Retomar treino
+              </Link>
+            )}
           </div>
         </Card>
       )}
@@ -134,7 +158,11 @@ export default async function TodayPage() {
             {next.estimated_minutes} min ·{" "}
             {next.workout_day_exercises?.length ?? 0} exercícios
           </p>
-          <StartButton dayId={next.id} className="mt-8 w-full sm:w-auto" />
+          <StartButton
+            dayId={next.id}
+            className="mt-8 w-full sm:w-auto"
+            discardSessionId={staleInProgress ? inProgress?.id : undefined}
+          />
         </Card>
       ) : isDraft ? (
         <Card className="mt-8 p-7">

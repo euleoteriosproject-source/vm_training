@@ -17,12 +17,13 @@ const candidate = {
   mediaUrl: null,
   posterUrl: null,
   mediaType: "gif",
-  isEquivalent: true,
+  replacementType: "DIRECT_EQUIVALENT",
   reason: "Mesmo padrão de empurrar horizontal",
+  goalAlignmentReason: "Mantém o foco de força e os critérios semanais",
   totalCount: 1,
 };
 
-test.describe("in-plan semantic swap v2.1.2", () => {
+test.describe("goal-aligned plan swap v2.1.4", () => {
   test.skip(!configured, "Requires the generated local workout");
 
   test("opens per-card ranking and routes a different function to rebalance", async ({
@@ -38,7 +39,7 @@ test.describe("in-plan semantic swap v2.1.2", () => {
             search
               ? {
                   ...candidate,
-                  isEquivalent: false,
+                  replacementType: "REQUIRES_REBALANCE",
                   reason: "Função diferente no treino",
                 }
               : candidate,
@@ -79,6 +80,44 @@ test.describe("in-plan semantic swap v2.1.2", () => {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
+  });
+
+  test("shows a goal-aligned fallback separately from equivalents", async ({
+    page,
+  }) => {
+    await page.route("**/api/plans/exercises/*/swap?*", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          candidates: [
+            {
+              ...candidate,
+              exerciseName: "Flexão com apoio",
+              replacementType: "GOAL_ALIGNED_ALTERNATIVE",
+              reason:
+                "Alternativa segura que mantém a qualidade do plano completo",
+            },
+          ],
+        }),
+      });
+    });
+    await page.goto("/login");
+    await page.getByLabel("E-mail").fill(process.env.E2E_TEST_EMAIL!);
+    await page.getByLabel("Senha").fill(process.env.E2E_TEST_PASSWORD!);
+    await page.getByRole("button", { name: "Entrar" }).click();
+    await page.waitForURL(/today|onboarding/, { timeout: 30_000 });
+    await page.goto("/workouts");
+    await page
+      .getByRole("link", { name: /Treino GIF-first/ })
+      .first()
+      .click();
+    await page.getByRole("button", { name: "Trocar" }).first().click();
+    await expect(page.getByText("Outras boas opções")).toBeVisible();
+    await expect(page.getByText("Boa opção para seu objetivo")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Equivalentes", exact: true }),
+    ).toHaveCount(0);
   });
 
   test("persistent exclusion succeeds and offers non-blocking remaining-day reorganization", async ({

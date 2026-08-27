@@ -126,8 +126,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  56,
-  'canonical function ACL has exactly 56 grants after v2.1.3 exclusion RPCs'
+  70,
+  'canonical function ACL has exactly 70 grants after v2.1.4 replacement RPCs'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

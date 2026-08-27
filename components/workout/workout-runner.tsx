@@ -28,6 +28,7 @@ import {
   pendingMutations,
   removeMutation,
 } from "@/lib/offline/queue";
+import type { SessionReplacementCandidate } from "@/lib/workout/session-swap";
 
 type SetRow = {
   id: string;
@@ -318,9 +319,10 @@ export function WorkoutRunner({
                         detail: {
                           ...exercise.detail,
                           name: replacement.exerciseName,
-                          mediaUrl: null,
-                          posterUrl: null,
-                          mediaType: null,
+                          primaryMuscles: replacement.primaryMuscles,
+                          mediaUrl: replacement.mediaUrl,
+                          posterUrl: replacement.posterUrl,
+                          mediaType: replacement.mediaType,
                           mediaSource: null,
                         },
                       }
@@ -447,10 +449,7 @@ function ExerciseCard({
   onSet: (setId: string, patch: Partial<SetRow>) => void;
   onSkip: () => void;
   onCardioComplete: () => void;
-  onSubstituted: (replacement: {
-    exerciseId: string;
-    exerciseName: string;
-  }) => void;
+  onSubstituted: (replacement: SessionReplacementCandidate) => void;
   onSubstitutionUndone: (previous: {
     exerciseId: string;
     detail: ExerciseDetail;
@@ -777,94 +776,229 @@ function SubstitutionActions({
 }: {
   item: RunnerExercise;
   onDone: () => void;
-  onSubstituted: (replacement: {
-    exerciseId: string;
-    exerciseName: string;
-  }) => void;
+  onSubstituted: (replacement: SessionReplacementCandidate) => void;
   onSubstitutionUndone: (previous: {
     exerciseId: string;
     detail: ExerciseDetail;
   }) => void;
 }) {
   const [loading, setLoading] = useState(false);
-  const [excluded, setExcluded] = useState<string[]>([]);
-  async function substitute(
-    reason:
-      "equipment_unavailable" | "temporarily_unavailable" | "user_requested",
-  ) {
+  const [reason, setReason] = useState<
+    | "occupied_today"
+    | "equipment_missing"
+    | "exercise_dislike"
+    | "user_choice"
+    | "other"
+  >("user_choice");
+  const [candidates, setCandidates] = useState<SessionReplacementCandidate[]>(
+    [],
+  );
+  const [selected, setSelected] = useState<SessionReplacementCandidate | null>(
+    null,
+  );
+  const [persistChange, setPersistChange] = useState(false);
+  const [candidatesLoaded, setCandidatesLoaded] = useState(false);
+
+  async function loadCandidates(nextReason = reason) {
     setLoading(true);
-    const { data, error } = await createClient().rpc(
-      "substitute_workout_exercise",
-      {
-        p_session_exercise_id: item.id,
-        p_reason: reason,
-        p_equipment_id:
-          reason === "equipment_unavailable"
-            ? (item.requiredEquipmentIds[0] ?? null)
-            : null,
-        p_exclude_exercise_ids: excluded,
-      },
-    );
-    setLoading(false);
-    if (error) {
-      toast.error(substitutionErrorMessage(error.message));
-      return;
+    setCandidatesLoaded(false);
+    setSelected(null);
+    const params = new URLSearchParams({ reason: nextReason });
+    if (nextReason === "equipment_missing" && item.requiredEquipmentIds[0])
+      params.set("equipmentId", item.requiredEquipmentIds[0]);
+    try {
+      const response = await fetch(
+        `/api/workouts/session-exercises/${item.id}/swap?${params}`,
+        { cache: "no-store" },
+      );
+      const body = (await response.json()) as {
+        candidates?: SessionReplacementCandidate[];
+        error?: string;
+      };
+      if (!response.ok) throw new Error(body.error);
+      setCandidates(body.candidates ?? []);
+      setCandidatesLoaded(true);
+    } catch (error) {
+      toast.error(
+        substitutionErrorMessage(
+          error instanceof Error ? error.message : "Falha ao buscar opções",
+        ),
+      );
+    } finally {
+      setLoading(false);
     }
-    const result = data as {
-      eventId: string;
-      exerciseId: string;
-      exerciseName: string;
-    };
-    setExcluded((current) => [...current, result.exerciseId]);
-    onSubstituted(result);
-    toast.success(`Substituímos por ${result.exerciseName}`, {
-      action: {
-        label: "Desfazer",
-        onClick: async () => {
-          const { error: undoError } = await createClient().rpc(
-            "undo_workout_substitution",
-            { p_event_id: result.eventId },
-          );
-          if (undoError)
-            toast.error(
-              "Não foi possível desfazer agora. Seu treino continua salvo.",
-            );
-          else {
-            toast.success("Substituição desfeita");
-            onSubstitutionUndone({
-              exerciseId: item.actualExerciseId,
-              detail: item.detail,
-            });
-          }
+  }
+
+  async function substitute(candidate: SessionReplacementCandidate) {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `/api/workouts/session-exercises/${item.id}/swap`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            action: "replace",
+            replacementExerciseId: candidate.exerciseId,
+            replacementType: candidate.replacementType,
+            reasonCode: reason,
+            equipmentId:
+              reason === "equipment_missing"
+                ? (item.requiredEquipmentIds[0] ?? null)
+                : null,
+            persistChange,
+          }),
         },
-      },
-      duration: 8000,
-    });
-    onDone();
+      );
+      const result = (await response.json()) as {
+        eventId?: string;
+        error?: string;
+      };
+      if (!response.ok || !result.eventId) throw new Error(result.error);
+      onSubstituted(candidate);
+      toast.success(`Substituímos por ${candidate.exerciseName}`, {
+        action: {
+          label: "Desfazer",
+          onClick: async () => {
+            const undo = await fetch(
+              `/api/workouts/session-exercises/${item.id}/swap`,
+              {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  action: "undo",
+                  eventId: result.eventId,
+                }),
+              },
+            );
+            if (!undo.ok)
+              toast.error(
+                "Não foi possível desfazer agora. Seu treino continua salvo.",
+              );
+            else {
+              toast.success("Substituição desfeita");
+              onSubstitutionUndone({
+                exerciseId: item.actualExerciseId,
+                detail: item.detail,
+              });
+            }
+          },
+        },
+        duration: 8000,
+      });
+      onDone();
+    } catch (error) {
+      toast.error(
+        substitutionErrorMessage(
+          error instanceof Error ? error.message : "Falha na troca",
+        ),
+      );
+    } finally {
+      setLoading(false);
+    }
   }
   return (
     <div className="mt-5 grid gap-2">
-      <Button
-        variant="secondary"
-        disabled={loading || !item.requiredEquipmentIds.length}
-        onClick={() => substitute("equipment_unavailable")}
-      >
-        Minha academia não tem
-      </Button>
-      <Button
-        variant="secondary"
-        disabled={loading}
-        onClick={() => substitute("temporarily_unavailable")}
-      >
-        Está ocupado agora
-      </Button>
-      <Button
-        variant="secondary"
-        disabled={loading}
-        onClick={() => substitute("user_requested")}
-      >
-        {excluded.length ? "Ver outra opção" : "Não quero fazer este exercício"}
-      </Button>
+      <label className="text-sm font-medium">
+        Motivo
+        <select
+          className="mt-2 w-full rounded-xl border bg-background px-3 py-2"
+          value={reason}
+          onChange={(event) => {
+            const nextReason = event.target.value as typeof reason;
+            setReason(nextReason);
+            setCandidates([]);
+            setCandidatesLoaded(false);
+            setPersistChange(false);
+          }}
+        >
+          <option value="user_choice">Quero outra opção</option>
+          <option value="occupied_today">Está ocupado agora</option>
+          <option
+            value="equipment_missing"
+            disabled={!item.requiredEquipmentIds.length}
+          >
+            Minha academia não tem
+          </option>
+          <option value="exercise_dislike">Não gosto deste exercício</option>
+          <option value="other">Outro motivo</option>
+        </select>
+      </label>
+      {!candidatesLoaded && !selected && (
+        <Button
+          variant="secondary"
+          disabled={loading}
+          onClick={() => void loadCandidates()}
+        >
+          {loading ? "Buscando…" : "Ver alternativas"}
+        </Button>
+      )}
+      {candidatesLoaded && !candidates.length && (
+        <p className="rounded-xl border p-3 text-sm text-muted">
+          Não encontramos uma alternativa segura para esta sessão agora. Seu
+          plano não foi alterado.
+        </p>
+      )}
+      {candidates.map((candidate) => (
+        <button
+          type="button"
+          key={candidate.exerciseId}
+          className="grid overflow-hidden rounded-xl border text-left sm:grid-cols-[96px_1fr]"
+          onClick={() => setSelected(candidate)}
+        >
+          <ViewportVideo
+            src={candidate.mediaUrl}
+            poster={candidate.posterUrl}
+            mediaType={candidate.mediaType}
+            className="aspect-video w-full sm:h-full"
+          />
+          <span className="p-3">
+            <span className="font-semibold">{candidate.exerciseName}</span>
+            <span className="mt-1 block text-xs text-muted">
+              {candidate.reason}
+            </span>
+            <span className="mt-2 inline-flex rounded-full bg-accent/10 px-2 py-1 text-[11px] font-semibold text-accent">
+              {candidate.replacementType === "DIRECT_EQUIVALENT"
+                ? "Equivalente direto"
+                : "Boa opção para seu objetivo"}
+            </span>
+          </span>
+        </button>
+      ))}
+      {selected && (
+        <div className="rounded-xl border border-accent/30 p-3">
+          <p className="font-semibold">{selected.exerciseName}</p>
+          <p className="mt-1 text-xs text-muted">
+            {selected.goalAlignmentReason}
+          </p>
+          {(reason === "exercise_dislike" ||
+            reason === "equipment_missing") && (
+            <label className="mt-3 flex items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={persistChange}
+                onChange={(event) => setPersistChange(event.target.checked)}
+              />
+              <span>
+                {reason === "exercise_dislike"
+                  ? "Evitar este exercício nos próximos planos"
+                  : "Este equipamento não existe na minha academia"}
+              </span>
+            </label>
+          )}
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <Button variant="secondary" onClick={() => setSelected(null)}>
+              Voltar
+            </Button>
+            <Button
+              disabled={loading}
+              onClick={() => void substitute(selected)}
+            >
+              {loading ? "Trocando…" : "Usar alternativa agora"}
+            </Button>
+          </div>
+        </div>
+      )}
       {loading && (
         <p className="text-center text-sm text-muted">
           Buscando uma alternativa compatível…

@@ -1,7 +1,7 @@
 begin;
 grant usage on schema extensions to anon, authenticated, service_role;
 set local search_path = public, extensions;
-select plan(60);
+select plan(93);
 
 select is((select count(*)::integer from public.exercises where training_role is null), 0,
   'every exercise has a programming training role');
@@ -85,6 +85,9 @@ insert into public.exercises(
     array['Execute com controle.'], false),
   ('v212-push-up', 'Flexão de braços V212', 'strength',
     'horizontal_push', array['peitoral'], array['triceps'], 'beginner',
+    array['Execute com controle.'], false),
+  ('v212-goal-press', 'Press objetivo V214', 'strength',
+    'vertical_push', array['peitoral'], array['triceps'], 'beginner',
     array['Execute com controle.'], false),
   ('v212-back-extension', 'Extensão lombar', 'strength',
     'posture', array['lombar'], array['gluteos'], 'beginner',
@@ -171,6 +174,57 @@ from (values
 join public.exercises exercise on exercise.slug = fixture.slug;
 update public.workout_plans set status = 'active', activated_at = now()
 where id = 'e2000000-0000-4000-8000-000000000002';
+
+select ok(
+  has_function_privilege('authenticated',
+    'public.get_plan_replacement_candidates_v214(uuid,text,integer,integer,text)', 'execute')
+  and has_function_privilege('authenticated',
+    'public.replace_plan_exercise_v214(uuid,uuid,text,text,boolean)', 'execute')
+  and has_function_privilege('authenticated',
+    'public.preview_plan_rebalance_v214(uuid,uuid,text)', 'execute')
+  and has_function_privilege('authenticated',
+    'public.activate_plan_rebalance_v214(uuid)', 'execute'),
+  'authenticated can execute the ownership-checked v2.1.4 plan API');
+select ok(
+  not has_function_privilege('anon',
+    'public.get_plan_replacement_candidates_v214(uuid,text,integer,integer,text)', 'execute')
+  and not has_function_privilege('anon',
+    'public.replace_plan_exercise_v214(uuid,uuid,text,text,boolean)', 'execute'),
+  'anonymous callers cannot use the v2.1.4 plan API');
+select is(private.plan_replacement_type_v214(
+  'e4000000-0000-4000-8000-000000000001',
+  (select id from public.exercises where slug = 'v212-bench-press'),
+  'e1000000-0000-4000-8000-000000000001'
+), 'DIRECT_EQUIVALENT', 'strict semantic match is classified as direct equivalent');
+select is(private.plan_replacement_type_v214(
+  'e4000000-0000-4000-8000-000000000001',
+  (select id from public.exercises where slug = 'v212-goal-press'),
+  'e1000000-0000-4000-8000-000000000001'
+), 'GOAL_ALIGNED_ALTERNATIVE',
+  'safe whole-plan simulation classifies a non-equivalent goal fallback');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select is((select count(*)::integer
+  from public.get_plan_replacement_candidates_v214(
+    'e4000000-0000-4000-8000-000000000001', null, 30, 0, 'user_choice'
+  ) where exercise_name = 'Supino com barra'
+    and replacement_type = 'DIRECT_EQUIVALENT'), 1,
+  'v2.1.4 candidates expose direct equivalents as direct equivalents');
+select is((select count(*)::integer
+  from public.get_plan_replacement_candidates_v214(
+    'e4000000-0000-4000-8000-000000000001', null, 30, 0, 'user_choice'
+  ) where exercise_name = 'Press objetivo V214'
+    and replacement_type = 'GOAL_ALIGNED_ALTERNATIVE'), 1,
+  'v2.1.4 candidates expose a safe fallback without calling it equivalent');
+select ok((select goal_alignment_reason <> ''
+  from public.get_plan_replacement_candidates_v214(
+    'e4000000-0000-4000-8000-000000000001', 'Press objetivo V214', 5, 0,
+    'user_choice'
+  ) where exercise_name = 'Press objetivo V214'),
+  'goal-aligned candidate explains why it preserves the selected goal');
+reset role;
 
 insert into public.workout_sessions(
   id, user_id, workout_day_id, workout_plan_id, status, completed_at
@@ -448,6 +502,176 @@ select ok((select undone_at is not null from public.plan_exercise_change_events
 select is((select count(*)::integer from public.workout_plans
   where user_id = 'e1000000-0000-4000-8000-000000000001' and status = 'active'),
   1, 'v2.1.3 undo leaves exactly one active plan');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select set_config('v214.direct',
+  public.replace_plan_exercise_v214(
+    'e4000000-0000-4000-8000-000000000001',
+    (select id from public.exercises where slug = 'v212-bench-press'),
+    'DIRECT_EQUIVALENT', 'exercise_dislike', false
+  )::text, true)$$, 'v2.1.4 direct equivalent activates atomically');
+reset role;
+select is((select replacement_type from public.plan_exercise_change_events
+  where id = (current_setting('v214.direct')::jsonb->>'eventId')::uuid),
+  'DIRECT_EQUIVALENT', 'direct event records its backend classification');
+select is((select reason_code from public.plan_exercise_change_events
+  where id = (current_setting('v214.direct')::jsonb->>'eventId')::uuid),
+  'exercise_dislike', 'direct event records the canonical reason');
+select is((select generator_version from public.workout_plans
+  where id = (current_setting('v214.direct')::jsonb->>'planId')::uuid),
+  'v2.1.4', 'direct result is versioned as v2.1.4');
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_plan_exercise_change_v212(
+  (current_setting('v214.direct')::jsonb->>'eventId')::uuid
+)$$, 'existing exact undo restores a v2.1.4 direct change');
+select lives_ok($$select set_config('v214.goal',
+  public.replace_plan_exercise_v214(
+    'e4000000-0000-4000-8000-000000000001',
+    (select id from public.exercises where slug = 'v212-goal-press'),
+    'GOAL_ALIGNED_ALTERNATIVE', 'user_choice', false
+  )::text, true)$$, 'goal-aligned fallback activates only after server validation');
+reset role;
+select is((select replacement_type from public.plan_exercise_change_events
+  where id = (current_setting('v214.goal')::jsonb->>'eventId')::uuid),
+  'GOAL_ALIGNED_ALTERNATIVE', 'goal fallback event is not mislabeled equivalent');
+select is((current_setting('v214.goal')::jsonb#>>'{quality,mediaCoveragePercent}')::numeric,
+  100::numeric, 'goal-aligned fallback retains complete media coverage');
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_plan_exercise_change_v212(
+  (current_setting('v214.goal')::jsonb->>'eventId')::uuid
+)$$, 'goal-aligned fallback supports exact undo');
+reset role;
+
+insert into public.workout_sessions(
+  id, user_id, workout_day_id, workout_plan_id, status
+) values (
+  'e5000000-0000-4000-8000-000000000214',
+  'e1000000-0000-4000-8000-000000000001',
+  'e3000000-0000-4000-8000-000000000003',
+  'e2000000-0000-4000-8000-000000000002', 'in_progress'
+);
+insert into public.workout_session_exercises(
+  id, workout_session_id, planned_exercise_id, actual_exercise_id, position
+) select 'e6000000-0000-4000-8000-000000000214',
+  'e5000000-0000-4000-8000-000000000214', exercise.id, exercise.id, 1
+from public.exercises exercise where exercise.slug = 'v212-floor-press';
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select is((select count(*)::integer
+  from public.get_workout_replacement_candidates_v214(
+    'e6000000-0000-4000-8000-000000000214', 'user_choice', null, null, 30, 0
+  ) where exercise_name = 'Supino com barra'
+    and replacement_type = 'DIRECT_EQUIVALENT'), 1,
+  'session-only candidates include the direct equivalent');
+select is((select count(*)::integer
+  from public.get_workout_replacement_candidates_v214(
+    'e6000000-0000-4000-8000-000000000214', 'user_choice', null, null, 30, 0
+  ) where replacement_type = 'REQUIRES_REBALANCE'), 0,
+  'session-only candidates never offer silent weekly rebalance');
+select lives_ok($$select set_config('v214.session',
+  public.substitute_workout_exercise_v214(
+    'e6000000-0000-4000-8000-000000000214',
+    (select id from public.exercises where slug = 'v212-bench-press'),
+    'DIRECT_EQUIVALENT', 'exercise_dislike', null, true
+  )::text, true)$$, 'selected session-only substitution is atomic');
+reset role;
+select is((select scope from public.workout_substitution_events
+  where id = (current_setting('v214.session')::jsonb->>'eventId')::uuid),
+  'session', 'session event records session scope');
+select is((select reason_code from public.workout_substitution_events
+  where id = (current_setting('v214.session')::jsonb->>'eventId')::uuid),
+  'exercise_dislike', 'session event records the canonical reason');
+select is((select actual_exercise_id from public.workout_session_exercises
+  where id = 'e6000000-0000-4000-8000-000000000214'),
+  (select id from public.exercises where slug = 'v212-bench-press'),
+  'session actual exercise changes to the selected candidate');
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select lives_ok($$select public.undo_workout_substitution_v214(
+  (current_setting('v214.session')::jsonb->>'eventId')::uuid
+)$$, 'session substitution undo restores preference and exercise atomically');
+reset role;
+select is((select actual_exercise_id from public.workout_session_exercises
+  where id = 'e6000000-0000-4000-8000-000000000214'),
+  (select id from public.exercises where slug = 'v212-floor-press'),
+  'session undo restores the prior actual exercise');
+
+set local role authenticated;
+select set_config('request.jwt.claims',
+  '{"sub":"e1000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+insert into public.workout_plans(
+  id, user_id, name, status, sessions_per_week, target_session_minutes
+) values (
+  'e7000000-0000-4000-8000-000000000214',
+  'e1000000-0000-4000-8000-000000000001',
+  'Latest V214 plan', 'draft', 2, 45
+);
+insert into public.workout_days(
+  id, workout_plan_id, name, position, estimated_minutes
+) values (
+  'e7100000-0000-4000-8000-000000000214',
+  'e7000000-0000-4000-8000-000000000214', 'Latest day', 1, 45
+);
+insert into public.workout_day_exercises(
+  id, workout_day_id, exercise_id, position, target_sets, rep_min, rep_max,
+  rest_seconds
+) select
+  'e7200000-0000-4000-8000-000000000214',
+  'e7100000-0000-4000-8000-000000000214', exercise.id, 1, 3, 8, 12, 60
+from public.exercises exercise where exercise.slug = 'v212-floor-press';
+update public.workout_plans
+set status = 'archived', archived_at = now()
+where id = 'e2000000-0000-4000-8000-000000000002';
+update public.workout_plans
+set status = 'active', activated_at = now(), archived_at = null
+where id = 'e7000000-0000-4000-8000-000000000214';
+select lives_ok($$select set_config('v214.latest_session',
+  public.start_workout('e7100000-0000-4000-8000-000000000214')::text, true)$$,
+  'starting the latest plan safely resolves an archived-plan session');
+select is((select status from public.workout_sessions
+  where id = 'e5000000-0000-4000-8000-000000000214'), 'cancelled',
+  'archived-plan in-progress session is cancelled instead of resumed');
+select ok((select completed_at is null
+    and cancellation_reason =
+      'Sessão antiga descartada após ativação de novo plano'
+  from public.workout_sessions
+  where id = 'e5000000-0000-4000-8000-000000000214'),
+  'stale cancellation is not misclassified as completion');
+select is((select count(*)::integer from public.workout_session_exercises
+  where workout_session_id = 'e5000000-0000-4000-8000-000000000214'), 1,
+  'stale session exercise snapshot remains intact');
+select ok((select workout_plan_id = 'e7000000-0000-4000-8000-000000000214'
+    and workout_day_id = 'e7100000-0000-4000-8000-000000000214'
+    and status = 'in_progress'
+  from public.workout_sessions
+  where id = current_setting('v214.latest_session')::uuid),
+  'new session belongs to the current active plan and selected day');
+select is((select actual_exercise_id
+  from public.workout_session_exercises
+  where workout_session_id = current_setting('v214.latest_session')::uuid),
+  (select exercise_id from public.workout_day_exercises
+   where id = 'e7200000-0000-4000-8000-000000000214'),
+  'new session snapshots the latest plan exercise');
+select is(public.start_workout('e7100000-0000-4000-8000-000000000214'),
+  current_setting('v214.latest_session')::uuid,
+  'a current-plan session still resumes normally');
+reset role;
+select is((select count(*)::integer from public.workout_sessions
+  where user_id = 'e1000000-0000-4000-8000-000000000001'
+    and status = 'in_progress'), 1,
+  'stale recovery leaves exactly one current active session');
+select is((select status from public.workout_sessions
+  where id = 'e5000000-0000-4000-8000-000000000005'), 'completed',
+  'completed workout history remains unchanged');
 
 select * from finish();
 rollback;

@@ -29,3 +29,8 @@ export async function removeMutation(key: string) {
   const db = await database();
   await db.delete("mutations", key);
 }
+
+export async function clearPendingMutations() {
+  const db = await database();
+  await db.clear("mutations");
+}

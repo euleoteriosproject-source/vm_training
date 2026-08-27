@@ -21,7 +21,8 @@ export default async function WorkoutsPage({
   const { view } = await searchParams;
   const selected = view === "history" ? "history" : "plan";
   const supabase = await createClient();
-  const [{ data: plans }, { data: sessions }] = await Promise.all([
+  const [{ data: plans }, { data: sessions }, { data: inProgress }] =
+    await Promise.all([
     supabase
       .from("workout_plans")
       .select(
@@ -37,12 +38,22 @@ export default async function WorkoutsPage({
       .eq("status", "completed")
       .order("completed_at", { ascending: false })
       .limit(50),
+    supabase
+      .from("workout_sessions")
+      .select("id,workout_plan_id")
+      .eq("status", "in_progress")
+      .order("started_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
   const plan =
     plans?.find((item) => item.status === "active") ??
     plans?.find((item) => item.status === "draft") ??
     null;
   const isDraft = plan?.status === "draft";
+  const staleInProgress = Boolean(
+    inProgress && plan?.status === "active" && inProgress.workout_plan_id !== plan.id,
+  );
   const days = (plan?.workout_days ?? []).sort(
     (a, b) => a.position - b.position,
   );
@@ -108,7 +119,13 @@ export default async function WorkoutsPage({
                     Rascunho disponível para consulta
                   </p>
                 ) : (
-                  <StartButton dayId={day.id} className="mt-6 w-full" />
+                  <StartButton
+                    dayId={day.id}
+                    className="mt-6 w-full"
+                    discardSessionId={
+                      staleInProgress ? inProgress?.id : undefined
+                    }
+                  />
                 )}
               </Card>
             ))}

@@ -4,15 +4,18 @@ import { useRouter } from "next/navigation";
 import { Play } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { clearPendingMutations } from "@/lib/offline/queue";
 import { createClient } from "@/lib/supabase/client";
 export function StartButton({
   dayId,
   className,
   label = "Iniciar treino",
+  discardSessionId,
 }: {
   dayId: string;
   className?: string;
   label?: string;
+  discardSessionId?: string;
 }) {
   const [busy, setBusy] = useState(false);
   const router = useRouter();
@@ -25,6 +28,11 @@ export function StartButton({
       toast.error(error.message);
       setBusy(false);
       return;
+    }
+    if (discardSessionId) {
+      localStorage.removeItem(`rest:${discardSessionId}`);
+      await clearPendingMutations();
+      toast.info("Treino antigo descartado. Iniciando o plano atual.");
     }
     router.push(`/workout-session/${data}`);
   }

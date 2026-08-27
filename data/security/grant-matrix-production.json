@@ -1,261 +1,9 @@
 {
-  "version": "1.6.1-R2",
+  "version": "1.6.1-R3",
   "target": "production",
   "projectRef": "inghftngeritrsezwxnm",
   "matrix": {
     "defaultPrivileges": [
-      {
-        "objectType": "FUNCTIONS",
-        "owner": "postgres",
-        "privilege": "EXECUTE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "FUNCTIONS",
-        "owner": "postgres",
-        "privilege": "EXECUTE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "FUNCTIONS",
-        "owner": "postgres",
-        "privilege": "EXECUTE",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "USAGE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "USAGE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "SEQUENCES",
-        "owner": "postgres",
-        "privilege": "USAGE",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "DELETE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "INSERT",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "MAINTAIN",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "REFERENCES",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRIGGER",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRUNCATE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "DELETE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "INSERT",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "MAINTAIN",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "REFERENCES",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRIGGER",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRUNCATE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "DELETE",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "INSERT",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "MAINTAIN",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "REFERENCES",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "SELECT",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRIGGER",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "TRUNCATE",
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "objectType": "TABLES",
-        "owner": "postgres",
-        "privilege": "UPDATE",
-        "role": "service_role",
-        "schema": "public"
-      },
       {
         "objectType": "FUNCTIONS",
         "owner": "supabase_admin",
@@ -511,10 +259,170 @@
     ],
     "functionInventory": [
       {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_rebalance_v212_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_rebalance_v214_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_remaining_exclusions_v213_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "assert_plan_quality_v212",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid, p_retained_avoid_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "assert_plan_quality_v213",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "assign_exercise_training_role_v212",
+        "resultType": "trigger",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "calculate_goal_alignment_v211",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "calculate_plan_quality",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid, p_retained_avoid_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "calculate_plan_quality_v213",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_source_plan_id uuid, p_user_id uuid, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "clone_plan_v212",
+        "resultType": "uuid",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_user_id uuid, p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_and_activate_plan_v21",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_user_id uuid, p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_plan_preview_v211",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "delete_current_auth_user",
+        "resultType": "void",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_exercise_id uuid, p_user_id uuid",
+        "language": "sql",
+        "object": "exercise_auto_plan_eligible",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_exercise_id uuid, p_user_id uuid",
+        "language": "sql",
+        "object": "exercise_auto_plan_reasons",
+        "resultType": "text[]",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "exercise_media_is_ready",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_source_exercise_id uuid, p_candidate_exercise_id uuid",
+        "language": "sql",
+        "object": "exercises_are_semantically_equivalent_v212",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
         "identityArguments": "",
         "language": "sql",
         "object": "is_admin",
         "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "value jsonb",
+        "language": "sql",
+        "object": "is_valid_automated_media_validation",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "normalize_plan_change_event_v214",
+        "resultType": "trigger",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "normalize_session_change_event_v214",
+        "resultType": "trigger",
         "schema": "private",
         "securityDefiner": true
       },
@@ -551,10 +459,186 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "plpgsql",
+        "object": "plan_replacement_candidates_v212",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, is_equivalent boolean, reason text, total_count bigint)",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer, p_reason_code text",
+        "language": "plpgsql",
+        "object": "plan_replacement_candidates_v214",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_candidate_exercise_id uuid, p_user_id uuid",
+        "language": "plpgsql",
+        "object": "plan_replacement_type_v214",
+        "resultType": "text",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "preview_plan_rebalance_v212_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid, p_reason_code text",
+        "language": "plpgsql",
+        "object": "preview_plan_rebalance_v214_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "preview_remaining_exclusions_v213_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_media_id uuid, p_review_agent text, p_validation_version text",
+        "language": "plpgsql",
+        "object": "publish_validated_exercise_media_automated",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_persist_exclusion boolean",
+        "language": "plpgsql",
+        "object": "replace_plan_exercise_v212_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_persist_exclusion boolean",
+        "language": "plpgsql",
+        "object": "replace_plan_exercise_v214_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_candidate_exercise_id uuid, p_user_id uuid",
+        "language": "sql",
+        "object": "simulate_plan_replacement_v214",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason text, p_equipment_id uuid, p_exclude_exercise_ids uuid[]",
+        "language": "plpgsql",
+        "object": "substitute_workout_exercise_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_equipment_id uuid, p_persist_change boolean",
+        "language": "plpgsql",
+        "object": "substitute_workout_exercise_v214_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_plan_exercise_change_v212_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_workout_substitution_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_workout_substitution_v214_internal",
+        "resultType": "jsonb",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_user_id uuid, p_equipment_id uuid",
+        "language": "sql",
+        "object": "user_equipment_is_available",
+        "resultType": "boolean",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason_code text, p_equipment_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "plpgsql",
+        "object": "workout_replacement_candidates_v214",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], equipment_names text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
         "identityArguments": "p_plan_id uuid",
         "language": "plpgsql",
         "object": "activate_plan",
         "resultType": "void",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_plan_rebalance_v212",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_plan_rebalance_v214",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_v211",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_remaining_exclusions_v213",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_id uuid, p_reason text",
+        "language": "plpgsql",
+        "object": "cancel_workout",
+        "resultType": "jsonb",
         "schema": "public",
         "securityDefiner": false
       },
@@ -565,6 +649,22 @@
         "resultType": "void",
         "schema": "public",
         "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_and_activate_plan_v21",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_plan_preview_v211",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
       },
       {
         "identityArguments": "",
@@ -599,20 +699,44 @@
         "securityDefiner": false
       },
       {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "enforce_session_exercise_media_ready",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "p_exercise_id uuid",
         "language": "sql",
         "object": "exercise_has_approved_primary",
         "resultType": "boolean",
         "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_id uuid, p_notes text, p_confirm_partial boolean",
+        "language": "plpgsql",
+        "object": "finish_workout",
+        "resultType": "jsonb",
+        "schema": "public",
         "securityDefiner": false
       },
       {
-        "identityArguments": "p_session_id uuid, p_notes text",
+        "identityArguments": "",
         "language": "plpgsql",
-        "object": "finish_workout",
-        "resultType": "void",
+        "object": "get_auto_plan_catalog",
+        "resultType": "TABLE(id uuid, name text, pattern text, category text, difficulty text, active boolean, media_ready boolean, auto_plan_eligible boolean, required_equipment text[], eligibility_reasons text[])",
         "schema": "public",
-        "securityDefiner": false
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_auto_plan_catalog_v211",
+        "resultType": "TABLE(id uuid, name text, pattern text, category text, difficulty text, active boolean, media_ready boolean, auto_plan_eligible boolean, required_equipment text[], required_capabilities text[], eligibility_reasons text[])",
+        "schema": "public",
+        "securityDefiner": true
       },
       {
         "identityArguments": "p_exercise_id uuid",
@@ -624,9 +748,57 @@
       },
       {
         "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "get_plan_quality",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
         "language": "sql",
         "object": "get_plan_readiness",
         "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "sql",
+        "object": "get_plan_replacement_candidates_v212",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, is_equivalent boolean, reason text, total_count bigint)",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer, p_reason_code text",
+        "language": "sql",
+        "object": "get_plan_replacement_candidates_v214",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_v20_plan_reconciliation_input",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_v21_plan_reconciliation_input",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason_code text, p_equipment_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "sql",
+        "object": "get_workout_replacement_candidates_v214",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], equipment_names text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
         "schema": "public",
         "securityDefiner": false
       },
@@ -647,6 +819,22 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "is_auto_plan_eligible",
+        "resultType": "boolean",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "media exercise_media",
+        "language": "sql",
+        "object": "is_valid_animated_primary",
+        "resultType": "boolean",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "value jsonb",
         "language": "sql",
         "object": "is_valid_primary_checklist",
@@ -657,8 +845,40 @@
       {
         "identityArguments": "",
         "language": "plpgsql",
+        "object": "prevent_active_plan_structure_mutation_v212",
+        "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
         "object": "prevent_primary_media_regression",
         "resultType": "trigger",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid",
+        "language": "sql",
+        "object": "preview_plan_rebalance_v212",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid, p_reason_code text",
+        "language": "sql",
+        "object": "preview_plan_rebalance_v214",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "preview_remaining_exclusions_v213",
+        "resultType": "jsonb",
         "schema": "public",
         "securityDefiner": false
       },
@@ -679,6 +899,54 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_media_id uuid, p_expected_content_hash text",
+        "language": "plpgsql",
+        "object": "publish_v21_automated_media",
+        "resultType": "void",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb",
+        "language": "plpgsql",
+        "object": "reconcile_media_ready_plan_v20",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "reconcile_plan_v21",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_persist_exclusion boolean",
+        "language": "sql",
+        "object": "replace_plan_exercise_v212",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_persist_exclusion boolean",
+        "language": "sql",
+        "object": "replace_plan_exercise_v214",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_goal_code text, p_sessions_per_week smallint, p_session_minutes smallint, p_cardio_preference smallint, p_gym_profile text",
+        "language": "plpgsql",
+        "object": "save_training_preferences_v211",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "",
         "language": "plpgsql",
         "object": "set_updated_at",
@@ -695,6 +963,46 @@
         "securityDefiner": false
       },
       {
+        "identityArguments": "p_session_exercise_id uuid, p_reason text, p_equipment_id uuid, p_exclude_exercise_ids uuid[]",
+        "language": "sql",
+        "object": "substitute_workout_exercise",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_equipment_id uuid, p_persist_change boolean",
+        "language": "sql",
+        "object": "substitute_workout_exercise_v214",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_plan_exercise_change_v212",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_workout_substitution",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_workout_substitution_v214",
+        "resultType": "jsonb",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "",
         "language": "plpgsql",
         "object": "validate_media_approval",
@@ -704,6 +1012,46 @@
       }
     ],
     "functions": [
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_rebalance_v212_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_rebalance_v214_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_remaining_exclusions_v213_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "delete_current_auth_user",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
       {
         "identityArguments": "",
         "language": "sql",
@@ -755,11 +1103,201 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "plpgsql",
+        "object": "plan_replacement_candidates_v212",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, is_equivalent boolean, reason text, total_count bigint)",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer, p_reason_code text",
+        "language": "plpgsql",
+        "object": "plan_replacement_candidates_v214",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "preview_plan_rebalance_v212_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid, p_reason_code text",
+        "language": "plpgsql",
+        "object": "preview_plan_rebalance_v214_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "preview_remaining_exclusions_v213_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_media_id uuid, p_review_agent text, p_validation_version text",
+        "language": "plpgsql",
+        "object": "publish_validated_exercise_media_automated",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_persist_exclusion boolean",
+        "language": "plpgsql",
+        "object": "replace_plan_exercise_v212_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_persist_exclusion boolean",
+        "language": "plpgsql",
+        "object": "replace_plan_exercise_v214_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason text, p_equipment_id uuid, p_exclude_exercise_ids uuid[]",
+        "language": "plpgsql",
+        "object": "substitute_workout_exercise_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_equipment_id uuid, p_persist_change boolean",
+        "language": "plpgsql",
+        "object": "substitute_workout_exercise_v214_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_plan_exercise_change_v212_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_workout_substitution_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "plpgsql",
+        "object": "undo_workout_substitution_v214_internal",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason_code text, p_equipment_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "plpgsql",
+        "object": "workout_replacement_candidates_v214",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], equipment_names text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "role": "authenticated",
+        "schema": "private",
+        "securityDefiner": true
+      },
+      {
         "identityArguments": "p_plan_id uuid",
         "language": "plpgsql",
         "object": "activate_plan",
         "privilege": "EXECUTE",
         "resultType": "void",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_plan_rebalance_v212",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_plan_rebalance_v214",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "activate_plan_v211",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "activate_remaining_exclusions_v213",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_id uuid, p_reason text",
+        "language": "plpgsql",
+        "object": "cancel_workout",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
         "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
@@ -773,6 +1311,26 @@
         "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_and_activate_plan_v21",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "create_plan_preview_v211",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
       },
       {
         "identityArguments": "",
@@ -792,7 +1350,7 @@
         "resultType": "boolean",
         "role": "authenticated",
         "schema": "public",
-        "securityDefiner": false
+        "securityDefiner": true
       },
       {
         "identityArguments": "p_exercise_id uuid",
@@ -802,14 +1360,74 @@
         "resultType": "boolean",
         "role": "service_role",
         "schema": "public",
-        "securityDefiner": false
+        "securityDefiner": true
       },
       {
-        "identityArguments": "p_session_id uuid, p_notes text",
+        "identityArguments": "p_session_id uuid, p_notes text, p_confirm_partial boolean",
         "language": "plpgsql",
         "object": "finish_workout",
         "privilege": "EXECUTE",
-        "resultType": "void",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_auto_plan_catalog",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(id uuid, name text, pattern text, category text, difficulty text, active boolean, media_ready boolean, auto_plan_eligible boolean, required_equipment text[], eligibility_reasons text[])",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_auto_plan_catalog_v211",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(id uuid, name text, pattern text, category text, difficulty text, active boolean, media_ready boolean, auto_plan_eligible boolean, required_equipment text[], required_capabilities text[], eligibility_reasons text[])",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "get_exercise_publish_readiness",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "sql",
+        "object": "get_exercise_publish_readiness",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "plpgsql",
+        "object": "get_plan_quality",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_plan_id uuid",
+        "language": "sql",
+        "object": "get_plan_readiness",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
         "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
@@ -820,6 +1438,56 @@
         "object": "get_plan_readiness",
         "privilege": "EXECUTE",
         "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "sql",
+        "object": "get_plan_replacement_candidates_v212",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, is_equivalent boolean, reason text, total_count bigint)",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_query text, p_limit integer, p_offset integer, p_reason_code text",
+        "language": "sql",
+        "object": "get_plan_replacement_candidates_v214",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], secondary_muscles text[], equipment_names text[], equipment_slugs text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_v20_plan_reconciliation_input",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "",
+        "language": "plpgsql",
+        "object": "get_v21_plan_reconciliation_input",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason_code text, p_equipment_id uuid, p_query text, p_limit integer, p_offset integer",
+        "language": "sql",
+        "object": "get_workout_replacement_candidates_v214",
+        "privilege": "EXECUTE",
+        "resultType": "TABLE(exercise_id uuid, exercise_name text, movement_pattern text, training_role text, category text, difficulty text, primary_muscles text[], equipment_names text[], media_storage_path text, media_poster_path text, media_type text, replacement_type text, reason text, goal_alignment_reason text, total_count bigint)",
         "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
@@ -835,6 +1503,36 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_exercise_id uuid",
+        "language": "plpgsql",
+        "object": "is_auto_plan_eligible",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "media exercise_media",
+        "language": "sql",
+        "object": "is_valid_animated_primary",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "media exercise_media",
+        "language": "sql",
+        "object": "is_valid_animated_primary",
+        "privilege": "EXECUTE",
+        "resultType": "boolean",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "value jsonb",
         "language": "sql",
         "object": "is_valid_primary_checklist",
@@ -851,6 +1549,36 @@
         "privilege": "EXECUTE",
         "resultType": "boolean",
         "role": "service_role",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid",
+        "language": "sql",
+        "object": "preview_plan_rebalance_v212",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_desired_exercise_id uuid, p_reason_code text",
+        "language": "sql",
+        "object": "preview_plan_rebalance_v214",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "preview_remaining_exclusions_v213",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
       },
@@ -865,11 +1593,121 @@
         "securityDefiner": true
       },
       {
+        "identityArguments": "p_media_id uuid, p_expected_content_hash text",
+        "language": "plpgsql",
+        "object": "publish_v21_automated_media",
+        "privilege": "EXECUTE",
+        "resultType": "void",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb",
+        "language": "plpgsql",
+        "object": "reconcile_media_ready_plan_v20",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_days jsonb, p_generator_version text, p_rationale jsonb",
+        "language": "plpgsql",
+        "object": "reconcile_plan_v21",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "service_role",
+        "schema": "public",
+        "securityDefiner": true
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_persist_exclusion boolean",
+        "language": "sql",
+        "object": "replace_plan_exercise_v212",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_workout_day_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_persist_exclusion boolean",
+        "language": "sql",
+        "object": "replace_plan_exercise_v214",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_goal_code text, p_sessions_per_week smallint, p_session_minutes smallint, p_cardio_preference smallint, p_gym_profile text",
+        "language": "plpgsql",
+        "object": "save_training_preferences_v211",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
         "identityArguments": "p_workout_day_id uuid",
         "language": "plpgsql",
         "object": "start_workout",
         "privilege": "EXECUTE",
         "resultType": "uuid",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_reason text, p_equipment_id uuid, p_exclude_exercise_ids uuid[]",
+        "language": "sql",
+        "object": "substitute_workout_exercise",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_session_exercise_id uuid, p_replacement_exercise_id uuid, p_replacement_type text, p_reason_code text, p_equipment_id uuid, p_persist_change boolean",
+        "language": "sql",
+        "object": "substitute_workout_exercise_v214",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_plan_exercise_change_v212",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_workout_substitution",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
+        "role": "authenticated",
+        "schema": "public",
+        "securityDefiner": false
+      },
+      {
+        "identityArguments": "p_event_id uuid",
+        "language": "sql",
+        "object": "undo_workout_substitution_v214",
+        "privilege": "EXECUTE",
+        "resultType": "jsonb",
         "role": "authenticated",
         "schema": "public",
         "securityDefiner": false
@@ -879,6 +1717,11 @@
       {
         "privilege": "USAGE",
         "role": "authenticated",
+        "schema": "private"
+      },
+      {
+        "privilege": "USAGE",
+        "role": "service_role",
         "schema": "private"
       },
       {
@@ -906,70 +1749,7 @@
     "tables": [
       {
         "object": "allowed_signup_emails",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
         "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "REFERENCES",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -983,70 +1763,14 @@
       },
       {
         "object": "allowed_signup_emails",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
         "schema": "public"
       },
       {
         "object": "allowed_signup_emails",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "allowed_signup_emails",
-        "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
@@ -1062,68 +1786,12 @@
         "object": "body_measurements",
         "privilege": "DELETE",
         "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
       },
       {
         "object": "body_measurements",
         "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "REFERENCES",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -1137,121 +1805,9 @@
       },
       {
         "object": "body_measurements",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "body_measurements",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -1270,13 +1826,6 @@
       },
       {
         "object": "cardio_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -1284,126 +1833,7 @@
       },
       {
         "object": "cardio_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
         "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "cardio_logs",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -1417,28 +1847,7 @@
       },
       {
         "object": "equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -1452,168 +1861,42 @@
       },
       {
         "object": "equipment",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "equipment_capabilities",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "equipment_capabilities",
         "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "equipment",
+        "object": "equipment_capabilities",
         "privilege": "INSERT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
+        "object": "equipment_capabilities",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "equipment",
+        "object": "equipment_capabilities",
         "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "REFERENCES",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
@@ -1626,97 +1909,6 @@
         "schema": "public"
       },
       {
-        "object": "exercise_aliases",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_aliases",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
         "object": "exercise_equipment",
         "privilege": "SELECT",
         "rlsEnabled": true,
@@ -1725,168 +1917,14 @@
       },
       {
         "object": "exercise_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_equipment",
-        "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
         "object": "exercise_media",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -1907,13 +1945,6 @@
       },
       {
         "object": "exercise_media",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
@@ -1921,224 +1952,28 @@
       },
       {
         "object": "exercise_media",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_media",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "exercise_substitutions",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
+        "object": "exercise_media_readiness",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
+        "rlsEnabled": false,
         "role": "authenticated",
         "schema": "public"
       },
       {
-        "object": "exercise_substitutions",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
+        "object": "exercise_media_readiness",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
+        "rlsEnabled": false,
         "role": "service_role",
         "schema": "public"
       },
       {
         "object": "exercise_substitutions",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercise_substitutions",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -2152,28 +1987,7 @@
       },
       {
         "object": "exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -2187,168 +2001,77 @@
       },
       {
         "object": "exercises",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "gym_capability_presets",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "gym_capability_presets",
         "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "exercises",
+        "object": "gym_capability_presets",
         "privilege": "INSERT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
+        "object": "gym_capability_presets",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "exercises",
+        "object": "gym_capability_presets",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "media_licenses",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
+        "object": "gym_equipment_presets",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
       },
       {
-        "object": "media_licenses",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
+        "object": "gym_equipment_presets",
         "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "media_licenses",
+        "object": "gym_equipment_presets",
         "privilege": "INSERT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "media_licenses",
-        "privilege": "REFERENCES",
+        "object": "gym_equipment_presets",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "gym_equipment_presets",
+        "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
@@ -2358,125 +2081,6 @@
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_licenses",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
         "schema": "public"
       },
       {
@@ -2495,13 +2099,6 @@
       },
       {
         "object": "media_review_events",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
@@ -2509,93 +2106,44 @@
       },
       {
         "object": "media_review_events",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "media_review_events",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "profiles",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
+        "object": "plan_exercise_change_events",
         "privilege": "SELECT",
         "rlsEnabled": true,
-        "role": "anon",
+        "role": "authenticated",
         "schema": "public"
       },
       {
-        "object": "profiles",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
+        "object": "plan_exercise_change_events",
         "privilege": "DELETE",
         "rlsEnabled": true,
-        "role": "authenticated",
+        "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "profiles",
+        "object": "plan_exercise_change_events",
         "privilege": "INSERT",
         "rlsEnabled": true,
-        "role": "authenticated",
+        "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "profiles",
-        "privilege": "REFERENCES",
+        "object": "plan_exercise_change_events",
+        "privilege": "SELECT",
         "rlsEnabled": true,
-        "role": "authenticated",
+        "role": "service_role",
+        "schema": "public"
+      },
+      {
+        "object": "plan_exercise_change_events",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "service_role",
         "schema": "public"
       },
       {
@@ -2607,44 +2155,9 @@
       },
       {
         "object": "profiles",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
         "schema": "public"
       },
       {
@@ -2652,76 +2165,6 @@
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "profiles",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -2740,13 +2183,6 @@
       },
       {
         "object": "set_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -2754,121 +2190,9 @@
       },
       {
         "object": "set_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "set_logs",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -2887,13 +2211,6 @@
       },
       {
         "object": "training_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -2901,121 +2218,9 @@
       },
       {
         "object": "training_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "training_preferences",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3034,13 +2239,6 @@
       },
       {
         "object": "user_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -3048,121 +2246,9 @@
       },
       {
         "object": "user_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_equipment",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3181,13 +2267,6 @@
       },
       {
         "object": "user_exercise_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -3195,121 +2274,9 @@
       },
       {
         "object": "user_exercise_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_exercise_preferences",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3328,13 +2295,6 @@
       },
       {
         "object": "user_goals",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "authenticated",
@@ -3342,121 +2302,65 @@
       },
       {
         "object": "user_goals",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
       },
       {
-        "object": "user_goals",
+        "object": "user_movement_attention",
+        "privilege": "DELETE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_movement_attention",
+        "privilege": "INSERT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_movement_attention",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_movement_attention",
+        "privilege": "UPDATE",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "user_movement_attention",
         "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "user_goals",
+        "object": "user_movement_attention",
         "privilege": "INSERT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "user_goals",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
+        "object": "user_movement_attention",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "user_goals",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "user_goals",
+        "object": "user_movement_attention",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3475,28 +2379,7 @@
       },
       {
         "object": "workout_day_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -3510,100 +2393,9 @@
       },
       {
         "object": "workout_day_exercises",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_day_exercises",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3622,28 +2414,7 @@
       },
       {
         "object": "workout_days",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -3657,100 +2428,9 @@
       },
       {
         "object": "workout_days",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_days",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3769,28 +2449,7 @@
       },
       {
         "object": "workout_plans",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -3804,100 +2463,9 @@
       },
       {
         "object": "workout_plans",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_plans",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
         "schema": "public"
       },
       {
@@ -3916,28 +2484,7 @@
       },
       {
         "object": "workout_session_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -3950,104 +2497,6 @@
         "schema": "public"
       },
       {
-        "object": "workout_session_exercises",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_session_exercises",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "DELETE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "INSERT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "UPDATE",
-        "rlsEnabled": true,
-        "role": "anon",
-        "schema": "public"
-      },
-      {
         "object": "workout_sessions",
         "privilege": "DELETE",
         "rlsEnabled": true,
@@ -4063,28 +2512,7 @@
       },
       {
         "object": "workout_sessions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
         "privilege": "SELECT",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "authenticated",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "TRUNCATE",
         "rlsEnabled": true,
         "role": "authenticated",
         "schema": "public"
@@ -4097,49 +2525,35 @@
         "schema": "public"
       },
       {
-        "object": "workout_sessions",
+        "object": "workout_substitution_events",
+        "privilege": "SELECT",
+        "rlsEnabled": true,
+        "role": "authenticated",
+        "schema": "public"
+      },
+      {
+        "object": "workout_substitution_events",
         "privilege": "DELETE",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "workout_sessions",
+        "object": "workout_substitution_events",
         "privilege": "INSERT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "workout_sessions",
-        "privilege": "REFERENCES",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
+        "object": "workout_substitution_events",
         "privilege": "SELECT",
         "rlsEnabled": true,
         "role": "service_role",
         "schema": "public"
       },
       {
-        "object": "workout_sessions",
-        "privilege": "TRIGGER",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
-        "privilege": "TRUNCATE",
-        "rlsEnabled": true,
-        "role": "service_role",
-        "schema": "public"
-      },
-      {
-        "object": "workout_sessions",
+        "object": "workout_substitution_events",
         "privilege": "UPDATE",
         "rlsEnabled": true,
         "role": "service_role",

@@ -89,4 +89,60 @@ test.describe("workout experience v1.8", () => {
     ).toBeVisible();
     await expect(page.getByText("Faixa saudável")).toBeVisible();
   });
+
+  test("offers a classified session-only fallback without weekly rebalance", async ({
+    page,
+  }) => {
+    await page.route(
+      "**/api/workouts/session-exercises/*/swap*",
+      async (route) => {
+        if (route.request().method() === "POST") {
+          await route.fulfill({
+            status: 200,
+            contentType: "application/json",
+            body: JSON.stringify({
+              eventId: "e2140000-0000-4000-8000-000000000001",
+              exerciseId: "e2140000-0000-4000-8000-000000000002",
+              exerciseName: "Alternativa da sessão",
+            }),
+          });
+          return;
+        }
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            candidates: [
+              {
+                exerciseId: "e2140000-0000-4000-8000-000000000002",
+                exerciseName: "Alternativa da sessão",
+                movementPattern: "horizontal_push",
+                trainingRole: "horizontal_push",
+                category: "strength",
+                difficulty: "beginner",
+                primaryMuscles: ["peitoral"],
+                equipmentNames: ["Peso corporal"],
+                mediaUrl: null,
+                posterUrl: null,
+                mediaType: "gif",
+                replacementType: "GOAL_ALIGNED_ALTERNATIVE",
+                reason: "Outra boa opção para o mesmo objetivo nesta sessão",
+                goalAlignmentReason: "Mantém a intenção do treino de hoje",
+                totalCount: 1,
+              },
+            ],
+          }),
+        });
+      },
+    );
+
+    await page.goto(`/workout-session/${process.env.E2E_SESSION_ID}`);
+    await page.getByRole("button", { name: "Trocar" }).first().click();
+    await page.getByRole("button", { name: "Ver alternativas" }).click();
+    await expect(page.getByText("Boa opção para seu objetivo")).toBeVisible();
+    await expect(page.getByText("Requer reorganização")).toHaveCount(0);
+    await page.getByRole("button", { name: /Alternativa da sessão/ }).click();
+    await page.getByRole("button", { name: "Usar alternativa agora" }).click();
+    await expect(page.getByText("Alternativa da sessão").first()).toBeVisible();
+  });
 });

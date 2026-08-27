@@ -7,6 +7,7 @@ describe("plan swap contract", () => {
       planSwapRequestSchema.safeParse({
         action: "replace",
         replacementExerciseId: "11111111-1111-4111-8111-111111111111",
+        replacementType: "DIRECT_EQUIVALENT",
         persistExclusion: true,
       }).success,
     ).toBe(true);
@@ -23,6 +24,17 @@ describe("plan swap contract", () => {
       planSwapRequestSchema.safeParse({
         action: "replace",
         replacementExerciseId: "not-an-id",
+        replacementType: "DIRECT_EQUIVALENT",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("does not accept a rebalance classification through the direct mutation", () => {
+    expect(
+      planSwapRequestSchema.safeParse({
+        action: "replace",
+        replacementExerciseId: "11111111-1111-4111-8111-111111111111",
+        replacementType: "REQUIRES_REBALANCE",
       }).success,
     ).toBe(false);
   });

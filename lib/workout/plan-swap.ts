@@ -4,13 +4,23 @@ export const planSwapRequestSchema = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("replace"),
     replacementExerciseId: z.string().uuid(),
+    replacementType: z.enum(["DIRECT_EQUIVALENT", "GOAL_ALIGNED_ALTERNATIVE"]),
+    reasonCode: z
+      .enum(["exercise_dislike", "user_choice", "other"])
+      .default("user_choice"),
     persistExclusion: z.boolean().default(false),
   }),
   z.object({
     action: z.literal("preview-rebalance"),
     desiredExerciseId: z.string().uuid(),
+    reasonCode: z
+      .enum(["exercise_dislike", "user_choice", "other"])
+      .default("user_choice"),
   }),
 ]);
+
+export type ReplacementType =
+  "DIRECT_EQUIVALENT" | "GOAL_ALIGNED_ALTERNATIVE" | "REQUIRES_REBALANCE";
 
 export type PlanReplacementCandidate = {
   exerciseId: string;
@@ -25,7 +35,8 @@ export type PlanReplacementCandidate = {
   mediaUrl: string | null;
   posterUrl: string | null;
   mediaType: "gif" | "video";
-  isEquivalent: boolean;
+  replacementType: ReplacementType;
+  goalAlignmentReason: string;
   reason: string;
   totalCount: number;
 };

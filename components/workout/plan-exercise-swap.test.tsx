@@ -57,8 +57,9 @@ const equivalent = {
   mediaUrl: "/demo.gif",
   posterUrl: "/poster.webp",
   mediaType: "gif" as const,
-  isEquivalent: true,
+  replacementType: "DIRECT_EQUIVALENT" as const,
   reason: "Mesmo padrão de empurrar horizontal",
+  goalAlignmentReason: "Mantém o foco de força e os critérios semanais",
   totalCount: 1,
 };
 
@@ -104,7 +105,7 @@ describe("PlanExerciseSwap", () => {
           candidates: [
             {
               ...equivalent,
-              isEquivalent: false,
+              replacementType: "REQUIRES_REBALANCE",
               reason: "Função diferente no treino",
             },
           ],
@@ -123,6 +124,37 @@ describe("PlanExerciseSwap", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Reorganizar treino" }),
+    ).toBeInTheDocument();
+  });
+
+  it("labels a goal-aligned fallback without calling it equivalent", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          candidates: [
+            {
+              ...equivalent,
+              replacementType: "GOAL_ALIGNED_ALTERNATIVE",
+              exerciseName: "Flexão com apoio",
+              reason:
+                "Alternativa segura que mantém a qualidade do plano completo",
+            },
+          ],
+        }),
+      }),
+    );
+    render(<PlanExerciseSwap slotId="slot-goal" exerciseName="Supino" />);
+    fireEvent.click(screen.getByRole("button", { name: "Trocar" }));
+    expect(await screen.findByText("Outras boas opções")).toBeInTheDocument();
+    expect(screen.getByText("Boa opção para seu objetivo")).toBeInTheDocument();
+    expect(screen.queryByText("Equivalentes")).not.toBeInTheDocument();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Quero este exercício" }),
+    );
+    expect(
+      screen.getByText("Confirmar alternativa para seu objetivo?"),
     ).toBeInTheDocument();
   });
 
