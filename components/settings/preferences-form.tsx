@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { GOAL_OPTIONS, goalLabel } from "@/lib/workouts/goals";
-import type { GoalCode } from "@/lib/workouts/types";
+import type { GoalCode, WorkoutStyle } from "@/lib/workouts/types";
 import { cn } from "@/lib/utils";
 
 type Preferences = {
@@ -16,6 +16,7 @@ type Preferences = {
   session_minutes: number;
   cardio_preference: number;
   gym_profile: string;
+  workout_style: WorkoutStyle;
 };
 
 type PlanPreview = {
@@ -26,7 +27,23 @@ type PlanPreview = {
   structure: string;
   exercisesPerDay: number[];
   changes: string[];
+  gymEquipmentSlots: number;
+  gymEquipmentPercent: number;
+  machineCableSlots: number;
+  freeWeightSlots: number;
+  bodyweightFloorSlots: number;
+  bodyweightPercent: number;
 };
+
+const styleOptions: Array<[WorkoutStyle, string, string]> = [
+  [
+    "gym_first",
+    "Academia / máquinas",
+    "Prioriza máquinas, cabos e equipamentos comuns de academia.",
+  ],
+  ["mixed", "Misto", "Equilibra máquinas, pesos livres e peso corporal."],
+  ["free_weight", "Peso livre", "Dá mais espaço a halteres e barras."],
+];
 
 export function PreferencesForm({
   preferences,
@@ -40,26 +57,22 @@ export function PreferencesForm({
   const [days, setDays] = useState(preferences.sessions_per_week);
   const [minutes, setMinutes] = useState(preferences.session_minutes);
   const [cardio, setCardio] = useState(preferences.cardio_preference);
+  const [workoutStyle, setWorkoutStyle] = useState(preferences.workout_style);
   const [busy, setBusy] = useState(false);
   const [savedChange, setSavedChange] = useState(false);
   const [preview, setPreview] = useState<PlanPreview | null>(null);
 
   async function save() {
     setBusy(true);
-    const changed =
-      selectedGoal !== goal ||
-      days !== preferences.sessions_per_week ||
-      minutes !== preferences.session_minutes ||
-      cardio !== preferences.cardio_preference ||
-      preferences.gym_profile !== "STANDARD_COMMERCIAL_GYM";
     const { error } = await createClient().rpc(
-      "save_training_preferences_v211",
+      "save_training_preferences_v215",
       {
         p_goal_code: selectedGoal,
         p_sessions_per_week: days,
         p_session_minutes: minutes,
         p_cardio_preference: cardio,
         p_gym_profile: "STANDARD_COMMERCIAL_GYM",
+        p_workout_style: workoutStyle,
       },
     );
     setBusy(false);
@@ -67,7 +80,10 @@ export function PreferencesForm({
       toast.error("Não foi possível salvar suas preferências.");
       return false;
     }
-    setSavedChange(changed);
+    // A successful save must always expose the explicit preview flow. This lets
+    // existing users request the latest generator without inventing a preference
+    // change, while their current plan remains active until confirmation.
+    setSavedChange(true);
     setPreview(null);
     toast.success("Suas preferências foram atualizadas.");
     router.refresh();
@@ -179,6 +195,33 @@ export function PreferencesForm({
         />
       </label>
 
+      <section>
+        <h2 className="text-base font-semibold">Estilo de treino</h2>
+        <p className="mt-1 text-sm text-muted">
+          Escolha a combinação de equipamentos que deve receber prioridade.
+        </p>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          {styleOptions.map(([code, label, description]) => (
+            <button
+              type="button"
+              aria-label={`${label}. ${description}`}
+              aria-pressed={workoutStyle === code}
+              key={code}
+              onClick={() => setWorkoutStyle(code)}
+              className={cn(
+                "min-h-24 rounded-xl border p-3 text-left transition-colors",
+                workoutStyle === code && "border-accent bg-accent/10",
+              )}
+            >
+              <strong className="block text-sm">{label}</strong>
+              <span className="mt-1 block text-xs leading-5 text-muted">
+                {description}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <section className="rounded-2xl border bg-surface-alt p-4">
         <div className="flex items-start gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
@@ -187,9 +230,10 @@ export function PreferencesForm({
           <div>
             <h2 className="font-semibold">Academia comercial padrão</h2>
             <p className="mt-1 text-sm leading-6 text-muted">
-              Vamos considerar os equipamentos mais comuns de uma academia. Se
-              algum aparelho não estiver disponível, você pode trocar o
-              exercício durante o treino.
+              Priorizamos máquinas, cabos e equipamentos comuns de academia.
+              Pesos livres e exercícios no chão entram quando fizerem sentido
+              para o seu objetivo. Se algum aparelho não estiver disponível,
+              você pode trocar o exercício durante o treino.
             </p>
           </div>
         </div>
@@ -246,6 +290,24 @@ export function PreferencesForm({
               value={preview.exercisesPerDay.join(" · ")}
             />
           </dl>
+          <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-accent/5 p-3 text-sm sm:grid-cols-4">
+            <Summary
+              label="Equipamentos de academia"
+              value={`${preview.gymEquipmentPercent}%`}
+            />
+            <Summary
+              label="Máquinas e cabos"
+              value={`${preview.machineCableSlots} exercícios`}
+            />
+            <Summary
+              label="Pesos livres"
+              value={`${preview.freeWeightSlots} exercícios`}
+            />
+            <Summary
+              label="Peso corporal / chão"
+              value={`${preview.bodyweightFloorSlots} (${preview.bodyweightPercent}%)`}
+            />
+          </div>
           {preview.changes.length > 0 && (
             <div className="mt-4 rounded-xl bg-surface-alt p-3 text-sm text-muted">
               <strong className="text-foreground">Principais mudanças</strong>

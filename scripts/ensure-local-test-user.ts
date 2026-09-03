@@ -318,15 +318,18 @@ const { error: fixtureActivationError } = await adminClient
   .eq("id", fixtureExercise.id);
 if (fixtureActivationError) throw fixtureActivationError;
 
-// The v2.1.1 preview exercises the real goal-driven generator. A disposable
+// The v2.1.5 preview exercises the real goal-driven gym-first generator. A disposable
 // local catalog therefore needs enough media-ready movement patterns to meet
 // the same diversity gate used in production.
 const v211FixtureSlugs = [
   "bodyweight-half-squat",
   "goblet-squat",
+  "hack-squat",
   "machine-row",
   "seated-row",
   "lying-leg-curl",
+  "seated-leg-curl",
+  "machine-glute",
   "hip-thrust",
   "machine-shoulder-press",
   "lateral-raise",
@@ -334,8 +337,11 @@ const v211FixtureSlugs = [
   "dead-bug",
   "pallof-press",
   "machine-chest-press",
+  "incline-machine-press",
+  "machine-fly",
   "lat-pulldown",
   "neutral-pulldown",
+  "supinated-pulldown",
   "leg-extension",
   "wall-slide",
   "treadmill",

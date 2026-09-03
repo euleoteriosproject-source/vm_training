@@ -47,6 +47,25 @@ join public.exercises exercise on exercise.id = link.exercise_id
 where exercise.slug = 'leg-press' and link.required
 on conflict (user_id,equipment_id) do update set available = true;
 
+-- This catalog fixture intentionally has no media. Using a dedicated row keeps
+-- the security assertion valid as the real catalog gains reviewed coverage.
+insert into public.exercises(
+  id, slug, name_pt, category, movement_pattern, primary_muscles,
+  secondary_muscles, difficulty, execution_instructions, common_errors, active
+) values (
+  'a6000000-0000-0000-0000-000000000006',
+  'v20-no-media-fixture',
+  'V20 sem mídia',
+  'strength',
+  'core_anti_extension',
+  array['core'],
+  '{}'::text[],
+  'beginner',
+  array['Fixture de segurança'],
+  '{}'::text[],
+  false
+);
+
 set local role service_role;
 select set_config(
   'request.jwt.claims',
@@ -129,7 +148,7 @@ select is(
 );
 select throws_ok(
   $$update public.workout_session_exercises
-    set actual_exercise_id = (select id from public.exercises where slug = 'dead-bug')
+    set actual_exercise_id = 'a6000000-0000-0000-0000-000000000006'
     where workout_session_id = (
       select id from public.workout_sessions
       where user_id = 'a1000000-0000-0000-0000-000000000001'

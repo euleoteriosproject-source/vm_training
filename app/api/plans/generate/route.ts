@@ -13,6 +13,7 @@ import type {
   GoalCode,
   GymProfile,
   PlanInput,
+  WorkoutStyle,
 } from "@/lib/workouts/types";
 import { createClient } from "@/lib/supabase/server";
 
@@ -28,6 +29,11 @@ type AutoPlanCatalogRow = {
   eligibility_reasons: string[] | null;
   required_equipment: string[] | null;
   required_capabilities: string[] | null;
+  training_role: string;
+  environment_profile: ExerciseCandidate["environmentProfile"];
+  gym_equipment_tier: ExerciseCandidate["gymEquipmentTier"];
+  technical_complexity: ExerciseCandidate["technicalComplexity"];
+  goal_suitability: GoalCode[] | null;
 };
 
 type GenerateRequest = { activation?: "immediate" | "preview" };
@@ -75,7 +81,7 @@ export async function POST(request: Request) {
   ] = await Promise.all([
     supabase
       .from("training_preferences")
-      .select("sessions_per_week,session_minutes,cardio_preference,experience,gym_category,gym_profile")
+      .select("sessions_per_week,session_minutes,cardio_preference,experience,gym_category,gym_profile,workout_style")
       .eq("user_id", user.id)
       .maybeSingle(),
     supabase
@@ -96,7 +102,7 @@ export async function POST(request: Request) {
       .select("region")
       .eq("user_id", user.id)
       .eq("active", true),
-    supabase.rpc("get_auto_plan_catalog_v211"),
+    supabase.rpc("get_auto_plan_catalog_v215"),
     supabase
       .from("workout_sessions")
       .select("workout_session_exercises(actual_exercise_id)")
@@ -148,6 +154,7 @@ export async function POST(request: Request) {
     id: row.id,
     name: row.name,
     pattern: row.pattern,
+    trainingRole: row.training_role,
     category: row.category,
     difficulty: row.difficulty,
     active: row.active,
@@ -157,6 +164,10 @@ export async function POST(request: Request) {
     eligibilityReasons: row.eligibility_reasons ?? [],
     equipment: row.required_equipment ?? [],
     capabilities: row.required_capabilities ?? [],
+    environmentProfile: row.environment_profile,
+    gymEquipmentTier: row.gym_equipment_tier,
+    technicalComplexity: row.technical_complexity,
+    goalSuitability: row.goal_suitability ?? [],
   }));
   const recentExerciseIds = [
     ...new Set(
@@ -186,6 +197,7 @@ export async function POST(request: Request) {
       cardioPreference: preferences.cardio_preference,
       experience: preferences.experience,
       gymProfile,
+      workoutStyle: (preferences.workout_style ?? "gym_first") as WorkoutStyle,
       capabilities: capabilitiesForGym(gymProfile),
       equipment,
       unavailableEquipment,
@@ -196,14 +208,15 @@ export async function POST(request: Request) {
     };
     const generated = generatePlanWithQuality(input, catalog);
     const { data: previewData, error: previewError } = await supabase.rpc(
-      "create_plan_preview_v211",
+      "create_plan_preview_v215",
       {
         p_days: generated.days,
         p_generator_version: generated.generatorVersion,
         p_rationale: {
-          strategy: "goal-driven-capability-v211",
+          strategy: "goal-driven-gym-first-v215",
           quality: generated.quality,
           gymProfile,
+          workoutStyle: input.workoutStyle,
           recentExerciseWindow: recentExerciseIds.length,
         },
       },
@@ -217,7 +230,7 @@ export async function POST(request: Request) {
 
     if (immediate) {
       const { error: activationError } = await supabase.rpc(
-        "activate_plan_v211",
+        "activate_plan_v215",
         { p_plan_id: result.planId },
       );
       if (activationError) throw activationError;
@@ -237,6 +250,12 @@ export async function POST(request: Request) {
           structure: generated.days.map((day) => day.name).join(" / "),
           exercisesPerDay: generated.days.map((day) => day.exercises.length),
           changes: changesForGoal(result.goal),
+          gymEquipmentSlots: generated.quality.gymEquipmentSlots,
+          gymEquipmentPercent: generated.quality.gymEquipmentPercent,
+          machineCableSlots: generated.quality.machineCableSlots,
+          freeWeightSlots: generated.quality.freeWeightSlots,
+          bodyweightFloorSlots: generated.quality.bodyweightFloorSlots,
+          bodyweightPercent: generated.quality.bodyweightPercent,
         },
       },
       { status: 201 },

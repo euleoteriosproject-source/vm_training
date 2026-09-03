@@ -7,7 +7,7 @@ import type {
   PlanQualityMetrics,
 } from "./types";
 
-export const GENERATOR_VERSION = "v2.1.1";
+export const GENERATOR_VERSION = "v2.1.5";
 
 const splits: Record<number, string[]> = {
   2: ["Full Body A", "Full Body B"],
@@ -58,6 +58,33 @@ const balancedThreeDayPatternSlots: readonly (readonly (readonly string[])[])[] 
   ],
 ];
 
+const gymFirstMuscleGainThreeDayPatternSlots: typeof balancedThreeDayPatternSlots = [
+  [
+    ["squat"],
+    ["horizontal_pull"],
+    ["horizontal_push"],
+    ["knee_flexion", "hinge", "hip_extension"],
+    ["vertical_push"],
+    ["vertical_pull"],
+  ],
+  [
+    ["knee_extension"],
+    ["vertical_pull"],
+    ["horizontal_push"],
+    ["hip_extension", "hinge", "knee_flexion"],
+    ["horizontal_pull"],
+    ["core_anti_rotation", "carry"],
+  ],
+  [
+    ["squat", "knee_extension"],
+    ["horizontal_pull"],
+    ["vertical_push"],
+    ["knee_flexion", "hip_extension", "hinge"],
+    ["horizontal_push"],
+    ["vertical_pull"],
+  ],
+];
+
 const conditioningThreeDayPatternSlots: typeof balancedThreeDayPatternSlots = [
   [["squat"], ["horizontal_pull"], ["horizontal_push"], ["hinge", "hip_extension"], ["core_anti_extension", "carry"], ["cardio"]],
   [["knee_extension", "squat"], ["vertical_pull"], ["vertical_push"], ["knee_flexion", "hinge"], ["core_anti_rotation", "posture"], ["cardio"]],
@@ -91,11 +118,31 @@ function primaryGoal(input: PlanInput) {
 
 function threeDaySlotsForGoal(input: PlanInput) {
   const goal = primaryGoal(input);
+  if (goal === "muscle_gain" && isGymFirst(input))
+    return gymFirstMuscleGainThreeDayPatternSlots;
   if (["conditioning", "cardio_endurance", "fat_loss", "weight_loss", "measurements"].includes(goal))
     return conditioningThreeDayPatternSlots;
   if (["mobility", "posture"].includes(goal)) return mobilityThreeDayPatternSlots;
   if (goal === "general_health") return healthThreeDayPatternSlots;
   return balancedThreeDayPatternSlots;
+}
+
+function workoutStyle(input: PlanInput) {
+  return (
+    input.workoutStyle ??
+    (input.gymProfile === "STANDARD_COMMERCIAL_GYM" ? "gym_first" : "mixed")
+  );
+}
+
+function isGymFirst(input: PlanInput) {
+  return (
+    input.gymProfile === "STANDARD_COMMERCIAL_GYM" &&
+    workoutStyle(input) === "gym_first"
+  );
+}
+
+function gymFirstMuscleGain(input: PlanInput) {
+  return isGymFirst(input) && primaryGoal(input) === "muscle_gain";
 }
 
 export class PlanConstraintError extends Error {
@@ -114,6 +161,14 @@ function percentage(value: number, total: number) {
 
 function isMediaReady(exercise: ExerciseCandidate) {
   return exercise.mediaReady ?? exercise.hasApprovedMedia;
+}
+
+function exerciseEnvironment(exercise: ExerciseCandidate) {
+  return exercise.environmentProfile ?? "bodyweight_floor";
+}
+
+function exerciseGymTier(exercise: ExerciseCandidate) {
+  return exercise.gymEquipmentTier ?? 3;
 }
 
 export function isExerciseEligible(
@@ -148,7 +203,48 @@ function hasCompatibleEquipment(
   );
 }
 
-function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
+export function equipmentPreferenceScore(
+  exercise: ExerciseCandidate,
+  input: PlanInput,
+) {
+  if (input.gymProfile !== "STANDARD_COMMERCIAL_GYM") return 0;
+  const goal = primaryGoal(input);
+  const style = workoutStyle(input);
+  const environment = exerciseEnvironment(exercise);
+  const tier = exerciseGymTier(exercise);
+
+  let score = 0;
+  if (style === "gym_first") {
+    if (goal === "muscle_gain")
+      score += tier === 1 ? 42 : tier === 2 ? 16 : tier === 3 ? -34 : -42;
+    else if (goal === "strength")
+      score += tier === 1 ? 16 : tier === 2 ? 26 : tier === 3 ? -8 : -16;
+    else if (
+      ["conditioning", "cardio_endurance", "fat_loss", "weight_loss"].includes(
+        goal,
+      )
+    )
+      score += environment === "cardio_machine" ? 24 : tier === 1 ? 12 : tier === 3 ? 5 : 0;
+    else score += tier === 1 ? 24 : tier === 2 ? 14 : tier === 3 ? -8 : -14;
+  } else if (style === "free_weight") {
+    score += tier === 2 ? 34 : tier === 1 ? 8 : tier === 3 ? -4 : -10;
+  } else {
+    score += tier === 1 ? 12 : tier === 2 ? 10 : tier === 3 ? 2 : -4;
+  }
+
+  if (goal === "muscle_gain")
+    score +=
+      exercise.technicalComplexity === "low"
+        ? 10
+        : exercise.technicalComplexity === "high"
+          ? -12
+          : 0;
+  if (exercise.goalSuitability?.includes(goal)) score += 12;
+  else score -= 12;
+  return score;
+}
+
+export function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
   let score = 10;
   const goals = new Map(
     input.goals.map((goal) => [goal.code, 11 - goal.priority]),
@@ -182,7 +278,7 @@ function scoreExercise(exercise: ExerciseCandidate, input: PlanInput) {
   if (preference === "like") score += 8;
   if (preference === "dislike") score -= 8;
   if (input.recentExerciseIds?.includes(exercise.id)) score -= 6;
-  return score;
+  return score + equipmentPreferenceScore(exercise, input);
 }
 
 function overlap(left: Set<string>, right: Set<string>) {
@@ -254,6 +350,65 @@ export function evaluatePlanQuality(
     return exercise ? isMediaReady(exercise) : false;
   }).length;
 
+  const exercises = slots
+    .map((slot) => catalogById.get(slot.exerciseId))
+    .filter((exercise): exercise is ExerciseCandidate => Boolean(exercise));
+  const isMachineCable = (exercise: ExerciseCandidate) =>
+    ["commercial_machine", "commercial_cable", "cardio_machine"].includes(
+      exerciseEnvironment(exercise),
+    );
+  const isBodyweight = (exercise: ExerciseCandidate) =>
+    ["bodyweight_floor", "bodyweight_station"].includes(
+      exerciseEnvironment(exercise),
+    );
+  const machineCableSlots = exercises.filter(isMachineCable).length;
+  const freeWeightSlots = exercises.filter(
+    (exercise) => exerciseEnvironment(exercise) === "commercial_free_weight",
+  ).length;
+  const bodyweightFloorSlots = exercises.filter(isBodyweight).length;
+  const specializedSlots = exercises.filter(
+    (exercise) => exerciseEnvironment(exercise) === "specialized_space",
+  ).length;
+  const gymEquipmentSlots = machineCableSlots + freeWeightSlots;
+  const corePostureSlots = exercises.filter(
+    (exercise) =>
+      exercise.pattern.startsWith("core_") ||
+      exercise.pattern === "posture" ||
+      exercise.trainingRole === "postural_control",
+  ).length;
+  const bodyweightFloorSlotsByDay = days.map((day) =>
+    day.exercises.filter((slot) => {
+      const exercise = catalogById.get(slot.exerciseId);
+      return exercise ? isBodyweight(exercise) : false;
+    }).length,
+  );
+  const gymFirstExceptions = gymFirstMuscleGain(input)
+    ? days.flatMap((day) =>
+        day.exercises.flatMap((slot) => {
+          const exercise = catalogById.get(slot.exerciseId);
+          if (!exercise || !isBodyweight(exercise)) return [];
+          const hasGymAlternative = catalog.some(
+            (candidate) =>
+              candidate.pattern === exercise.pattern &&
+              exerciseGymTier(candidate) <= 2 &&
+              isExerciseEligible(candidate, input),
+          );
+          return [
+            {
+              exerciseId: exercise.id,
+              day: day.name,
+              rationale:
+                input.preferences?.[exercise.id] === "like"
+                  ? ("explicit_user_preference" as const)
+                  : hasGymAlternative
+                    ? ("programming_balance" as const)
+                    : ("no_media_ready_gym_alternative" as const),
+            },
+          ];
+        }),
+      )
+    : [];
+
   const goalAlignment = evaluateGoalAlignment(days, catalog, input);
 
   return {
@@ -271,6 +426,16 @@ export function evaluatePlanQuality(
     mediaCoveragePercent: percentage(mediaReadyCount, slots.length),
     invalidEquipment,
     ineligibleExercises,
+    gymEquipmentSlots,
+    machineCableSlots,
+    freeWeightSlots,
+    bodyweightFloorSlots,
+    specializedSlots,
+    gymEquipmentPercent: percentage(gymEquipmentSlots, slots.length),
+    bodyweightPercent: percentage(bodyweightFloorSlots, slots.length),
+    corePostureSlots,
+    bodyweightFloorSlotsByDay,
+    gymFirstExceptions,
     goalAlignment,
   };
 }
@@ -340,6 +505,7 @@ export function evaluateGoalAlignment(
 function qualityDiagnostics(
   quality: PlanQualityMetrics,
   standardThreeDayPlan: boolean,
+  input: PlanInput,
 ): PlanConstraintDiagnostic[] {
   const diagnostics: PlanConstraintDiagnostic[] = [];
   if (quality.mediaCoveragePercent !== 100)
@@ -400,6 +566,26 @@ function qualityDiagnostics(
       message: "O plano não alcança oito padrões de movimento.",
       actual: quality.movementPatternCount,
       required: 8,
+    });
+  if (
+    gymFirstMuscleGain(input) &&
+    (quality.gymEquipmentPercent < 70 ||
+      quality.bodyweightPercent > 20 ||
+      quality.bodyweightFloorSlots > 2 ||
+      quality.bodyweightFloorSlotsByDay.some((slots) => slots > 1) ||
+      quality.corePostureSlots > 2)
+  )
+    diagnostics.push({
+      code: "GYM_FIRST_CONSTRAINT",
+      message:
+        "O catálogo ou as restrições atuais não permitem um plano de academia coerente sem excesso de exercícios no chão.",
+      actual: {
+        gymEquipmentPercent: quality.gymEquipmentPercent,
+        bodyweightPercent: quality.bodyweightPercent,
+        bodyweightFloorSlots: quality.bodyweightFloorSlots,
+        corePostureSlots: quality.corePostureSlots,
+      },
+      required: ">= 70% academia, <= 20% peso corporal, <= 2 no chão e <= 2 core/postura",
     });
   return diagnostics;
 }
@@ -481,17 +667,45 @@ function generateDiverseThreeDayPlan(
             return shared + (priorIds.has(exercise.id) ? 1 : 0) <= 3;
           });
         })
+        .filter(({ exercise }, _candidateIndex, candidatesBeforeQuota) => {
+          if (!gymFirstMuscleGain(input)) return true;
+          const isBodyweight = ["bodyweight_floor", "bodyweight_station"].includes(
+            exerciseEnvironment(exercise),
+          );
+          if (!isBodyweight) return true;
+          const weeklyBodyweight = selectedDays
+            .flat()
+            .concat(selected)
+            .filter((item) =>
+              ["bodyweight_floor", "bodyweight_station"].includes(
+                exerciseEnvironment(item),
+              ),
+            ).length;
+          const dailyBodyweight = selected.filter((item) =>
+            ["bodyweight_floor", "bodyweight_station"].includes(
+              exerciseEnvironment(item),
+            ),
+          ).length;
+          if (weeklyBodyweight < 2 && dailyBodyweight < 1) return true;
+          return !candidatesBeforeQuota.some(
+            (candidate) =>
+              candidate.exercise.id !== exercise.id &&
+              exerciseGymTier(candidate.exercise) <= 2,
+          );
+        })
         .sort((left, right) => {
           const leftUsage = usage.get(left.exercise.id) ?? 0;
           const rightUsage = usage.get(right.exercise.id) ?? 0;
           const preferUnused = usage.size < targetUnique;
-          if (preferUnused && (leftUsage === 0) !== (rightUsage === 0))
-            return leftUsage === 0 ? -1 : 1;
-          if (!preferUnused && (leftUsage === 1) !== (rightUsage === 1))
-            return leftUsage === 1 ? -1 : 1;
+          if (!gymFirstMuscleGain(input)) {
+            if (preferUnused && (leftUsage === 0) !== (rightUsage === 0))
+              return leftUsage === 0 ? -1 : 1;
+            if (!preferUnused && (leftUsage === 1) !== (rightUsage === 1))
+              return leftUsage === 1 ? -1 : 1;
+          }
           return (
-            leftUsage - rightUsage ||
-            right.score - left.score ||
+            right.score + (rightUsage === 0 && preferUnused ? 18 : 0) - rightUsage * 16 -
+              (left.score + (leftUsage === 0 && preferUnused ? 18 : 0) - leftUsage * 16) ||
             left.exercise.id.localeCompare(right.exercise.id)
           );
         });
@@ -639,7 +853,7 @@ export function generatePlanWithQuality(
     ? generateDiverseThreeDayPlan(input, eligible)
     : generateLegacySplit(input, eligible);
   const quality = evaluatePlanQuality(days, catalog, input);
-  const diagnostics = qualityDiagnostics(quality, standardThreeDayPlan);
+  const diagnostics = qualityDiagnostics(quality, standardThreeDayPlan, input);
   if (diagnostics.length) throw new PlanConstraintError(diagnostics);
   return {
     days,

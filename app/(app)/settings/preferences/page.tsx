@@ -13,7 +13,7 @@ export default async function PreferencesPage() {
     await Promise.all([
       supabase
         .from("training_preferences")
-        .select("sessions_per_week,session_minutes,cardio_preference,gym_profile")
+        .select("sessions_per_week,session_minutes,cardio_preference,gym_profile,workout_style")
         .single(),
       supabase
         .from("user_goals")

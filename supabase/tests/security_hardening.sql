@@ -86,8 +86,8 @@ select is(
       and schema.nspname = 'public'
       and has_function_privilege('authenticated', function.oid, 'execute')
   ),
-  8,
-  'authenticated can execute only the eight ownership-checked public SECURITY DEFINER helpers'
+  16,
+  'authenticated can execute only the sixteen ownership-checked public SECURITY DEFINER helpers through v2.1.5'
 );
 
 select * from finish();

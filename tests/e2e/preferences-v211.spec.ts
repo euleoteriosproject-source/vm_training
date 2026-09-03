@@ -4,7 +4,7 @@ const configured = Boolean(
   process.env.E2E_TEST_EMAIL && process.env.E2E_TEST_PASSWORD,
 );
 
-test.describe("training preferences v2.1.1", () => {
+test.describe("training preferences v2.1.5", () => {
   test.skip(!configured, "Requires the generated local E2E account");
 
   test("simplifies gym setup and previews a goal-driven plan without silent activation", async ({
@@ -22,15 +22,19 @@ test.describe("training preferences v2.1.1", () => {
     ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Objetivo" })).toBeVisible();
     await expect(page.getByText("Academia comercial padrão")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /^Academia \/ máquinas\./ }),
+    ).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByText("Equipamentos disponíveis")).toHaveCount(0);
 
-    const strength = page.getByRole("button", { name: /^Força\./ });
-    const health = page.getByRole("button", {
-      name: /^Saúde e condicionamento\./,
-    });
-    if ((await strength.getAttribute("aria-pressed")) === "true")
-      await health.click();
-    else await strength.click();
+    await page
+      .getByRole("button", { name: /^Força e massa muscular\./ })
+      .click();
+    await page.getByRole("button", { name: "3", exact: true }).click();
+    await page.getByRole("button", { name: "60" }).click();
+    const cardio = page.getByLabel("Preferência por cardio");
+    const currentCardio = await cardio.inputValue();
+    await cardio.fill(currentCardio === "2" ? "3" : "2");
 
     await page.getByRole("button", { name: "Salvar preferências" }).click();
     const main = page.getByRole("main");
@@ -51,6 +55,9 @@ test.describe("training preferences v2.1.1", () => {
     await expect(page.getByText("Prévia do novo plano")).toBeVisible({
       timeout: 30_000,
     });
+    await expect(main.getByText("Equipamentos de academia")).toBeVisible();
+    await expect(main.getByText("Máquinas e cabos")).toBeVisible();
+    await expect(main.getByText("Peso corporal / chão")).toBeVisible();
     await expect(
       page.getByRole("button", { name: "Confirmar e ativar" }),
     ).toBeVisible();

@@ -49,6 +49,10 @@ select
   '{"exercise_match_exact":true,"equipment_match":true,"execution_quality_approved":true,"visibility_sufficient":true,"license_verified":true,"download_permitted":true,"transformation_permitted":true,"rehost_permitted":true,"source_provenance_verified":true,"visual_inspection_passed":true,"biomechanical_references_passed":true,"final_gif_inspection_passed":true,"storage_hash_verified":true}'
 from public.exercises where slug = 'machine-shoulder-press';
 
+create temporary table media_automation_initial_exercise_state(active boolean) on commit drop;
+insert into media_automation_initial_exercise_state(active)
+select active from public.exercises where slug = 'machine-shoulder-press';
+
 set local role authenticated;
 select set_config(
   'request.jwt.claims',
@@ -113,7 +117,7 @@ select is(
   (select active from public.exercises exercise
    join public.exercise_media media on media.exercise_id = exercise.id
    where media.id = '91000000-0000-0000-0000-000000000001'),
-  false,
+  (select active from media_automation_initial_exercise_state),
   'automated media publication does not change catalog activation'
 );
 

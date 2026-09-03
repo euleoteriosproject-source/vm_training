@@ -124,8 +124,46 @@ when 'one-arm-row' then 'dumbbells' when 'reverse-fly' then 'chest-press' when '
 when 'machine-chest-press' then 'chest-press' when 'incline-machine-press' then 'chest-press' when 'machine-fly' then 'chest-press'
 when 'machine-shoulder-press' then 'chest-press' when 'lateral-raise' then 'dumbbells' when 'pallof-press' then 'cable'
 when 'farmer-walk' then 'dumbbells' when 'treadmill' then 'treadmill' when 'incline-treadmill' then 'treadmill'
-when 'bike' then 'bike' when 'elliptical' then 'elliptical' else 'bodyweight' end
+when 'bike' then 'bike' when 'elliptical' then 'elliptical' else null end
 on conflict do nothing;
+
+-- Migrations run before seed on a local reset. Recreate the normalized v2.1
+-- requirements after equipment exists, without assigning unknown exercises to
+-- bodyweight by default.
+with requirements(slug, equipment_slugs) as (values
+  ('barbell-bench-press', array['barbell','bench']),
+  ('bent-over-barbell-row', array['barbell']),
+  ('conventional-deadlift', array['barbell']),
+  ('pull-up', array['pull-up-bar']),
+  ('standing-barbell-press', array['barbell']),
+  ('barbell-back-squat', array['barbell']),
+  ('incline-barbell-press', array['barbell','bench']),
+  ('hanging-straight-leg-raise', array['pull-up-bar']),
+  ('hanging-knee-raise', array['pull-up-bar']),
+  ('knee-push-up', array['bodyweight']),
+  ('bodyweight-half-squat', array['bodyweight']),
+  ('seated-dumbbell-overhead-press', array['dumbbells','bench']),
+  ('alternating-superman', array['bodyweight']),
+  ('bilateral-superman', array['bodyweight']),
+  ('high-to-low-plank', array['bodyweight']),
+  ('side-plank', array['bodyweight']),
+  ('standing-toe-raise', array['bodyweight']),
+  ('back-extension-machine', array['back-extension-machine']),
+  ('burpee', array['bodyweight']),
+  ('sumo-deadlift', array['barbell']),
+  ('suitcase-carry', array['kettlebell']),
+  ('chair-squat', array['bodyweight']),
+  ('dumbbell-floor-press', array['dumbbells']),
+  ('standing-chest-stretch', array['bodyweight']),
+  ('seated-hamstring-stretch', array['bodyweight'])
+)
+insert into public.exercise_equipment(exercise_id, equipment_id, required)
+select exercise.id, equipment.id, true
+from requirements
+join public.exercises exercise on exercise.slug = requirements.slug
+cross join lateral unnest(requirements.equipment_slugs) required_equipment(slug)
+join public.equipment equipment on equipment.slug = required_equipment.slug
+on conflict(exercise_id, equipment_id) do update set required = true;
 
 -- Candidatos reais verificados no Wikimedia Commons. Permanecem pendentes até
 -- revisão humana da execução e processamento server-side com FFmpeg.

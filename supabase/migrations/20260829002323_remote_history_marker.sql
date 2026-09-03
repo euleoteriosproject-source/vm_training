@@ -1,0 +1,6 @@
+-- Remote history marker only.
+--
+-- Production contains an unrelated ai_study_progress migration under this
+-- version. Its objects are outside VM Training and are intentionally neither
+-- recreated nor modified here. Keeping the version as a no-op lets the VM
+-- Training migration chain reconcile without destructive history repair.

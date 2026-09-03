@@ -13,7 +13,18 @@ export async function POST(
   if (!user)
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
 
-  const { data, error } = await supabase.rpc("activate_plan_v211", {
+  const { data: plan } = await supabase
+    .from("workout_plans")
+    .select("generator_version")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .eq("status", "draft")
+    .maybeSingle();
+  const rpc =
+    plan?.generator_version === "v2.1.5"
+      ? "activate_plan_v215"
+      : "activate_plan_v211";
+  const { data, error } = await supabase.rpc(rpc, {
     p_plan_id: id,
   });
   if (error)

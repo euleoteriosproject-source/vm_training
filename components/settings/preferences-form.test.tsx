@@ -25,9 +25,10 @@ const preferences = {
   session_minutes: 60,
   cardio_preference: 3,
   gym_profile: "STANDARD_COMMERCIAL_GYM",
+  workout_style: "gym_first" as const,
 };
 
-describe("PreferencesForm v2.1.1", () => {
+describe("PreferencesForm v2.1.5", () => {
   beforeEach(() => {
     cleanup();
     vi.clearAllMocks();
@@ -38,6 +39,9 @@ describe("PreferencesForm v2.1.1", () => {
     render(<PreferencesForm preferences={preferences} goal="general_health" />);
     expect(screen.getByRole("heading", { name: "Objetivo" })).toBeVisible();
     expect(screen.getByText("Academia comercial padrão")).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: /^Academia \/ máquinas\./ }),
+    ).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByLabelText("Preferência por cardio")).toHaveValue("3");
     expect(screen.queryByText("Equipamentos disponíveis")).not.toBeInTheDocument();
     expect(screen.queryByText("Hack squat")).not.toBeInTheDocument();
@@ -54,13 +58,24 @@ describe("PreferencesForm v2.1.1", () => {
     fireEvent.click(screen.getByRole("button", { name: "Salvar preferências" }));
 
     await waitFor(() => expect(mocks.rpc).toHaveBeenCalledOnce());
-    expect(mocks.rpc).toHaveBeenCalledWith("save_training_preferences_v211", {
+    expect(mocks.rpc).toHaveBeenCalledWith("save_training_preferences_v215", {
       p_goal_code: "strength",
       p_sessions_per_week: 4,
       p_session_minutes: 75,
       p_cardio_preference: 4,
       p_gym_profile: "STANDARD_COMMERCIAL_GYM",
+      p_workout_style: "gym_first",
     });
+    expect(screen.getByText("Seu treino atual continua ativo.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Atualizar meu treino" })).toBeVisible();
+  });
+
+  it("offers a new-plan preview after saving unchanged preferences", async () => {
+    render(<PreferencesForm preferences={preferences} goal="general_health" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Salvar preferências" }));
+
+    await waitFor(() => expect(mocks.rpc).toHaveBeenCalledOnce());
     expect(screen.getByText("Seu treino atual continua ativo.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Atualizar meu treino" })).toBeVisible();
   });
@@ -79,6 +94,12 @@ describe("PreferencesForm v2.1.1", () => {
               structure: "Full Body A / Full Body B / Full Body C",
               exercisesPerDay: [6, 6, 6],
               changes: ["mais foco em força"],
+              gymEquipmentSlots: 16,
+              gymEquipmentPercent: 88.9,
+              machineCableSlots: 12,
+              freeWeightSlots: 4,
+              bodyweightFloorSlots: 2,
+              bodyweightPercent: 11.1,
             },
           }),
           { status: 201 },

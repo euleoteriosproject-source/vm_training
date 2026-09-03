@@ -16,10 +16,24 @@ export type GymProfile =
   | "HOME_GYM"
   | "BODYWEIGHT_ONLY";
 
+export type WorkoutStyle = "gym_first" | "mixed" | "free_weight";
+
+export type ExerciseEnvironmentProfile =
+  | "commercial_machine"
+  | "commercial_cable"
+  | "commercial_free_weight"
+  | "bodyweight_floor"
+  | "bodyweight_station"
+  | "cardio_machine"
+  | "specialized_space";
+
+export type TechnicalComplexity = "low" | "moderate" | "high";
+
 export type ExerciseCandidate = {
   id: string;
   name: string;
   pattern: string;
+  trainingRole?: string;
   category: "strength" | "cardio" | "mobility";
   equipment: string[];
   capabilities?: string[];
@@ -29,6 +43,10 @@ export type ExerciseCandidate = {
   mediaReady?: boolean;
   autoPlanEligible?: boolean;
   eligibilityReasons?: string[];
+  environmentProfile?: ExerciseEnvironmentProfile;
+  gymEquipmentTier?: 1 | 2 | 3 | 4;
+  technicalComplexity?: TechnicalComplexity;
+  goalSuitability?: GoalCode[];
 };
 
 export type PlanInput = {
@@ -40,6 +58,7 @@ export type PlanInput = {
   equipment: string[];
   unavailableEquipment?: string[];
   gymProfile?: GymProfile;
+  workoutStyle?: WorkoutStyle;
   capabilities?: string[];
   preferences?: Record<string, "like" | "neutral" | "dislike" | "avoid">;
   movementAttentionPatterns?: string[];
@@ -72,6 +91,23 @@ export type PlanQualityMetrics = {
   mediaCoveragePercent: number;
   invalidEquipment: string[];
   ineligibleExercises: string[];
+  gymEquipmentSlots: number;
+  machineCableSlots: number;
+  freeWeightSlots: number;
+  bodyweightFloorSlots: number;
+  specializedSlots: number;
+  gymEquipmentPercent: number;
+  bodyweightPercent: number;
+  corePostureSlots: number;
+  bodyweightFloorSlotsByDay: number[];
+  gymFirstExceptions: {
+    exerciseId: string;
+    day: string;
+    rationale:
+      | "explicit_user_preference"
+      | "programming_balance"
+      | "no_media_ready_gym_alternative";
+  }[];
   goalAlignment: {
     status: "PASS" | "FAIL";
     goal: GoalCode;
@@ -95,9 +131,10 @@ export type PlanConstraintDiagnostic = {
     | "INVALID_EQUIPMENT"
     | "INELIGIBLE_EXERCISE"
     | "INSUFFICIENT_MOVEMENT_COVERAGE"
-    | "GOAL_MISALIGNED";
+    | "GOAL_MISALIGNED"
+    | "GYM_FIRST_CONSTRAINT";
   message: string;
-  actual: number | string[];
+  actual: number | string[] | Record<string, number | string[]>;
   required: number | string;
 };
 

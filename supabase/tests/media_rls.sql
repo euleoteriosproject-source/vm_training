@@ -38,7 +38,7 @@ select
   '30000000-0000-0000-0000-000000000003',now(),'approved',
   '{"correct_exercise":true,"compatible_equipment":true,"start_position_visible":true,"main_range_visible":true,"complete_repetition_visible":true,"technically_acceptable":true,"sufficient_clarity":true,"useful_framing":true,"no_blocking_elements":true,"license_confirmed":true}'::jsonb,
   true,180,true,30,'GIF_SIZE_TOO_LARGE',6
-from public.exercises limit 1;
+from public.exercises where slug = 'leg-press';
 
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"40000000-0000-0000-0000-000000000004","role":"authenticated"}',true);

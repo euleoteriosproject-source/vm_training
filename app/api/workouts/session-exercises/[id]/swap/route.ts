@@ -52,7 +52,7 @@ export async function GET(
   );
   const offset = Math.max(Number(url.searchParams.get("offset")) || 0, 0);
   const { data, error } = await supabase.rpc(
-    "get_workout_replacement_candidates_v214",
+    "get_workout_replacement_candidates_v215",
     {
       p_session_exercise_id: id,
       p_reason_code: parsedReason.data,

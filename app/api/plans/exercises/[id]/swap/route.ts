@@ -50,7 +50,7 @@ export async function GET(
   );
   const offset = Math.max(Number(url.searchParams.get("offset")) || 0, 0);
   const { data, error } = await supabase.rpc(
-    "get_plan_replacement_candidates_v214",
+    "get_plan_replacement_candidates_v215",
     {
       p_workout_day_exercise_id: id,
       p_query: query,
@@ -119,14 +119,14 @@ export async function POST(
 
   const operation =
     parsed.data.action === "replace"
-      ? supabase.rpc("replace_plan_exercise_v214", {
+      ? supabase.rpc("replace_plan_exercise_v215", {
           p_workout_day_exercise_id: id,
           p_replacement_exercise_id: parsed.data.replacementExerciseId,
           p_replacement_type: parsed.data.replacementType,
           p_reason_code: parsed.data.reasonCode,
           p_persist_exclusion: parsed.data.persistExclusion,
         })
-      : supabase.rpc("preview_plan_rebalance_v214", {
+      : supabase.rpc("preview_plan_rebalance_v215", {
           p_workout_day_exercise_id: id,
           p_desired_exercise_id: parsed.data.desiredExerciseId,
           p_reason_code: parsed.data.reasonCode,

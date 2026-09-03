@@ -4,6 +4,7 @@ import {
   generatePlanWithQuality,
   isExerciseEligible,
   PlanConstraintError,
+  scoreExercise,
 } from "./generator";
 import type { ExerciseCandidate, PlanInput } from "./types";
 
@@ -242,5 +243,98 @@ describe("generatePlan v2.1", () => {
         ).toBe("PASS");
       }
     }
+  });
+});
+
+const gymCatalog: ExerciseCandidate[] = [
+  ["leg-press", "squat", "commercial_machine", 1, "low"],
+  ["hack-squat", "squat", "commercial_machine", 1, "moderate"],
+  ["barbell-squat", "squat", "commercial_free_weight", 2, "high"],
+  ["machine-row", "horizontal_pull", "commercial_machine", 1, "low"],
+  ["cable-row", "horizontal_pull", "commercial_cable", 1, "low"],
+  ["barbell-row", "horizontal_pull", "commercial_free_weight", 2, "high"],
+  ["leg-curl", "knee_flexion", "commercial_machine", 1, "low"],
+  ["hip-machine", "hip_extension", "commercial_machine", 1, "low"],
+  ["deadlift", "hinge", "commercial_free_weight", 2, "high"],
+  ["machine-press", "horizontal_push", "commercial_machine", 1, "low"],
+  ["incline-machine", "horizontal_push", "commercial_machine", 1, "low"],
+  ["bench-press", "horizontal_push", "commercial_free_weight", 2, "moderate"],
+  ["shoulder-machine", "vertical_push", "commercial_machine", 1, "low"],
+  ["dumbbell-press", "vertical_push", "commercial_free_weight", 2, "moderate"],
+  ["lat-pulldown", "vertical_pull", "commercial_machine", 1, "low"],
+  ["neutral-pulldown", "vertical_pull", "commercial_machine", 1, "low"],
+  ["pull-up", "vertical_pull", "bodyweight_station", 3, "moderate"],
+  ["leg-extension", "knee_extension", "commercial_machine", 1, "low"],
+  ["pallof", "core_anti_rotation", "commercial_cable", 1, "low"],
+  ["plank", "core_anti_extension", "bodyweight_floor", 3, "low"],
+  ["side-plank", "core_anti_rotation", "bodyweight_floor", 3, "low"],
+  ["superman", "posture", "bodyweight_floor", 3, "low"],
+] .map(([id, pattern, environmentProfile, gymEquipmentTier, technicalComplexity]) => ({
+  ...candidate(id as string, pattern as string),
+  equipment: [],
+  trainingRole: pattern === "posture" ? "postural_control" : (pattern as string),
+  environmentProfile: environmentProfile as ExerciseCandidate["environmentProfile"],
+  gymEquipmentTier: gymEquipmentTier as ExerciseCandidate["gymEquipmentTier"],
+  technicalComplexity: technicalComplexity as ExerciseCandidate["technicalComplexity"],
+  goalSuitability: ["muscle_gain", "strength", "general_health"],
+}));
+
+const gymFirstInput: PlanInput = {
+  ...input,
+  goals: [{ code: "muscle_gain", priority: 1 }],
+  gymProfile: "STANDARD_COMMERCIAL_GYM",
+  workoutStyle: "gym_first",
+  equipment: [],
+};
+
+describe("generatePlan v2.1.5 gym-first", () => {
+  it("ranks a comparable machine above bodyweight for gym-first muscle gain", () => {
+    const machine = gymCatalog.find((exercise) => exercise.id === "lat-pulldown")!;
+    const bodyweight = gymCatalog.find((exercise) => exercise.id === "pull-up")!;
+    expect(scoreExercise(machine, gymFirstInput)).toBeGreaterThan(
+      scoreExercise(bodyweight, gymFirstInput),
+    );
+  });
+
+  it("builds a commercial-gym muscle-gain preview that passes every hard gate", () => {
+    const result = generatePlanWithQuality(gymFirstInput, gymCatalog);
+    expect(result.generatorVersion).toBe("v2.1.5");
+    expect(result.quality.gymEquipmentPercent).toBeGreaterThanOrEqual(70);
+    expect(result.quality.bodyweightPercent).toBeLessThanOrEqual(20);
+    expect(result.quality.bodyweightFloorSlots).toBeLessThanOrEqual(2);
+    expect(result.quality.bodyweightFloorSlotsByDay.every((count) => count <= 1)).toBe(true);
+    expect(result.quality.corePostureSlots).toBeLessThanOrEqual(2);
+    expect(result.quality.mediaCoveragePercent).toBe(100);
+    expect(result.quality.goalAlignment.status).toBe("PASS");
+    expect(result.quality.uniqueExercises).toBeGreaterThanOrEqual(12);
+  });
+
+  it("keeps strength meaningfully more open to free-weight compounds", () => {
+    const hypertrophy = generatePlanWithQuality(gymFirstInput, gymCatalog);
+    const strength = generatePlanWithQuality(
+      { ...gymFirstInput, goals: [{ code: "strength", priority: 1 }] },
+      gymCatalog,
+    );
+    expect(strength.quality.freeWeightSlots).toBeGreaterThanOrEqual(
+      hypertrophy.quality.freeWeightSlots,
+    );
+  });
+
+  it("returns GYM_FIRST_CONSTRAINT instead of emitting a floor-dominant plan", () => {
+    const floorCatalog = diverseCatalog.map((exercise) => ({
+      ...exercise,
+      environmentProfile: "bodyweight_floor" as const,
+      gymEquipmentTier: 3 as const,
+      technicalComplexity: "low" as const,
+      goalSuitability: ["muscle_gain" as const],
+      equipment: [],
+    }));
+    expect(() => generatePlanWithQuality(gymFirstInput, floorCatalog)).toThrowError(
+      expect.objectContaining({
+        diagnostics: expect.arrayContaining([
+          expect.objectContaining({ code: "GYM_FIRST_CONSTRAINT" }),
+        ]),
+      }),
+    );
   });
 });
