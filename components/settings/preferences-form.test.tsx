@@ -28,7 +28,7 @@ const preferences = {
   workout_style: "gym_first" as const,
 };
 
-describe("PreferencesForm v2.1.5", () => {
+describe("PreferencesForm v2.2.0", () => {
   beforeEach(() => {
     cleanup();
     vi.clearAllMocks();
@@ -100,6 +100,19 @@ describe("PreferencesForm v2.1.5", () => {
               freeWeightSlots: 4,
               bodyweightFloorSlots: 2,
               bodyweightPercent: 11.1,
+              days: [{
+                name: "Superior — força",
+                focus: "Movimentos prioritários antes de acessórios.",
+                exercises: [{
+                  name: "Supino máquina",
+                  role: "PRIMARY_PUSH",
+                  sets: 4,
+                  repMin: 3,
+                  repMax: 6,
+                  restSeconds: 150,
+                  rationale: "Atende o empurrar horizontal e apoia força.",
+                }],
+              }],
             },
           }),
           { status: 201 },
@@ -115,6 +128,8 @@ describe("PreferencesForm v2.1.5", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Atualizar meu treino" }));
     expect(await screen.findByText("Prévia do novo plano")).toBeVisible();
+    expect(screen.getByText("Superior — força")).toBeVisible();
+    expect(screen.getByText("Por que este exercício?")).toBeVisible();
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(mocks.push).not.toHaveBeenCalled();
 

@@ -6,8 +6,14 @@ import type {
   PlanInput,
   PlanQualityMetrics,
 } from "./types";
+import { buildTrainingArchitecture } from "./programming/training-architecture.ts";
+import { resolveGoalStrategy } from "./programming/goal-strategy.ts";
+import { normalizeTrainingProfile } from "./programming/profile-normalizer.ts";
+import { buildTrainingSlots } from "./programming/slot-builder.ts";
+import { compilePlan } from "./programming/plan-compiler.ts";
+import { enrichProgramQuality } from "./programming/program-quality.ts";
 
-export const GENERATOR_VERSION = "v2.1.5";
+export const GENERATOR_VERSION = "v2.2.0";
 
 const splits: Record<number, string[]> = {
   2: ["Full Body A", "Full Body B"],
@@ -532,8 +538,43 @@ function qualityDiagnostics(
   if (quality.goalAlignment.status !== "PASS")
     diagnostics.push({
       code: "GOAL_MISALIGNED",
-      message: "O plano não reflete materialmente o objetivo selecionado.",
+      message: `O plano não reflete materialmente o objetivo selecionado (${quality.goalAlignment.reasons.join(", ")}).`,
       actual: quality.goalAlignment.reasons,
+      required: "PASS",
+    });
+  if (quality.weeklyBalanceStatus === "FAIL")
+    diagnostics.push({
+      code: "WEEKLY_BALANCE",
+      message: "A distribuição semanal ficou desequilibrada para as restrições atuais.",
+      actual: quality.movementPatternDistribution,
+      required: "PASS",
+    });
+  if (quality.volumeValidationStatus === "FAIL")
+    diagnostics.push({
+      code: "VOLUME_INVALID",
+      message: "O volume prescrito ficou fora dos limites seguros do motor.",
+      actual: quality.weeklyVolumeSets ?? {},
+      required: "PASS",
+    });
+  if (quality.frequencyValidationStatus === "FAIL")
+    diagnostics.push({
+      code: "FREQUENCY_INVALID",
+      message: "A quantidade ou composição dos dias não corresponde à frequência solicitada.",
+      actual: quality.totalSlots,
+      required: "PASS",
+    });
+  if (quality.functionalRepetitionStatus === "FAIL")
+    diagnostics.push({
+      code: "FUNCTIONAL_REPETITION_INVALID",
+      message: "O plano repetiu desnecessariamente a mesma família de exercício no mesmo dia.",
+      actual: quality.exerciseFamilyFrequency ?? {},
+      required: "PASS",
+    });
+  if (quality.orderingStatus === "FAIL")
+    diagnostics.push({
+      code: "ORDERING_INVALID",
+      message: "A ordem dos exercícios não preserva os movimentos prioritários.",
+      actual: quality.roleDistribution ?? {},
       required: "PASS",
     });
   if (standardThreeDayPlan && quality.uniqueExercises < 12)
@@ -622,6 +663,8 @@ function createPrescription(exercise: ExerciseCandidate, input: PlanInput) {
   };
 }
 
+// Kept as a compatibility reference for v2.1.5 plan audits; v2.2 uses PlanCompiler.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateDiverseThreeDayPlan(
   input: PlanInput,
   eligible: Array<{ exercise: ExerciseCandidate; score: number }>,
@@ -735,6 +778,8 @@ function generateDiverseThreeDayPlan(
   }));
 }
 
+// Kept as a compatibility reference for v2.1.5 plan audits; v2.2 uses PlanCompiler.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateLegacySplit(
   input: PlanInput,
   eligible: Array<{ exercise: ExerciseCandidate; score: number }>,
@@ -847,18 +892,45 @@ export function generatePlanWithQuality(
         right.score - left.score ||
         left.exercise.id.localeCompare(right.exercise.id),
     );
-  const standardThreeDayPlan =
-    input.sessionsPerWeek === 3 && input.sessionMinutes === 60;
-  const days = standardThreeDayPlan
-    ? generateDiverseThreeDayPlan(input, eligible)
-    : generateLegacySplit(input, eligible);
-  const quality = evaluatePlanQuality(days, catalog, input);
+  const standardThreeDayPlan = input.sessionsPerWeek === 3 && input.sessionMinutes === 60;
+  if (standardThreeDayPlan && eligible.length < 12)
+    throw new PlanConstraintError([
+      {
+        code: "INSUFFICIENT_ELIGIBLE_POOL",
+        message: "O pool compatível tem menos de 12 exercícios elegíveis.",
+        actual: eligible.length,
+        required: 12,
+      },
+    ]);
+  if (eligible.length < Math.min(8, input.sessionsPerWeek * 3))
+    throw new PlanConstraintError([
+      {
+        code: "INSUFFICIENT_ELIGIBLE_POOL",
+        message: "O pool compatível não permite preencher a arquitetura com segurança.",
+        actual: eligible.length,
+        required: Math.min(8, input.sessionsPerWeek * 3),
+      },
+    ]);
+  const profile = normalizeTrainingProfile(input);
+  const strategy = resolveGoalStrategy(profile);
+  const architecture = buildTrainingArchitecture(profile, strategy);
+  const slots = buildTrainingSlots(profile, strategy, architecture);
+  const days = compilePlan(input, profile, strategy, architecture, slots, eligible);
+  const quality = enrichProgramQuality(
+    evaluatePlanQuality(days, catalog, input),
+    days,
+    catalog,
+    input.catalogVersion,
+    input.sessionsPerWeek,
+  );
   const diagnostics = qualityDiagnostics(quality, standardThreeDayPlan, input);
   if (diagnostics.length) throw new PlanConstraintError(diagnostics);
   return {
     days,
     quality,
     generatorVersion: input.generatorVersion ?? GENERATOR_VERSION,
+    architecture,
+    slots,
   };
 }
 

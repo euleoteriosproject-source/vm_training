@@ -20,7 +20,7 @@ export default async function WorkoutDayPage({
   const { data: day } = await supabase
     .from("workout_days")
     .select(
-      "id,name,estimated_minutes,workout_plan:workout_plans(id,status),workout_day_exercises(id,position,target_sets,rep_min,rep_max,rest_seconds,exercise:exercises(name_pt,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(equipment(name)),exercise_media(storage_path,poster_path,status,media_type,media_role,execution_quality,is_primary,sort_order,author,source_name,source_url,license_code,license_url,attribution_text)))",
+      "id,name,estimated_minutes,programming_focus,workout_plan:workout_plans(id,status),workout_day_exercises(id,position,target_sets,rep_min,rep_max,rest_seconds,slot_role,selection_rationale,progression_recommendation,exercise:exercises(name_pt,primary_muscles,secondary_muscles,execution_instructions,breathing_instruction,common_errors,exercise_equipment(equipment(name)),exercise_media(storage_path,poster_path,status,media_type,media_role,execution_quality,is_primary,sort_order,author,source_name,source_url,license_code,license_url,attribution_text)))",
     )
     .eq("id", id)
     .maybeSingle();
@@ -122,6 +122,9 @@ export default async function WorkoutDayPage({
         {day.estimated_minutes} min estimados
       </p>
       <h1 className="mt-1 text-3xl font-semibold">{day.name}</h1>
+      {typeof day.programming_focus === "string" && day.programming_focus && (
+        <p className="mt-2 text-sm text-muted">{day.programming_focus}</p>
+      )}
       <div className="mt-6 flex gap-3">
         {isDraft ? (
           <p className="flex min-h-11 flex-1 items-center rounded-xl bg-warning/10 px-4 text-sm text-warning sm:flex-none">
@@ -158,8 +161,19 @@ export default async function WorkoutDayPage({
                     {item.target_sets} séries · {item.rep_min}–{item.rep_max}{" "}
                     reps · {item.rest_seconds}s
                   </p>
+                  {item.slot_role && (
+                    <p className="mt-1 text-xs font-medium uppercase tracking-wide text-accent">
+                      {item.slot_role.replaceAll("_", " ")}
+                    </p>
+                  )}
                 </div>
               </div>
+              {item.selection_rationale && (
+                <details className="mt-3 rounded-lg bg-surface-alt px-3 py-2 text-sm">
+                  <summary className="cursor-pointer font-medium">Por que este exercício?</summary>
+                  <p className="mt-2 leading-5 text-muted">{item.selection_rationale}</p>
+                </details>
+              )}
               <div className="mt-4 flex gap-2 border-t pt-3">
                 <ExerciseDetails
                   exercise={item.detail}

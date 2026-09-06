@@ -34,9 +34,12 @@ type AutoPlanCatalogRow = {
   gym_equipment_tier: ExerciseCandidate["gymEquipmentTier"];
   technical_complexity: ExerciseCandidate["technicalComplexity"];
   goal_suitability: GoalCode[] | null;
+  primary_muscles: string[] | null;
+  secondary_muscles: string[] | null;
+  exercise_family: string;
+  fatigue_profile: ExerciseCandidate["fatigueProfile"];
+  stability_profile: ExerciseCandidate["stabilityProfile"];
 };
-
-type GenerateRequest = { activation?: "immediate" | "preview" };
 
 const attentionPatterns: Record<string, string[]> = {
   knee: ["squat", "knee_extension", "knee_flexion"],
@@ -59,16 +62,13 @@ function changesForGoal(goal: GoalCode) {
   return ["força, condicionamento e movimento em equilíbrio"];
 }
 
-export async function POST(request: Request) {
+export async function POST() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user)
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
-
-  const payload = (await request.json().catch(() => ({}))) as GenerateRequest;
-  const immediate = payload.activation === "immediate";
 
   const [
     { data: preferences },
@@ -102,12 +102,12 @@ export async function POST(request: Request) {
       .select("region")
       .eq("user_id", user.id)
       .eq("active", true),
-    supabase.rpc("get_auto_plan_catalog_v215"),
+    supabase.rpc("get_auto_plan_catalog_v220"),
     supabase
       .from("workout_sessions")
-      .select("workout_session_exercises(actual_exercise_id)")
+      .select("completed_at,workout_day_id,workout_session_exercises(position,actual_exercise_id,set_logs(weight_kg,reps,rpe,completed))")
       .eq("user_id", user.id)
-      .in("status", ["completed", "cancelled"])
+      .eq("status", "completed")
       .order("started_at", { ascending: false })
       .limit(10),
   ]);
@@ -168,6 +168,11 @@ export async function POST(request: Request) {
     gymEquipmentTier: row.gym_equipment_tier,
     technicalComplexity: row.technical_complexity,
     goalSuitability: row.goal_suitability ?? [],
+    primaryMuscles: row.primary_muscles ?? [],
+    secondaryMuscles: row.secondary_muscles ?? [],
+    exerciseFamily: row.exercise_family,
+    fatigueProfile: row.fatigue_profile,
+    stabilityProfile: row.stability_profile,
   }));
   const recentExerciseIds = [
     ...new Set(
@@ -178,6 +183,38 @@ export async function POST(request: Request) {
       ),
     ),
   ];
+  const recentDayIds = [
+    ...new Set((recentSessions ?? []).map((session) => session.workout_day_id).filter(Boolean)),
+  ] as string[];
+  const { data: recentPrescriptions } = recentDayIds.length
+    ? await supabase
+        .from("workout_day_exercises")
+        .select("workout_day_id,position,target_sets,rep_min,rep_max")
+        .in("workout_day_id", recentDayIds)
+    : { data: [] };
+  const prescriptionBySlot = new Map(
+    (recentPrescriptions ?? []).map((item) => [
+      `${item.workout_day_id}:${item.position}`,
+      item,
+    ]),
+  );
+  const performanceHistory = (recentSessions ?? []).flatMap((session) =>
+    (session.workout_session_exercises ?? []).map((exercise) => {
+      const prescription = prescriptionBySlot.get(`${session.workout_day_id}:${exercise.position}`);
+      const completedSets = (exercise.set_logs ?? []).filter((set) => set.completed);
+      return {
+        exerciseId: exercise.actual_exercise_id,
+        completedAt: session.completed_at ?? "",
+        prescribedSets: prescription?.target_sets ?? exercise.set_logs?.length ?? 0,
+        completedSets: completedSets.length,
+        prescribedRepMin: prescription?.rep_min ?? 0,
+        prescribedRepMax: prescription?.rep_max ?? 0,
+        actualReps: completedSets.flatMap((set) => set.reps == null ? [] : [set.reps]),
+        loadKg: completedSets.flatMap((set) => set.weight_kg == null ? [] : [set.weight_kg]),
+        rpe: completedSets.find((set) => set.rpe != null)?.rpe ?? undefined,
+      };
+    }),
+  );
   const movementAttentionPatterns = [
     ...new Set(
       (movementAttention ?? []).flatMap(
@@ -204,20 +241,25 @@ export async function POST(request: Request) {
       preferences: preferenceMap,
       movementAttentionPatterns,
       recentExerciseIds,
+      performanceHistory,
+      catalogVersion: "production-v220",
       generatorVersion: GENERATOR_VERSION,
     };
     const generated = generatePlanWithQuality(input, catalog);
     const { data: previewData, error: previewError } = await supabase.rpc(
-      "create_plan_preview_v215",
+      "create_plan_preview_v220",
       {
         p_days: generated.days,
         p_generator_version: generated.generatorVersion,
         p_rationale: {
-          strategy: "goal-driven-gym-first-v215",
+          strategy: "strategy-first-personal-engine-v220",
+          architecture: generated.architecture,
+          selectedSlots: generated.slots,
           quality: generated.quality,
           gymProfile,
           workoutStyle: input.workoutStyle,
           recentExerciseWindow: recentExerciseIds.length,
+          performanceRecordCount: performanceHistory.length,
         },
       },
     );
@@ -228,18 +270,11 @@ export async function POST(request: Request) {
       goal: GoalCode;
     };
 
-    if (immediate) {
-      const { error: activationError } = await supabase.rpc(
-        "activate_plan_v215",
-        { p_plan_id: result.planId },
-      );
-      if (activationError) throw activationError;
-    }
-
+    const catalogById = new Map(catalog.map((exercise) => [exercise.id, exercise]));
     return NextResponse.json(
       {
         id: result.planId,
-        status: immediate ? ("active" as const) : ("draft" as const),
+        status: "draft" as const,
         generatorVersion: generated.generatorVersion,
         quality: result.quality,
         preview: {
@@ -256,6 +291,21 @@ export async function POST(request: Request) {
           freeWeightSlots: generated.quality.freeWeightSlots,
           bodyweightFloorSlots: generated.quality.bodyweightFloorSlots,
           bodyweightPercent: generated.quality.bodyweightPercent,
+          architecture: generated.architecture,
+          days: generated.days.map((day) => ({
+            name: day.name,
+            focus: day.focus,
+            exercises: day.exercises.map((exercise) => ({
+              name: catalogById.get(exercise.exerciseId)?.name ?? "Exercício",
+              role: exercise.slotRole,
+              sets: exercise.sets,
+              repMin: exercise.repMin,
+              repMax: exercise.repMax,
+              restSeconds: exercise.restSeconds,
+              rationale: exercise.rationale,
+              progression: exercise.progression,
+            })),
+          })),
         },
       },
       { status: 201 },

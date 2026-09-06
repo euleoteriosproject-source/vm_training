@@ -79,7 +79,10 @@ describe("generatePlan v2.1", () => {
   it("meets the standard diversity and coverage gates", () => {
     const result = generatePlanWithQuality(input, diverseCatalog);
     expect(result.quality.uniqueExercises).toBeGreaterThanOrEqual(12);
-    expect(result.quality.uniqueExercises).toBeLessThanOrEqual(15);
+    expect(
+      result.quality.uniqueExercises,
+      JSON.stringify(result.days.map((day) => day.exercises.map((exercise) => exercise.exerciseId))),
+    ).toBeLessThanOrEqual(15);
     expect(result.quality.maxExactExerciseFrequency).toBeLessThanOrEqual(2);
     expect(result.quality.exactExerciseOnAllDays).toEqual([]);
     expect(
@@ -298,7 +301,7 @@ describe("generatePlan v2.1.5 gym-first", () => {
 
   it("builds a commercial-gym muscle-gain preview that passes every hard gate", () => {
     const result = generatePlanWithQuality(gymFirstInput, gymCatalog);
-    expect(result.generatorVersion).toBe("v2.1.5");
+    expect(result.generatorVersion).toBe("v2.2.0");
     expect(result.quality.gymEquipmentPercent).toBeGreaterThanOrEqual(70);
     expect(result.quality.bodyweightPercent).toBeLessThanOrEqual(20);
     expect(result.quality.bodyweightFloorSlots).toBeLessThanOrEqual(2);

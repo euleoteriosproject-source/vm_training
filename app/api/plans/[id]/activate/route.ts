@@ -21,7 +21,9 @@ export async function POST(
     .eq("status", "draft")
     .maybeSingle();
   const rpc =
-    plan?.generator_version === "v2.1.5"
+    plan?.generator_version === "v2.2.0"
+      ? "activate_plan_v220"
+      : plan?.generator_version === "v2.1.5"
       ? "activate_plan_v215"
       : "activate_plan_v211";
   const { data, error } = await supabase.rpc(rpc, {

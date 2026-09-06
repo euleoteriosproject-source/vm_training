@@ -33,6 +33,20 @@ type PlanPreview = {
   freeWeightSlots: number;
   bodyweightFloorSlots: number;
   bodyweightPercent: number;
+  days: {
+    name: string;
+    focus?: string;
+    exercises: {
+      name: string;
+      role?: string;
+      sets: number;
+      repMin: number;
+      repMax: number;
+      restSeconds: number;
+      rationale?: string;
+      progression?: { state: string; reason: string };
+    }[];
+  }[];
 };
 
 const styleOptions: Array<[WorkoutStyle, string, string]> = [
@@ -318,6 +332,39 @@ export function PreferencesForm({
               </ul>
             </div>
           )}
+          <div className="mt-5 space-y-3">
+            {(preview.days ?? []).map((day) => (
+              <section key={day.name} className="rounded-xl border p-4">
+                <h3 className="font-semibold">{day.name}</h3>
+                {day.focus && <p className="mt-1 text-xs text-muted">{day.focus}</p>}
+                <ol className="mt-3 space-y-3">
+                  {day.exercises.map((exercise, index) => (
+                    <li key={`${exercise.name}-${index}`} className="text-sm">
+                      <div className="flex items-start justify-between gap-3">
+                        <span>
+                          <strong>{index + 1}. {exercise.name}</strong>
+                          <span className="mt-0.5 block text-xs text-muted">
+                            {exercise.sets} séries · {exercise.repMin}–{exercise.repMax} reps · {exercise.restSeconds}s
+                          </span>
+                        </span>
+                        {exercise.role && (
+                          <span className="rounded-full bg-accent/10 px-2 py-1 text-[10px] font-semibold text-accent">
+                            {exercise.role.replaceAll("_", " ")}
+                          </span>
+                        )}
+                      </div>
+                      {exercise.rationale && (
+                        <details className="mt-2 rounded-lg bg-surface-alt px-3 py-2">
+                          <summary className="cursor-pointer font-medium">Por que este exercício?</summary>
+                          <p className="mt-2 leading-5 text-muted">{exercise.rationale}</p>
+                        </details>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ))}
+          </div>
           <p className="mt-4 text-sm text-muted">
             Seu plano atual só será arquivado depois da sua confirmação.
           </p>
