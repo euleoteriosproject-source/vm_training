@@ -102,8 +102,13 @@ export function enrichProgramQuality(
     .filter((exercise): exercise is ExerciseCandidate => Boolean(exercise));
   const poorEnvironmentFit = input?.gymProfile === "STANDARD_COMMERCIAL_GYM" &&
     (input.workoutStyle ?? "gym_first") === "gym_first" &&
-    selectedExercises.some((exercise) =>
-      exercise.environmentProfile === "bodyweight_floor" &&
+    selectedExercises.some((exercise) => {
+      const postureUnsupportedFreeWeight = input.goals
+        .slice()
+        .sort((left, right) => left.priority - right.priority || left.code.localeCompare(right.code))[0]?.code === "posture" &&
+        exercise.environmentProfile === "commercial_free_weight" &&
+        (exercise.technicalComplexity === "high" || exercise.stabilityProfile !== "high");
+      const avoidableFloorExercise = exercise.environmentProfile === "bodyweight_floor" &&
       input.preferences?.[exercise.id] !== "like" &&
       catalog.some((alternative) =>
         alternative.id !== exercise.id &&
@@ -112,8 +117,9 @@ export function enrichProgramQuality(
         alternative.mediaReady !== false &&
         alternative.pattern === exercise.pattern &&
         ["commercial_machine", "commercial_cable", "commercial_free_weight"].includes(alternative.environmentProfile ?? ""),
-      ),
-    );
+      );
+      return postureUnsupportedFreeWeight || avoidableFloorExercise;
+    });
   const environmentContextFitStatus = poorEnvironmentFit ? "FAIL" : "PASS";
   return {
     ...quality,

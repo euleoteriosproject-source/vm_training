@@ -236,6 +236,7 @@ export type PlanQualityMetrics = {
   gymEquipmentSlots: number;
   machineCableSlots: number;
   freeWeightSlots: number;
+  unsupportedFreeWeightSlots: number;
   bodyweightFloorSlots: number;
   specializedSlots: number;
   gymEquipmentPercent: number;

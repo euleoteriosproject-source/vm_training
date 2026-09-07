@@ -9,14 +9,21 @@ import { sha256File } from "../../lib/media/hash.ts";
 import { getAdminClient, log, parseArgs } from "./shared.ts";
 
 const isV21 = process.argv.includes("--v21");
-const DATASET_PATH = isV21
+const isGuidedPostureV22 = process.argv.includes("--guided-posture-v22");
+const DATASET_PATH = isGuidedPostureV22
+  ? "data/media/media-v22-guided-posture.json"
+  : isV21
   ? "data/media/media-v21.json"
   : "data/media/media-v20.json";
-const expectedVersion = isV21 ? "2.1" : "2.0";
-const expectedAgent = isV21
+const expectedVersion = isGuidedPostureV22
+  ? "2.2-guided-posture"
+  : isV21 ? "2.1" : "2.0";
+const expectedAgent = isGuidedPostureV22
+  ? "vm-media-validator-v22-guided-posture"
+  : isV21
   ? "vm-media-validator-v21"
   : "vm-media-validator-v20";
-const expectedDecisionCount = isV21 ? 26 : 3;
+const expectedDecisionCount = isGuidedPostureV22 ? 5 : isV21 ? 26 : 3;
 const ALLOWED_SOURCE_HOSTS = new Set([
   "upload.wikimedia.org",
   "d34w7g4gy10iej.cloudfront.net",
@@ -94,6 +101,11 @@ async function ensureSource(decision: Decision) {
     if (error instanceof Error && !/ENOENT/.test(error.message)) throw error;
   }
 
+  // The guided-posture inputs are audited two-frame derivatives committed to
+  // the repository. A single upstream frame cannot safely recreate them.
+  if (isGuidedPostureV22)
+    throw new Error(`${decision.exercise}: derivado versionado ausente`);
+
   const sourceUrl = new URL(decision.originalFileUrl);
   if (
     sourceUrl.protocol !== "https:" ||
@@ -146,7 +158,10 @@ for (const decision of dataset.decisions) {
   const artifact = await prepareLocalArtifact({
     exerciseSlug: decision.exercise,
     inputPath: sourcePath,
-    outputDirectory: path.resolve(".tmp/media-v20/prepared", decision.exercise),
+    outputDirectory: path.resolve(
+      isGuidedPostureV22 ? ".tmp/media-v22-guided/prepared" : ".tmp/media-v20/prepared",
+      decision.exercise,
+    ),
     trimStart: decision.trimStart,
     trimEnd: decision.trimEnd,
     mediaRole: "PRIMARY_DEMO",
@@ -161,7 +176,7 @@ for (const decision of dataset.decisions) {
     artifact.frameCount <= 1 ||
     !artifact.animationLoop
   )
-    throw new Error(`${decision.exercise}: artefato diverge da revisao v2.0`);
+    throw new Error(`${decision.exercise}: artefato diverge da revisao ${expectedVersion}`);
   prepared.set(decision.exercise, { ...artifact, sourcePath });
   log(
     "DRY-RUN",
@@ -436,7 +451,7 @@ for (const decision of dataset.decisions) {
     throw error;
   }
 }
-if (isV21) {
+if (isV21 || isGuidedPostureV22) {
   for (const decision of dataset.decisions) {
     const { data: exercise, error: exerciseError } = await client
       .from("exercises")
@@ -457,7 +472,7 @@ if (isV21) {
       throw new Error(`${decision.exercise}: hash diverge antes da publicação`);
     if (candidate.status !== "approved") {
       const { error: publishError } = await client.rpc(
-        "publish_v21_automated_media",
+        isGuidedPostureV22 ? "publish_v22_guided_media" : "publish_v21_automated_media",
         {
           p_media_id: candidate.id,
           p_expected_content_hash: decision.artifactSha256,
@@ -485,12 +500,12 @@ if (isV21) {
       verifyRemoteObject(client, published.storage_path, decision.artifactSha256),
       verifyRemoteObject(client, published.poster_path, decision.posterSha256),
     ]);
-    log("PUBLISHED", `${decision.exercise}: PRIMARY v2.1 verificada`);
+    log("PUBLISHED", `${decision.exercise}: PRIMARY ${expectedVersion} verificada`);
   }
 }
 log(
   "NEXT",
-  isV21
+  isV21 || isGuidedPostureV22
     ? `${expectedDecisionCount}/${expectedDecisionCount} publicadas e verificadas`
     : `${expectedDecisionCount}/${expectedDecisionCount} processadas; publicar somente por migration automatizada revisada`,
 );

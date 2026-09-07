@@ -2,7 +2,7 @@
 begin;
 grant usage on schema extensions to anon, authenticated, service_role;
 set local search_path = public, extensions;
-select plan(32);
+select plan(34);
 
 select is(
   (select count(*)::integer from information_schema.role_table_grants
@@ -46,6 +46,17 @@ select is(
   (select prosecdef from pg_proc where oid = 'public.publish_v21_automated_media(uuid,text)'::regprocedure),
   true,
   'v2.1 publisher is a guarded SECURITY DEFINER operation'
+);
+select ok(
+  has_function_privilege('service_role', 'public.publish_v22_guided_media(uuid,text)', 'execute')
+  and not has_function_privilege('authenticated', 'public.publish_v22_guided_media(uuid,text)', 'execute')
+  and not has_function_privilege('anon', 'public.publish_v22_guided_media(uuid,text)', 'execute'),
+  'only service_role can execute the hash-bound guided-media publisher'
+);
+select is(
+  (select prosecdef from pg_proc where oid = 'public.publish_v22_guided_media(uuid,text)'::regprocedure),
+  true,
+  'guided-media publisher is a guarded SECURITY DEFINER operation'
 );
 select ok(not has_function_privilege('anon', 'public.hook_restrict_signup(jsonb)', 'execute'),
   'anon cannot execute the Auth Hook');
@@ -126,8 +137,8 @@ select is(
    cross join (values ('anon'), ('authenticated'), ('service_role'), ('supabase_auth_admin')) roles(role_name)
    where schema.nspname in ('public', 'private')
      and has_function_privilege(roles.role_name, function.oid, 'execute')),
-  84,
-  'canonical function ACL has exactly 84 grants after the two v2.2.1 owner RPCs'
+  85,
+  'canonical function ACL has exactly 85 grants after the guided-media publisher'
 );
 
 select ok(has_table_privilege('authenticated', 'public.gym_equipment_presets', 'select'),

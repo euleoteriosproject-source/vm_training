@@ -55,6 +55,7 @@ export function buildTrainingSlotDecision(
         position,
         strategy.patternPriorities,
         usedPrimaryPatterns,
+        profile.primaryGoal,
       );
       usedPrimaryPatterns.add(slotPatterns[0]);
       const fatigueBudget = position === 0 ? "high" : position < 4 ? "medium" : "low";
@@ -150,6 +151,7 @@ function patternsForRole(
   position: number,
   priorities: string[],
   usedPrimaryPatterns: Set<string>,
+  primaryGoal: NormalizedTrainingProfile["primaryGoal"],
 ) {
   const rolePatterns: Partial<Record<TrainingRole, string[]>> = {
     PRIMARY_LOWER: ["squat", "hinge", "hip_extension", "knee_extension"],
@@ -165,7 +167,12 @@ function patternsForRole(
     ACCESSORY: ["knee_flexion", "knee_extension", "hip_extension", "vertical_push", "vertical_pull", "carry", "posture"],
     ISOLATION: ["knee_flexion", "knee_extension", "hip_extension", "posture", "vertical_push"],
   };
-  const allowed = rolePatterns[role] ?? priorities;
+  // Generic stretching is not a substitute for supported strength/postural
+  // work in a posture-focused plan. Mobility remains available for the
+  // dedicated mobility goal.
+  const allowed = role === "CORRECTIVE" && primaryGoal === "posture"
+    ? ["posture", "core_anti_rotation"]
+    : rolePatterns[role] ?? priorities;
   const ordered = [...bias, ...priorities, ...allowed].filter((pattern, index, all) => allowed.includes(pattern) && all.indexOf(pattern) === index);
   const rotated = [
     ...ordered.filter((pattern) => !usedPrimaryPatterns.has(pattern)),

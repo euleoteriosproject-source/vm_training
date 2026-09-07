@@ -44,6 +44,8 @@
     "media:complete:v20:apply": "node --experimental-strip-types scripts/media/complete-v20.ts --apply --allow-production --confirm-visual",
     "media:complete:v21": "node --experimental-strip-types scripts/media/complete-v20.ts --v21 --dry-run",
     "media:complete:v21:apply": "node --experimental-strip-types scripts/media/complete-v20.ts --v21 --apply --allow-production --confirm-visual",
+    "media:guided-posture:v22": "node --experimental-strip-types scripts/media/complete-v20.ts --guided-posture-v22 --dry-run",
+    "media:guided-posture:v22:apply": "node --experimental-strip-types scripts/media/complete-v20.ts --guided-posture-v22 --apply --allow-production --confirm-visual",
     "plan:reconcile:v20": "node --experimental-strip-types scripts/production/reconcile-v20-plan.ts --dry-run",
     "plan:reconcile:v20:apply": "node --experimental-strip-types scripts/production/reconcile-v20-plan.ts --apply --allow-production",
     "plan:reconcile:v21": "node --experimental-strip-types scripts/production/reconcile-v21-plan.ts --dry-run",

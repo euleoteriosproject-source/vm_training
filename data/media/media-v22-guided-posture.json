@@ -1,0 +1,172 @@
+{
+  "version": "2.2-guided-posture",
+  "projectRef": "inghftngeritrsezwxnm",
+  "reviewMethod": "automated_assisted_visual_inspection",
+  "reviewAgent": "vm-media-validator-v22-guided-posture",
+  "humanReviewClaimed": false,
+  "remoteWrites": 0,
+  "decisionCount": 5,
+  "decisions": [
+    {
+      "exercise": "hack-squat",
+      "sourceFile": "data/media/assets/guided-posture-v22/hack-squat.gif",
+      "title": "Hack squat machine — animated two-position derivative",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hack_squat_machine_1.svg",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Hack_squat_machine_1.svg",
+      "licenseCode": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "author": "Everkinetic",
+      "attributionRequired": true,
+      "attributionText": "Hack squat machine 1.svg e Narrow stance hack squats 2.svg. Autor: Everkinetic. Licença: CC-BY-SA-3.0. Fonte: Wikimedia Commons. Animação derivada pelo VM Training.",
+      "trimStart": 0,
+      "trimEnd": 6,
+      "posterTimestamp": 2.8,
+      "sourceSha256": "b4575a19370404e78e8077a08047ffaf45995855de4c764b22317b30e3915fcc",
+      "artifactSha256": "4bfc51034fa778d8c43cc0e411341adee7f3137fefeaee5689e0dd3762835ad3",
+      "posterSha256": "55864e18664392b1aa447b1b2db10fc643cf75a8b210b154a65c1a3918ecb615",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Hack_squat_machine_1.svg",
+        "https://commons.wikimedia.org/wiki/File:Narrow_stance_hack_squats_2.svg",
+        "https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "reason": "Duas posições distintas mostram exatamente o agachamento guiado com apoio dorsal e trajetória fixa.",
+      "frameSources": [
+        { "title": "Hack squat machine 1.svg", "sha256": "4625a2a32987b02f85593fd4ba4ff54b107e13e513264384c7724c018d7e6ee4" },
+        { "title": "Narrow stance hack squats 2.svg", "sha256": "f8264ca869165c7a4e7871918bef1f020a2024c5aaee1e7885028911742ee41a" }
+      ]
+    },
+    {
+      "exercise": "lying-leg-curl",
+      "sourceFile": "data/media/assets/guided-posture-v22/lying-leg-curl.gif",
+      "title": "Lying leg curl machine — animated two-position derivative",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lying_leg_curl_machine_1.svg",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Lying_leg_curl_machine_1.svg",
+      "licenseCode": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "author": "Everkinetic",
+      "attributionRequired": true,
+      "attributionText": "Lying leg curl machine 1.svg e 2.svg. Autor: Everkinetic. Licença: CC-BY-SA-3.0. Fonte: Wikimedia Commons. Animação derivada pelo VM Training.",
+      "trimStart": 0,
+      "trimEnd": 6,
+      "posterTimestamp": 2.8,
+      "sourceSha256": "f464150a6111cd90735c9e8e2aec420bc814766cdbbb3f7ae861c91a7584164b",
+      "artifactSha256": "861e6827fc35be65f534d1494718ace96060edc26701fe569112a590fc5c1753",
+      "posterSha256": "a396805954eb9faf0bbf435357bef5eb3802fc441bb6337acb53093a0f08a9b2",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Lying_leg_curl_machine_1.svg",
+        "https://commons.wikimedia.org/wiki/File:Lying_leg_curl_machine_2.svg",
+        "https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "reason": "Duas posições distintas mostram exatamente a flexão de joelhos deitada na mesa flexora.",
+      "frameSources": [
+        { "title": "Lying leg curl machine 1.svg", "sha256": "c91d9ec7e5e546d254542250eb246a3842748b7bd7945c8f05ea116c43214f8e" },
+        { "title": "Lying leg curl machine 2.svg", "sha256": "e94e747c32389860cc22238314fc1a21abb90864dda78cc801666db05a8cbfe9" }
+      ]
+    },
+    {
+      "exercise": "seated-row",
+      "sourceFile": "data/media/assets/guided-posture-v22/seated-row.gif",
+      "title": "Seated cable row — animated two-position derivative",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seated_cable_rows_1.svg",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/Seated_cable_rows_1.svg",
+      "licenseCode": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "author": "Everkinetic",
+      "attributionRequired": true,
+      "attributionText": "Seated cable rows 1.svg e 2.svg. Autor: Everkinetic. Licença: CC-BY-SA-3.0. Fonte: Wikimedia Commons. Animação derivada pelo VM Training.",
+      "trimStart": 0,
+      "trimEnd": 6,
+      "posterTimestamp": 2.8,
+      "sourceSha256": "16b399f9b2289b7582ccfbb876ff37d7df3c832205459f13bca4a5528b290a85",
+      "artifactSha256": "f9431d7c3da1de1e0bfc84d2f856b5e57b4d0b576c23c4faff37edd9fcbf4a54",
+      "posterSha256": "0fe8588bf4b3ec73638f944be9c2dd1bf5237a113bbc668b393e770b9690efcc",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Seated_cable_rows_1.svg",
+        "https://commons.wikimedia.org/wiki/File:Seated_cable_rows_2.svg",
+        "https://www.acefitness.org/resources/everyone/exercise-library/48/seated-row/",
+        "https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "reason": "Duas posições distintas mostram exatamente a remada baixa sentada no cabo com apoio dos pés.",
+      "frameSources": [
+        { "title": "Seated cable rows 1.svg", "sha256": "2cee2d7b24932cdda7401ae4689b3f30218ab95317fa3c1fe24b30be751dcd3c" },
+        { "title": "Seated cable rows 2.svg", "sha256": "512e64e3ce9562ce0bc8add56fc812346c10fcab6ab02a65b1f4c8348838e170" }
+      ]
+    },
+    {
+      "exercise": "incline-machine-press",
+      "sourceFile": "data/media/assets/guided-posture-v22/incline-machine-press.gif",
+      "title": "Incline chest press machine — animated two-position derivative",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Incline_chest_press_1.svg",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Incline_chest_press_1.svg",
+      "licenseCode": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "author": "Everkinetic",
+      "attributionRequired": true,
+      "attributionText": "Incline chest press 1.svg e 2.svg. Autor: Everkinetic. Licença: CC-BY-SA-3.0. Fonte: Wikimedia Commons. Animação derivada pelo VM Training.",
+      "trimStart": 0,
+      "trimEnd": 6,
+      "posterTimestamp": 2.8,
+      "sourceSha256": "6f22e29ff96c54942aee67ddacbf9f925953effe52046efb586e3ed2ece99025",
+      "artifactSha256": "904a1c96a06c6efff2597375cd0c994d97a2db205136dfcd8439c56f44c0a20b",
+      "posterSha256": "268ac1748f4db21f5c8c20eeb4442691441fb90445ac9384173cf453ddbe22d7",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Incline_chest_press_1.svg",
+        "https://commons.wikimedia.org/wiki/File:Incline_chest_press_2.svg",
+        "https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "reason": "Duas posições distintas mostram exatamente o supino inclinado em máquina com encosto.",
+      "frameSources": [
+        { "title": "Incline chest press 1.svg", "sha256": "7807670cd2b2acb67527526ce25b668ff0bd61b13274654ea744a1faa163d888" },
+        { "title": "Incline chest press 2.svg", "sha256": "431abb6ec1bbe64fe6dee789bebec6b53c13bf1e061c797d76ceeb4fa6ed7e80" }
+      ]
+    },
+    {
+      "exercise": "machine-fly",
+      "sourceFile": "data/media/assets/guided-posture-v22/machine-fly.gif",
+      "title": "Butterfly machine — animated two-position derivative",
+      "sourceName": "Wikimedia Commons",
+      "sourceType": "creative_commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Butterfly_machine_1.svg",
+      "originalFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/30/Butterfly_machine_1.svg",
+      "licenseCode": "CC-BY-SA-3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "author": "Everkinetic",
+      "attributionRequired": true,
+      "attributionText": "Butterfly machine 1.svg e 2.svg. Autor: Everkinetic. Licença: CC-BY-SA-3.0. Fonte: Wikimedia Commons. Animação derivada pelo VM Training.",
+      "trimStart": 0,
+      "trimEnd": 6,
+      "posterTimestamp": 2.8,
+      "sourceSha256": "f77d53b8e3212d2f9e7c8fb411b0e51620e2de440516ddd8311e247f0c3451b0",
+      "artifactSha256": "0a7b91b19d9a6d70481d478dfa02864fbab83a960660903956622466e27eadec",
+      "posterSha256": "efcd8e5d7642de8311df54518ae0c0ba2f19f36ddf5045bd79fd721d169fd376",
+      "mediaType": "gif",
+      "fallbackReason": null,
+      "references": [
+        "https://commons.wikimedia.org/wiki/File:Butterfly_machine_1.svg",
+        "https://commons.wikimedia.org/wiki/File:Butterfly_machine_2.svg",
+        "https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "reason": "Duas posições distintas mostram exatamente o crucifixo no peck deck com encosto.",
+      "frameSources": [
+        { "title": "Butterfly machine 1.svg", "sha256": "b517095bbc7bca33ad6a0055006dd4d53761ac55b2accfc559e99b548fd03543" },
+        { "title": "Butterfly machine 2.svg", "sha256": "3b8084f3947a62a187c92bb98dd77772b4e9d30006fc5bdfec448536d6ff33e4" }
+      ]
+    }
+  ]
+}

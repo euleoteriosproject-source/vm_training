@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generatePlanWithQuality, scoreExercise } from "../generator";
+import { generatePlanWithQuality, isExerciseEligible, scoreExercise } from "../generator";
 import type {
   ExerciseCandidate,
   GoalCode,
@@ -106,6 +106,73 @@ describe("v2.2.1 programming quality refinement", () => {
     expect(posture.quality.goalAlignment.status).toBe("PASS");
     expect(posture.quality.goalAlignment.strengthSlots).toBeGreaterThanOrEqual(9);
     expect(posture.days).not.toEqual(muscle.days);
+  });
+
+  it("rejects unsupported free weights and generic stretching for posture at a commercial gym", () => {
+    const unsupported = {
+      ...exercise("barbell-back-squat", "squat", "commercial_free_weight", "strength", "barbell-squat"),
+      technicalComplexity: "high" as const,
+      stabilityProfile: "moderate" as const,
+    };
+    expect(isExerciseEligible(unsupported, baseInput)).toBe(false);
+
+    const result = generatePlanWithQuality(baseInput, [...catalog, unsupported]);
+    const selected = result.days.flatMap((day) => day.exercises)
+      .map((item) => [...catalog, unsupported].find((candidate) => candidate.id === item.exerciseId)!);
+    expect(selected.some((candidate) => candidate.id === unsupported.id)).toBe(false);
+    expect(selected.some((candidate) => candidate.category === "mobility")).toBe(false);
+    expect(result.quality.unsupportedFreeWeightSlots).toBe(0);
+  });
+
+  it("builds the production-like posture week entirely from 13 guided options", () => {
+    const guided = [
+      ["hack-squat", "squat", "commercial_machine"],
+      ["leg-press", "squat", "commercial_machine"],
+      ["seated-row", "horizontal_pull", "commercial_cable"],
+      ["machine-row", "horizontal_pull", "commercial_machine"],
+      ["incline-machine-press", "horizontal_push", "commercial_machine"],
+      ["machine-chest-press", "horizontal_push", "commercial_machine"],
+      ["machine-fly", "horizontal_push", "commercial_machine"],
+      ["lying-leg-curl", "knee_flexion", "commercial_machine"],
+      ["seated-leg-curl", "knee_flexion", "commercial_machine"],
+      ["leg-extension", "knee_extension", "commercial_machine"],
+      ["lat-pulldown", "vertical_pull", "commercial_machine"],
+      ["machine-shoulder-press", "vertical_push", "commercial_machine"],
+      ["back-extension-machine", "posture", "commercial_machine"],
+    ].map(([id, pattern, environment]) => exercise(
+      id,
+      pattern,
+      environment as ExerciseCandidate["environmentProfile"],
+      "strength",
+      id,
+    ));
+    const unsafeAndGeneric = [
+      ["barbell-back-squat", "squat"],
+      ["conventional-deadlift", "hinge"],
+      ["bent-over-barbell-row", "horizontal_pull"],
+      ["incline-barbell-press", "horizontal_push"],
+    ].map(([id, pattern]) => ({
+      ...exercise(id, pattern, "commercial_free_weight", "strength", id),
+      technicalComplexity: "high" as const,
+      stabilityProfile: "moderate" as const,
+    }));
+    const stretch = exercise(
+      "seated-hamstring-stretch",
+      "mobility",
+      "bodyweight_floor",
+      "mobility",
+      "hamstring-stretch",
+    );
+
+    const result = generatePlanWithQuality(baseInput, [...guided, ...unsafeAndGeneric, stretch]);
+    expect(result.quality).toMatchObject({
+      totalSlots: 15,
+      uniqueExercises: 13,
+      machineCableSlots: 15,
+      unsupportedFreeWeightSlots: 0,
+      bodyweightFloorSlots: 0,
+      programQualityStatus: "PASS",
+    });
   });
 
   it("keeps the commercial back-extension capability eligible for posture plans", () => {

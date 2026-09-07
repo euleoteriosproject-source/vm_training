@@ -147,6 +147,15 @@ function isGymFirst(input: PlanInput) {
   );
 }
 
+function isPostureGymFirst(input: PlanInput) {
+  return isGymFirst(input) && primaryGoal(input) === "posture";
+}
+
+function isUnsupportedFreeWeight(exercise: ExerciseCandidate) {
+  return exerciseEnvironment(exercise) === "commercial_free_weight" &&
+    (exercise.technicalComplexity === "high" || exercise.stabilityProfile !== "high");
+}
+
 function gymFirstMuscleGain(input: PlanInput) {
   return isGymFirst(input) && primaryGoal(input) === "muscle_gain";
 }
@@ -186,6 +195,10 @@ export function isExerciseEligible(
   if (input.preferences?.[exercise.id] === "avoid") return false;
   if (input.experience === "beginner" && exercise.difficulty === "advanced")
     return false;
+  // A posture-focused gym plan must not prescribe technically demanding,
+  // unsupported free-weight work when guided equipment was explicitly chosen.
+  // Stable, supported free-weight variants remain available.
+  if (isPostureGymFirst(input) && isUnsupportedFreeWeight(exercise)) return false;
   if (input.movementAttentionPatterns?.includes(exercise.pattern)) return false;
   return hasCompatibleEquipment(exercise, input);
 }
@@ -371,6 +384,7 @@ export function evaluatePlanQuality(
   const freeWeightSlots = exercises.filter(
     (exercise) => exerciseEnvironment(exercise) === "commercial_free_weight",
   ).length;
+  const unsupportedFreeWeightSlots = exercises.filter(isUnsupportedFreeWeight).length;
   const bodyweightFloorSlots = exercises.filter(isBodyweight).length;
   const specializedSlots = exercises.filter(
     (exercise) => exerciseEnvironment(exercise) === "specialized_space",
@@ -435,6 +449,7 @@ export function evaluatePlanQuality(
     gymEquipmentSlots,
     machineCableSlots,
     freeWeightSlots,
+    unsupportedFreeWeightSlots,
     bodyweightFloorSlots,
     specializedSlots,
     gymEquipmentPercent: percentage(gymEquipmentSlots, slots.length),
@@ -651,6 +666,23 @@ function qualityDiagnostics(
         corePostureSlots: quality.corePostureSlots,
       },
       required: ">= 70% academia, <= 20% peso corporal, <= 2 no chão e <= 2 core/postura",
+    });
+  if (
+    isPostureGymFirst(input) &&
+    ((quality.unsupportedFreeWeightSlots ?? 0) > 0 ||
+      quality.machineCableSlots / Math.max(1, quality.totalSlots) < 0.7 ||
+      quality.bodyweightPercent > 20)
+  )
+    diagnostics.push({
+      code: "GYM_FIRST_CONSTRAINT",
+      message:
+        "O catálogo ou as restrições atuais não permitem um plano de postura com apoio e predominância de máquinas/cabos.",
+      actual: {
+        machineCableSlots: quality.machineCableSlots,
+        unsupportedFreeWeightSlots: quality.unsupportedFreeWeightSlots ?? 0,
+        bodyweightPercent: quality.bodyweightPercent,
+      },
+      required: ">= 70% máquinas/cabos, zero peso livre sem apoio e <= 20% peso corporal",
     });
   return diagnostics;
 }
