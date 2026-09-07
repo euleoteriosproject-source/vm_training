@@ -8,6 +8,7 @@ import type {
   TrainingSlot,
 } from "../types";
 import { resolveGoalStrategy } from "./goal-strategy";
+import { capabilitiesForGym } from "../gym-capabilities";
 import { compilePlan, matchesSlot } from "./plan-compiler";
 import { normalizeTrainingProfile } from "./profile-normalizer";
 
@@ -105,6 +106,27 @@ describe("v2.2.1 programming quality refinement", () => {
     expect(posture.quality.goalAlignment.status).toBe("PASS");
     expect(posture.quality.goalAlignment.strengthSlots).toBeGreaterThanOrEqual(9);
     expect(posture.days).not.toEqual(muscle.days);
+  });
+
+  it("keeps the commercial back-extension capability eligible for posture plans", () => {
+    const backExtension = exercise(
+      "back-extension-machine",
+      "posture",
+      "commercial_machine",
+      "strength",
+      "back-extension-machine",
+    );
+    backExtension.capabilities = ["hip_extension"];
+    const input = {
+      ...baseInput,
+      capabilities: capabilitiesForGym("STANDARD_COMMERCIAL_GYM"),
+    };
+
+    expect(capabilitiesForGym("STANDARD_COMMERCIAL_GYM")).toEqual(
+      expect.arrayContaining(["hip_accessory", "hip_extension"]),
+    );
+    expect(generatePlanWithQuality(input, [...catalog, backExtension]).quality)
+      .toMatchObject({ environmentContextFitStatus: "PASS", programQualityStatus: "PASS" });
   });
 
   it("answers why every selected exercise exists using need and weekly context", () => {

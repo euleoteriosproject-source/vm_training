@@ -15,6 +15,8 @@ export const gymProfileCapabilities: Record<GymProfile, readonly string[]> = {
     "leg_press",
     "knee_extension",
     "knee_flexion",
+    "hip_accessory",
+    "hip_extension",
     "cardio_machine",
     "bodyweight",
   ],
