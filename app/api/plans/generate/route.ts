@@ -242,19 +242,20 @@ export async function POST() {
       movementAttentionPatterns,
       recentExerciseIds,
       performanceHistory,
-      catalogVersion: "production-v220",
+      catalogVersion: "production-v221",
       generatorVersion: GENERATOR_VERSION,
     };
     const generated = generatePlanWithQuality(input, catalog);
     const { data: previewData, error: previewError } = await supabase.rpc(
-      "create_plan_preview_v220",
+      "create_plan_preview_v221",
       {
         p_days: generated.days,
         p_generator_version: generated.generatorVersion,
         p_rationale: {
-          strategy: "strategy-first-personal-engine-v220",
+          strategy: "programming-needs-smart-slot-v221",
           architecture: generated.architecture,
           selectedSlots: generated.slots,
+          prunedSlots: generated.prunedSlots,
           quality: generated.quality,
           gymProfile,
           workoutStyle: input.workoutStyle,
@@ -266,7 +267,6 @@ export async function POST() {
     if (previewError) throw previewError;
     const result = previewData as {
       planId: string;
-      quality: typeof generated.quality;
       goal: GoalCode;
     };
 
@@ -276,7 +276,6 @@ export async function POST() {
         id: result.planId,
         status: "draft" as const,
         generatorVersion: generated.generatorVersion,
-        quality: result.quality,
         preview: {
           id: result.planId,
           goal: result.goal,
@@ -315,16 +314,12 @@ export async function POST() {
       return NextResponse.json(
         {
           error: "Não foi possível gerar um plano seguro, variado e alinhado ao objetivo.",
-          diagnostics: error.diagnostics,
         },
         { status: 422 },
       );
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Não foi possível gerar o plano",
+        error: "Não foi possível gerar o plano.",
       },
       { status: 422 },
     );

@@ -28,8 +28,10 @@ export function compilePlan(
 
   for (const slot of slots) {
     const matching = eligible.filter(({ exercise }) => matchesSlot(exercise, slot));
-    const pool = (matching.length ? matching : eligible)
-      .sort((left, right) => rankForSlot(right, slot, profile) - rankForSlot(left, slot, profile) || left.exercise.id.localeCompare(right.exercise.id))
+    if (!matching.length) throw new Error(`Não há candidato funcionalmente válido para o slot ${slot.id}.`);
+    const poolExercises = matching.map(({ exercise }) => exercise);
+    const pool = [...matching]
+      .sort((left, right) => rankForSlot(right, slot, profile, input, poolExercises) - rankForSlot(left, slot, profile, input, poolExercises) || left.exercise.id.localeCompare(right.exercise.id))
       // Keep enough semantically compatible alternatives available for later
       // days. A very small local pool can exhaust every candidate at the
       // two-use ceiling even when the full eligible catalog has safe options.
@@ -40,10 +42,10 @@ export function compilePlan(
         const family = exerciseFamily(ranked.exercise);
         const exactCount = state.usage.get(ranked.exercise.id) ?? 0;
         const familyCount = state.familyUsage.get(family) ?? 0;
-        const sameDay = state.picks.slice(slot.dayIndex * slotsPerDay(slots), slot.dayIndex * slotsPerDay(slots) + slot.position);
+        const sameDay = selectedForDay(state.picks, slots, slot.dayIndex);
         if (sameDay.some((exercise) => exercise.id === ranked.exercise.id)) continue;
         const sameFamilyInDay = sameDay.some((exercise) => exerciseFamily(exercise) === family);
-        if (wouldExceedDayOverlap(state.picks, slot, slotsPerDay(slots), ranked.exercise.id)) continue;
+        if (wouldExceedDayOverlap(state.picks, slot, slots, ranked.exercise.id)) continue;
         if (exactCount >= 2 && eligible.length >= slots.length / 2) continue;
         const canReuseCompatible = pool.some(({ exercise }) =>
           (state.usage.get(exercise.id) ?? 0) === 1 &&
@@ -58,7 +60,7 @@ export function compilePlan(
           picks: [...state.picks, ranked.exercise],
           score:
             state.score +
-            rankForSlot(ranked, slot, profile) -
+            rankForSlot(ranked, slot, profile, input, poolExercises) -
             exactCount * 28 -
             (state.usage.size >= 15 && exactCount === 0 ? 140 : 0) -
             familyCount * 9 -
@@ -86,7 +88,7 @@ export function compilePlan(
       name: day.name,
       focus: day.focus,
       rationale: architecture.rationale,
-      estimatedMinutes: profile.sessionMinutes,
+      estimatedMinutes: daySlots.reduce((sum, slot) => sum + slot.estimatedTimeMinutes, 0),
       exercises: daySlots.map((slot) => {
         const exercise = finalPicks[slots.indexOf(slot)];
         const prescription = prescriptionFor(exercise, slot.role, strategy, profile.sessionMinutes);
@@ -97,6 +99,10 @@ export function compilePlan(
           exerciseFamily: exerciseFamily(exercise),
           rationale: explainChoice(exercise, slot, strategy),
           progression: recommendProgression(exercise.id, input.performanceHistory),
+          programmingNeed: slot.need,
+          needStatus: slot.needStatus,
+          programmingValue: slot.programmingValue,
+          redundancy: slot.redundancy,
         };
       }),
     } satisfies GeneratedDay;
@@ -123,7 +129,7 @@ function enforceUniqueFloor(
         !used.has(exercise.id) &&
         exercise.pattern === result[index].pattern &&
         matchesSlot(exercise, slots[index]) &&
-        replacementKeepsOverlap(result, slots[index], slotsPerDay(slots), index, exercise.id),
+        replacementKeepsOverlap(result, slots, index, exercise.id),
       )?.exercise;
       if (!alternative) continue;
       result[index] = alternative;
@@ -136,22 +142,22 @@ function enforceUniqueFloor(
 
 function replacementKeepsOverlap(
   picks: ExerciseCandidate[],
-  slot: TrainingSlot,
-  perDay: number,
+  slots: TrainingSlot[],
   replacementIndex: number,
   replacementId: string,
 ) {
   const candidate = picks.map((exercise, index) =>
     index === replacementIndex ? { ...exercise, id: replacementId } : exercise,
   );
-  const targetDayIds = new Set(
-    candidate.slice(slot.dayIndex * perDay, slot.dayIndex * perDay + perDay).map((exercise) => exercise.id),
-  );
-  if (targetDayIds.size < perDay) return false;
-  for (let dayIndex = 0; dayIndex < Math.ceil(candidate.length / perDay); dayIndex++) {
-    if (dayIndex === slot.dayIndex) continue;
-    const otherIds = new Set(candidate.slice(dayIndex * perDay, dayIndex * perDay + perDay).map((exercise) => exercise.id));
-    if ([...targetDayIds].filter((id) => otherIds.has(id)).length > Math.floor(perDay / 2)) return false;
+  const targetDay = slots[replacementIndex].dayIndex;
+  const targetDayIds = new Set(selectedForDay(candidate, slots, targetDay).map((exercise) => exercise.id));
+  const targetSize = slots.filter((slot) => slot.dayIndex === targetDay).length;
+  if (targetDayIds.size < targetSize) return false;
+  for (const dayIndex of [...new Set(slots.map((slot) => slot.dayIndex))]) {
+    if (dayIndex === targetDay) continue;
+    const otherIds = new Set(selectedForDay(candidate, slots, dayIndex).map((exercise) => exercise.id));
+    const allowed = Math.floor(Math.min(targetSize, slots.filter((slot) => slot.dayIndex === dayIndex).length) / 2);
+    if ([...targetDayIds].filter((id) => otherIds.has(id)).length > allowed) return false;
   }
   return true;
 }
@@ -159,16 +165,19 @@ function replacementKeepsOverlap(
 function wouldExceedDayOverlap(
   picks: ExerciseCandidate[],
   slot: TrainingSlot,
-  perDay: number,
+  slots: TrainingSlot[],
   candidateId: string,
 ) {
   if (slot.dayIndex === 0) return false;
-  const currentStart = slot.dayIndex * perDay;
-  const currentIds = new Set(picks.slice(currentStart).map((exercise) => exercise.id));
+  const currentIds = new Set(selectedForDay(picks, slots, slot.dayIndex).map((exercise) => exercise.id));
   currentIds.add(candidateId);
   for (let prior = 0; prior < slot.dayIndex; prior++) {
-    const priorIds = new Set(picks.slice(prior * perDay, prior * perDay + perDay).map((exercise) => exercise.id));
-    if ([...currentIds].filter((id) => priorIds.has(id)).length > Math.floor(perDay / 2)) return true;
+    const priorIds = new Set(selectedForDay(picks, slots, prior).map((exercise) => exercise.id));
+    const allowed = Math.floor(Math.min(
+      slots.filter((item) => item.dayIndex === slot.dayIndex).length,
+      slots.filter((item) => item.dayIndex === prior).length,
+    ) / 2);
+    if ([...currentIds].filter((id) => priorIds.has(id)).length > allowed) return true;
   }
   return false;
 }
@@ -187,14 +196,12 @@ function enforceUniqueCap(
     for (let index = result.length - 1; index >= 0 && !replaced; index--) {
       if ((usage.get(result[index].id) ?? 0) !== 1) continue;
       const slot = slots[index];
-      const dayStart = slot.dayIndex * slotsPerDay(slots);
-      const perDay = slotsPerDay(slots);
-      const dayIds = new Set(result.slice(dayStart, dayStart + perDay).map((exercise) => exercise.id));
+      const dayIds = new Set(selectedForDay(result, slots, slot.dayIndex).map((exercise) => exercise.id));
       const alternative = eligible.find(({ exercise }) =>
         matchesSlot(exercise, slot) &&
         (usage.get(exercise.id) ?? 0) === 1 &&
         !dayIds.has(exercise.id) &&
-        priorDayOverlapRemainsSafe(result, slot.dayIndex, perDay, dayIds, exercise.id),
+        replacementKeepsOverlap(result, slots, index, exercise.id),
       )?.exercise;
       if (!alternative) continue;
       result[index] = alternative;
@@ -205,22 +212,7 @@ function enforceUniqueCap(
   return result;
 }
 
-function priorDayOverlapRemainsSafe(
-  picks: ExerciseCandidate[],
-  dayIndex: number,
-  perDay: number,
-  currentIds: Set<string>,
-  replacementId: string,
-) {
-  for (let prior = 0; prior < dayIndex; prior++) {
-    const priorIds = new Set(picks.slice(prior * perDay, prior * perDay + perDay).map((exercise) => exercise.id));
-    const overlap = [...currentIds].filter((id) => priorIds.has(id)).length + (priorIds.has(replacementId) ? 1 : 0);
-    if (overlap > Math.floor(perDay / 2)) return false;
-  }
-  return true;
-}
-
-function matchesSlot(exercise: ExerciseCandidate, slot: TrainingSlot) {
+export function matchesSlot(exercise: ExerciseCandidate, slot: TrainingSlot) {
   if (!slot.patterns.includes(exercise.pattern)) return false;
   if (complexityRank[exercise.technicalComplexity ?? "low"] > complexityRank[slot.maxTechnicalComplexity]) return false;
   if (slot.role === "CONDITIONING") return exercise.category === "cardio" || exercise.pattern === "carry";
@@ -229,7 +221,13 @@ function matchesSlot(exercise: ExerciseCandidate, slot: TrainingSlot) {
   return exercise.category === "strength" || exercise.pattern === "carry";
 }
 
-function rankForSlot(candidate: RankedCandidate, slot: TrainingSlot, profile: NormalizedTrainingProfile) {
+function rankForSlot(
+  candidate: RankedCandidate,
+  slot: TrainingSlot,
+  profile: NormalizedTrainingProfile,
+  input: PlanInput,
+  compatible: ExerciseCandidate[],
+) {
   const exercise = candidate.exercise;
   let score = candidate.score;
   if (slot.role === "CONDITIONING" && exercise.category === "cardio") score += 100;
@@ -237,12 +235,38 @@ function rankForSlot(candidate: RankedCandidate, slot: TrainingSlot, profile: No
   // The architecture's first pattern is the day-level programming intent.
   // Give it enough weight to avoid a globally popular exercise silently
   // turning (for example) a hinge slot into another squat slot.
-  score += patternIndex === 0 ? 42 : Math.max(0, 18 - patternIndex * 4);
+  score += patternIndex === 0 ? 76 : Math.max(8, 28 - patternIndex * 6);
   if (exercise.primaryMuscles?.some((muscle) => slot.targetMuscles.includes(muscle))) score += 8;
   if (slot.priority === "high" && exercise.trainingRole?.includes("primary")) score += 5;
   if (slot.position < 2 && exercise.fatigueProfile === "high") score += 4;
   if (slot.position >= 4 && exercise.fatigueProfile === "high") score -= 14;
   if (profile.experience === "beginner" && exercise.stabilityProfile === "low") score -= 10;
+  const missingMetadata = [
+    exercise.exerciseFamily,
+    exercise.trainingRole,
+    exercise.primaryMuscles?.length ? exercise.primaryMuscles : undefined,
+    exercise.environmentProfile,
+    exercise.technicalComplexity,
+    exercise.stabilityProfile,
+    exercise.fatigueProfile,
+  ].filter((value) => value == null).length;
+  score -= missingMetadata * 14;
+  if (input.preferences?.[exercise.id] === "like") score += 125;
+  const progression = recommendProgression(exercise.id, input.performanceHistory);
+  if (progression.state === "PROGRESS" || progression.state === "MAINTAIN") score += 10;
+  const isCommercialGym = profile.gymProfile === "STANDARD_COMMERCIAL_GYM" && profile.workoutStyle === "gym_first";
+  const environment = exercise.environmentProfile;
+  if (isCommercialGym) {
+    if (environment === "commercial_machine" || environment === "commercial_cable") score += 22;
+    else if (environment === "commercial_free_weight") score += 10;
+    const exactGymAlternative = compatible.some((option) =>
+      option.id !== exercise.id &&
+      option.pattern === exercise.pattern &&
+      ["commercial_machine", "commercial_cable", "commercial_free_weight"].includes(option.environmentProfile ?? ""),
+    );
+    if (environment === "bodyweight_floor" && exactGymAlternative) score -= 52;
+  }
+  score += Math.round(slot.programmingValue / 5);
   return score;
 }
 
@@ -280,15 +304,23 @@ function prescriptionFor(
 
 function explainChoice(exercise: ExerciseCandidate, slot: TrainingSlot, strategy: GoalStrategy) {
   const equipment = exercise.environmentProfile?.replaceAll("_", " ") ?? "equipamento disponível";
-  return `${exercise.name} atende o padrão ${exercise.pattern}, ocupa o papel ${slot.role.toLowerCase().replaceAll("_", " ")} e apoia ${strategy.label.toLowerCase()} com ${equipment}.`;
+  const role = slot.role.toLowerCase().replaceAll("_", " ");
+  const weeklyReason = slot.needStatus === "UNMET"
+    ? "cobrindo uma necessidade ainda ausente na semana"
+    : slot.needStatus === "PARTIALLY_COVERED"
+      ? "completando uma necessidade parcialmente coberta na semana"
+      : "mantendo uma exposição semanal intencional";
+  if (slot.role === "CORRECTIVE")
+    return `${exercise.name} foi incluído como trabalho complementar porque a semana ainda não cobre suficientemente esta função; atende ${exercise.pattern} e apoia ${strategy.label.toLowerCase()}.`;
+  return `${exercise.name} atende o padrão ${exercise.pattern} como ${role}, apoia ${strategy.label.toLowerCase()} e foi mantido ${weeklyReason}, com ${equipment}.`;
 }
 
 export function exerciseFamily(exercise: ExerciseCandidate) {
   return exercise.exerciseFamily ?? `${exercise.pattern}:${exercise.environmentProfile ?? "generic"}`;
 }
 
-function slotsPerDay(slots: TrainingSlot[]) {
-  return slots.filter((slot) => slot.dayIndex === 0).length;
+function selectedForDay(picks: ExerciseCandidate[], slots: TrainingSlot[], dayIndex: number) {
+  return picks.filter((_, index) => slots[index]?.dayIndex === dayIndex);
 }
 
 function weeklyImbalancePenalty(picks: ExerciseCandidate[]) {
@@ -310,5 +342,5 @@ export function determinismKey(days: GeneratedDay[], catalogVersion = "catalog-u
     hash ^= value.charCodeAt(index);
     hash = Math.imul(hash, 16777619);
   }
-  return `v220-${(hash >>> 0).toString(16).padStart(8, "0")}`;
+  return `v221-${(hash >>> 0).toString(16).padStart(8, "0")}`;
 }

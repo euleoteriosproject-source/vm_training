@@ -28,7 +28,7 @@ const preferences = {
   workout_style: "gym_first" as const,
 };
 
-describe("PreferencesForm v2.2.0", () => {
+describe("PreferencesForm v2.2.1", () => {
   beforeEach(() => {
     cleanup();
     vi.clearAllMocks();
@@ -92,7 +92,7 @@ describe("PreferencesForm v2.2.0", () => {
               daysPerWeek: 3,
               sessionMinutes: 60,
               structure: "Full Body A / Full Body B / Full Body C",
-              exercisesPerDay: [6, 6, 6],
+              exercisesPerDay: [5, 5, 5],
               changes: ["mais foco em força"],
               gymEquipmentSlots: 16,
               gymEquipmentPercent: 88.9,

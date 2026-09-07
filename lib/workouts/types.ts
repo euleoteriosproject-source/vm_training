@@ -46,6 +46,21 @@ export type TrainingRole =
 export type FatigueProfile = "low" | "medium" | "high";
 export type StabilityProfile = "high" | "moderate" | "low";
 export type ProgrammingPriority = "high" | "medium" | "low";
+export type NeedCoverageStatus = "UNMET" | "PARTIALLY_COVERED" | "COVERED";
+export type SlotRequirement = "REQUIRED" | "OPTIONAL";
+export type ProgrammingNeedCode =
+  | "PRIMARY_LOWER_STIMULUS"
+  | "HORIZONTAL_PUSH"
+  | "VERTICAL_PUSH"
+  | "HORIZONTAL_PULL"
+  | "VERTICAL_PULL"
+  | "POSTERIOR_CHAIN"
+  | "KNEE_DOMINANT"
+  | "SUPPORTING_VOLUME"
+  | "TRUNK_STABILITY"
+  | "SCAPULAR_CONTROL"
+  | "CONDITIONING"
+  | "MOBILITY";
 export type ProgressionState =
   | "PROGRESS"
   | "MAINTAIN"
@@ -99,6 +114,25 @@ export type TrainingSlot = {
   priority: ProgrammingPriority;
   fatigueBudget: FatigueProfile;
   maxTechnicalComplexity: TechnicalComplexity;
+  rationale: string;
+  need: ProgrammingNeedCode;
+  needStatus: NeedCoverageStatus;
+  requirement: SlotRequirement;
+  programmingValue: number;
+  minimumProgrammingValue: number;
+  estimatedTimeMinutes: number;
+  redundancy: number;
+  justification: string;
+};
+
+export type ProgrammingNeed = {
+  code: ProgrammingNeedCode;
+  role: TrainingRole;
+  patterns: string[];
+  targetMuscles: string[];
+  targetWeeklyExposure: number;
+  goalRelevant: boolean;
+  corrective: boolean;
   rationale: string;
 };
 
@@ -180,6 +214,10 @@ export type GeneratedDay = {
     exerciseFamily?: string;
     rationale?: string;
     progression?: ProgressionRecommendation;
+    programmingNeed?: ProgrammingNeedCode;
+    needStatus?: NeedCoverageStatus;
+    programmingValue?: number;
+    redundancy?: number;
   }[];
 };
 
@@ -230,6 +268,15 @@ export type PlanQualityMetrics = {
   volumeValidationStatus?: "PASS" | "FAIL";
   frequencyValidationStatus?: "PASS" | "FAIL";
   functionalRepetitionStatus?: "PASS" | "FAIL";
+  functionalCoverageStatus?: "PASS" | "FAIL";
+  slotJustificationStatus?: "PASS" | "FAIL";
+  sessionEfficiencyStatus?: "PASS" | "FAIL";
+  fillerSlots?: number;
+  unjustifiedCorrectiveSlots?: number;
+  optionalSlotsPruned?: number;
+  estimatedSessionMinutesByDay?: number[];
+  averageProgrammingValue?: number;
+  environmentContextFitStatus?: "PASS" | "FAIL";
   weeklyBalanceStatus?: "PASS" | "FAIL";
   orderingStatus?: "PASS" | "FAIL";
   programQualityStatus?: "PASS" | "FAIL";
@@ -252,10 +299,13 @@ export type PlanConstraintDiagnostic = {
     | "VOLUME_INVALID"
     | "FREQUENCY_INVALID"
     | "FUNCTIONAL_REPETITION_INVALID"
+    | "FUNCTIONAL_COVERAGE_INVALID"
+    | "SLOT_JUSTIFICATION_INVALID"
+    | "SESSION_EFFICIENCY_INVALID"
     | "ORDERING_INVALID"
     | "SLOT_UNFILLED";
   message: string;
-  actual: number | string[] | Record<string, number | string[]>;
+  actual: number | string[] | Record<string, number | number[] | string[]>;
   required: number | string;
 };
 
@@ -265,4 +315,5 @@ export type GeneratedPlan = {
   generatorVersion: string;
   architecture?: TrainingArchitecture;
   slots?: TrainingSlot[];
+  prunedSlots?: TrainingSlot[];
 };

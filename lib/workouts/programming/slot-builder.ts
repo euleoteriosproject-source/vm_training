@@ -5,6 +5,12 @@ import type {
   TrainingRole,
   TrainingSlot,
 } from "../types";
+import {
+  analyzeCoverage,
+  determineProgrammingNeed,
+  estimateSlotTime,
+  evaluateSlotJustification,
+} from "./programming-needs.ts";
 
 const slotsByMinutes: Record<number, number> = { 30: 4, 45: 5, 60: 6, 75: 7, 90: 8 };
 
@@ -13,40 +19,115 @@ export function buildTrainingSlots(
   strategy: GoalStrategy,
   architecture: TrainingArchitecture,
 ): TrainingSlot[] {
+  return buildTrainingSlotDecision(profile, strategy, architecture).slots;
+}
+
+export function buildTrainingSlotDecision(
+  profile: NormalizedTrainingProfile,
+  strategy: GoalStrategy,
+  architecture: TrainingArchitecture,
+): { slots: TrainingSlot[]; prunedSlots: TrainingSlot[] } {
   const perDay = slotsByMinutes[profile.sessionMinutes];
   let conditioningRemaining = strategy.conditioningSlotsPerWeek;
   let mobilityRemaining = strategy.mobilitySlotsPerWeek;
-  return architecture.days.flatMap((day, dayIndex) => {
+  const candidates = architecture.days.flatMap((day, dayIndex) => {
     const patterns = [...day.patternBias];
     const roles = rolesForDay(day.name, perDay);
+    const usedPrimaryPatterns = new Set<string>();
     if (day.name.toLowerCase().includes("corpo inteiro") && roles.length > 4)
       roles[4] = dayIndex % 2 === 0 ? "SECONDARY_PULL" : "SECONDARY_PUSH";
     if (["muscle_gain", "strength"].includes(strategy.goal))
       for (let index = 0; index < roles.length; index++)
         if (roles[index] === "CORE" || roles[index] === "MOBILITY") roles[index] = "ACCESSORY";
-    if (conditioningRemaining > 0) {
+    if (profile.primaryGoal === "posture") {
+      if (roles.length > 5) roles[roles.length - 1] = "CORRECTIVE";
+    } else if (conditioningRemaining > 0) {
       roles[roles.length - 1] = "CONDITIONING";
       conditioningRemaining -= 1;
     } else if (mobilityRemaining > 0) {
-      roles[roles.length - 1] = profile.primaryGoal === "posture" ? "CORRECTIVE" : "MOBILITY";
+      roles[roles.length - 1] = "MOBILITY";
       mobilityRemaining -= 1;
     }
     return roles.map((role, position) => {
-      const slotPatterns = patternsForRole(role, patterns, position, strategy.patternPriorities);
+      const slotPatterns = patternsForRole(
+        role,
+        patterns,
+        position,
+        strategy.patternPriorities,
+        usedPrimaryPatterns,
+      );
+      usedPrimaryPatterns.add(slotPatterns[0]);
+      const fatigueBudget = position === 0 ? "high" : position < 4 ? "medium" : "low";
+      const requirement = position < Math.min(5, perDay) ? "REQUIRED" : "OPTIONAL";
+      const need = determineProgrammingNeed(
+        role,
+        slotPatterns,
+        profile,
+        strategy,
+        Math.max(1, position - 4),
+      );
       return {
         id: `${architecture.id}-d${dayIndex + 1}-s${position + 1}`,
         dayIndex,
         position,
         role,
         patterns: slotPatterns,
-        targetMuscles: musclesForPatterns(slotPatterns),
+        targetMuscles: need.targetMuscles,
         priority: position < 2 ? "high" : position < 4 ? "medium" : "low",
-        fatigueBudget: position === 0 ? "high" : position < 4 ? "medium" : "low",
+        fatigueBudget,
         maxTechnicalComplexity: profile.experience === "beginner" ? (position < 2 ? "moderate" : "low") : "high",
         rationale: rationaleForRole(role, strategy.label, day.name),
+        need: need.code,
+        needStatus: "UNMET",
+        requirement,
+        programmingValue: 0,
+        minimumProgrammingValue: requirement === "REQUIRED" ? 0 : 45,
+        estimatedTimeMinutes: estimateSlotTime(role),
+        redundancy: 0,
+        justification: need.rationale,
       } satisfies TrainingSlot;
     });
   });
+
+  const accepted: TrainingSlot[] = [];
+  const prunedSlots: TrainingSlot[] = [];
+  const ordered = [...candidates].sort(
+    (left, right) =>
+      (left.requirement === right.requirement ? 0 : left.requirement === "REQUIRED" ? -1 : 1) ||
+      left.position - right.position ||
+      left.dayIndex - right.dayIndex,
+  );
+  for (const slot of ordered) {
+    const need = determineProgrammingNeed(
+      slot.role,
+      slot.patterns,
+      profile,
+      strategy,
+      Math.max(1, slot.position - 4),
+    );
+    const coverage = analyzeCoverage(need, accepted);
+    const decision = evaluateSlotJustification(
+      need,
+      coverage,
+      slot.requirement,
+      slot.fatigueBudget,
+      slot.estimatedTimeMinutes,
+    );
+    const evaluated = {
+      ...slot,
+      needStatus: coverage.status,
+      programmingValue: decision.value,
+      minimumProgrammingValue: decision.threshold,
+      redundancy: coverage.redundancy,
+      justification: decision.justification,
+    };
+    if (decision.keep) accepted.push(evaluated);
+    else prunedSlots.push(evaluated);
+  }
+  return {
+    slots: accepted.sort((left, right) => left.dayIndex - right.dayIndex || left.position - right.position),
+    prunedSlots: prunedSlots.sort((left, right) => left.dayIndex - right.dayIndex || left.position - right.position),
+  };
 }
 
 function rolesForDay(name: string, count: number): TrainingRole[] {
@@ -63,7 +144,13 @@ function rolesForDay(name: string, count: number): TrainingRole[] {
   return base.slice(0, count);
 }
 
-function patternsForRole(role: TrainingRole, bias: string[], position: number, priorities: string[]) {
+function patternsForRole(
+  role: TrainingRole,
+  bias: string[],
+  position: number,
+  priorities: string[],
+  usedPrimaryPatterns: Set<string>,
+) {
   const rolePatterns: Partial<Record<TrainingRole, string[]>> = {
     PRIMARY_LOWER: ["squat", "hinge", "hip_extension", "knee_extension"],
     SECONDARY_LOWER: ["knee_flexion", "knee_extension", "hip_extension", "hinge", "squat"],
@@ -80,17 +167,11 @@ function patternsForRole(role: TrainingRole, bias: string[], position: number, p
   };
   const allowed = rolePatterns[role] ?? priorities;
   const ordered = [...bias, ...priorities, ...allowed].filter((pattern, index, all) => allowed.includes(pattern) && all.indexOf(pattern) === index);
-  return ordered.length ? ordered : [priorities[position % priorities.length] ?? "squat"];
-}
-
-function musclesForPatterns(patterns: string[]) {
-  const map: Record<string, string[]> = {
-    squat: ["quadriceps", "glutes"], hinge: ["hamstrings", "glutes"], hip_extension: ["glutes"],
-    knee_extension: ["quadriceps"], knee_flexion: ["hamstrings"], horizontal_push: ["chest", "triceps"],
-    vertical_push: ["shoulders", "triceps"], horizontal_pull: ["back", "biceps"], vertical_pull: ["lats", "biceps"],
-    posture: ["upper_back"], core_anti_rotation: ["core"], core_anti_extension: ["core"], carry: ["core", "grip"],
-  };
-  return [...new Set(patterns.flatMap((pattern) => map[pattern] ?? []))];
+  const rotated = [
+    ...ordered.filter((pattern) => !usedPrimaryPatterns.has(pattern)),
+    ...ordered.filter((pattern) => usedPrimaryPatterns.has(pattern)),
+  ];
+  return rotated.length ? rotated : [priorities[position % priorities.length] ?? "squat"];
 }
 
 function rationaleForRole(role: TrainingRole, goal: string, day: string) {

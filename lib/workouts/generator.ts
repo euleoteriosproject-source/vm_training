@@ -9,11 +9,11 @@ import type {
 import { buildTrainingArchitecture } from "./programming/training-architecture.ts";
 import { resolveGoalStrategy } from "./programming/goal-strategy.ts";
 import { normalizeTrainingProfile } from "./programming/profile-normalizer.ts";
-import { buildTrainingSlots } from "./programming/slot-builder.ts";
-import { compilePlan } from "./programming/plan-compiler.ts";
+import { buildTrainingSlotDecision } from "./programming/slot-builder.ts";
+import { compilePlan, matchesSlot } from "./programming/plan-compiler.ts";
 import { enrichProgramQuality } from "./programming/program-quality.ts";
 
-export const GENERATOR_VERSION = "v2.2.0";
+export const GENERATOR_VERSION = "v2.2.1";
 
 const splits: Record<number, string[]> = {
   2: ["Full Body A", "Full Body B"],
@@ -463,6 +463,13 @@ export function evaluateGoalAlignment(
     const exercise = byId.get(slot.exerciseId);
     return exercise?.category === "mobility" || exercise?.pattern === "posture";
   }).length;
+  const postureRelevantSlots = slots.filter((slot) => {
+    const exercise = byId.get(slot.exerciseId);
+    return exercise && [
+      "horizontal_pull", "vertical_pull", "posture", "hinge", "hip_extension",
+      "knee_flexion", "core_anti_rotation", "core_anti_extension", "carry",
+    ].includes(exercise.pattern);
+  }).length;
   const lowerRepStrengthSlots = strengthSlots.filter(
     (slot) => slot.repMax > 0 && slot.repMax <= 8,
   ).length;
@@ -486,8 +493,11 @@ export function evaluateGoalAlignment(
   } else if (["conditioning", "cardio_endurance", "fat_loss", "weight_loss", "measurements"].includes(goal)) {
     if (cardioSlots < days.length) reasons.push("conditioning_cardio");
     if (strengthSlots.length < days.length * 2) reasons.push("conditioning_strength_foundation");
-  } else if (["mobility", "posture"].includes(goal)) {
+  } else if (goal === "mobility") {
     if (mobilityOrPostureSlots < days.length) reasons.push("movement_quality_volume");
+    if (strengthSlots.length < days.length * 3) reasons.push("movement_quality_strength_foundation");
+  } else if (goal === "posture") {
+    if (postureRelevantSlots < days.length * 2) reasons.push("posture_functional_coverage");
     if (strengthSlots.length < days.length * 3) reasons.push("movement_quality_strength_foundation");
   } else {
     if (strengthSlots.length < days.length * 3) reasons.push("health_strength_foundation");
@@ -570,6 +580,27 @@ function qualityDiagnostics(
       actual: quality.exerciseFamilyFrequency ?? {},
       required: "PASS",
     });
+  if (quality.functionalCoverageStatus === "FAIL")
+    diagnostics.push({
+      code: "FUNCTIONAL_COVERAGE_INVALID",
+      message: "A composição não cobre as necessidades estruturais da semana.",
+      actual: quality.movementPatternDistribution,
+      required: "PASS",
+    });
+  if (quality.slotJustificationStatus === "FAIL")
+    diagnostics.push({
+      code: "SLOT_JUSTIFICATION_INVALID",
+      message: "O plano contém slot opcional sem necessidade ou justificativa suficiente.",
+      actual: { fillerSlots: quality.fillerSlots ?? 0, unjustifiedCorrectiveSlots: quality.unjustifiedCorrectiveSlots ?? 0 },
+      required: "PASS",
+    });
+  if (quality.sessionEfficiencyStatus === "FAIL" || quality.environmentContextFitStatus === "FAIL")
+    diagnostics.push({
+      code: "SESSION_EFFICIENCY_INVALID",
+      message: "O plano não atingiu o gate de eficiência da sessão ou adequação ao ambiente.",
+      actual: { estimatedSessionMinutesByDay: quality.estimatedSessionMinutesByDay ?? [] },
+      required: "PASS",
+    });
   if (quality.orderingStatus === "FAIL")
     diagnostics.push({
       code: "ORDERING_INVALID",
@@ -600,13 +631,6 @@ function qualityDiagnostics(
       message: "A sobreposição entre dias excede 50%.",
       actual: excessivePairs,
       required: "<= 50%",
-    });
-  if (standardThreeDayPlan && quality.movementPatternCount < 8)
-    diagnostics.push({
-      code: "INSUFFICIENT_MOVEMENT_COVERAGE",
-      message: "O plano não alcança oito padrões de movimento.",
-      actual: quality.movementPatternCount,
-      required: 8,
     });
   if (
     gymFirstMuscleGain(input) &&
@@ -914,7 +938,21 @@ export function generatePlanWithQuality(
   const profile = normalizeTrainingProfile(input);
   const strategy = resolveGoalStrategy(profile);
   const architecture = buildTrainingArchitecture(profile, strategy);
-  const slots = buildTrainingSlots(profile, strategy, architecture);
+  const slotDecision = buildTrainingSlotDecision(profile, strategy, architecture);
+  const unavailableOptionalSlots = slotDecision.slots.filter(
+    (slot) => slot.requirement === "OPTIONAL" && !eligible.some(({ exercise }) => matchesSlot(exercise, slot)),
+  );
+  const slots = slotDecision.slots.filter((slot) => !unavailableOptionalSlots.includes(slot));
+  const unavailableRequiredSlot = slots.find(
+    (slot) => slot.requirement === "REQUIRED" && !eligible.some(({ exercise }) => matchesSlot(exercise, slot)),
+  );
+  if (unavailableRequiredSlot)
+    throw new PlanConstraintError([{
+      code: "SLOT_UNFILLED",
+      message: "O catálogo compatível não consegue preencher uma necessidade estrutural do programa.",
+      actual: [unavailableRequiredSlot.need],
+      required: "functional candidate",
+    }]);
   const days = compilePlan(input, profile, strategy, architecture, slots, eligible);
   const quality = enrichProgramQuality(
     evaluatePlanQuality(days, catalog, input),
@@ -922,6 +960,9 @@ export function generatePlanWithQuality(
     catalog,
     input.catalogVersion,
     input.sessionsPerWeek,
+    slots,
+    [...slotDecision.prunedSlots, ...unavailableOptionalSlots],
+    input,
   );
   const diagnostics = qualityDiagnostics(quality, standardThreeDayPlan, input);
   if (diagnostics.length) throw new PlanConstraintError(diagnostics);
@@ -931,6 +972,7 @@ export function generatePlanWithQuality(
     generatorVersion: input.generatorVersion ?? GENERATOR_VERSION,
     architecture,
     slots,
+    prunedSlots: [...slotDecision.prunedSlots, ...unavailableOptionalSlots],
   };
 }
 

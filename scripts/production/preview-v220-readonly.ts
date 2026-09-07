@@ -1,6 +1,6 @@
 import { generatePlanWithQuality } from "../../lib/workouts/generator.ts";
 import { capabilitiesForGym } from "../../lib/workouts/gym-capabilities.ts";
-import type { ExerciseCandidate, PlanInput } from "../../lib/workouts/types.ts";
+import type { ExerciseCandidate, GoalCode, PlanInput } from "../../lib/workouts/types.ts";
 import { getAdminClient } from "../media/shared.ts";
 
 const PROJECT_REF = "inghftngeritrsezwxnm";
@@ -8,6 +8,17 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 if (!url || new URL(url).hostname !== `${PROJECT_REF}.supabase.co`)
   throw new Error("Supabase project ref mismatch");
 const client = getAdminClient()!;
+const supportedGoals = new Set<GoalCode>([
+  "weight_loss", "fat_loss", "measurements", "muscle_gain", "strength",
+  "posture", "mobility", "conditioning", "cardio_endurance", "general_health",
+]);
+const goalArgument = process.argv.find((argument) => argument.startsWith("--goal="));
+const requestedGoal = (
+  goalArgument?.slice("--goal=".length) ??
+  process.env.V220_PREVIEW_GOAL ??
+  "muscle_gain"
+) as GoalCode;
+if (!supportedGoals.has(requestedGoal)) throw new Error("Unsupported preview goal");
 
 type Reconciliation = {
   userId: string;
@@ -68,7 +79,7 @@ const catalog: ExerciseCandidate[] = (metadata ?? []).map((exercise) => {
 });
 const gymProfile = "STANDARD_COMMERCIAL_GYM" as const;
 const previewInput: PlanInput = {
-  goals: [{ code: "muscle_gain", priority: 1 }],
+  goals: [{ code: requestedGoal, priority: 1 }],
   ...source.preferences,
   gymProfile,
   workoutStyle: "gym_first",
@@ -77,7 +88,7 @@ const previewInput: PlanInput = {
   preferences: Object.fromEntries(source.exercisePreferences.map((item) => [item.exerciseId, item.preference])),
   movementAttentionPatterns: source.movementAttentionPatterns,
   recentExerciseIds: source.recentExerciseIds,
-  catalogVersion: "production-v220",
+  catalogVersion: "production-v221",
 };
 let generated;
 try {
@@ -112,6 +123,7 @@ process.stdout.write(`${JSON.stringify({
   readOnly: true,
   persisted: false,
   activated: false,
+  goal: requestedGoal,
   comparison: {
     priorGenerator: activePlan.generator_version,
     priorSlots: priorIds.length,
@@ -122,6 +134,37 @@ process.stdout.write(`${JSON.stringify({
   },
   architecture: generated.architecture,
   quality: generated.quality,
+  slotReport: generated.days.flatMap((day, dayIndex) => {
+    const daySlots = (generated.slots ?? []).filter((slot) => slot.dayIndex === dayIndex);
+    return day.exercises.map((exercise, position) => {
+      const slot = daySlots[position];
+      const candidate = catalog.find((item) => item.id === exercise.exerciseId);
+      return {
+        day: day.name,
+        slot: position + 1,
+        need: slot?.need,
+        needStatus: slot?.needStatus,
+        requirement: slot?.requirement,
+        justification: slot?.justification,
+        exercise: candidate?.name,
+        exerciseFamily: exercise.exerciseFamily,
+        movementPattern: candidate?.pattern,
+        equipment: candidate?.environmentProfile,
+        programmingValue: slot?.programmingValue,
+        redundancy: slot?.redundancy,
+        fatigue: candidate?.fatigueProfile,
+      };
+    });
+  }),
+  rejectedSlots: (generated.prunedSlots ?? []).map((slot) => ({
+    day: generated.architecture?.days[slot.dayIndex]?.name,
+    slot: slot.position + 1,
+    need: slot.need,
+    reasonCodes: ["LOW_PROGRAMMING_VALUE"],
+    programmingValue: slot.programmingValue,
+    threshold: slot.minimumProgrammingValue,
+    justification: slot.justification,
+  })),
   days: generated.days.map((day) => ({
     name: day.name,
     focus: day.focus,
